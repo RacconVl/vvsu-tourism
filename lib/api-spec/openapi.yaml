@@ -24,6 +24,8 @@ tags:
     description: Educational resources
   - name: dashboard
     description: Student dashboard and progress
+  - name: quizzes
+    description: Interactive knowledge quizzes about Vladivostok and Primorsky Krai
 
 paths:
   /healthz:
@@ -283,6 +285,65 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProgressMap"
+
+  /quizzes:
+    get:
+      operationId: listQuizzes
+      tags: [quizzes]
+      summary: List all quizzes
+      responses:
+        "200":
+          description: List of quizzes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuizSummary"
+
+  /quizzes/{id}:
+    get:
+      operationId: getQuiz
+      tags: [quizzes]
+      summary: Get full quiz with questions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Quiz with questions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quiz"
+
+  /quizzes/{id}/submit:
+    post:
+      operationId: submitQuiz
+      tags: [quizzes]
+      summary: Submit quiz answers and get results
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuizSubmission"
+      responses:
+        "200":
+          description: Quiz result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizResult"
 
   /dashboard/leaderboard:
     get:
@@ -683,6 +744,113 @@ components:
         imageUrl:
           type: string
       required: [id, name, location, isCompleted, isCurrent, isLocked, xpRequired, imageUrl]
+
+    QuizSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          description: "history, geography, culture, nature, ecology"
+        difficulty:
+          type: string
+        questionCount:
+          type: integer
+        xpReward:
+          type: integer
+        estimatedMinutes:
+          type: integer
+        imageUrl:
+          type: string
+        isCompleted:
+          type: boolean
+        bestScore:
+          type: integer
+          nullable: true
+      required: [id, title, description, category, difficulty, questionCount, xpReward, estimatedMinutes, imageUrl, isCompleted]
+
+    QuizQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+        explanation:
+          type: string
+      required: [id, question, options, explanation]
+
+    Quiz:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        difficulty:
+          type: string
+        xpReward:
+          type: integer
+        imageUrl:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuizQuestion"
+      required: [id, title, description, category, difficulty, xpReward, imageUrl, questions]
+
+    QuizSubmission:
+      type: object
+      properties:
+        answers:
+          type: array
+          items:
+            type: integer
+          description: "Index of chosen option for each question"
+      required: [answers]
+
+    QuizAnswerResult:
+      type: object
+      properties:
+        questionId:
+          type: integer
+        correct:
+          type: boolean
+        correctAnswerIndex:
+          type: integer
+        explanation:
+          type: string
+      required: [questionId, correct, correctAnswerIndex, explanation]
+
+    QuizResult:
+      type: object
+      properties:
+        score:
+          type: integer
+        total:
+          type: integer
+        xpEarned:
+          type: integer
+        passed:
+          type: boolean
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuizAnswerResult"
+      required: [score, total, xpEarned, passed, results]
 
     LeaderboardEntry:
       type: object

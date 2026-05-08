@@ -331,6 +331,79 @@ export const GetProgressMapResponse = zod.object({
 });
 
 /**
+ * @summary List all quizzes
+ */
+export const ListQuizzesResponseItem = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod
+    .string()
+    .describe("history, geography, culture, nature, ecology"),
+  difficulty: zod.string(),
+  questionCount: zod.number(),
+  xpReward: zod.number(),
+  estimatedMinutes: zod.number(),
+  imageUrl: zod.string(),
+  isCompleted: zod.boolean(),
+  bestScore: zod.number().nullish(),
+});
+export const ListQuizzesResponse = zod.array(ListQuizzesResponseItem);
+
+/**
+ * @summary Get full quiz with questions
+ */
+export const GetQuizParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetQuizResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  difficulty: zod.string(),
+  xpReward: zod.number(),
+  imageUrl: zod.string(),
+  questions: zod.array(
+    zod.object({
+      id: zod.number(),
+      question: zod.string(),
+      options: zod.array(zod.string()),
+      explanation: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary Submit quiz answers and get results
+ */
+export const SubmitQuizParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const SubmitQuizBody = zod.object({
+  answers: zod
+    .array(zod.number())
+    .describe("Index of chosen option for each question"),
+});
+
+export const SubmitQuizResponse = zod.object({
+  score: zod.number(),
+  total: zod.number(),
+  xpEarned: zod.number(),
+  passed: zod.boolean(),
+  results: zod.array(
+    zod.object({
+      questionId: zod.number(),
+      correct: zod.boolean(),
+      correctAnswerIndex: zod.number(),
+      explanation: zod.string(),
+    }),
+  ),
+});
+
+/**
  * @summary Get top students leaderboard
  */
 export const GetLeaderboardResponseItem = zod.object({

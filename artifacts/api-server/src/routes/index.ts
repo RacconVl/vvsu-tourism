@@ -7,6 +7,7 @@ import mapRouter from "./map";
 import communityRouter from "./community";
 import libraryRouter from "./library";
 import dashboardRouter from "./dashboard";
+import quizzesRouter from "./quizzes";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(mapRouter);
 router.use(communityRouter);
 router.use(libraryRouter);
 router.use(dashboardRouter);
+router.use(quizzesRouter);
 
 export default router;

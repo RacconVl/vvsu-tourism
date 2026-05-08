@@ -202,6 +202,59 @@ export interface ProgressMap {
   currentStageIndex: number;
 }
 
+export interface QuizSummary {
+  id: number;
+  title: string;
+  description: string;
+  /** history, geography, culture, nature, ecology */
+  category: string;
+  difficulty: string;
+  questionCount: number;
+  xpReward: number;
+  estimatedMinutes: number;
+  imageUrl: string;
+  isCompleted: boolean;
+  bestScore?: number | null;
+}
+
+export interface QuizQuestion {
+  id: number;
+  question: string;
+  options: string[];
+  explanation: string;
+}
+
+export interface Quiz {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  xpReward: number;
+  imageUrl: string;
+  questions: QuizQuestion[];
+}
+
+export interface QuizSubmission {
+  /** Index of chosen option for each question */
+  answers: number[];
+}
+
+export interface QuizAnswerResult {
+  questionId: number;
+  correct: boolean;
+  correctAnswerIndex: number;
+  explanation: string;
+}
+
+export interface QuizResult {
+  score: number;
+  total: number;
+  xpEarned: number;
+  passed: boolean;
+  results: QuizAnswerResult[];
+}
+
 export interface LeaderboardEntry {
   rank: number;
   studentName: string;

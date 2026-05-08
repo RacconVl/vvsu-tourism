@@ -29,9 +29,7 @@ export default function CourseDetail() {
   const id = parseInt(params.id ?? "0", 10);
   const queryClient = useQueryClient();
 
-  const { data: course, isLoading } = useGetCourse(id, {
-    query: { enabled: !!id }
-  });
+  const { data: course, isLoading } = useGetCourse(id);
   const completeModule = useCompleteModule();
 
   const progress = course && course.totalModules > 0

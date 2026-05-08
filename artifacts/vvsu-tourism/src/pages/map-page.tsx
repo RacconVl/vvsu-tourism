@@ -1,42 +1,109 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { useListMapPoints, useListMapRoutes } from "@workspace/api-client-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Map as MapIcon, MapPin, BookOpen, Mountain, Building2, TreePine, Utensils, Scroll, Route, Clock, ChevronRight } from "lucide-react";
+import { Map as MapIcon, BookOpen, Mountain, Building2, TreePine, Utensils, Scroll, Route, Clock } from "lucide-react";
 
-const categoryConfig: Record<string, { icon: React.ReactNode; color: string; label: string }> = {
-  landmark: { icon: <Building2 className="h-4 w-4" />, color: "bg-blue-500", label: "Достопримечательность" },
-  nature: { icon: <TreePine className="h-4 w-4" />, color: "bg-green-500", label: "Природа" },
-  museum: { icon: <BookOpen className="h-4 w-4" />, color: "bg-purple-500", label: "Музей" },
-  hotel: { icon: <Mountain className="h-4 w-4" />, color: "bg-amber-500", label: "Отель" },
-  restaurant: { icon: <Utensils className="h-4 w-4" />, color: "bg-rose-500", label: "Ресторан" },
+const categoryConfig: Record<string, { color: string; label: string; icon: React.ReactNode }> = {
+  landmark: { color: "#2563eb", label: "Достопримечательность", icon: <Building2 className="h-4 w-4" /> },
+  nature: { color: "#16a34a", label: "Природа", icon: <TreePine className="h-4 w-4" /> },
+  museum: { color: "#9333ea", label: "Музей", icon: <BookOpen className="h-4 w-4" /> },
+  hotel: { color: "#d97706", label: "Отель", icon: <Mountain className="h-4 w-4" /> },
+  restaurant: { color: "#e11d48", label: "Ресторан", icon: <Utensils className="h-4 w-4" /> },
 };
 
-// SVG positions mapped to Vladivostok geography (simplified)
-const mapPositions: Record<string, { x: number; y: number }> = {
-  "Золотой мост": { x: 48, y: 38 },
-  "Морской вокзал": { x: 46, y: 44 },
-  "Остров Русский": { x: 60, y: 68 },
-  "Дальневосточный морской заповедник": { x: 25, y: 80 },
-  "Приморский музей им. Арсеньева": { x: 44, y: 35 },
-  "Мыс Тобизина": { x: 72, y: 82 },
-  "Набережная Спортивной гавани": { x: 50, y: 42 },
+// Accurate geo-coordinates for Vladivostok landmarks
+const pointCoordinates: Record<string, [number, number]> = {
+  "Золотой мост": [43.1126, 131.8869],
+  "Морской вокзал": [43.1112, 131.8854],
+  "Остров Русский": [43.0214, 131.9043],
+  "Дальневосточный морской заповедник": [42.6175, 131.1422],
+  "Приморский музей им. Арсеньева": [43.1167, 131.8847],
+  "Мыс Тобизина": [42.9745, 131.9952],
+  "Набережная Спортивной гавани": [43.1163, 131.8765],
+  "Маяк Эгершельда": [43.0710, 131.8418],
+  "ДВФУ Кампус": [43.0247, 131.8911],
+  "Покровский собор": [43.1217, 131.8929],
+  "Видовая площадка Орлиное гнездо": [43.1175, 131.8841],
+  "Русский мост": [43.0535, 131.8869],
 };
+
+function makeIcon(color: string) {
+  return L.divIcon({
+    className: "custom-marker",
+    html: `<div style="
+      width: 32px; height: 32px;
+      background: ${color};
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      border: 3px solid white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+    ">
+      <div style="
+        width: 10px; height: 10px;
+        background: white;
+        border-radius: 50%;
+        transform: rotate(45deg);
+      "></div>
+    </div>`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+}
+
+function FlyToPoint({ position }: { position: [number, number] | null }) {
+  const map = useMap();
+  if (position) {
+    map.flyTo(position, 14, { duration: 1.2 });
+  }
+  return null;
+}
 
 export default function MapPage() {
   const { data: points, isLoading: pointsLoading } = useListMapPoints();
   const { data: routes, isLoading: routesLoading } = useListMapRoutes();
-  const [selected, setSelected] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<"points" | "routes">("points");
-
-  const selectedPoint = points?.find(p => p.id === selected);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [activeRouteId, setActiveRouteId] = useState<number | null>(null);
 
   const difficultyLabel: Record<string, string> = {
-    easy: "Лёгкий", medium: "Средний", hard: "Сложный"
+    easy: "Лёгкий", medium: "Средний", hard: "Сложный",
   };
+
+  const enrichedPoints = useMemo(() => {
+    if (!points) return [];
+    return points.map(p => {
+      const cat = categoryConfig[p.category] ?? categoryConfig.landmark;
+      const coords = pointCoordinates[p.name] ?? [
+        Number((p as { latitude?: number | string }).latitude ?? 43.115),
+        Number((p as { longitude?: number | string }).longitude ?? 131.886),
+      ];
+      return { ...p, coords: coords as [number, number], catConfig: cat };
+    });
+  }, [points]);
+
+  const selectedPoint = enrichedPoints.find(p => p.id === selectedId);
+  const flyTarget = selectedPoint?.coords ?? null;
+
+  const activeRoute = routes?.find(r => r.id === activeRouteId);
+  const routeCoords = useMemo<[number, number][]>(() => {
+    if (!activeRoute || !points) return [];
+    const ids = (activeRoute as { pointIds?: (number | string)[] }).pointIds ?? [];
+    return ids
+      .map(id => {
+        const p = enrichedPoints.find(pt => pt.id === Number(id));
+        return p?.coords;
+      })
+      .filter((c): c is [number, number] => Array.isArray(c));
+  }, [activeRoute, points, enrichedPoints]);
 
   return (
     <div className="min-h-screen bg-background py-6 px-4">
@@ -47,191 +114,164 @@ export default function MapPage() {
             <span className="text-muted-foreground uppercase tracking-widest text-xs">Навигация</span>
           </div>
           <h1 className="text-4xl font-bold text-foreground">Карта Владивостока</h1>
-          <p className="text-muted-foreground mt-1">Интерактивная карта туристических объектов Приморского края</p>
+          <p className="text-muted-foreground mt-1">
+            Реальная интерактивная карта Приморского края — точки на своих местах
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Map SVG */}
+          {/* Leaflet map */}
           <div className="lg:col-span-2">
             <Card className="rounded-2xl border-border/60 overflow-hidden">
-              <div className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-teal-800" style={{ paddingBottom: "66%" }}>
-                <div className="absolute inset-0">
-                  {/* Water texture */}
-                  <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    {[5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85].map(y => (
-                      <line key={y} x1="0" y1={y} x2="100" y2={y + 2} stroke="white" strokeWidth="0.3" strokeDasharray="2,4" />
-                    ))}
-                  </svg>
-
-                  {/* Vladivostok peninsula silhouette */}
-                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    {/* Main peninsula */}
-                    <polygon
-                      points="35,20 65,20 70,30 75,45 68,60 55,72 45,75 35,65 30,50 32,35"
-                      fill="#2a5a3a" stroke="#3a7a4a" strokeWidth="0.3"
+              <div className="relative" style={{ height: "640px" }}>
+                {pointsLoading ? (
+                  <Skeleton className="absolute inset-0" />
+                ) : (
+                  <MapContainer
+                    center={[43.0815, 131.7]}
+                    zoom={10}
+                    className="w-full h-full"
+                    scrollWheelZoom
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     />
-                    {/* Russky Island */}
-                    <polygon
-                      points="52,58 70,58 75,70 72,80 58,85 48,78 50,65"
-                      fill="#2a5a3a" stroke="#3a7a4a" strokeWidth="0.3"
-                    />
-                    {/* Golden Horn bay */}
-                    <path d="M40,38 Q48,42 46,50 Q44,55 40,58" fill="none" stroke="#60a5fa" strokeWidth="1.5" />
-                    {/* Labels */}
-                    <text x="45" y="30" fill="white" fontSize="3" textAnchor="middle" className="font-bold" opacity="0.8">Владивосток</text>
-                    <text x="60" y="70" fill="white" fontSize="2.5" textAnchor="middle" opacity="0.7">о. Русский</text>
-                    <text x="43" y="47" fill="#93c5fd" fontSize="2" textAnchor="middle" opacity="0.8">Золотой</text>
-                    <text x="43" y="50" fill="#93c5fd" fontSize="2" textAnchor="middle" opacity="0.8">Рог</text>
-                    <text x="20" y="55" fill="#93c5fd" fontSize="2.5" textAnchor="middle" opacity="0.6">Амурский</text>
-                    <text x="20" y="58" fill="#93c5fd" fontSize="2.5" textAnchor="middle" opacity="0.6">залив</text>
-                    <text x="80" y="50" fill="#93c5fd" fontSize="2.5" textAnchor="middle" opacity="0.6">Уссурийский</text>
-                    <text x="80" y="53" fill="#93c5fd" fontSize="2.5" textAnchor="middle" opacity="0.6">залив</text>
-                  </svg>
+                    <FlyToPoint position={flyTarget} />
 
-                  {/* Map Points */}
-                  {!pointsLoading && points?.map((point) => {
-                    const pos = mapPositions[point.name] ?? { x: 50, y: 50 };
-                    const cfg = categoryConfig[point.category] ?? categoryConfig.landmark;
-                    const isSelected = selected === point.id;
-
-                    return (
-                      <button
-                        key={point.id}
-                        onClick={() => setSelected(isSelected ? null : point.id)}
-                        data-testid={`map-point-${point.id}`}
-                        className="absolute transform -translate-x-1/2 -translate-y-1/2 focus:outline-none group"
-                        style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+                    {enrichedPoints.map(p => (
+                      <Marker
+                        key={p.id}
+                        position={p.coords}
+                        icon={makeIcon(p.catConfig.color)}
+                        eventHandlers={{
+                          click: () => setSelectedId(p.id),
+                        }}
                       >
-                        <motion.div
-                          animate={{ scale: isSelected ? 1.4 : 1 }}
-                          whileHover={{ scale: 1.2 }}
-                          className={`h-7 w-7 rounded-full ${cfg.color} text-white flex items-center justify-center shadow-lg ring-2 ring-white/30 ${isSelected ? "ring-white" : ""}`}
-                        >
-                          {cfg.icon}
-                        </motion.div>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 whitespace-nowrap bg-black/80 text-white text-xs px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                          {point.name}
-                        </div>
-                      </button>
-                    );
-                  })}
+                        <Popup>
+                          <div className="min-w-[220px]">
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <span
+                                className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white"
+                                style={{ background: p.catConfig.color }}
+                              >
+                                {p.catConfig.icon}
+                              </span>
+                              <strong className="text-sm">{p.name}</strong>
+                            </div>
+                            <div className="text-xs text-gray-500 mb-1">{p.catConfig.label}</div>
+                            {p.description && (
+                              <p className="text-xs text-gray-700 mb-2 leading-snug">{p.description}</p>
+                            )}
+                            {p.legend && (
+                              <div className="mt-2 p-2 bg-amber-50 border-l-2 border-amber-400 rounded">
+                                <div className="flex items-center gap-1 text-amber-800 text-[11px] font-semibold uppercase tracking-wide mb-1">
+                                  <Scroll className="h-3 w-3" /> Легенда
+                                </div>
+                                <p className="text-xs text-amber-900 italic leading-snug">{p.legend}</p>
+                              </div>
+                            )}
+                          </div>
+                        </Popup>
+                      </Marker>
+                    ))}
 
-                  {/* Compass Rose */}
-                  <div className="absolute top-3 right-3 h-10 w-10 rounded-full bg-black/40 flex items-center justify-center text-white/60 text-xs font-bold">
-                    С
-                  </div>
-                </div>
-              </div>
-
-              {/* Legend */}
-              <div className="p-4 border-t border-border/40 flex flex-wrap gap-3">
-                {Object.entries(categoryConfig).map(([key, cfg]) => (
-                  <div key={key} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <div className={`h-3 w-3 rounded-full ${cfg.color}`} />
-                    {cfg.label}
-                  </div>
-                ))}
+                    {routeCoords.length > 1 && (
+                      <Polyline
+                        positions={routeCoords}
+                        pathOptions={{ color: "#EB7124", weight: 5, opacity: 0.85, dashArray: "8 8" }}
+                      />
+                    )}
+                  </MapContainer>
+                )}
               </div>
             </Card>
+            <p className="text-xs text-muted-foreground mt-2 px-1">
+              Карта © OpenStreetMap. Используйте колесо мыши для масштабирования, перетаскивание для перемещения.
+            </p>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-4">
-            {/* Detail panel */}
-            <AnimatePresence>
-              {selectedPoint && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  <Card className="rounded-2xl border-accent/30 bg-accent/5">
-                    <div className="h-36 overflow-hidden rounded-t-2xl">
-                      <img src={selectedPoint.imageUrl} alt={selectedPoint.name} className="w-full h-full object-cover" />
-                    </div>
-                    <CardContent className="p-4 space-y-3">
-                      <h3 className="font-bold text-foreground">{selectedPoint.name}</h3>
-                      <Badge className={`${categoryConfig[selectedPoint.category]?.color ?? "bg-gray-500"} text-white border-0 text-xs`}>
-                        {categoryConfig[selectedPoint.category]?.label}
-                      </Badge>
-                      <p className="text-sm text-muted-foreground">{selectedPoint.description}</p>
-                      {selectedPoint.legend && (
-                        <div className="bg-primary/5 rounded-xl p-3 border border-primary/10">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Scroll className="h-4 w-4 text-primary" />
-                            <span className="text-xs font-semibold text-primary uppercase tracking-wider">Легенда</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground italic leading-relaxed">{selectedPoint.legend}</p>
-                        </div>
-                      )}
-                      <Button variant="outline" size="sm" className="w-full rounded-xl" onClick={() => setSelected(null)}>
-                        Закрыть
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Tabs */}
             <div className="flex gap-2">
-              <Button variant={activeTab === "points" ? "default" : "outline"} size="sm" className="flex-1 rounded-xl" onClick={() => setActiveTab("points")}>
-                <MapPin className="h-4 w-4 mr-1" /> Объекты
+              <Button
+                variant={activeTab === "points" ? "default" : "outline"}
+                size="sm"
+                className="flex-1 rounded-xl"
+                onClick={() => setActiveTab("points")}
+              >
+                <MapIcon className="h-4 w-4 mr-1.5" /> Объекты
               </Button>
-              <Button variant={activeTab === "routes" ? "default" : "outline"} size="sm" className="flex-1 rounded-xl" onClick={() => setActiveTab("routes")}>
-                <Route className="h-4 w-4 mr-1" /> Маршруты
+              <Button
+                variant={activeTab === "routes" ? "default" : "outline"}
+                size="sm"
+                className="flex-1 rounded-xl"
+                onClick={() => setActiveTab("routes")}
+              >
+                <Route className="h-4 w-4 mr-1.5" /> Маршруты
               </Button>
             </div>
 
             {activeTab === "points" && (
-              <div className="space-y-2">
-                {pointsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-16 w-full rounded-xl" />) :
-                  points?.map(point => (
-                    <button
-                      key={point.id}
-                      onClick={() => setSelected(selected === point.id ? null : point.id)}
-                      className={`w-full text-left p-3 rounded-xl border transition-all ${selected === point.id ? "border-accent bg-accent/5" : "border-border/60 hover:border-accent/40 hover:bg-muted/30"}`}
-                      data-testid={`list-point-${point.id}`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className={`h-7 w-7 rounded-full ${categoryConfig[point.category]?.color ?? "bg-gray-500"} text-white flex items-center justify-center flex-shrink-0`}>
-                          {categoryConfig[point.category]?.icon}
+              <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+                {pointsLoading
+                  ? Array.from({ length: 6 }).map((_, i) => (
+                      <Skeleton key={i} className="h-16 rounded-xl" />
+                    ))
+                  : enrichedPoints.map(p => (
+                      <Card
+                        key={p.id}
+                        className={`rounded-xl border-border/60 cursor-pointer transition-all hover-elevate ${
+                          selectedId === p.id ? "ring-2 ring-accent" : ""
+                        }`}
+                        onClick={() => setSelectedId(p.id)}
+                      >
+                        <div className="p-3 flex items-center gap-3">
+                          <span
+                            className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white shrink-0"
+                            style={{ background: p.catConfig.color }}
+                          >
+                            {p.catConfig.icon}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-semibold text-sm truncate">{p.name}</div>
+                            <div className="text-xs text-muted-foreground">{p.catConfig.label}</div>
+                          </div>
                         </div>
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium text-foreground truncate">{point.name}</p>
-                          <p className="text-xs text-muted-foreground">{categoryConfig[point.category]?.label}</p>
-                        </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                      </div>
-                    </button>
-                  ))
-                }
+                      </Card>
+                    ))}
               </div>
             )}
 
             {activeTab === "routes" && (
-              <div className="space-y-3">
-                {routesLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-24 w-full rounded-xl" />) :
-                  routes?.map(route => (
-                    <Card key={route.id} className="rounded-xl border-border/60">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-semibold text-sm text-foreground">{route.name}</h4>
-                          {route.isStudentCreated && (
-                            <Badge variant="outline" className="text-xs">Студент</Badge>
-                          )}
+              <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+                {routesLoading
+                  ? Array.from({ length: 3 }).map((_, i) => (
+                      <Skeleton key={i} className="h-32 rounded-xl" />
+                    ))
+                  : routes?.map(r => (
+                      <Card
+                        key={r.id}
+                        className={`rounded-xl border-border/60 cursor-pointer transition-all hover-elevate ${
+                          activeRouteId === r.id ? "ring-2 ring-accent" : ""
+                        }`}
+                        onClick={() => setActiveRouteId(r.id === activeRouteId ? null : r.id)}
+                      >
+                        <div className="p-4">
+                          <div className="font-semibold text-sm mb-1">{r.name}</div>
+                          <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{r.description}</p>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <Badge variant="secondary" className="text-[10px]">
+                              {difficultyLabel[r.difficulty] ?? r.difficulty}
+                            </Badge>
+                            <span className="text-xs text-muted-foreground inline-flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              {r.durationHours} ч
+                            </span>
+                          </div>
                         </div>
-                        <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{route.description}</p>
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {route.durationHours}ч</span>
-                          <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {route.pointIds.length} точек</span>
-                          <span>{difficultyLabel[route.difficulty] ?? route.difficulty}</span>
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-1">Автор: {route.authorName}</p>
-                      </CardContent>
-                    </Card>
-                  ))
-                }
+                      </Card>
+                    ))}
               </div>
             )}
           </div>

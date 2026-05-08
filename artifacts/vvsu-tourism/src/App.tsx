@@ -13,6 +13,8 @@ import Community from "@/pages/community";
 import LibraryPage from "@/pages/library";
 import Achievements from "@/pages/achievements";
 import Leaderboard from "@/pages/leaderboard";
+import Quizzes from "@/pages/quizzes";
+import QuizDetail from "@/pages/quiz-detail";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -32,6 +34,8 @@ function Router() {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/courses" component={Courses} />
         <Route path="/courses/:id" component={CourseDetail} />
+        <Route path="/quizzes" component={Quizzes} />
+        <Route path="/quiz/:id" component={QuizDetail} />
         <Route path="/quests" component={Quests} />
         <Route path="/map" component={MapPage} />
         <Route path="/community" component={Community} />

@@ -33,6 +33,10 @@ import type {
   Quest,
   QuestResult,
   QuestSubmission,
+  Quiz,
+  QuizResult,
+  QuizSubmission,
+  QuizSummary,
   TouristRoute,
 } from "./api.schemas";
 
@@ -1292,6 +1296,245 @@ export function useGetProgressMap<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * @summary List all quizzes
+ */
+export const getListQuizzesUrl = () => {
+  return `/api/quizzes`;
+};
+
+export const listQuizzes = async (
+  options?: RequestInit,
+): Promise<QuizSummary[]> => {
+  return customFetch<QuizSummary[]>(getListQuizzesUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getListQuizzesQueryKey = () => {
+  return [`/api/quizzes`] as const;
+};
+
+export const getListQuizzesQueryOptions = <
+  TData = Awaited<ReturnType<typeof listQuizzes>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listQuizzes>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getListQuizzesQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listQuizzes>>> = ({
+    signal,
+  }) => listQuizzes({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listQuizzes>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type ListQuizzesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listQuizzes>>
+>;
+export type ListQuizzesQueryError = ErrorType<unknown>;
+
+/**
+ * @summary List all quizzes
+ */
+
+export function useListQuizzes<
+  TData = Awaited<ReturnType<typeof listQuizzes>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listQuizzes>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListQuizzesQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Get full quiz with questions
+ */
+export const getGetQuizUrl = (id: number) => {
+  return `/api/quizzes/${id}`;
+};
+
+export const getQuiz = async (
+  id: number,
+  options?: RequestInit,
+): Promise<Quiz> => {
+  return customFetch<Quiz>(getGetQuizUrl(id), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetQuizQueryKey = (id: number) => {
+  return [`/api/quizzes/${id}`] as const;
+};
+
+export const getGetQuizQueryOptions = <
+  TData = Awaited<ReturnType<typeof getQuiz>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof getQuiz>>, TError, TData>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetQuizQueryKey(id);
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getQuiz>>> = ({
+    signal,
+  }) => getQuiz(id, { signal, ...requestOptions });
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!id,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getQuiz>>, TError, TData> & {
+    queryKey: QueryKey;
+  };
+};
+
+export type GetQuizQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getQuiz>>
+>;
+export type GetQuizQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get full quiz with questions
+ */
+
+export function useGetQuiz<
+  TData = Awaited<ReturnType<typeof getQuiz>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: UseQueryOptions<Awaited<ReturnType<typeof getQuiz>>, TError, TData>;
+    request?: SecondParameter<typeof customFetch>;
+  },
+): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetQuizQueryOptions(id, options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit quiz answers and get results
+ */
+export const getSubmitQuizUrl = (id: number) => {
+  return `/api/quizzes/${id}/submit`;
+};
+
+export const submitQuiz = async (
+  id: number,
+  quizSubmission: QuizSubmission,
+  options?: RequestInit,
+): Promise<QuizResult> => {
+  return customFetch<QuizResult>(getSubmitQuizUrl(id), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(quizSubmission),
+  });
+};
+
+export const getSubmitQuizMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitQuiz>>,
+    TError,
+    { id: number; data: BodyType<QuizSubmission> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitQuiz>>,
+  TError,
+  { id: number; data: BodyType<QuizSubmission> },
+  TContext
+> => {
+  const mutationKey = ["submitQuiz"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitQuiz>>,
+    { id: number; data: BodyType<QuizSubmission> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return submitQuiz(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitQuizMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitQuiz>>
+>;
+export type SubmitQuizMutationBody = BodyType<QuizSubmission>;
+export type SubmitQuizMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Submit quiz answers and get results
+ */
+export const useSubmitQuiz = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitQuiz>>,
+    TError,
+    { id: number; data: BodyType<QuizSubmission> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitQuiz>>,
+  TError,
+  { id: number; data: BodyType<QuizSubmission> },
+  TContext
+> => {
+  return useMutation(getSubmitQuizMutationOptions(options));
+};
 
 /**
  * @summary Get top students leaderboard

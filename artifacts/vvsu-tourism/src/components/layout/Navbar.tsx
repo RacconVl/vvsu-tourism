@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
-import { Compass, BookOpen, Map as MapIcon, Award, Users, Library, Trophy, LayoutDashboard, Sun, Moon, Menu, X } from "lucide-react";
+import { Compass, BookOpen, Map as MapIcon, Award, Users, Library, Trophy, LayoutDashboard, Brain, Sun, Moon, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 
@@ -12,6 +12,7 @@ export function Navbar() {
   const navItems = [
     { href: "/dashboard", label: "Кабинет", icon: LayoutDashboard },
     { href: "/courses", label: "Курсы", icon: BookOpen },
+    { href: "/quizzes", label: "Тесты", icon: Brain },
     { href: "/quests", label: "Квесты", icon: Compass },
     { href: "/map", label: "Карта", icon: MapIcon },
     { href: "/achievements", label: "Достижения", icon: Award },
