@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "9ahUXRp63g3tOehtF8GYd"
+uri = "file://artifacts/vvsu-tourism/public/images/hero-vladivostok.png"
+type = "image"
+title = "Vladivostok Golden Bridge sunset"
+
+[[generated]]
+id = "Vt4PBqrpfQ7DM1YBe7fyk"
+uri = "file://artifacts/vvsu-tourism/public/images/course-russky.png"
+type = "image"
+title = "Vladivostok Russky Island"
+
+[[generated]]
+id = "jvodOjJvcETF3dYfEfyM4"
+uri = "file://artifacts/vvsu-tourism/public/images/course-golden-horn.png"
+type = "image"
+title = "Vladivostok Golden Horn Bay"
+
+[[generated]]
+id = "kZSLWtYByPRHKbt3kGysw"
+uri = "file://artifacts/vvsu-tourism/public/images/vladivostok-map-bg.png"
+type = "image"
+title = "Stylized Vladivostok map illustration"

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "ВВГУ — Институт туризма и креативных индустрий"
+version = "1.0.0"
+id = "artifacts/vvsu-tourism"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21095
+
+[services.development]
+run = "pnpm --filter @workspace/vvsu-tourism run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vvsu-tourism", "run", "build" ]
+publicDir = "artifacts/vvsu-tourism/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21095"
+BASE_PATH = "/"

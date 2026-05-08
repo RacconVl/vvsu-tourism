@@ -3,20 +3,34 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API for VVSU Tourism & Creative Industries immersive educational platform
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: courses
+    description: Course and module operations
+  - name: quests
+    description: Quest and task operations
+  - name: achievements
+    description: Achievements and badges
+  - name: map
+    description: Interactive Vladivostok map points
+  - name: community
+    description: Forum and student works
+  - name: library
+    description: Educational resources
+  - name: dashboard
+    description: Student dashboard and progress
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +38,267 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /courses:
+    get:
+      operationId: listCourses
+      tags: [courses]
+      summary: List all courses
+      responses:
+        "200":
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Course"
+
+  /courses/{id}:
+    get:
+      operationId: getCourse
+      tags: [courses]
+      summary: Get course with modules
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Course detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseDetail"
+
+  /modules/{id}/complete:
+    post:
+      operationId: completeModule
+      tags: [courses]
+      summary: Mark a module as complete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Module completion result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModuleCompletion"
+
+  /quests:
+    get:
+      operationId: listQuests
+      tags: [quests]
+      summary: List all quests
+      responses:
+        "200":
+          description: List of quests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Quest"
+
+  /quests/{id}:
+    get:
+      operationId: getQuest
+      tags: [quests]
+      summary: Get quest detail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Quest detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quest"
+
+  /quests/{id}/submit:
+    post:
+      operationId: submitQuest
+      tags: [quests]
+      summary: Submit quest answer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestSubmission"
+      responses:
+        "200":
+          description: Submission result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestResult"
+
+  /achievements:
+    get:
+      operationId: listAchievements
+      tags: [achievements]
+      summary: List all achievements with unlock status
+      responses:
+        "200":
+          description: Achievements list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Achievement"
+
+  /map/points:
+    get:
+      operationId: listMapPoints
+      tags: [map]
+      summary: List all interactive map points
+      responses:
+        "200":
+          description: Map points
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MapPoint"
+
+  /map/routes:
+    get:
+      operationId: listMapRoutes
+      tags: [map]
+      summary: List tourist routes
+      responses:
+        "200":
+          description: Tourist routes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TouristRoute"
+
+  /community/posts:
+    get:
+      operationId: listCommunityPosts
+      tags: [community]
+      summary: List community forum posts
+      responses:
+        "200":
+          description: Community posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CommunityPost"
+    post:
+      operationId: createCommunityPost
+      tags: [community]
+      summary: Create a community post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCommunityPostBody"
+      responses:
+        "201":
+          description: Created post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommunityPost"
+
+  /community/gallery:
+    get:
+      operationId: listGalleryWorks
+      tags: [community]
+      summary: List student gallery works
+      responses:
+        "200":
+          description: Gallery works
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GalleryWork"
+
+  /library/resources:
+    get:
+      operationId: listLibraryResources
+      tags: [library]
+      summary: List educational library resources
+      responses:
+        "200":
+          description: Library resources
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LibraryResource"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get student dashboard summary
+      responses:
+        "200":
+          description: Dashboard summary with progress and stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/progress:
+    get:
+      operationId: getProgressMap
+      tags: [dashboard]
+      summary: Get travel map progress visualization data
+      responses:
+        "200":
+          description: Progress map data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgressMap"
+
+  /dashboard/leaderboard:
+    get:
+      operationId: getLeaderboard
+      tags: [dashboard]
+      summary: Get top students leaderboard
+      responses:
+        "200":
+          description: Leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +306,399 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        role:
+          type: string
+          description: "Student role: guide, marketer, designer, operator"
+        stage:
+          type: string
+          description: "Journey stage name (e.g. Порт отправления)"
+        imageUrl:
+          type: string
+        totalModules:
+          type: integer
+        completedModules:
+          type: integer
+        xpReward:
+          type: integer
+        isLocked:
+          type: boolean
+        category:
+          type: string
+      required: [id, title, description, role, stage, totalModules, completedModules, xpReward, isLocked, category]
+
+    Module:
+      type: object
+      properties:
+        id:
+          type: integer
+        courseId:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+          description: "video, interactive, animation, test"
+        order:
+          type: integer
+        isCompleted:
+          type: boolean
+        durationMinutes:
+          type: integer
+        xpReward:
+          type: integer
+      required: [id, courseId, title, type, order, isCompleted, durationMinutes, xpReward]
+
+    CourseDetail:
+      allOf:
+        - $ref: "#/components/schemas/Course"
+        - type: object
+          properties:
+            modules:
+              type: array
+              items:
+                $ref: "#/components/schemas/Module"
+          required: [modules]
+
+    ModuleCompletion:
+      type: object
+      properties:
+        success:
+          type: boolean
+        xpEarned:
+          type: integer
+        newAchievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/Achievement"
+      required: [success, xpEarned, newAchievements]
+
+    Quest:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          description: "route, budget, marketing, design"
+        difficulty:
+          type: string
+          description: "easy, medium, hard"
+        xpReward:
+          type: integer
+        isCompleted:
+          type: boolean
+        imageUrl:
+          type: string
+        locationName:
+          type: string
+      required: [id, title, description, type, difficulty, xpReward, isCompleted, locationName]
+
+    QuestSubmission:
+      type: object
+      properties:
+        answer:
+          type: string
+      required: [answer]
+
+    QuestResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        xpEarned:
+          type: integer
+        feedback:
+          type: string
+        newAchievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/Achievement"
+      required: [success, xpEarned, feedback, newAchievements]
+
+    Achievement:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        category:
+          type: string
+          description: "exploration, learning, social, mastery"
+        isUnlocked:
+          type: boolean
+        unlockedAt:
+          type: string
+          nullable: true
+        xpValue:
+          type: integer
+      required: [id, title, description, icon, category, isUnlocked, xpValue]
+
+    MapPoint:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          description: "landmark, hotel, museum, nature, restaurant"
+        lat:
+          type: number
+        lng:
+          type: number
+        imageUrl:
+          type: string
+        videoUrl:
+          type: string
+          nullable: true
+        relatedCourseId:
+          type: integer
+          nullable: true
+        legend:
+          type: string
+          nullable: true
+          description: "Local folk legend or historical story"
+      required: [id, name, description, category, lat, lng, imageUrl]
+
+    TouristRoute:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        durationHours:
+          type: number
+        pointIds:
+          type: array
+          items:
+            type: integer
+        difficulty:
+          type: string
+        authorName:
+          type: string
+        isStudentCreated:
+          type: boolean
+      required: [id, name, description, durationHours, pointIds, difficulty, authorName, isStudentCreated]
+
+    CommunityPost:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        authorName:
+          type: string
+        authorRole:
+          type: string
+        createdAt:
+          type: string
+        likes:
+          type: integer
+        replies:
+          type: integer
+        category:
+          type: string
+      required: [id, title, content, authorName, authorRole, createdAt, likes, replies, category]
+
+    CreateCommunityPostBody:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        category:
+          type: string
+      required: [title, content, category]
+
+    GalleryWork:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        authorName:
+          type: string
+        category:
+          type: string
+          description: "design, marketing, route, concept"
+        imageUrl:
+          type: string
+        likes:
+          type: integer
+        createdAt:
+          type: string
+      required: [id, title, description, authorName, category, imageUrl, likes, createdAt]
+
+    LibraryResource:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          description: "presentation, infographic, video, article, database"
+        category:
+          type: string
+        url:
+          type: string
+        thumbnailUrl:
+          type: string
+        isInteractive:
+          type: boolean
+      required: [id, title, description, type, category, url, thumbnailUrl, isInteractive]
+
+    DashboardSummary:
+      type: object
+      properties:
+        studentName:
+          type: string
+        currentRole:
+          type: string
+        level:
+          type: integer
+        xp:
+          type: integer
+        xpToNextLevel:
+          type: integer
+        currentStage:
+          type: string
+          description: "Current journey stage name"
+        completedCourses:
+          type: integer
+        totalCourses:
+          type: integer
+        completedQuests:
+          type: integer
+        totalQuests:
+          type: integer
+        unlockedAchievements:
+          type: integer
+        totalAchievements:
+          type: integer
+        recentActivity:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivityItem"
+        upcomingDeadlines:
+          type: array
+          items:
+            $ref: "#/components/schemas/DeadlineItem"
+      required: [studentName, currentRole, level, xp, xpToNextLevel, currentStage, completedCourses, totalCourses, completedQuests, totalQuests, unlockedAchievements, totalAchievements, recentActivity, upcomingDeadlines]
+
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        description:
+          type: string
+        xpEarned:
+          type: integer
+        timestamp:
+          type: string
+      required: [id, type, description, xpEarned, timestamp]
+
+    DeadlineItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        dueDate:
+          type: string
+        courseTitle:
+          type: string
+        type:
+          type: string
+      required: [id, title, dueDate, courseTitle, type]
+
+    ProgressMap:
+      type: object
+      properties:
+        stages:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProgressStage"
+        currentStageIndex:
+          type: integer
+      required: [stages, currentStageIndex]
+
+    ProgressStage:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        isCompleted:
+          type: boolean
+        isCurrent:
+          type: boolean
+        isLocked:
+          type: boolean
+        xpRequired:
+          type: integer
+        imageUrl:
+          type: string
+      required: [id, name, location, isCompleted, isCurrent, isLocked, xpRequired, imageUrl]
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        studentName:
+          type: string
+        level:
+          type: integer
+        xp:
+          type: integer
+        role:
+          type: string
+        avatarUrl:
+          type: string
+        completedQuests:
+          type: integer
+      required: [rank, studentName, level, xp, role, completedQuests]
