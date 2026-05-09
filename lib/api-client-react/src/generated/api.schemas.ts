@@ -255,6 +255,160 @@ export interface QuizResult {
   results: QuizAnswerResult[];
 }
 
+export interface OkResponse {
+  ok: boolean;
+}
+
+export interface AuthUser {
+  id: number;
+  email: string;
+  name: string;
+  /** student or admin */
+  role: string;
+  studentRole: string;
+  bio?: string | null;
+  avatarUrl?: string | null;
+  level: number;
+  xp: number;
+}
+
+export interface MeResponse {
+  user?: AuthUser | null;
+}
+
+export interface RegisterRequest {
+  email: string;
+  /** @minLength 6 */
+  password: string;
+  /** @minLength 2 */
+  name: string;
+  studentRole?: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface UpdateProfileRequest {
+  name?: string;
+  bio?: string;
+  avatarUrl?: string;
+  studentRole?: string;
+}
+
+export interface ProfileActivityItem {
+  id: number;
+  type: string;
+  description: string;
+  xpEarned: number;
+  createdAt: string;
+}
+
+export interface QuizAttemptHistory {
+  id: number;
+  quizId: number;
+  quizTitle: string;
+  score: number;
+  total: number;
+  xpEarned: number;
+  passed: boolean;
+  createdAt: string;
+}
+
+export interface CompletedCourse {
+  courseId: number;
+  title: string;
+  completedModules: number;
+  totalModules: number;
+}
+
+export interface UnlockedAchievement {
+  id: number;
+  name: string;
+  description: string;
+  iconType: string;
+  category: string;
+  xpReward: number;
+  unlockedAt: string;
+}
+
+export interface Profile {
+  user: AuthUser;
+  nextLevelXp: number;
+  currentLevelXp: number;
+  completedQuests: number;
+  completedQuizzes: number;
+  completedModules: number;
+  unlockedAchievements: UnlockedAchievement[];
+  recentActivity: ProfileActivityItem[];
+  quizHistory: QuizAttemptHistory[];
+  completedCourses: CompletedCourse[];
+}
+
+export interface PublicUser {
+  id: number;
+  name: string;
+  role: string;
+  studentRole: string;
+  bio?: string | null;
+  avatarUrl?: string | null;
+  level: number;
+  xp: number;
+}
+
+export interface PublicProfile {
+  user: PublicUser;
+  completedQuests: number;
+  completedQuizzes: number;
+  completedModules: number;
+  unlockedAchievements: UnlockedAchievement[];
+}
+
+export interface AdminUserRow {
+  id: number;
+  email: string;
+  name: string;
+  role: string;
+  studentRole: string;
+  level: number;
+  xp: number;
+  createdAt: string;
+  completedQuizzes: number;
+  completedQuests: number;
+}
+
+export interface AdminStats {
+  totalUsers: number;
+  totalAdmins: number;
+  totalCourses: number;
+  totalQuests: number;
+  totalQuizzes: number;
+  totalCommunityPosts: number;
+  quizAttemptsLast7d: number;
+  moduleCompletionsLast7d: number;
+}
+
+export interface CreateCourseRequest {
+  title: string;
+  description: string;
+  role: string;
+  stage: string;
+  category: string;
+  xpReward?: number;
+  imageUrl?: string;
+}
+
+export interface CreateQuestRequest {
+  title: string;
+  description: string;
+  type: string;
+  difficulty: string;
+  location: string;
+  xpReward?: number;
+  timeEstimate?: number;
+}
+
 export interface LeaderboardEntry {
   rank: number;
   studentName: string;

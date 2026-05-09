@@ -7,6 +7,9 @@ import {
   SubmitQuizBody,
   SubmitQuizResponse,
 } from "@workspace/api-zod";
+import { db, userQuizAttemptsTable, userActivityTable, usersTable } from "@workspace/db";
+import { eq, and, desc, sql } from "drizzle-orm";
+import { requireAuth } from "../lib/auth";
 
 const router: IRouter = Router();
 
@@ -475,7 +478,7 @@ router.get("/quizzes", async (_req, res): Promise<void> => {
   res.json(ListQuizzesResponse.parse(summaries));
 });
 
-router.get("/quizzes/:id", async (req, res): Promise<void> => {
+router.get("/quizzes/:id", requireAuth, async (req, res): Promise<void> => {
   const raw = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
   const params = GetQuizParams.safeParse({ id: parseInt(raw, 10) });
   if (!params.success) {
@@ -506,7 +509,7 @@ router.get("/quizzes/:id", async (req, res): Promise<void> => {
   res.json(GetQuizResponse.parse(sanitized));
 });
 
-router.post("/quizzes/:id/submit", async (req, res): Promise<void> => {
+router.post("/quizzes/:id/submit", requireAuth, async (req, res): Promise<void> => {
   const raw = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
   const params = SubmitQuizParams.safeParse({ id: parseInt(raw, 10) });
   if (!params.success) {
@@ -534,6 +537,36 @@ router.post("/quizzes/:id/submit", async (req, res): Promise<void> => {
   const total = quiz.questions.length;
   const passed = score / total >= 0.6;
   const xpEarned = passed ? Math.round((score / total) * quiz.xpReward) : Math.round((score / total) * quiz.xpReward * 0.5);
+
+  const u = req.user!;
+  const previous = await db
+    .select()
+    .from(userQuizAttemptsTable)
+    .where(and(eq(userQuizAttemptsTable.userId, u.id), eq(userQuizAttemptsTable.quizId, quiz.id), eq(userQuizAttemptsTable.passed, 1)))
+    .orderBy(desc(userQuizAttemptsTable.createdAt))
+    .limit(1);
+
+  await db.insert(userQuizAttemptsTable).values({
+    userId: u.id,
+    quizId: quiz.id,
+    quizTitle: quiz.title,
+    score,
+    total,
+    xpEarned,
+    passed: passed ? 1 : 0,
+  });
+
+  if (xpEarned > 0) {
+    await db.update(usersTable).set({ xp: sql`${usersTable.xp} + ${xpEarned}` }).where(eq(usersTable.id, u.id));
+  }
+  if (previous.length === 0 && passed) {
+    await db.insert(userActivityTable).values({
+      userId: u.id,
+      type: "quiz",
+      description: `Пройден тест «${quiz.title}» (${score}/${total})`,
+      xpEarned,
+    });
+  }
 
   res.json(SubmitQuizResponse.parse({ score, total, xpEarned, passed, results }));
 });

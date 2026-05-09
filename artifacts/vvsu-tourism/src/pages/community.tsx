@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { useListCommunityPosts, useListGalleryWorks, useCreateCommunityPost, getListCommunityPostsQueryKey } from "@workspace/api-client-react";
+import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,6 +34,7 @@ const galleryCategories: Record<string, { label: string; color: string }> = {
 };
 
 export default function Community() {
+  const { user } = useAuth();
   const { data: posts, isLoading: postsLoading } = useListCommunityPosts();
   const { data: gallery, isLoading: galleryLoading } = useListGalleryWorks();
   const createPost = useCreateCommunityPost();
@@ -75,9 +78,17 @@ export default function Community() {
             </Button>
           </div>
           {activeTab === "forum" && (
-            <Button onClick={() => setShowDialog(true)} className="rounded-full" data-testid="button-create-post">
-              <PlusCircle className="h-4 w-4 mr-2" /> Новый пост
-            </Button>
+            user ? (
+              <Button onClick={() => setShowDialog(true)} className="rounded-full" data-testid="button-create-post">
+                <PlusCircle className="h-4 w-4 mr-2" /> Новый пост
+              </Button>
+            ) : (
+              <Link href="/login">
+                <Button variant="outline" className="rounded-full" data-testid="button-login-to-post">
+                  <PlusCircle className="h-4 w-4 mr-2" /> Войти, чтобы публиковать
+                </Button>
+              </Link>
+            )
           )}
         </div>
 

@@ -1,11 +1,12 @@
 import { Router, type IRouter } from "express";
-import { db, communityPostsTable, galleryWorksTable } from "@workspace/db";
-import { desc } from "drizzle-orm";
+import { db, communityPostsTable, galleryWorksTable, userActivityTable, usersTable } from "@workspace/db";
+import { desc, eq, sql } from "drizzle-orm";
 import {
   ListCommunityPostsResponse,
   CreateCommunityPostBody,
   ListGalleryWorksResponse,
 } from "@workspace/api-zod";
+import { requireAuth } from "../lib/auth";
 
 const router: IRouter = Router();
 
@@ -17,22 +18,31 @@ router.get("/community/posts", async (_req, res): Promise<void> => {
   }))));
 });
 
-router.post("/community/posts", async (req, res): Promise<void> => {
+router.post("/community/posts", requireAuth, async (req, res): Promise<void> => {
   const body = CreateCommunityPostBody.safeParse(req.body);
   if (!body.success) {
     res.status(400).json({ error: body.error.message });
     return;
   }
-
+  const u = req.user!;
   const [post] = await db.insert(communityPostsTable).values({
+    userId: u.id,
     title: body.data.title,
     content: body.data.content,
     category: body.data.category,
-    authorName: "Студент",
-    authorRole: "guide",
+    authorName: u.name,
+    authorRole: u.studentRole,
     likes: 0,
     replies: 0,
   }).returning();
+
+  await db.insert(userActivityTable).values({
+    userId: u.id,
+    type: "community",
+    description: `Опубликован новый пост: «${body.data.title}»`,
+    xpEarned: 25,
+  });
+  await db.update(usersTable).set({ xp: sql`${usersTable.xp} + 25` }).where(eq(usersTable.id, u.id));
 
   res.status(201).json({
     ...post,

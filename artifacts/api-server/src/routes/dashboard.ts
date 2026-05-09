@@ -1,5 +1,6 @@
 import { Router, type IRouter } from "express";
-import { db, coursesTable, questsTable, achievementsTable, communityPostsTable } from "@workspace/db";
+import { db, coursesTable, questsTable, achievementsTable, usersTable, userQuestSubmissionsTable } from "@workspace/db";
+import { desc, sql, ne } from "drizzle-orm";
 import {
   GetDashboardSummaryResponse,
   GetProgressMapResponse,
@@ -65,17 +66,24 @@ router.get("/dashboard/progress", async (_req, res): Promise<void> => {
 });
 
 router.get("/dashboard/leaderboard", async (_req, res): Promise<void> => {
-  const leaderboard = [
-    { rank: 1, studentName: "Дмитрий Волков", level: 8, xp: 3850, role: "marketer", avatarUrl: "https://i.pravatar.cc/150?img=1", completedQuests: 12 },
-    { rank: 2, studentName: "Анна Сизова", level: 7, xp: 3200, role: "designer", avatarUrl: "https://i.pravatar.cc/150?img=5", completedQuests: 10 },
-    { rank: 3, studentName: "Максим Тихонов", level: 6, xp: 2900, role: "operator", avatarUrl: "https://i.pravatar.cc/150?img=3", completedQuests: 9 },
-    { rank: 4, studentName: "Александра Морозова", level: 5, xp: 2400, role: "guide", avatarUrl: "https://i.pravatar.cc/150?img=9", completedQuests: 7 },
-    { rank: 5, studentName: "Иван Петров", level: 4, xp: 1950, role: "guide", avatarUrl: "https://i.pravatar.cc/150?img=7", completedQuests: 6 },
-    { rank: 6, studentName: "Елена Краснова", level: 4, xp: 1800, role: "marketer", avatarUrl: "https://i.pravatar.cc/150?img=10", completedQuests: 5 },
-    { rank: 7, studentName: "Сергей Борисов", level: 3, xp: 1400, role: "designer", avatarUrl: "https://i.pravatar.cc/150?img=12", completedQuests: 4 },
-    { rank: 8, studentName: "Мария Фёдорова", level: 3, xp: 1200, role: "operator", avatarUrl: "https://i.pravatar.cc/150?img=15", completedQuests: 3 },
-  ];
-
+  const users = await db.select().from(usersTable).where(ne(usersTable.role, "admin")).orderBy(desc(usersTable.xp)).limit(20);
+  const counts = await db
+    .select({
+      userId: userQuestSubmissionsTable.userId,
+      count: sql<number>`count(*)::int`,
+    })
+    .from(userQuestSubmissionsTable)
+    .groupBy(userQuestSubmissionsTable.userId);
+  const countMap = new Map(counts.map((c) => [c.userId, c.count]));
+  const leaderboard = users.map((u, i) => ({
+    rank: i + 1,
+    studentName: u.name,
+    level: u.level,
+    xp: u.xp,
+    role: u.studentRole,
+    avatarUrl: u.avatarUrl ?? `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(u.name)}`,
+    completedQuests: countMap.get(u.id) ?? 0,
+  }));
   res.json(GetLeaderboardResponse.parse(leaderboard));
 });
 

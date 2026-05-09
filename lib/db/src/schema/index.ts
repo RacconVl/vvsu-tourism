@@ -4,3 +4,4 @@ export * from "./achievements";
 export * from "./map";
 export * from "./community";
 export * from "./library";
+export * from "./users";

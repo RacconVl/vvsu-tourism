@@ -331,6 +331,281 @@ export const GetProgressMapResponse = zod.object({
 });
 
 /**
+ * @summary Register a new account
+ */
+export const registerBodyPasswordMin = 6;
+
+export const registerBodyNameMin = 2;
+
+export const RegisterBody = zod.object({
+  email: zod.string(),
+  password: zod.string().min(registerBodyPasswordMin),
+  name: zod.string().min(registerBodyNameMin),
+  studentRole: zod.string().optional(),
+});
+
+export const RegisterResponse = zod.object({
+  id: zod.number(),
+  email: zod.string(),
+  name: zod.string(),
+  role: zod.string().describe("student or admin"),
+  studentRole: zod.string(),
+  bio: zod.string().nullish(),
+  avatarUrl: zod.string().nullish(),
+  level: zod.number(),
+  xp: zod.number(),
+});
+
+/**
+ * @summary Sign in
+ */
+export const LoginBody = zod.object({
+  email: zod.string(),
+  password: zod.string(),
+});
+
+export const LoginResponse = zod.object({
+  id: zod.number(),
+  email: zod.string(),
+  name: zod.string(),
+  role: zod.string().describe("student or admin"),
+  studentRole: zod.string(),
+  bio: zod.string().nullish(),
+  avatarUrl: zod.string().nullish(),
+  level: zod.number(),
+  xp: zod.number(),
+});
+
+/**
+ * @summary Sign out
+ */
+export const LogoutResponse = zod.object({
+  ok: zod.boolean(),
+});
+
+/**
+ * @summary Get current authenticated user
+ */
+export const GetMeResponse = zod.object({
+  user: zod
+    .object({
+      id: zod.number(),
+      email: zod.string(),
+      name: zod.string(),
+      role: zod.string().describe("student or admin"),
+      studentRole: zod.string(),
+      bio: zod.string().nullish(),
+      avatarUrl: zod.string().nullish(),
+      level: zod.number(),
+      xp: zod.number(),
+    })
+    .nullish(),
+});
+
+/**
+ * @summary Get my full profile with stats
+ */
+export const GetMyProfileResponse = zod.object({
+  user: zod.object({
+    id: zod.number(),
+    email: zod.string(),
+    name: zod.string(),
+    role: zod.string().describe("student or admin"),
+    studentRole: zod.string(),
+    bio: zod.string().nullish(),
+    avatarUrl: zod.string().nullish(),
+    level: zod.number(),
+    xp: zod.number(),
+  }),
+  nextLevelXp: zod.number(),
+  currentLevelXp: zod.number(),
+  completedQuests: zod.number(),
+  completedQuizzes: zod.number(),
+  completedModules: zod.number(),
+  unlockedAchievements: zod.array(
+    zod.object({
+      id: zod.number(),
+      name: zod.string(),
+      description: zod.string(),
+      iconType: zod.string(),
+      category: zod.string(),
+      xpReward: zod.number(),
+      unlockedAt: zod.string(),
+    }),
+  ),
+  recentActivity: zod.array(
+    zod.object({
+      id: zod.number(),
+      type: zod.string(),
+      description: zod.string(),
+      xpEarned: zod.number(),
+      createdAt: zod.string(),
+    }),
+  ),
+  quizHistory: zod.array(
+    zod.object({
+      id: zod.number(),
+      quizId: zod.number(),
+      quizTitle: zod.string(),
+      score: zod.number(),
+      total: zod.number(),
+      xpEarned: zod.number(),
+      passed: zod.boolean(),
+      createdAt: zod.string(),
+    }),
+  ),
+  completedCourses: zod.array(
+    zod.object({
+      courseId: zod.number(),
+      title: zod.string(),
+      completedModules: zod.number(),
+      totalModules: zod.number(),
+    }),
+  ),
+});
+
+/**
+ * @summary Update my profile
+ */
+export const UpdateMyProfileBody = zod.object({
+  name: zod.string().optional(),
+  bio: zod.string().optional(),
+  avatarUrl: zod.string().optional(),
+  studentRole: zod.string().optional(),
+});
+
+export const UpdateMyProfileResponse = zod.object({
+  id: zod.number(),
+  email: zod.string(),
+  name: zod.string(),
+  role: zod.string().describe("student or admin"),
+  studentRole: zod.string(),
+  bio: zod.string().nullish(),
+  avatarUrl: zod.string().nullish(),
+  level: zod.number(),
+  xp: zod.number(),
+});
+
+/**
+ * @summary Get public profile of a user
+ */
+export const GetPublicProfileParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const GetPublicProfileResponse = zod.object({
+  user: zod.object({
+    id: zod.number(),
+    name: zod.string(),
+    role: zod.string(),
+    studentRole: zod.string(),
+    bio: zod.string().nullish(),
+    avatarUrl: zod.string().nullish(),
+    level: zod.number(),
+    xp: zod.number(),
+  }),
+  completedQuests: zod.number(),
+  completedQuizzes: zod.number(),
+  completedModules: zod.number(),
+  unlockedAchievements: zod.array(
+    zod.object({
+      id: zod.number(),
+      name: zod.string(),
+      description: zod.string(),
+      iconType: zod.string(),
+      category: zod.string(),
+      xpReward: zod.number(),
+      unlockedAt: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary List all users (admin only)
+ */
+export const AdminListUsersResponseItem = zod.object({
+  id: zod.number(),
+  email: zod.string(),
+  name: zod.string(),
+  role: zod.string(),
+  studentRole: zod.string(),
+  level: zod.number(),
+  xp: zod.number(),
+  createdAt: zod.string(),
+  completedQuizzes: zod.number(),
+  completedQuests: zod.number(),
+});
+export const AdminListUsersResponse = zod.array(AdminListUsersResponseItem);
+
+/**
+ * @summary Aggregate platform statistics
+ */
+export const AdminGetStatsResponse = zod.object({
+  totalUsers: zod.number(),
+  totalAdmins: zod.number(),
+  totalCourses: zod.number(),
+  totalQuests: zod.number(),
+  totalQuizzes: zod.number(),
+  totalCommunityPosts: zod.number(),
+  quizAttemptsLast7d: zod.number(),
+  moduleCompletionsLast7d: zod.number(),
+});
+
+/**
+ * @summary Create a new course
+ */
+export const AdminCreateCourseBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  role: zod.string(),
+  stage: zod.string(),
+  category: zod.string(),
+  xpReward: zod.number().optional(),
+  imageUrl: zod.string().optional(),
+});
+
+export const AdminCreateCourseResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  role: zod
+    .string()
+    .describe("Student role: guide, marketer, designer, operator"),
+  stage: zod.string().describe("Journey stage name (e.g. Порт отправления)"),
+  imageUrl: zod.string().optional(),
+  totalModules: zod.number(),
+  completedModules: zod.number(),
+  xpReward: zod.number(),
+  isLocked: zod.boolean(),
+  category: zod.string(),
+});
+
+/**
+ * @summary Create a new quest
+ */
+export const AdminCreateQuestBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  type: zod.string(),
+  difficulty: zod.string(),
+  location: zod.string(),
+  xpReward: zod.number().optional(),
+  timeEstimate: zod.number().optional(),
+});
+
+export const AdminCreateQuestResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  type: zod.string().describe("route, budget, marketing, design"),
+  difficulty: zod.string().describe("easy, medium, hard"),
+  xpReward: zod.number(),
+  isCompleted: zod.boolean(),
+  imageUrl: zod.string().optional(),
+  locationName: zod.string(),
+});
+
+/**
  * @summary List all quizzes
  */
 export const ListQuizzesResponseItem = zod.object({

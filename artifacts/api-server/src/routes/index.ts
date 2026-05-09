@@ -8,10 +8,16 @@ import communityRouter from "./community";
 import libraryRouter from "./library";
 import dashboardRouter from "./dashboard";
 import quizzesRouter from "./quizzes";
+import authRouter from "./auth";
+import profileRouter from "./profile";
+import adminRouter from "./admin";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
+router.use(authRouter);
+router.use(profileRouter);
+router.use(adminRouter);
 router.use(coursesRouter);
 router.use(questsRouter);
 router.use(achievementsRouter);

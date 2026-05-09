@@ -26,6 +26,12 @@ tags:
     description: Student dashboard and progress
   - name: quizzes
     description: Interactive knowledge quizzes about Vladivostok and Primorsky Krai
+  - name: auth
+    description: Authentication and session management
+  - name: profile
+    description: Personal profile and statistics
+  - name: admin
+    description: Admin-only operations
 
 paths:
   /healthz:
@@ -285,6 +291,185 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProgressMap"
+
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register a new account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "200":
+          description: Registered user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthUser"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Sign in
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Logged in user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthUser"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Sign out
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OkResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current authenticated user
+      responses:
+        "200":
+          description: Current user or null
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeResponse"
+
+  /profile:
+    get:
+      operationId: getMyProfile
+      tags: [profile]
+      summary: Get my full profile with stats
+      responses:
+        "200":
+          description: Profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+    patch:
+      operationId: updateMyProfile
+      tags: [profile]
+      summary: Update my profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileRequest"
+      responses:
+        "200":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthUser"
+
+  /profile/{id}:
+    get:
+      operationId: getPublicProfile
+      tags: [profile]
+      summary: Get public profile of a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Public profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicProfile"
+
+  /admin/users:
+    get:
+      operationId: adminListUsers
+      tags: [admin]
+      summary: List all users (admin only)
+      responses:
+        "200":
+          description: User list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminUserRow"
+
+  /admin/stats:
+    get:
+      operationId: adminGetStats
+      tags: [admin]
+      summary: Aggregate platform statistics
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
+  /admin/courses:
+    post:
+      operationId: adminCreateCourse
+      tags: [admin]
+      summary: Create a new course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCourseRequest"
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+
+  /admin/quests:
+    post:
+      operationId: adminCreateQuest
+      tags: [admin]
+      summary: Create a new quest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateQuestRequest"
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quest"
 
   /quizzes:
     get:
@@ -851,6 +1036,302 @@ components:
           items:
             $ref: "#/components/schemas/QuizAnswerResult"
       required: [score, total, xpEarned, passed, results]
+
+    OkResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+      required: [ok]
+
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+          description: "student or admin"
+        studentRole:
+          type: string
+        bio:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        level:
+          type: integer
+        xp:
+          type: integer
+      required: [id, email, name, role, studentRole, level, xp]
+
+    MeResponse:
+      type: object
+      properties:
+        user:
+          allOf:
+            - $ref: "#/components/schemas/AuthUser"
+          nullable: true
+
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+          minLength: 6
+        name:
+          type: string
+          minLength: 2
+        studentRole:
+          type: string
+      required: [email, password, name]
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required: [email, password]
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        bio:
+          type: string
+        avatarUrl:
+          type: string
+        studentRole:
+          type: string
+
+    ProfileActivityItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+        description:
+          type: string
+        xpEarned:
+          type: integer
+        createdAt:
+          type: string
+      required: [id, type, description, xpEarned, createdAt]
+
+    QuizAttemptHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+        quizId:
+          type: integer
+        quizTitle:
+          type: string
+        score:
+          type: integer
+        total:
+          type: integer
+        xpEarned:
+          type: integer
+        passed:
+          type: boolean
+        createdAt:
+          type: string
+      required: [id, quizId, quizTitle, score, total, xpEarned, passed, createdAt]
+
+    CompletedCourse:
+      type: object
+      properties:
+        courseId:
+          type: integer
+        title:
+          type: string
+        completedModules:
+          type: integer
+        totalModules:
+          type: integer
+      required: [courseId, title, completedModules, totalModules]
+
+    UnlockedAchievement:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        iconType:
+          type: string
+        category:
+          type: string
+        xpReward:
+          type: integer
+        unlockedAt:
+          type: string
+      required: [id, name, description, iconType, category, xpReward, unlockedAt]
+
+    Profile:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/AuthUser"
+        nextLevelXp:
+          type: integer
+        currentLevelXp:
+          type: integer
+        completedQuests:
+          type: integer
+        completedQuizzes:
+          type: integer
+        completedModules:
+          type: integer
+        unlockedAchievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/UnlockedAchievement"
+        recentActivity:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProfileActivityItem"
+        quizHistory:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuizAttemptHistory"
+        completedCourses:
+          type: array
+          items:
+            $ref: "#/components/schemas/CompletedCourse"
+      required:
+        [user, nextLevelXp, currentLevelXp, completedQuests, completedQuizzes,
+         completedModules, unlockedAchievements, recentActivity, quizHistory, completedCourses]
+
+    PublicUser:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        role: { type: string }
+        studentRole: { type: string }
+        bio: { type: string, nullable: true }
+        avatarUrl: { type: string, nullable: true }
+        level: { type: integer }
+        xp: { type: integer }
+      required: [id, name, role, studentRole, level, xp]
+
+    PublicProfile:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/PublicUser"
+        completedQuests:
+          type: integer
+        completedQuizzes:
+          type: integer
+        completedModules:
+          type: integer
+        unlockedAchievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/UnlockedAchievement"
+      required: [user, completedQuests, completedQuizzes, completedModules, unlockedAchievements]
+
+    AdminUserRow:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+        studentRole:
+          type: string
+        level:
+          type: integer
+        xp:
+          type: integer
+        createdAt:
+          type: string
+        completedQuizzes:
+          type: integer
+        completedQuests:
+          type: integer
+      required: [id, email, name, role, studentRole, level, xp, createdAt, completedQuizzes, completedQuests]
+
+    AdminStats:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+        totalAdmins:
+          type: integer
+        totalCourses:
+          type: integer
+        totalQuests:
+          type: integer
+        totalQuizzes:
+          type: integer
+        totalCommunityPosts:
+          type: integer
+        quizAttemptsLast7d:
+          type: integer
+        moduleCompletionsLast7d:
+          type: integer
+      required:
+        [totalUsers, totalAdmins, totalCourses, totalQuests, totalQuizzes,
+         totalCommunityPosts, quizAttemptsLast7d, moduleCompletionsLast7d]
+
+    CreateCourseRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        role:
+          type: string
+        stage:
+          type: string
+        category:
+          type: string
+        xpReward:
+          type: integer
+        imageUrl:
+          type: string
+      required: [title, description, role, stage, category]
+
+    CreateQuestRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        difficulty:
+          type: string
+        location:
+          type: string
+        xpReward:
+          type: integer
+        timeEstimate:
+          type: integer
+      required: [title, description, type, difficulty, location]
 
     LeaderboardEntry:
       type: object

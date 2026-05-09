@@ -4,6 +4,7 @@ import { z } from "zod/v4";
 
 export const communityPostsTable = pgTable("community_posts", {
   id: serial("id").primaryKey(),
+  userId: integer("user_id"),
   title: text("title").notNull(),
   content: text("content").notNull(),
   authorName: text("author_name").notNull(),
