@@ -9,6 +9,13 @@ const app: Express = express();
 
 app.set("trust proxy", 1);
 
+// Replit always terminates TLS at the proxy level — force HTTPS detection
+// so that express-session sets the Secure cookie flag correctly.
+app.use((req, _res, next) => {
+  req.headers["x-forwarded-proto"] = "https";
+  next();
+});
+
 app.use(
   pinoHttp({
     logger,
