@@ -143,7 +143,7 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05 }}
                     >
-                      <Link href={`/quiz/${q.id}`}>
+                      <Link href={`/cabinet/tasks/quiz/${q.id}`}>
                         <Card className="rounded-2xl border-border/60 overflow-hidden cursor-pointer hover-elevate transition-all h-full group">
                           <div
                             className="h-32 bg-cover bg-center relative"

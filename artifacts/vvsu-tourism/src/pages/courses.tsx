@@ -56,7 +56,7 @@ export default function Courses() {
                   whileHover={{ y: -4 }}
                   data-testid={`card-course-${course.id}`}
                 >
-                  <Link href={course.isLocked ? "#" : `/courses/${course.id}`}>
+                  <Link href={course.isLocked ? "#" : `/cabinet/courses/${course.id}`}>
                     <Card className={`overflow-hidden rounded-2xl border-border/60 h-full cursor-pointer transition-shadow hover:shadow-xl ${course.isLocked ? "opacity-60" : ""}`}>
                       <div className="relative h-48 overflow-hidden">
                         <img

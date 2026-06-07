@@ -1,9 +1,8 @@
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
 import {
-  Compass, BookOpen, Map as MapIcon, Users, Library, Trophy,
-  LayoutDashboard, Swords, Sun, Moon, Menu, X,
-  LogIn, LogOut, Shield, UserPlus,
+  Compass, Map as MapIcon, Library, Trophy,
+  Sun, Moon, Menu, X, LogIn, LogOut, Shield, UserPlus, LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
@@ -17,30 +16,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const publicNavItems = [
-  { href: "/map",        label: "Карта",       icon: MapIcon },
-  { href: "/library",    label: "Библиотека",  icon: Library },
-  { href: "/leaderboard",label: "Рейтинг",     icon: Trophy },
+  { href: "/map",         label: "Карта",      icon: MapIcon },
+  { href: "/library",     label: "Библиотека", icon: Library },
+  { href: "/leaderboard", label: "Рейтинг",    icon: Trophy },
 ];
-
-const authNavItems = [
-  { href: "/dashboard",  label: "Кабинет",     icon: LayoutDashboard },
-  { href: "/courses",    label: "Курсы",       icon: BookOpen },
-  { href: "/tasks",      label: "Задания",     icon: Swords },
-  { href: "/map",        label: "Карта",       icon: MapIcon },
-  { href: "/community",  label: "Сообщество",  icon: Users },
-  { href: "/library",    label: "Библиотека",  icon: Library },
-  { href: "/leaderboard",label: "Рейтинг",     icon: Trophy },
-];
-
-function isItemActive(href: string, location: string) {
-  if (href === "/tasks") {
-    return location.startsWith("/tasks") ||
-      location.startsWith("/quizzes") ||
-      location.startsWith("/quests") ||
-      location.startsWith("/quiz");
-  }
-  return location.startsWith(href);
-}
 
 export function Navbar() {
   const [location] = useLocation();
@@ -49,11 +28,6 @@ export function Navbar() {
   const logout = useLogout();
   const qc = useQueryClient();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const navItems = user ? authNavItems : publicNavItems;
-  const displayedItems = isAdmin
-    ? [...navItems, { href: "/admin", label: "Админ", icon: Shield }]
-    : navItems;
 
   const handleLogout = () => {
     logout.mutate(undefined, {
@@ -72,10 +46,10 @@ export function Navbar() {
           <span className="hidden sm:inline">ВВГУ</span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop public nav */}
         <nav className="hidden lg:flex items-center gap-1 flex-1">
-          {displayedItems.map((item) => {
-            const active = isItemActive(item.href, location);
+          {publicNavItems.map((item) => {
+            const active = location.startsWith(item.href);
             return (
               <Link
                 key={item.href}
@@ -97,46 +71,65 @@ export function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2 ml-auto">
           {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <>
+              {/* Cabinet shortcut */}
+              <Link href="/cabinet">
                 <Button
                   variant="ghost"
-                  className="rounded-full h-9 px-2 gap-2 text-primary-foreground hover:bg-white/10"
-                  data-testid="button-user-menu"
+                  size="sm"
+                  className={`hidden md:flex items-center gap-1.5 rounded-full text-sm transition-all ${
+                    location.startsWith("/cabinet")
+                      ? "bg-white/15 text-accent font-semibold"
+                      : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
+                  }`}
                 >
-                  <Avatar className="h-7 w-7">
-                    <AvatarImage src={user.avatarUrl ?? undefined} />
-                    <AvatarFallback className="bg-accent text-white text-xs">
-                      {user.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="hidden md:inline text-sm">{user.name.split(" ")[0]}</span>
+                  <LayoutDashboard className="h-4 w-4" />
+                  Кабинет
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>
-                  <div className="font-semibold">{user.name}</div>
-                  <div className="text-xs text-muted-foreground font-normal">{user.email}</div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/profile" data-testid="menu-profile">
-                    <LayoutDashboard className="h-4 w-4 mr-2" /> Мой профиль
-                  </Link>
-                </DropdownMenuItem>
-                {isAdmin && (
+              </Link>
+
+              {/* User menu */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="rounded-full h-9 px-2 gap-2 text-primary-foreground hover:bg-white/10"
+                    data-testid="button-user-menu"
+                  >
+                    <Avatar className="h-7 w-7">
+                      <AvatarImage src={user.avatarUrl ?? undefined} />
+                      <AvatarFallback className="bg-accent text-white text-xs">
+                        {user.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="hidden md:inline text-sm">{user.name.split(" ")[0]}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>
+                    <div className="font-semibold">{user.name}</div>
+                    <div className="text-xs text-muted-foreground font-normal">{user.email}</div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link href="/admin">
-                      <Shield className="h-4 w-4 mr-2" /> Админ-панель
+                    <Link href="/cabinet" data-testid="menu-cabinet">
+                      <LayoutDashboard className="h-4 w-4 mr-2" /> Мой кабинет
                     </Link>
                   </DropdownMenuItem>
-                )}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout} data-testid="menu-logout">
-                  <LogOut className="h-4 w-4 mr-2" /> Выйти
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/admin">
+                        <Shield className="h-4 w-4 mr-2" /> Админ-панель
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} data-testid="menu-logout">
+                    <LogOut className="h-4 w-4 mr-2" /> Выйти
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
           ) : (
             <div className="hidden md:flex items-center gap-1">
               <Link href="/login">
@@ -190,8 +183,8 @@ export function Navbar() {
       {mobileOpen && (
         <div className="lg:hidden border-t border-white/10 bg-primary px-4 pb-4">
           <nav className="flex flex-col gap-1 pt-3">
-            {displayedItems.map((item) => {
-              const active = isItemActive(item.href, location);
+            {publicNavItems.map((item) => {
+              const active = location.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
@@ -208,8 +201,25 @@ export function Navbar() {
                 </Link>
               );
             })}
-
-            {!user && (
+            {user ? (
+              <>
+                <Link href="/cabinet" onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
+                    location.startsWith("/cabinet")
+                      ? "bg-white/15 text-accent font-semibold"
+                      : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
+                  }`}
+                >
+                  <LayoutDashboard className="h-4 w-4" /> Кабинет
+                </Link>
+                <button
+                  onClick={() => { handleLogout(); setMobileOpen(false); }}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-primary-foreground/80 hover:bg-white/10 hover:text-white transition-all w-full text-left"
+                >
+                  <LogOut className="h-4 w-4" /> Выйти
+                </button>
+              </>
+            ) : (
               <div className="flex gap-2 pt-3 mt-2 border-t border-white/10">
                 <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1">
                   <Button variant="outline" size="sm" className="w-full rounded-full bg-white/10 border-white/20 text-white">

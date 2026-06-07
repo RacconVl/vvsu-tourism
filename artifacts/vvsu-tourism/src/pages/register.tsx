@@ -24,9 +24,9 @@ export default function RegisterPage() {
       { data: form },
       {
         onSuccess: async () => {
-          await qc.invalidateQueries({ queryKey: getGetMeQueryKey() });
+          await qc.refetchQueries({ queryKey: getGetMeQueryKey() });
           toast({ title: "Аккаунт создан!", description: "Добро пожаловать в институт." });
-          setLocation("/dashboard");
+          setLocation("/cabinet");
         },
         onError: (err: unknown) => {
           const message = err instanceof Error ? err.message : "Не удалось зарегистрироваться";
