@@ -1,45 +1,93 @@
 import { Router, type IRouter } from "express";
-import { db, coursesTable, questsTable, achievementsTable, usersTable, userQuestSubmissionsTable } from "@workspace/db";
-import { desc, sql, ne } from "drizzle-orm";
+import {
+  db,
+  coursesTable,
+  questsTable,
+  achievementsTable,
+  usersTable,
+  userQuestSubmissionsTable,
+  userActivityTable,
+  userAchievementsTable,
+} from "@workspace/db";
+import { desc, eq, ne, sql } from "drizzle-orm";
 import {
   GetDashboardSummaryResponse,
   GetProgressMapResponse,
   GetLeaderboardResponse,
 } from "@workspace/api-zod";
+import { requireAuth, levelForXp } from "../lib/auth";
 
 const router: IRouter = Router();
 
-router.get("/dashboard/summary", async (_req, res): Promise<void> => {
-  const courses = await db.select().from(coursesTable);
-  const quests = await db.select().from(questsTable);
-  const achievements = await db.select().from(achievementsTable);
+router.get("/dashboard/summary", requireAuth, async (req, res): Promise<void> => {
+  const userId = req.user!.id;
+  const u = req.user!;
 
-  const completedCourses = courses.filter(c => c.completedModules >= c.totalModules && c.totalModules > 0).length;
-  const completedQuests = quests.filter(q => q.isCompleted).length;
-  const unlockedAchievements = achievements.filter(a => a.isUnlocked).length;
+  const [courses, quests, achievements] = await Promise.all([
+    db.select().from(coursesTable),
+    db.select().from(questsTable),
+    db.select().from(achievementsTable),
+  ]);
 
-  const xp = completedCourses * 200 + completedQuests * 150 + unlockedAchievements * 50;
-  const level = Math.floor(xp / 500) + 1;
-  const xpToNextLevel = (level * 500) - xp;
+  const completedCourses = courses.filter(
+    (c) => c.completedModules >= c.totalModules && c.totalModules > 0,
+  ).length;
+  const completedQuests = quests.filter((q) => q.isCompleted).length;
 
-  const recentActivity = [
-    { id: 1, type: "module_complete", description: "Завершён модуль: Основы туристического маршрута", xpEarned: 25, timestamp: new Date(Date.now() - 3600000).toISOString() },
-    { id: 2, type: "quest_complete", description: "Выполнен квест: Разработка маршрута по Золотому рогу", xpEarned: 150, timestamp: new Date(Date.now() - 86400000).toISOString() },
-    { id: 3, type: "achievement", description: "Получен значок: Первооткрыватель", xpEarned: 50, timestamp: new Date(Date.now() - 172800000).toISOString() },
-  ];
+  const [unlockedRows, activityRows] = await Promise.all([
+    db.select().from(userAchievementsTable).where(eq(userAchievementsTable.userId, userId)),
+    db
+      .select()
+      .from(userActivityTable)
+      .where(eq(userActivityTable.userId, userId))
+      .orderBy(desc(userActivityTable.createdAt))
+      .limit(5),
+  ]);
+
+  const unlockedAchievements = unlockedRows.length;
+  const lv = levelForXp(u.xp);
+
+  const recentActivity = activityRows.map((a) => ({
+    id: a.id,
+    type: a.type,
+    description: a.description,
+    xpEarned: a.xpEarned,
+    timestamp: a.createdAt.toISOString(),
+  }));
 
   const upcomingDeadlines = [
-    { id: 1, title: "Финальный тест модуля", dueDate: new Date(Date.now() + 86400000 * 3).toISOString(), courseTitle: "Туристический маркетинг", type: "test" },
-    { id: 2, title: "Практическое задание: бюджет тура", dueDate: new Date(Date.now() + 86400000 * 7).toISOString(), courseTitle: "Туроперейтинг", type: "quest" },
+    {
+      id: 1,
+      title: "Финальный тест модуля",
+      dueDate: new Date(Date.now() + 86400000 * 3).toISOString(),
+      courseTitle: "Туристический маркетинг",
+      type: "test",
+    },
+    {
+      id: 2,
+      title: "Практическое задание: бюджет тура",
+      dueDate: new Date(Date.now() + 86400000 * 7).toISOString(),
+      courseTitle: "Туроперейтинг",
+      type: "quest",
+    },
   ];
 
+  const currentStages = [
+    "Порт отправления",
+    "Бухта открытий",
+    "Мост знаний",
+    "Остров мастерства",
+    "Тихоокеанский горизонт",
+  ];
+  const stageIndex = Math.min(Math.floor(u.xp / 500), 4);
+
   const summary = {
-    studentName: "Александра Морозова",
-    currentRole: "guide",
-    level,
-    xp,
-    xpToNextLevel,
-    currentStage: "Бухта открытий",
+    studentName: u.name,
+    currentRole: u.studentRole,
+    level: u.level,
+    xp: u.xp,
+    xpToNextLevel: lv.nextLevelXp,
+    currentStage: currentStages[stageIndex],
     completedCourses,
     totalCourses: courses.length,
     completedQuests,
@@ -66,7 +114,13 @@ router.get("/dashboard/progress", async (_req, res): Promise<void> => {
 });
 
 router.get("/dashboard/leaderboard", async (_req, res): Promise<void> => {
-  const users = await db.select().from(usersTable).where(ne(usersTable.role, "admin")).orderBy(desc(usersTable.xp)).limit(20);
+  const users = await db
+    .select()
+    .from(usersTable)
+    .where(ne(usersTable.role, "admin"))
+    .orderBy(desc(usersTable.xp))
+    .limit(20);
+
   const counts = await db
     .select({
       userId: userQuestSubmissionsTable.userId,
@@ -74,6 +128,7 @@ router.get("/dashboard/leaderboard", async (_req, res): Promise<void> => {
     })
     .from(userQuestSubmissionsTable)
     .groupBy(userQuestSubmissionsTable.userId);
+
   const countMap = new Map(counts.map((c) => [c.userId, c.count]));
   const leaderboard = users.map((u, i) => ({
     rank: i + 1,
@@ -81,9 +136,12 @@ router.get("/dashboard/leaderboard", async (_req, res): Promise<void> => {
     level: u.level,
     xp: u.xp,
     role: u.studentRole,
-    avatarUrl: u.avatarUrl ?? `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(u.name)}`,
+    avatarUrl:
+      u.avatarUrl ??
+      `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(u.name)}`,
     completedQuests: countMap.get(u.id) ?? 0,
   }));
+
   res.json(GetLeaderboardResponse.parse(leaderboard));
 });
 

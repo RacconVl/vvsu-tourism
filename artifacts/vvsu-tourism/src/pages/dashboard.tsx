@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "wouter";
+import { useEffect, useState } from "react";
+import { Link, useSearch } from "wouter";
 import { motion } from "framer-motion";
 import {
   useGetDashboardSummary, useGetProgressMap, useGetLeaderboard,
@@ -21,7 +21,7 @@ import { useAuth } from "@/hooks/use-auth";
 import {
   BookOpen, Compass, Award, Star, Clock, ChevronRight, Trophy, Flame,
   Anchor, MapPin, Waves, Brain, Activity, Settings, MessageCircle,
-  Sparkles, Lock, Map as MapIcon,
+  Sparkles, Lock, Map as MapIcon, Zap,
 } from "lucide-react";
 
 const roleLabels: Record<string, string> = {
@@ -29,14 +29,29 @@ const roleLabels: Record<string, string> = {
   operator: "Туроператор", admin: "Администратор",
 };
 
-const activityIcons: Record<string, React.ReactNode> = {
-  module_complete: <BookOpen className="h-4 w-4 text-accent" />,
-  quest_complete: <Compass className="h-4 w-4 text-accent" />,
-  achievement: <Award className="h-4 w-4 text-yellow-400" />,
-  quiz: <Brain className="h-4 w-4 text-secondary" />,
-  quest: <Compass className="h-4 w-4 text-accent" />,
-  community: <MessageCircle className="h-4 w-4 text-blue-500" />,
+type ActivityType = "module_complete" | "quest_complete" | "achievement" | "quiz" | "quest" | "community";
+
+const activityConfig: Record<ActivityType | string, { icon: React.ReactNode; color: string; bg: string }> = {
+  module_complete: { icon: <BookOpen className="h-3.5 w-3.5" />, color: "#033F7E", bg: "rgba(3,63,126,0.12)" },
+  quest_complete:  { icon: <Compass className="h-3.5 w-3.5" />,  color: "#EB7124", bg: "rgba(235,113,36,0.12)" },
+  quest:           { icon: <Compass className="h-3.5 w-3.5" />,  color: "#EB7124", bg: "rgba(235,113,36,0.12)" },
+  achievement:     { icon: <Award className="h-3.5 w-3.5" />,    color: "#d97706", bg: "rgba(217,119,6,0.12)" },
+  quiz:            { icon: <Brain className="h-3.5 w-3.5" />,    color: "#7c3aed", bg: "rgba(124,58,237,0.12)" },
+  community:       { icon: <MessageCircle className="h-3.5 w-3.5" />, color: "#0891b2", bg: "rgba(8,145,178,0.12)" },
 };
+const defaultActivity = { icon: <Zap className="h-3.5 w-3.5" />, color: "#EB7124", bg: "rgba(235,113,36,0.12)" };
+
+function relativeTime(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return "только что";
+  if (mins < 60) return `${mins} мин. назад`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs} ч. назад`;
+  const days = Math.floor(hrs / 24);
+  if (days < 30) return `${days} дн. назад`;
+  return new Date(iso).toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
+}
 
 const iconMap: Record<string, React.ReactNode> = {
   anchor: <Anchor className="h-6 w-6" />,
@@ -50,9 +65,19 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 type Tab = "overview" | "achievements" | "activity" | "results" | "settings";
+const VALID_TABS: Tab[] = ["overview", "achievements", "activity", "results", "settings"];
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const search = useSearch();
+  const tabParam = (new URLSearchParams(search).get("tab") ?? "overview") as Tab;
+  const initialTab = VALID_TABS.includes(tabParam) ? tabParam : "overview";
+  const [activeTab, setActiveTab] = useState<Tab>(initialTab);
+
+  useEffect(() => {
+    const t = (new URLSearchParams(search).get("tab") ?? "overview") as Tab;
+    if (VALID_TABS.includes(t)) setActiveTab(t);
+  }, [search]);
+
   const { user } = useAuth();
   const { data: summary, isLoading: summaryLoading } = useGetDashboardSummary();
   const { data: progressMap, isLoading: mapLoading } = useGetProgressMap();
@@ -68,10 +93,6 @@ export default function Dashboard() {
     avatarUrl: user?.avatarUrl ?? "",
     studentRole: user?.studentRole ?? "guide",
   });
-
-  const xpPercent = summary
-    ? Math.round((summary.xp / (summary.xp + summary.xpToNextLevel)) * 100)
-    : 0;
 
   const profileXpPercent = profile
     ? Math.round((profile.currentLevelXp / Math.max(profile.currentLevelXp + profile.nextLevelXp, 1)) * 100)
@@ -91,11 +112,11 @@ export default function Dashboard() {
   };
 
   const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
-    { key: "overview",      label: "Обзор",       icon: <Anchor className="h-4 w-4" /> },
-    { key: "achievements",  label: "Достижения",  icon: <Award className="h-4 w-4" /> },
-    { key: "activity",      label: "Активность",  icon: <Activity className="h-4 w-4" /> },
-    { key: "results",       label: "Результаты",  icon: <Brain className="h-4 w-4" /> },
-    { key: "settings",      label: "Настройки",   icon: <Settings className="h-4 w-4" /> },
+    { key: "overview",     label: "Обзор",      icon: <Anchor className="h-4 w-4" /> },
+    { key: "achievements", label: "Достижения", icon: <Award className="h-4 w-4" /> },
+    { key: "activity",     label: "Активность", icon: <Activity className="h-4 w-4" /> },
+    { key: "results",      label: "Результаты", icon: <Brain className="h-4 w-4" /> },
+    { key: "settings",     label: "Настройки",  icon: <Settings className="h-4 w-4" /> },
   ];
 
   return (
@@ -128,11 +149,7 @@ export default function Dashboard() {
               </div>
             </div>
           ) : profile ? (
-            <motion.div
-              initial={{ opacity: 0, y: -16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="flex items-center gap-5">
                   <Avatar className="h-24 w-24 ring-4 ring-white/20 shrink-0">
@@ -242,15 +259,15 @@ export default function Dashboard() {
                 {[
                   { label: "Курсов завершено", value: `${summary.completedCourses}/${summary.totalCourses}`, icon: <BookOpen className="h-5 w-5" />, href: "/cabinet/courses", accent: "#033F7E" },
                   { label: "Квестов выполнено", value: `${summary.completedQuests}/${summary.totalQuests}`, icon: <Compass className="h-5 w-5" />, href: "/cabinet/tasks", accent: "#EB7124" },
-                  { label: "Достижений", value: `${summary.unlockedAchievements}/${summary.totalAchievements}`, icon: <Award className="h-5 w-5" />, href: "#", accent: "#d97706", onClick: () => setActiveTab("achievements") },
+                  { label: "Достижений", value: `${summary.unlockedAchievements}/${summary.totalAchievements}`, icon: <Award className="h-5 w-5" />, href: null, accent: "#d97706", onClick: () => setActiveTab("achievements") },
                   { label: "Текущий этап", value: summary.currentStage, icon: <MapPin className="h-5 w-5" />, href: "/map", accent: "#172E46" },
                 ].map((stat, i) => (
-                  <Card
-                    key={i}
-                    onClick={stat.onClick}
-                    className="hover:shadow-lg transition-all hover:-translate-y-0.5 cursor-pointer rounded-2xl border-border/60 overflow-hidden group"
-                  >
-                    <Link href={stat.onClick ? "#" : stat.href}>
+                  stat.onClick ? (
+                    <Card
+                      key={i}
+                      onClick={stat.onClick}
+                      className="hover:shadow-lg transition-all hover:-translate-y-0.5 cursor-pointer rounded-2xl border-border/60 overflow-hidden group"
+                    >
                       <CardContent className="p-0">
                         <div className="h-1.5 w-full" style={{ background: stat.accent }} />
                         <div className="p-4">
@@ -263,8 +280,25 @@ export default function Dashboard() {
                           <p className="text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">{stat.value}</p>
                         </div>
                       </CardContent>
+                    </Card>
+                  ) : (
+                    <Link key={i} href={stat.href!}>
+                      <Card className="hover:shadow-lg transition-all hover:-translate-y-0.5 cursor-pointer rounded-2xl border-border/60 overflow-hidden group h-full">
+                        <CardContent className="p-0">
+                          <div className="h-1.5 w-full" style={{ background: stat.accent }} />
+                          <div className="p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl text-white" style={{ background: stat.accent }}>
+                                {stat.icon}
+                              </span>
+                              <span className="text-xs text-muted-foreground uppercase tracking-wider leading-tight">{stat.label}</span>
+                            </div>
+                            <p className="text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">{stat.value}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </Link>
-                  </Card>
+                  )
                 ))}
               </div>
             )}
@@ -323,26 +357,53 @@ export default function Dashboard() {
 
               {/* Right column */}
               <div className="space-y-6">
-                {/* Recent Activity */}
+                {/* Recent Activity — redesigned */}
                 <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "#EB7124" }} />
-                  <CardHeader className="pb-2 pt-4">
-                    <CardTitle className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                      <Star className="h-3.5 w-3.5 text-accent" /> Последняя активность
+                  <div className="h-1" style={{ background: "linear-gradient(90deg, #EB7124, #d97706)" }} />
+                  <CardHeader className="pb-3 pt-4 flex flex-row items-center justify-between space-y-0">
+                    <CardTitle className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <Activity className="h-4 w-4 text-accent" /> Последняя активность
                     </CardTitle>
+                    <button
+                      onClick={() => setActiveTab("activity")}
+                      className="text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-0.5"
+                    >
+                      Все <ChevronRight className="h-3 w-3" />
+                    </button>
                   </CardHeader>
-                  <CardContent className="space-y-2">
-                    {summaryLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-12 w-full rounded-xl" />) :
-                      summary?.recentActivity.length ? summary.recentActivity.map((item) => (
-                        <div key={item.id} className="flex items-start gap-3 p-2.5 rounded-xl bg-muted/30 border border-border/40">
-                          <div className="mt-0.5 shrink-0">{activityIcons[item.type] ?? <Star className="h-4 w-4 text-muted-foreground" />}</div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs text-foreground line-clamp-2 leading-snug">{item.description}</p>
-                            <p className="text-xs font-semibold mt-0.5" style={{ color: "#EB7124" }}>+{item.xpEarned} XP</p>
+                  <CardContent className="px-4 pb-4 space-y-2">
+                    {summaryLoading ? (
+                      [1,2,3].map(i => <Skeleton key={i} className="h-14 w-full rounded-xl" />)
+                    ) : summary?.recentActivity.length ? (
+                      summary.recentActivity.map((item) => {
+                        const cfg = activityConfig[item.type] ?? defaultActivity;
+                        return (
+                          <div key={item.id} className="flex items-center gap-3 p-3 rounded-xl border border-border/40 hover:bg-muted/30 transition-colors">
+                            <div
+                              className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0"
+                              style={{ background: cfg.bg, color: cfg.color }}
+                            >
+                              {cfg.icon}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs text-foreground line-clamp-2 leading-snug font-medium">{item.description}</p>
+                              <p className="text-xs text-muted-foreground mt-0.5">{relativeTime(item.timestamp)}</p>
+                            </div>
+                            {item.xpEarned > 0 && (
+                              <span className="text-xs font-bold shrink-0 px-2 py-0.5 rounded-full" style={{ background: "rgba(235,113,36,0.1)", color: "#EB7124" }}>
+                                +{item.xpEarned}
+                              </span>
+                            )}
                           </div>
-                        </div>
-                      )) : <p className="text-xs text-muted-foreground py-2 text-center">Активность пока отсутствует</p>
-                    }
+                        );
+                      })
+                    ) : (
+                      <div className="py-6 text-center">
+                        <Activity className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
+                        <p className="text-xs text-muted-foreground">Активность пока отсутствует</p>
+                        <p className="text-xs text-muted-foreground/60 mt-1">Проходите курсы и квесты</p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 
@@ -449,23 +510,37 @@ export default function Dashboard() {
                 {profileLoading ? (
                   <div className="space-y-3">{[1,2,3,4,5].map(i => <Skeleton key={i} className="h-16 rounded-xl" />)}</div>
                 ) : profile?.recentActivity.length === 0 ? (
-                  <p className="text-center text-muted-foreground py-6">История активности пуста.</p>
+                  <div className="py-10 text-center">
+                    <Activity className="h-12 w-12 mx-auto mb-3 text-muted-foreground/40" />
+                    <p className="text-muted-foreground">История активности пуста.</p>
+                    <p className="text-sm text-muted-foreground/60 mt-1">Проходите курсы и квесты, чтобы увидеть активность здесь.</p>
+                  </div>
                 ) : (
-                  <ul className="space-y-3">
-                    {profile?.recentActivity.map((a) => (
-                      <li key={a.id} className="flex items-start gap-3 p-3 rounded-xl bg-muted/40">
-                        <div className="h-9 w-9 rounded-full bg-background flex items-center justify-center shrink-0">
-                          {activityIcons[a.type] ?? <Sparkles className="h-4 w-4 text-muted-foreground" />}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm text-foreground">{a.description}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">{new Date(a.createdAt).toLocaleString("ru-RU")}</p>
-                        </div>
-                        {a.xpEarned > 0 && (
-                          <Badge variant="outline" className="text-accent border-accent/30 shrink-0">+{a.xpEarned} XP</Badge>
-                        )}
-                      </li>
-                    ))}
+                  <ul className="space-y-2">
+                    {profile?.recentActivity.map((a) => {
+                      const cfg = activityConfig[a.type] ?? defaultActivity;
+                      return (
+                        <li key={a.id} className="flex items-center gap-3 p-3 rounded-xl border border-border/40 hover:bg-muted/30 transition-colors">
+                          <div
+                            className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
+                            style={{ background: cfg.bg, color: cfg.color }}
+                          >
+                            {cfg.icon}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-foreground font-medium">{a.description}</p>
+                            <p className="text-xs text-muted-foreground mt-0.5">
+                              {new Date(a.createdAt).toLocaleString("ru-RU", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
+                            </p>
+                          </div>
+                          {a.xpEarned > 0 && (
+                            <span className="text-xs font-bold shrink-0 px-2.5 py-1 rounded-full" style={{ background: "rgba(235,113,36,0.1)", color: "#EB7124" }}>
+                              +{a.xpEarned} XP
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </CardContent>

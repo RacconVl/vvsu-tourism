@@ -1,4 +1,4 @@
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import { motion } from "framer-motion";
 import { LayoutDashboard, BookOpen, Swords, Users, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
@@ -11,14 +11,23 @@ const sidebarItems = [
   { href: "/cabinet/community", label: "Сообщество",  icon: Users },
 ];
 
-function isActive(href: string, location: string) {
-  if (href === "/cabinet") return location === "/cabinet" || location === "/cabinet/";
+function isActive(href: string, location: string, search: string) {
+  if (href === "/cabinet") {
+    if (location !== "/cabinet" && location !== "/cabinet/") return false;
+    const params = new URLSearchParams(search);
+    return !params.get("tab") || params.get("tab") === "overview";
+  }
   return location.startsWith(href);
 }
 
 export function CabinetSidebar() {
   const { user } = useAuth();
   const [location] = useLocation();
+  const search = useSearch();
+
+  const settingsActive =
+    (location === "/cabinet" || location === "/cabinet/") &&
+    new URLSearchParams(search).get("tab") === "settings";
 
   return (
     <aside className="w-60 shrink-0 hidden md:flex flex-col min-h-full border-r border-border/60 bg-card">
@@ -41,7 +50,7 @@ export function CabinetSidebar() {
       {/* Nav */}
       <nav className="flex-1 p-3 space-y-1">
         {sidebarItems.map(item => {
-          const active = isActive(item.href, location);
+          const active = isActive(item.href, location, search);
           return (
             <Link key={item.href} href={item.href}>
               <motion.div
@@ -62,18 +71,18 @@ export function CabinetSidebar() {
 
       {/* Settings at bottom */}
       <div className="p-3 border-t border-border/60">
-        <Link href="/cabinet">
-          <div
+        <Link href="/cabinet?tab=settings">
+          <motion.div
+            whileHover={{ x: 2 }}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${
-              location === "/cabinet"
-                ? "text-muted-foreground hover:bg-muted hover:text-foreground"
+              settingsActive
+                ? "bg-primary text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
             }`}
-            title="Настройки профиля — откройте вкладку «Настройки» в Обзоре"
           >
-            <Settings className="h-4 w-4" />
+            <Settings className="h-4 w-4 shrink-0" />
             Настройки
-          </div>
+          </motion.div>
         </Link>
       </div>
     </aside>
