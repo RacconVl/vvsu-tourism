@@ -15,6 +15,7 @@ import MapPage from "@/pages/map-page";
 import LibraryPage from "@/pages/library";
 import Leaderboard from "@/pages/leaderboard";
 import PublicProfile from "@/pages/public-profile";
+import AdmissionPage from "@/pages/admission";
 import NotFound from "@/pages/not-found";
 
 // Initialize JWT token getter from localStorage on app startup
@@ -35,6 +36,7 @@ function Router() {
       <Switch>
         {/* Public */}
         <Route path="/" component={Home} />
+        <Route path="/admission" component={AdmissionPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/map" component={MapPage} />

@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
 import {
-  Compass, Map as MapIcon, Library, Trophy,
+  Compass, Map as MapIcon, Library, Trophy, GraduationCap,
   Sun, Moon, Menu, X, LogIn, LogOut, Shield, UserPlus, LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,9 +16,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const publicNavItems = [
-  { href: "/map",         label: "Карта",      icon: MapIcon },
-  { href: "/library",     label: "Библиотека", icon: Library },
-  { href: "/leaderboard", label: "Рейтинг",    icon: Trophy },
+  { href: "/admission",   label: "Поступление", icon: GraduationCap },
+  { href: "/map",         label: "Карта",       icon: MapIcon },
+  { href: "/library",     label: "Библиотека",  icon: Library },
+  { href: "/leaderboard", label: "Рейтинг",     icon: Trophy },
 ];
 
 export function Navbar() {
