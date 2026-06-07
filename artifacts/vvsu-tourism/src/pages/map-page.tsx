@@ -1,8 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import { YMaps, Map, Placemark, Polyline } from "react-yandex-maps";
 import { useListMapPoints, useListMapRoutes } from "@workspace/api-client-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +16,6 @@ const categoryConfig: Record<string, { color: string; label: string; icon: React
   restaurant: { color: "#e11d48", label: "Ресторан", icon: <Utensils className="h-4 w-4" /> },
 };
 
-// Accurate geo-coordinates for Vladivostok landmarks
 const pointCoordinates: Record<string, [number, number]> = {
   "Золотой мост": [43.1126, 131.8869],
   "Морской вокзал": [43.1112, 131.8854],
@@ -34,45 +31,13 @@ const pointCoordinates: Record<string, [number, number]> = {
   "Русский мост": [43.0535, 131.8869],
 };
 
-function makeIcon(color: string) {
-  return L.divIcon({
-    className: "custom-marker",
-    html: `<div style="
-      width: 32px; height: 32px;
-      background: ${color};
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      border: 3px solid white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      display: flex; align-items: center; justify-content: center;
-    ">
-      <div style="
-        width: 10px; height: 10px;
-        background: white;
-        border-radius: 50%;
-        transform: rotate(45deg);
-      "></div>
-    </div>`,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-  });
-}
-
-function FlyToPoint({ position }: { position: [number, number] | null }) {
-  const map = useMap();
-  if (position) {
-    map.flyTo(position, 14, { duration: 1.2 });
-  }
-  return null;
-}
-
 export default function MapPage() {
   const { data: points, isLoading: pointsLoading } = useListMapPoints();
   const { data: routes, isLoading: routesLoading } = useListMapRoutes();
   const [activeTab, setActiveTab] = useState<"points" | "routes">("points");
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [activeRouteId, setActiveRouteId] = useState<number | null>(null);
+  const [mapInstance, setMapInstance] = useState<{ setCenter: (c: number[], z: number, opts?: object) => void } | null>(null);
 
   const difficultyLabel: Record<string, string> = {
     easy: "Лёгкий", medium: "Средний", hard: "Сложный",
@@ -90,9 +55,6 @@ export default function MapPage() {
     });
   }, [points]);
 
-  const selectedPoint = enrichedPoints.find(p => p.id === selectedId);
-  const flyTarget = selectedPoint?.coords ?? null;
-
   const activeRoute = routes?.find(r => r.id === activeRouteId);
   const routeCoords = useMemo<[number, number][]>(() => {
     if (!activeRoute || !points) return [];
@@ -105,6 +67,13 @@ export default function MapPage() {
       .filter((c): c is [number, number] => Array.isArray(c));
   }, [activeRoute, points, enrichedPoints]);
 
+  function handlePointClick(p: { id: number; coords: [number, number] }) {
+    setSelectedId(p.id);
+    if (mapInstance) {
+      mapInstance.setCenter(p.coords, 14, { duration: 800 });
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background py-6 px-4">
       <div className="max-w-7xl mx-auto">
@@ -115,79 +84,77 @@ export default function MapPage() {
           </div>
           <h1 className="text-4xl font-bold text-foreground">Карта Владивостока</h1>
           <p className="text-muted-foreground mt-1">
-            Реальная интерактивная карта Приморского края — точки на своих местах
+            Интерактивная карта Приморского края на Яндекс.Картах
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Leaflet map */}
+          {/* Yandex Map */}
           <div className="lg:col-span-2">
             <Card className="rounded-2xl border-border/60 overflow-hidden">
               <div className="relative" style={{ height: "640px" }}>
                 {pointsLoading ? (
                   <Skeleton className="absolute inset-0" />
                 ) : (
-                  <MapContainer
-                    center={[43.0815, 131.7]}
-                    zoom={10}
-                    className="w-full h-full"
-                    scrollWheelZoom
-                  >
-                    <TileLayer
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                    />
-                    <FlyToPoint position={flyTarget} />
+                  <YMaps query={{ lang: "ru_RU", load: "package.full" }}>
+                    <Map
+                      state={{ center: [43.0815, 131.87], zoom: 11 }}
+                      width="100%"
+                      height="640px"
+                      instanceRef={(ref: unknown) => {
+                        if (ref) setMapInstance(ref as typeof mapInstance);
+                      }}
+                      options={{ suppressMapOpenBlock: true }}
+                    >
+                      {enrichedPoints.map(p => (
+                        <Placemark
+                          key={p.id}
+                          geometry={p.coords}
+                          properties={{
+                            balloonContentHeader: p.name,
+                            balloonContentBody: [
+                              `<div style="min-width:200px">`,
+                              `<div style="font-size:12px;color:#666;margin-bottom:6px">${p.catConfig.label}</div>`,
+                              p.description
+                                ? `<p style="font-size:12px;color:#333;margin-bottom:8px">${p.description}</p>`
+                                : "",
+                              p.legend
+                                ? `<div style="background:#fffbeb;border-left:3px solid #f59e0b;padding:8px;border-radius:4px">
+                                     <div style="font-size:11px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">📜 Легенда</div>
+                                     <p style="font-size:11px;color:#78350f;font-style:italic;margin:0">${p.legend}</p>
+                                   </div>`
+                                : "",
+                              `</div>`,
+                            ].join(""),
+                            hintContent: p.name,
+                          }}
+                          options={{
+                            preset: "islands#blueCircleDotIcon",
+                            iconColor: p.catConfig.color,
+                            balloonPanelMaxMapArea: 0,
+                          }}
+                          onClick={() => handlePointClick(p)}
+                        />
+                      ))}
 
-                    {enrichedPoints.map(p => (
-                      <Marker
-                        key={p.id}
-                        position={p.coords}
-                        icon={makeIcon(p.catConfig.color)}
-                        eventHandlers={{
-                          click: () => setSelectedId(p.id),
-                        }}
-                      >
-                        <Popup>
-                          <div className="min-w-[220px]">
-                            <div className="flex items-center gap-2 mb-1.5">
-                              <span
-                                className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white"
-                                style={{ background: p.catConfig.color }}
-                              >
-                                {p.catConfig.icon}
-                              </span>
-                              <strong className="text-sm">{p.name}</strong>
-                            </div>
-                            <div className="text-xs text-gray-500 mb-1">{p.catConfig.label}</div>
-                            {p.description && (
-                              <p className="text-xs text-gray-700 mb-2 leading-snug">{p.description}</p>
-                            )}
-                            {p.legend && (
-                              <div className="mt-2 p-2 bg-amber-50 border-l-2 border-amber-400 rounded">
-                                <div className="flex items-center gap-1 text-amber-800 text-[11px] font-semibold uppercase tracking-wide mb-1">
-                                  <Scroll className="h-3 w-3" /> Легенда
-                                </div>
-                                <p className="text-xs text-amber-900 italic leading-snug">{p.legend}</p>
-                              </div>
-                            )}
-                          </div>
-                        </Popup>
-                      </Marker>
-                    ))}
-
-                    {routeCoords.length > 1 && (
-                      <Polyline
-                        positions={routeCoords}
-                        pathOptions={{ color: "#EB7124", weight: 5, opacity: 0.85, dashArray: "8 8" }}
-                      />
-                    )}
-                  </MapContainer>
+                      {routeCoords.length > 1 && (
+                        <Polyline
+                          geometry={routeCoords}
+                          options={{
+                            strokeColor: "#EB7124",
+                            strokeWidth: 5,
+                            strokeOpacity: 0.85,
+                            strokeStyle: "dash",
+                          }}
+                        />
+                      )}
+                    </Map>
+                  </YMaps>
                 )}
               </div>
             </Card>
             <p className="text-xs text-muted-foreground mt-2 px-1">
-              Карта © OpenStreetMap. Используйте колесо мыши для масштабирования, перетаскивание для перемещения.
+              © Яндекс.Карты. Используйте колесо мыши для масштабирования, перетаскивание для перемещения.
             </p>
           </div>
 
@@ -224,7 +191,7 @@ export default function MapPage() {
                         className={`rounded-xl border-border/60 cursor-pointer transition-all hover-elevate ${
                           selectedId === p.id ? "ring-2 ring-accent" : ""
                         }`}
-                        onClick={() => setSelectedId(p.id)}
+                        onClick={() => handlePointClick(p)}
                       >
                         <div className="p-3 flex items-center gap-3">
                           <span
@@ -273,6 +240,39 @@ export default function MapPage() {
                       </Card>
                     ))}
               </div>
+            )}
+
+            {/* Legend */}
+            {activeTab === "points" && (
+              <Card className="rounded-xl border-border/60 p-3">
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                  Легенда
+                </div>
+                <div className="space-y-1.5">
+                  {Object.entries(categoryConfig).map(([key, cfg]) => (
+                    <div key={key} className="flex items-center gap-2">
+                      <span
+                        className="inline-flex items-center justify-center w-6 h-6 rounded-full text-white shrink-0"
+                        style={{ background: cfg.color }}
+                      >
+                        <span className="scale-75">{cfg.icon}</span>
+                      </span>
+                      <span className="text-xs text-muted-foreground">{cfg.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            )}
+
+            {activeTab === "routes" && activeRoute && (
+              <Card className="rounded-xl border-border/60 p-3 bg-accent/5">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Scroll className="h-3.5 w-3.5 text-accent" />
+                  <span className="text-xs font-semibold text-accent">Активный маршрут</span>
+                </div>
+                <div className="text-sm font-semibold mb-1">{activeRoute.name}</div>
+                <div className="text-xs text-muted-foreground">{routeCoords.length} точек на карте</div>
+              </Card>
             )}
           </div>
         </div>
