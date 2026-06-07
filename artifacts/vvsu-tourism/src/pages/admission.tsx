@@ -148,14 +148,14 @@ export default function AdmissionPage() {
               Институт туризма и креативных индустрий · ВВГУ
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
-              Поступление <span className="text-accent">2025</span>
+              Поступление <span className="text-accent">2026</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl mx-auto mb-10">
               Начните своё путешествие в мир туризма, гостеприимства и творческих индустрий. Мы ждём вас в ВВГУ!
             </p>
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
               <div className="flex items-center gap-2"><Users className="h-4 w-4 text-accent" /> Бюджетные и платные места</div>
-              <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> Приём до 20 июля 2025</div>
+              <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> Приём до 20 июля 2026</div>
               <div className="flex items-center gap-2"><Star className="h-4 w-4 text-accent" /> Очная и заочная формы</div>
             </div>
           </motion.div>
