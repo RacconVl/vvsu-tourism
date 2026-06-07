@@ -439,7 +439,7 @@ export default function Dashboard() {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 pb-10 -mt-2">
+      <div className="max-w-7xl mx-auto px-4 pb-10 mt-8">
         {/* ── ОБЗОР АДМИНА ──────────────────────────────────── */}
         {activeTab === "overview" && isAdmin && <AdminOverview />}
 
