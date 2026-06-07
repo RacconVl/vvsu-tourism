@@ -44,7 +44,7 @@ export function Navbar() {
       <div className="container flex h-16 max-w-screen-2xl items-center px-4 mx-auto gap-4">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight shrink-0 mr-4">
           <Compass className="h-6 w-6 text-accent" />
-          <span className="hidden sm:inline">ВВГУ Туризм</span>
+          <span className="hidden sm:inline">ВВГУ</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1 flex-1">
