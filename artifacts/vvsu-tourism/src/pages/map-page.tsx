@@ -96,7 +96,7 @@ export default function MapPage() {
                 {pointsLoading ? (
                   <Skeleton className="absolute inset-0" />
                 ) : (
-                  <YMaps query={{ lang: "ru_RU", load: "package.full" }}>
+                  <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: import.meta.env.VITE_YANDEX_MAPS_KEY }}>
                     <Map
                       state={{ center: [43.0815, 131.87], zoom: 11 }}
                       width="100%"
