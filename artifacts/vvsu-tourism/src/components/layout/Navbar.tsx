@@ -7,7 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useAuth } from "@/hooks/use-auth";
-import { useLogout, getGetMeQueryKey, setAuthTokenGetter } from "@workspace/api-client-react";
+import { useLogout, getGetMeQueryKey, getGetMyProfileQueryKey, getGetDashboardSummaryQueryKey, setAuthTokenGetter } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -32,6 +32,8 @@ export function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("vvsu_auth_token");
     setAuthTokenGetter(null);
+    qc.removeQueries({ queryKey: getGetMyProfileQueryKey() });
+    qc.removeQueries({ queryKey: getGetDashboardSummaryQueryKey() });
     logout.mutate(undefined, {
       onSettled: () => {
         qc.setQueryData(getGetMeQueryKey(), { user: null });

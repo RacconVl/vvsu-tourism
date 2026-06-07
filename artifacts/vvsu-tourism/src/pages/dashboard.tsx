@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import {
   useGetDashboardSummary, useGetProgressMap, useGetLeaderboard,
   useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey, getGetMeQueryKey,
+  useAdminListUsers, useAdminGetStats, useAdminCreateCourse, useAdminCreateQuest,
+  getAdminGetStatsQueryKey,
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,7 +23,7 @@ import { useAuth } from "@/hooks/use-auth";
 import {
   BookOpen, Compass, Award, Star, Clock, ChevronRight, Trophy, Flame,
   Anchor, MapPin, Waves, Brain, Activity, Settings, MessageCircle,
-  Sparkles, Lock, Map as MapIcon, Zap,
+  Sparkles, Lock, Map as MapIcon, Zap, Users, BarChart3, Shield, Plus,
 } from "lucide-react";
 
 const roleLabels: Record<string, string> = {
@@ -30,7 +32,6 @@ const roleLabels: Record<string, string> = {
 };
 
 type ActivityType = "module_complete" | "quest_complete" | "achievement" | "quiz" | "quest" | "community";
-
 const activityConfig: Record<ActivityType | string, { icon: React.ReactNode; color: string; bg: string }> = {
   module_complete: { icon: <BookOpen className="h-3.5 w-3.5" />, color: "#033F7E", bg: "rgba(3,63,126,0.12)" },
   quest_complete:  { icon: <Compass className="h-3.5 w-3.5" />,  color: "#EB7124", bg: "rgba(235,113,36,0.12)" },
@@ -67,6 +68,213 @@ const iconMap: Record<string, React.ReactNode> = {
 type Tab = "overview" | "achievements" | "activity" | "results" | "settings";
 const VALID_TABS: Tab[] = ["overview", "achievements", "activity", "results", "settings"];
 
+/* ─── Admin sub-panels ──────────────────────────────────────── */
+type AdminPanel = "users" | "course" | "quest";
+
+function AdminOverview() {
+  const { data: stats } = useAdminGetStats();
+  const { data: users } = useAdminListUsers();
+  const [panel, setPanel] = useState<AdminPanel>("users");
+  const qc = useQueryClient();
+  const { toast } = useToast();
+
+  const statCards = stats ? [
+    { icon: <Users className="h-5 w-5" />,     value: stats.totalUsers,              label: "Пользователей",         color: "#033F7E" },
+    { icon: <Shield className="h-5 w-5" />,    value: stats.totalAdmins,             label: "Администраторов",       color: "#172E46" },
+    { icon: <BookOpen className="h-5 w-5" />,  value: stats.totalCourses,            label: "Курсов",                color: "#EB7124" },
+    { icon: <Compass className="h-5 w-5" />,   value: stats.totalQuests,             label: "Квестов",               color: "#d97706" },
+    { icon: <Brain className="h-5 w-5" />,     value: stats.totalQuizzes,            label: "Тестов",                color: "#7c3aed" },
+    { icon: <Activity className="h-5 w-5" />,  value: stats.totalCommunityPosts,     label: "Постов в сообществе",   color: "#0891b2" },
+    { icon: <BarChart3 className="h-5 w-5" />, value: stats.quizAttemptsLast7d,      label: "Попыток тестов / 7 дн", color: "#059669" },
+    { icon: <Trophy className="h-5 w-5" />,    value: stats.moduleCompletionsLast7d, label: "Модулей закрыто / 7 дн",color: "#ca8a04" },
+  ] : [];
+
+  const [course, setCourse] = useState({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
+  const [quest, setQuest] = useState({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150 });
+  const createCourse = useAdminCreateCourse();
+  const createQuest = useAdminCreateQuest();
+
+  const submitCourse = (e: React.FormEvent) => {
+    e.preventDefault();
+    createCourse.mutate({ data: { ...course, xpReward: Number(course.xpReward) } }, {
+      onSuccess: () => {
+        toast({ title: "Курс создан" });
+        qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
+        setCourse({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
+      },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const submitQuest = (e: React.FormEvent) => {
+    e.preventDefault();
+    createQuest.mutate({ data: { ...quest, xpReward: Number(quest.xpReward) } }, {
+      onSuccess: () => {
+        toast({ title: "Квест создан" });
+        setQuest({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150 });
+      },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+      {/* Stats grid */}
+      {stats ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {statCards.map((s, i) => (
+            <Card key={i} className="rounded-2xl border-border/60 overflow-hidden">
+              <div className="h-1" style={{ background: s.color }} />
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 text-white" style={{ background: s.color }}>
+                  {s.icon}
+                </div>
+                <div>
+                  <div className="text-2xl font-bold leading-none">{s.value}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[1,2,3,4,5,6,7,8].map(i => <Skeleton key={i} className="h-20 rounded-2xl" />)}
+        </div>
+      )}
+
+      {/* Sub-panel tabs */}
+      <div className="flex gap-1 p-1 rounded-2xl border border-border/60 bg-muted/30 w-fit">
+        {([["users","Пользователи"], ["course","Новый курс"], ["quest","Новый квест"]] as [AdminPanel, string][]).map(([key, label]) => (
+          <button
+            key={key}
+            onClick={() => setPanel(key)}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+              panel === key ? "bg-background shadow-sm text-foreground border border-border/60" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Users table */}
+      {panel === "users" && (
+        <Card className="rounded-2xl border-border/60 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-muted/50 text-left">
+                <tr>
+                  <th className="p-3 font-semibold">Имя</th>
+                  <th className="p-3 font-semibold">Email</th>
+                  <th className="p-3 font-semibold">Роль</th>
+                  <th className="p-3 font-semibold">Уровень</th>
+                  <th className="p-3 font-semibold">XP</th>
+                  <th className="p-3 font-semibold">Тесты</th>
+                  <th className="p-3 font-semibold">Квесты</th>
+                  <th className="p-3 font-semibold">Регистрация</th>
+                  <th className="p-3"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {users?.map((u) => (
+                  <tr key={u.id} className="border-t border-border/50 hover:bg-muted/30">
+                    <td className="p-3 font-medium">{u.name}</td>
+                    <td className="p-3 text-muted-foreground">{u.email}</td>
+                    <td className="p-3">
+                      {u.role === "admin"
+                        ? <Badge className="bg-accent text-white border-0">Админ</Badge>
+                        : <Badge variant="outline">{roleLabels[u.studentRole] ?? u.studentRole}</Badge>}
+                    </td>
+                    <td className="p-3">{u.level}</td>
+                    <td className="p-3 font-semibold" style={{ color: "#EB7124" }}>{u.xp}</td>
+                    <td className="p-3">{u.completedQuizzes}</td>
+                    <td className="p-3">{u.completedQuests}</td>
+                    <td className="p-3 text-muted-foreground">{new Date(u.createdAt).toLocaleDateString("ru-RU")}</td>
+                    <td className="p-3">
+                      <Link href={`/profile/${u.id}`} className="text-accent hover:underline text-xs">Профиль</Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {!users && <div className="p-6"><Skeleton className="h-32 rounded-xl" /></div>}
+          </div>
+        </Card>
+      )}
+
+      {/* New Course form */}
+      {panel === "course" && (
+        <Card className="rounded-2xl border-border/60">
+          <CardContent className="p-6">
+            <form onSubmit={submitCourse} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={course.title} onChange={(e) => setCourse(s => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
+              <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={course.description} onChange={(e) => setCourse(s => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
+              <div className="space-y-2"><Label>Специализация</Label>
+                <Select value={course.role} onValueChange={(v) => setCourse(s => ({ ...s, role: v }))}>
+                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="guide">Экскурсовод</SelectItem>
+                    <SelectItem value="marketer">Маркетолог</SelectItem>
+                    <SelectItem value="designer">Дизайнер</SelectItem>
+                    <SelectItem value="operator">Туроператор</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2"><Label>Этап</Label><Input value={course.stage} onChange={(e) => setCourse(s => ({ ...s, stage: e.target.value }))} className="rounded-xl" /></div>
+              <div className="space-y-2"><Label>Категория</Label><Input value={course.category} onChange={(e) => setCourse(s => ({ ...s, category: e.target.value }))} className="rounded-xl" /></div>
+              <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={course.xpReward} onChange={(e) => setCourse(s => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
+              <div className="space-y-2 md:col-span-2"><Label>Картинка (URL, опционально)</Label><Input value={course.imageUrl} onChange={(e) => setCourse(s => ({ ...s, imageUrl: e.target.value }))} className="rounded-xl" placeholder="https://..." /></div>
+              <Button type="submit" className="md:col-span-2 rounded-full" disabled={createCourse.isPending}>
+                <Plus className="h-4 w-4 mr-1" /> {createCourse.isPending ? "Создание..." : "Создать курс"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* New Quest form */}
+      {panel === "quest" && (
+        <Card className="rounded-2xl border-border/60">
+          <CardContent className="p-6">
+            <form onSubmit={submitQuest} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={quest.title} onChange={(e) => setQuest(s => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
+              <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={quest.description} onChange={(e) => setQuest(s => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
+              <div className="space-y-2"><Label>Тип</Label>
+                <Select value={quest.type} onValueChange={(v) => setQuest(s => ({ ...s, type: v }))}>
+                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="exploration">Исследование</SelectItem>
+                    <SelectItem value="creative">Творческое</SelectItem>
+                    <SelectItem value="research">Аналитика</SelectItem>
+                    <SelectItem value="practice">Практика</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2"><Label>Сложность</Label>
+                <Select value={quest.difficulty} onValueChange={(v) => setQuest(s => ({ ...s, difficulty: v }))}>
+                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="easy">Лёгкий</SelectItem>
+                    <SelectItem value="medium">Средний</SelectItem>
+                    <SelectItem value="hard">Сложный</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2 md:col-span-2"><Label>Место (Владивосток)</Label><Input required value={quest.location} onChange={(e) => setQuest(s => ({ ...s, location: e.target.value }))} className="rounded-xl" placeholder="Например: Золотой мост" /></div>
+              <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={quest.xpReward} onChange={(e) => setQuest(s => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
+              <Button type="submit" className="md:col-span-2 rounded-full" disabled={createQuest.isPending}>
+                <Plus className="h-4 w-4 mr-1" /> {createQuest.isPending ? "Создание..." : "Создать квест"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      )}
+    </motion.div>
+  );
+}
+
+/* ─── Main Dashboard ────────────────────────────────────────── */
 export default function Dashboard() {
   const search = useSearch();
   const tabParam = (new URLSearchParams(search).get("tab") ?? "overview") as Tab;
@@ -78,7 +286,7 @@ export default function Dashboard() {
     if (VALID_TABS.includes(t)) setActiveTab(t);
   }, [search]);
 
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const { data: summary, isLoading: summaryLoading } = useGetDashboardSummary();
   const { data: progressMap, isLoading: mapLoading } = useGetProgressMap();
   const { data: leaderboard, isLoading: lbLoading } = useGetLeaderboard();
@@ -111,13 +319,19 @@ export default function Dashboard() {
     });
   };
 
-  const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
+  // Admin sees only Обзор + Настройки tabs
+  const studentTabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
     { key: "overview",     label: "Обзор",      icon: <Anchor className="h-4 w-4" /> },
     { key: "achievements", label: "Достижения", icon: <Award className="h-4 w-4" /> },
     { key: "activity",     label: "Активность", icon: <Activity className="h-4 w-4" /> },
     { key: "results",      label: "Результаты", icon: <Brain className="h-4 w-4" /> },
     { key: "settings",     label: "Настройки",  icon: <Settings className="h-4 w-4" /> },
   ];
+  const adminTabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
+    { key: "overview",  label: "Обзор",     icon: <Shield className="h-4 w-4" /> },
+    { key: "settings",  label: "Настройки", icon: <Settings className="h-4 w-4" /> },
+  ];
+  const tabs = isAdmin ? adminTabs : studentTabs;
 
   return (
     <div className="min-h-screen bg-background">
@@ -160,72 +374,78 @@ export default function Dashboard() {
                   </Avatar>
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <Anchor className="h-4 w-4 text-accent" />
-                      <span className="text-white/50 text-xs uppercase tracking-widest font-medium">Личный кабинет</span>
+                      {isAdmin
+                        ? <><Shield className="h-4 w-4 text-accent" /><span className="text-white/50 text-xs uppercase tracking-widest font-medium">Панель администратора</span></>
+                        : <><Anchor className="h-4 w-4 text-accent" /><span className="text-white/50 text-xs uppercase tracking-widest font-medium">Личный кабинет</span></>
+                      }
                     </div>
                     <h1 className="text-3xl font-bold text-white leading-tight">{profile.user.name}</h1>
                     <p className="text-white/60 mt-1 text-sm">
                       {profile.user.email}
-                      {profile.user.role === "admin" && (
+                      {isAdmin && (
                         <Badge className="ml-2 bg-accent text-white border-0 text-xs">Администратор</Badge>
                       )}
                     </p>
-                    <div className="flex items-center gap-3 mt-2 flex-wrap">
-                      <Badge variant="secondary" className="rounded-full text-xs">
-                        {roleLabels[profile.user.studentRole] ?? profile.user.studentRole}
-                      </Badge>
-                      <span className="text-white/70 text-xs flex items-center gap-1">
-                        <Trophy className="h-3.5 w-3.5 text-accent" /> Уровень {profile.user.level}
-                      </span>
-                      <span className="text-white/70 text-xs flex items-center gap-1">
-                        <Sparkles className="h-3.5 w-3.5 text-accent" /> {profile.user.xp} XP
-                      </span>
-                    </div>
+                    {!isAdmin && (
+                      <div className="flex items-center gap-3 mt-2 flex-wrap">
+                        <Badge variant="secondary" className="rounded-full text-xs">
+                          {roleLabels[profile.user.studentRole] ?? profile.user.studentRole}
+                        </Badge>
+                        <span className="text-white/70 text-xs flex items-center gap-1">
+                          <Trophy className="h-3.5 w-3.5 text-accent" /> Уровень {profile.user.level}
+                        </span>
+                        <span className="text-white/70 text-xs flex items-center gap-1">
+                          <Sparkles className="h-3.5 w-3.5 text-accent" /> {profile.user.xp} XP
+                        </span>
+                      </div>
+                    )}
                     {profile.user.bio && (
                       <p className="text-white/70 text-sm mt-2 max-w-lg">{profile.user.bio}</p>
                     )}
                   </div>
                 </div>
 
-                {/* XP progress block */}
-                <div
-                  className="flex flex-col gap-3 rounded-2xl p-5 min-w-[240px]"
-                  style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.10)" }}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Flame className="h-5 w-5 text-accent" />
-                      <span className="text-2xl font-bold text-white">
-                        {profile.user.xp.toLocaleString()}
-                        <span className="text-base font-normal text-white/50 ml-1">XP</span>
-                      </span>
+                {/* XP progress block — students only */}
+                {!isAdmin && (
+                  <div
+                    className="flex flex-col gap-3 rounded-2xl p-5 min-w-[240px]"
+                    style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.10)" }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Flame className="h-5 w-5 text-accent" />
+                        <span className="text-2xl font-bold text-white">
+                          {profile.user.xp.toLocaleString()}
+                          <span className="text-base font-normal text-white/50 ml-1">XP</span>
+                        </span>
+                      </div>
+                      <Badge className="text-xs font-bold border-0 px-3" style={{ background: "#EB7124", color: "#fff" }}>
+                        Уровень {profile.user.level}
+                      </Badge>
                     </div>
-                    <Badge className="text-xs font-bold border-0 px-3" style={{ background: "#EB7124", color: "#fff" }}>
-                      Уровень {profile.user.level}
-                    </Badge>
+                    <div>
+                      <div className="relative h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.12)" }}>
+                        <div
+                          className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
+                          style={{ width: `${profileXpPercent}%`, background: "linear-gradient(90deg, #EB7124, #f59e0b)" }}
+                        />
+                      </div>
+                      <p className="text-xs text-white/40 mt-1.5 text-right">
+                        Ещё {profile.nextLevelXp} XP до уровня {profile.user.level + 1}
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/10">
+                      <div className="text-center">
+                        <p className="text-white text-lg font-bold">{profile.unlockedAchievements.length}</p>
+                        <p className="text-white/50 text-xs">Достижений</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-white text-lg font-bold">{profile.completedQuests}</p>
+                        <p className="text-white/50 text-xs">Квестов</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="relative h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.12)" }}>
-                      <div
-                        className="absolute inset-y-0 left-0 rounded-full transition-all duration-700"
-                        style={{ width: `${profileXpPercent}%`, background: "linear-gradient(90deg, #EB7124, #f59e0b)" }}
-                      />
-                    </div>
-                    <p className="text-xs text-white/40 mt-1.5 text-right">
-                      Ещё {profile.nextLevelXp} XP до уровня {profile.user.level + 1}
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/10">
-                    <div className="text-center">
-                      <p className="text-white text-lg font-bold">{profile.unlockedAchievements.length}</p>
-                      <p className="text-white/50 text-xs">Достижений</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-white text-lg font-bold">{profile.completedQuests}</p>
-                      <p className="text-white/50 text-xs">Квестов</p>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             </motion.div>
           ) : null}
@@ -250,59 +470,12 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* ── ОБЗОР ─────────────────────────────────────────────── */}
-        {activeTab === "overview" && (
-          <motion.div key="overview" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-            {/* Stat cards */}
-            {summary && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {[
-                  { label: "Курсов завершено", value: `${summary.completedCourses}/${summary.totalCourses}`, icon: <BookOpen className="h-5 w-5" />, href: "/cabinet/courses", accent: "#033F7E" },
-                  { label: "Квестов выполнено", value: `${summary.completedQuests}/${summary.totalQuests}`, icon: <Compass className="h-5 w-5" />, href: "/cabinet/tasks", accent: "#EB7124" },
-                  { label: "Достижений", value: `${summary.unlockedAchievements}/${summary.totalAchievements}`, icon: <Award className="h-5 w-5" />, href: null, accent: "#d97706", onClick: () => setActiveTab("achievements") },
-                  { label: "Текущий этап", value: summary.currentStage, icon: <MapPin className="h-5 w-5" />, href: "/map", accent: "#172E46" },
-                ].map((stat, i) => (
-                  stat.onClick ? (
-                    <Card
-                      key={i}
-                      onClick={stat.onClick}
-                      className="hover:shadow-lg transition-all hover:-translate-y-0.5 cursor-pointer rounded-2xl border-border/60 overflow-hidden group"
-                    >
-                      <CardContent className="p-0">
-                        <div className="h-1.5 w-full" style={{ background: stat.accent }} />
-                        <div className="p-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl text-white" style={{ background: stat.accent }}>
-                              {stat.icon}
-                            </span>
-                            <span className="text-xs text-muted-foreground uppercase tracking-wider leading-tight">{stat.label}</span>
-                          </div>
-                          <p className="text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">{stat.value}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <Link key={i} href={stat.href!}>
-                      <Card className="hover:shadow-lg transition-all hover:-translate-y-0.5 cursor-pointer rounded-2xl border-border/60 overflow-hidden group h-full">
-                        <CardContent className="p-0">
-                          <div className="h-1.5 w-full" style={{ background: stat.accent }} />
-                          <div className="p-4">
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl text-white" style={{ background: stat.accent }}>
-                                {stat.icon}
-                              </span>
-                              <span className="text-xs text-muted-foreground uppercase tracking-wider leading-tight">{stat.label}</span>
-                            </div>
-                            <p className="text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">{stat.value}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  )
-                ))}
-              </div>
-            )}
+        {/* ── ОБЗОР АДМИНА ──────────────────────────────────── */}
+        {activeTab === "overview" && isAdmin && <AdminOverview />}
 
+        {/* ── ОБЗОР СТУДЕНТА ────────────────────────────────── */}
+        {activeTab === "overview" && !isAdmin && (
+          <motion.div key="overview" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Journey Map */}
               <div className="lg:col-span-2">
@@ -357,7 +530,7 @@ export default function Dashboard() {
 
               {/* Right column */}
               <div className="space-y-6">
-                {/* Recent Activity — redesigned */}
+                {/* Recent Activity */}
                 <Card className="rounded-2xl border-border/60 overflow-hidden">
                   <div className="h-1" style={{ background: "linear-gradient(90deg, #EB7124, #d97706)" }} />
                   <CardHeader className="pb-3 pt-4 flex flex-row items-center justify-between space-y-0">
@@ -379,10 +552,7 @@ export default function Dashboard() {
                         const cfg = activityConfig[item.type] ?? defaultActivity;
                         return (
                           <div key={item.id} className="flex items-center gap-3 p-3 rounded-xl border border-border/40 hover:bg-muted/30 transition-colors">
-                            <div
-                              className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0"
-                              style={{ background: cfg.bg, color: cfg.color }}
-                            >
+                            <div className="h-8 w-8 rounded-xl flex items-center justify-center shrink-0" style={{ background: cfg.bg, color: cfg.color }}>
                               {cfg.icon}
                             </div>
                             <div className="flex-1 min-w-0">
@@ -462,8 +632,8 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* ── ДОСТИЖЕНИЯ ───────────────────────────────────────── */}
-        {activeTab === "achievements" && (
+        {/* ── ДОСТИЖЕНИЯ (только студенты) ─────────────────── */}
+        {activeTab === "achievements" && !isAdmin && (
           <motion.div key="achievements" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             {profileLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -502,8 +672,8 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* ── АКТИВНОСТЬ ───────────────────────────────────────── */}
-        {activeTab === "activity" && (
+        {/* ── АКТИВНОСТЬ (только студенты) ─────────────────── */}
+        {activeTab === "activity" && !isAdmin && (
           <motion.div key="activity" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="rounded-2xl border-border/60">
               <CardContent className="p-5">
@@ -521,10 +691,7 @@ export default function Dashboard() {
                       const cfg = activityConfig[a.type] ?? defaultActivity;
                       return (
                         <li key={a.id} className="flex items-center gap-3 p-3 rounded-xl border border-border/40 hover:bg-muted/30 transition-colors">
-                          <div
-                            className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
-                            style={{ background: cfg.bg, color: cfg.color }}
-                          >
+                          <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: cfg.bg, color: cfg.color }}>
                             {cfg.icon}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -548,8 +715,8 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* ── РЕЗУЛЬТАТЫ ───────────────────────────────────────── */}
-        {activeTab === "results" && (
+        {/* ── РЕЗУЛЬТАТЫ (только студенты) ─────────────────── */}
+        {activeTab === "results" && !isAdmin && (
           <motion.div key="results" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-5">
             <Card className="rounded-2xl border-border/60">
               <CardContent className="p-5">
@@ -609,63 +776,36 @@ export default function Dashboard() {
                 <h2 className="text-lg font-bold flex items-center gap-2">
                   <Settings className="h-5 w-5 text-accent" /> Настройки профиля
                 </h2>
-
                 <div className="space-y-2">
                   <Label>Имя</Label>
-                  <Input
-                    value={edit.name}
-                    onChange={(e) => setEdit((s) => ({ ...s, name: e.target.value }))}
-                    className="rounded-xl"
-                    placeholder="Ваше полное имя"
-                    data-testid="input-edit-name"
-                  />
+                  <Input value={edit.name} onChange={(e) => setEdit((s) => ({ ...s, name: e.target.value }))} className="rounded-xl" placeholder="Ваше полное имя" data-testid="input-edit-name" />
                 </div>
-
                 <div className="space-y-2">
                   <Label>О себе</Label>
-                  <Textarea
-                    rows={3}
-                    value={edit.bio}
-                    onChange={(e) => setEdit((s) => ({ ...s, bio: e.target.value }))}
-                    className="rounded-xl"
-                    placeholder="Расскажите о себе..."
-                    data-testid="input-edit-bio"
-                  />
+                  <Textarea rows={3} value={edit.bio} onChange={(e) => setEdit((s) => ({ ...s, bio: e.target.value }))} className="rounded-xl" placeholder="Расскажите о себе..." data-testid="input-edit-bio" />
                 </div>
-
                 <div className="space-y-2">
                   <Label>Ссылка на аватар (URL)</Label>
-                  <Input
-                    value={edit.avatarUrl}
-                    onChange={(e) => setEdit((s) => ({ ...s, avatarUrl: e.target.value }))}
-                    className="rounded-xl"
-                    placeholder="https://..."
-                    data-testid="input-edit-avatar"
-                  />
+                  <Input value={edit.avatarUrl} onChange={(e) => setEdit((s) => ({ ...s, avatarUrl: e.target.value }))} className="rounded-xl" placeholder="https://..." data-testid="input-edit-avatar" />
                   {edit.avatarUrl && (
                     <img src={edit.avatarUrl} alt="preview" className="h-16 w-16 rounded-full object-cover ring-2 ring-border mt-2" />
                   )}
                 </div>
-
-                <div className="space-y-2">
-                  <Label>Специализация</Label>
-                  <Select value={edit.studentRole} onValueChange={(v) => setEdit((s) => ({ ...s, studentRole: v }))}>
-                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="guide">Экскурсовод</SelectItem>
-                      <SelectItem value="marketer">Маркетолог</SelectItem>
-                      <SelectItem value="designer">Дизайнер</SelectItem>
-                      <SelectItem value="operator">Туроператор</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button
-                  onClick={saveProfile}
-                  disabled={update.isPending}
-                  className="rounded-full"
-                  data-testid="button-save-profile"
-                >
+                {!isAdmin && (
+                  <div className="space-y-2">
+                    <Label>Специализация</Label>
+                    <Select value={edit.studentRole} onValueChange={(v) => setEdit((s) => ({ ...s, studentRole: v }))}>
+                      <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="guide">Экскурсовод</SelectItem>
+                        <SelectItem value="marketer">Маркетолог</SelectItem>
+                        <SelectItem value="designer">Дизайнер</SelectItem>
+                        <SelectItem value="operator">Туроператор</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+                <Button onClick={saveProfile} disabled={update.isPending} className="rounded-full" data-testid="button-save-profile">
                   {update.isPending ? "Сохранение..." : "Сохранить изменения"}
                 </Button>
               </CardContent>

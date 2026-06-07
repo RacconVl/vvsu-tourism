@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { useRegister, getGetMeQueryKey, setAuthTokenGetter } from "@workspace/api-client-react";
+import { useRegister, getGetMeQueryKey, getGetMyProfileQueryKey, getGetDashboardSummaryQueryKey, setAuthTokenGetter } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,6 +28,8 @@ export default function RegisterPage() {
           localStorage.setItem("vvsu_auth_token", token);
           setAuthTokenGetter(() => localStorage.getItem("vvsu_auth_token"));
           qc.setQueryData(getGetMeQueryKey(), { user });
+          qc.removeQueries({ queryKey: getGetMyProfileQueryKey() });
+          qc.removeQueries({ queryKey: getGetDashboardSummaryQueryKey() });
           toast({ title: "Аккаунт создан!", description: "Добро пожаловать в институт." });
           setLocation("/cabinet");
         },

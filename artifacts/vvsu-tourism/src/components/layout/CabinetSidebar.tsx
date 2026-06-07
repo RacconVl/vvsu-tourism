@@ -67,24 +67,24 @@ export function CabinetSidebar() {
             </Link>
           );
         })}
-      </nav>
 
-      {/* Settings at bottom */}
-      <div className="p-3 border-t border-border/60">
-        <Link href="/cabinet?tab=settings">
-          <motion.div
-            whileHover={{ x: 2 }}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${
-              settingsActive
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
-            }`}
-          >
-            <Settings className="h-4 w-4 shrink-0" />
-            Настройки
-          </motion.div>
-        </Link>
-      </div>
+        {/* Divider + Settings */}
+        <div className="pt-2 mt-2 border-t border-border/60">
+          <Link href="/cabinet?tab=settings">
+            <motion.div
+              whileHover={{ x: 2 }}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${
+                settingsActive
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              <Settings className="h-4 w-4 shrink-0" />
+              Настройки
+            </motion.div>
+          </Link>
+        </div>
+      </nav>
     </aside>
   );
 }
