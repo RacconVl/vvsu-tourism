@@ -344,17 +344,23 @@ export const RegisterBody = zod.object({
   studentRole: zod.string().optional(),
 });
 
-export const RegisterResponse = zod.object({
-  id: zod.number(),
-  email: zod.string(),
-  name: zod.string(),
-  role: zod.string().describe("student or admin"),
-  studentRole: zod.string(),
-  bio: zod.string().nullish(),
-  avatarUrl: zod.string().nullish(),
-  level: zod.number(),
-  xp: zod.number(),
-});
+export const RegisterResponse = zod
+  .object({
+    id: zod.number(),
+    email: zod.string(),
+    name: zod.string(),
+    role: zod.string().describe("student or admin"),
+    studentRole: zod.string(),
+    bio: zod.string().nullish(),
+    avatarUrl: zod.string().nullish(),
+    level: zod.number(),
+    xp: zod.number(),
+  })
+  .and(
+    zod.object({
+      token: zod.string(),
+    }),
+  );
 
 /**
  * @summary Sign in
@@ -364,17 +370,23 @@ export const LoginBody = zod.object({
   password: zod.string(),
 });
 
-export const LoginResponse = zod.object({
-  id: zod.number(),
-  email: zod.string(),
-  name: zod.string(),
-  role: zod.string().describe("student or admin"),
-  studentRole: zod.string(),
-  bio: zod.string().nullish(),
-  avatarUrl: zod.string().nullish(),
-  level: zod.number(),
-  xp: zod.number(),
-});
+export const LoginResponse = zod
+  .object({
+    id: zod.number(),
+    email: zod.string(),
+    name: zod.string(),
+    role: zod.string().describe("student or admin"),
+    studentRole: zod.string(),
+    bio: zod.string().nullish(),
+    avatarUrl: zod.string().nullish(),
+    level: zod.number(),
+    xp: zod.number(),
+  })
+  .and(
+    zod.object({
+      token: zod.string(),
+    }),
+  );
 
 /**
  * @summary Sign out

@@ -305,11 +305,11 @@ paths:
               $ref: "#/components/schemas/RegisterRequest"
       responses:
         "200":
-          description: Registered user
+          description: Registered user with JWT token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthUser"
+                $ref: "#/components/schemas/AuthWithToken"
 
   /auth/login:
     post:
@@ -324,11 +324,11 @@ paths:
               $ref: "#/components/schemas/LoginRequest"
       responses:
         "200":
-          description: Logged in user
+          description: Logged in user with JWT token
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthUser"
+                $ref: "#/components/schemas/AuthWithToken"
 
   /auth/logout:
     post:
@@ -1069,6 +1069,14 @@ components:
         xp:
           type: integer
       required: [id, email, name, role, studentRole, level, xp]
+
+    AuthWithToken:
+      allOf:
+        - $ref: "#/components/schemas/AuthUser"
+      properties:
+        token:
+          type: string
+      required: [id, email, name, role, studentRole, level, xp, token]
 
     MeResponse:
       type: object

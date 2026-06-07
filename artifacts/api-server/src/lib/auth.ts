@@ -1,6 +1,7 @@
 import type { RequestHandler } from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
+import jwt from "jsonwebtoken";
 import { pool, db, usersTable, type User } from "@workspace/db";
 import { eq } from "drizzle-orm";
 
@@ -18,13 +19,28 @@ declare global {
   }
 }
 
+function getJwtSecret(): string {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) throw new Error("SESSION_SECRET environment variable is required");
+  return secret;
+}
+
+export function signJwt(userId: number): string {
+  return jwt.sign({ userId }, getJwtSecret(), { expiresIn: "30d" });
+}
+
+function verifyJwt(token: string): { userId: number } | null {
+  try {
+    return jwt.verify(token, getJwtSecret()) as { userId: number };
+  } catch {
+    return null;
+  }
+}
+
 const PgStore = connectPgSimple(session);
 
 export function buildSessionMiddleware(): RequestHandler {
-  const secret = process.env.SESSION_SECRET;
-  if (!secret) {
-    throw new Error("SESSION_SECRET environment variable is required");
-  }
+  const secret = getJwtSecret();
   return session({
     store: new PgStore({ pool, createTableIfMissing: true, tableName: "user_sessions" }),
     secret,
@@ -41,6 +57,21 @@ export function buildSessionMiddleware(): RequestHandler {
 }
 
 export const loadUser: RequestHandler = async (req, _res, next) => {
+  // JWT via Authorization: Bearer <token> (primary — works in all browser contexts)
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith("Bearer ")) {
+    const token = authHeader.slice(7);
+    const payload = verifyJwt(token);
+    if (payload) {
+      const [u] = await db.select().from(usersTable).where(eq(usersTable.id, payload.userId)).limit(1);
+      if (u) {
+        req.user = u;
+        return next();
+      }
+    }
+  }
+
+  // Session cookie fallback
   if (req.session.userId) {
     const [u] = await db.select().from(usersTable).where(eq(usersTable.id, req.session.userId)).limit(1);
     if (u) req.user = u;

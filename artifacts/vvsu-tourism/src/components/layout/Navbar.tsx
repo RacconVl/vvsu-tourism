@@ -7,7 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useAuth } from "@/hooks/use-auth";
-import { useLogout, getGetMeQueryKey } from "@workspace/api-client-react";
+import { useLogout, getGetMeQueryKey, setAuthTokenGetter } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -30,9 +30,11 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = () => {
+    localStorage.removeItem("vvsu_auth_token");
+    setAuthTokenGetter(null);
     logout.mutate(undefined, {
       onSettled: () => {
-        qc.invalidateQueries({ queryKey: getGetMeQueryKey() });
+        qc.setQueryData(getGetMeQueryKey(), { user: null });
       },
     });
   };

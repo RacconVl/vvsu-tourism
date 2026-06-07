@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/components/layout/Layout";
 import { AuthProvider } from "@/hooks/use-auth";
 import { RequireAuth } from "@/components/auth/RequireAuth";
+import { setAuthTokenGetter } from "@workspace/api-client-react";
 import Home from "@/pages/home";
 import Cabinet from "@/pages/cabinet";
 import LoginPage from "@/pages/login";
@@ -15,6 +16,9 @@ import LibraryPage from "@/pages/library";
 import Leaderboard from "@/pages/leaderboard";
 import PublicProfile from "@/pages/public-profile";
 import NotFound from "@/pages/not-found";
+
+// Initialize JWT token getter from localStorage on app startup
+setAuthTokenGetter(() => localStorage.getItem("vvsu_auth_token"));
 
 const queryClient = new QueryClient({
   defaultOptions: {

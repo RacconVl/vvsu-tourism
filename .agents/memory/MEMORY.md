@@ -1,1 +1,3 @@
 - [Auth 304 cache bug](auth-304-cache-bug.md) — customFetch must use `cache: "no-store"` or browser ETags break session-based auth after login
+- [JWT auth in Replit iframe](jwt-iframe-auth.md) — Session cookies fail in Replit's canvas iframe; use JWT tokens in localStorage + Authorization: Bearer header instead.
+- [Codegen index.ts gotcha](codegen-index.md) — After orval codegen, lib/api-zod/src/index.ts is overwritten with a bad api.schemas export; auto-fix script now runs after orval in codegen npm script.

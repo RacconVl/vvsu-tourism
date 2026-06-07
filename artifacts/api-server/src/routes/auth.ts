@@ -4,13 +4,11 @@ import { db, usersTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 import {
   RegisterBody,
-  RegisterResponse,
   LoginBody,
-  LoginResponse,
   GetMeResponse,
   LogoutResponse,
 } from "@workspace/api-zod";
-import { publicUser } from "../lib/auth";
+import { publicUser, signJwt } from "../lib/auth";
 
 const router: IRouter = Router();
 
@@ -36,7 +34,7 @@ router.post("/auth/register", async (req, res): Promise<void> => {
   }).returning();
   req.session.userId = u.id;
   req.session.save(() => {
-    res.json(RegisterResponse.parse(publicUser(u)));
+    res.json({ ...publicUser(u), token: signJwt(u.id) });
   });
 });
 
@@ -61,10 +59,8 @@ router.post("/auth/login", async (req, res): Promise<void> => {
   req.session.save((err) => {
     if (err) {
       req.log.error({ err }, "session save failed (login)");
-      res.status(500).json({ error: "Session error" });
-      return;
     }
-    res.json(LoginResponse.parse(publicUser(u)));
+    res.json({ ...publicUser(u), token: signJwt(u.id) });
   });
 });
 

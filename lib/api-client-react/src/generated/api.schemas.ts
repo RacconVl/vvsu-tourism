@@ -272,6 +272,10 @@ export interface AuthUser {
   xp: number;
 }
 
+export type AuthWithToken = AuthUser & {
+  token: string;
+};
+
 export interface MeResponse {
   user?: AuthUser | null;
 }

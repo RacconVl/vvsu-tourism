@@ -21,6 +21,7 @@ import type {
   AdminStats,
   AdminUserRow,
   AuthUser,
+  AuthWithToken,
   CommunityPost,
   Course,
   CourseDetail,
@@ -1319,8 +1320,8 @@ export const getRegisterUrl = () => {
 export const register = async (
   registerRequest: RegisterRequest,
   options?: RequestInit,
-): Promise<AuthUser> => {
-  return customFetch<AuthUser>(getRegisterUrl(), {
+): Promise<AuthWithToken> => {
+  return customFetch<AuthWithToken>(getRegisterUrl(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
@@ -1405,8 +1406,8 @@ export const getLoginUrl = () => {
 export const login = async (
   loginRequest: LoginRequest,
   options?: RequestInit,
-): Promise<AuthUser> => {
-  return customFetch<AuthUser>(getLoginUrl(), {
+): Promise<AuthWithToken> => {
+  return customFetch<AuthWithToken>(getLoginUrl(), {
     ...options,
     method: "POST",
     headers: { "Content-Type": "application/json", ...options?.headers },
