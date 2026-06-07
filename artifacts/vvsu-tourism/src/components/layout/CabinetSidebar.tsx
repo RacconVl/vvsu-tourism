@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { LayoutDashboard, BookOpen, Swords, Users, User, Settings } from "lucide-react";
+import { LayoutDashboard, BookOpen, Swords, Users, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -9,7 +9,6 @@ const sidebarItems = [
   { href: "/cabinet/courses",   label: "Курсы",       icon: BookOpen },
   { href: "/cabinet/tasks",     label: "Задания",     icon: Swords },
   { href: "/cabinet/community", label: "Сообщество",  icon: Users },
-  { href: "/cabinet/profile",   label: "Профиль",     icon: User },
 ];
 
 function isActive(href: string, location: string) {
@@ -63,12 +62,15 @@ export function CabinetSidebar() {
 
       {/* Settings at bottom */}
       <div className="p-3 border-t border-border/60">
-        <Link href="/cabinet/profile">
-          <div className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${
-            location.startsWith("/cabinet/profile")
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
-          }`}>
+        <Link href="/cabinet">
+          <div
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium cursor-pointer transition-all ${
+              location === "/cabinet"
+                ? "text-muted-foreground hover:bg-muted hover:text-foreground"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            }`}
+            title="Настройки профиля — откройте вкладку «Настройки» в Обзоре"
+          >
             <Settings className="h-4 w-4" />
             Настройки
           </div>

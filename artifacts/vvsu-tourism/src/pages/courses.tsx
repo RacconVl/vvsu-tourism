@@ -1,11 +1,21 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { useListCourses } from "@workspace/api-client-react";
+import { useListCourses, useAdminCreateCourse, getListCoursesQueryKey } from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Lock, Star, ChevronRight, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
+import { Lock, Star, ChevronRight, BookOpen, Plus } from "lucide-react";
 
 const roleColors: Record<string, string> = {
   guide: "bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-300",
@@ -15,25 +25,74 @@ const roleColors: Record<string, string> = {
 };
 
 const roleLabels: Record<string, string> = {
-  guide: "Экскурсовод",
-  marketer: "Маркетолог",
-  designer: "Дизайнер",
-  operator: "Туроператор",
+  guide: "Экскурсовод", marketer: "Маркетолог", designer: "Дизайнер", operator: "Туроператор",
+};
+
+const stageOptions = [
+  "Порт отправления", "Бухта открытий", "Морские пути", "Горизонт знаний", "Тихоокеанский горизонт",
+];
+
+type CourseForm = {
+  title: string;
+  description: string;
+  role: string;
+  stage: string;
+  category: string;
+  xpReward: string;
+  imageUrl: string;
+};
+
+const emptyForm: CourseForm = {
+  title: "", description: "", role: "guide", stage: stageOptions[0],
+  category: "general", xpReward: "100", imageUrl: "",
 };
 
 export default function Courses() {
   const { data: courses, isLoading } = useListCourses();
+  const { isAdmin } = useAuth();
+  const create = useAdminCreateCourse();
+  const qc = useQueryClient();
+  const { toast } = useToast();
+
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState<CourseForm>(emptyForm);
+
+  const handleCreate = () => {
+    const { title, description, role, stage, category, xpReward, imageUrl } = form;
+    if (!title.trim() || !description.trim()) return;
+    create.mutate(
+      { data: { title, description, role, stage, category, xpReward: Number(xpReward) || 100, imageUrl: imageUrl || undefined } },
+      {
+        onSuccess: () => {
+          qc.invalidateQueries({ queryKey: getListCoursesQueryKey() });
+          toast({ title: "Курс создан", description: `«${title}» добавлен в список курсов.` });
+          setOpen(false);
+          setForm(emptyForm);
+        },
+        onError: () => toast({ title: "Ошибка", description: "Не удалось создать курс.", variant: "destructive" }),
+      },
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
-          <div className="flex items-center gap-3 mb-2">
-            <BookOpen className="h-6 w-6 text-accent" />
-            <span className="text-muted-foreground uppercase tracking-widest text-xs">Учебный план</span>
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <BookOpen className="h-6 w-6 text-accent" />
+                <span className="text-muted-foreground uppercase tracking-widest text-xs">Учебный план</span>
+              </div>
+              <h1 className="text-4xl font-bold text-foreground">Курсы обучения</h1>
+              <p className="text-muted-foreground mt-2 text-lg">Каждый курс — это этап вашего путешествия к профессионализму</p>
+            </div>
+            {isAdmin && (
+              <Button onClick={() => setOpen(true)} className="rounded-full gap-2 shrink-0">
+                <Plus className="h-4 w-4" /> Добавить курс
+              </Button>
+            )}
           </div>
-          <h1 className="text-4xl font-bold text-foreground">Курсы обучения</h1>
-          <p className="text-muted-foreground mt-2 text-lg">Каждый курс — это этап вашего путешествия к профессионализму</p>
         </motion.div>
 
         {isLoading ? (
@@ -46,7 +105,6 @@ export default function Courses() {
               const progress = course.totalModules > 0
                 ? Math.round((course.completedModules / course.totalModules) * 100)
                 : 0;
-
               return (
                 <motion.div
                   key={course.id}
@@ -108,6 +166,73 @@ export default function Courses() {
           </div>
         )}
       </div>
+
+      {/* Admin: Create Course Dialog */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="rounded-2xl max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Plus className="h-5 w-5 text-accent" /> Новый курс
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="space-y-1.5">
+              <Label>Название *</Label>
+              <Input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} className="rounded-xl" placeholder="Введение в туризм" />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Описание *</Label>
+              <Textarea rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} className="rounded-xl" placeholder="Краткое описание курса..." />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label>Специализация</Label>
+                <Select value={form.role} onValueChange={v => setForm(f => ({ ...f, role: v }))}>
+                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="guide">Экскурсовод</SelectItem>
+                    <SelectItem value="marketer">Маркетолог</SelectItem>
+                    <SelectItem value="designer">Дизайнер</SelectItem>
+                    <SelectItem value="operator">Туроператор</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label>Этап</Label>
+                <Select value={form.stage} onValueChange={v => setForm(f => ({ ...f, stage: v }))}>
+                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {stageOptions.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label>Категория</Label>
+                <Input value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} className="rounded-xl" placeholder="general" />
+              </div>
+              <div className="space-y-1.5">
+                <Label>XP за курс</Label>
+                <Input type="number" value={form.xpReward} onChange={e => setForm(f => ({ ...f, xpReward: e.target.value }))} className="rounded-xl" min={0} />
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label>Изображение (URL)</Label>
+              <Input value={form.imageUrl} onChange={e => setForm(f => ({ ...f, imageUrl: e.target.value }))} className="rounded-xl" placeholder="https://..." />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(false)}>Отмена</Button>
+            <Button
+              onClick={handleCreate}
+              disabled={create.isPending || !form.title.trim() || !form.description.trim()}
+            >
+              {create.isPending ? "Создание..." : "Создать курс"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

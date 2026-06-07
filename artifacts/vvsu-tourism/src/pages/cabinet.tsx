@@ -1,4 +1,4 @@
-import { Switch, Route, useLocation, Redirect } from "wouter";
+import { Switch, Route, Redirect } from "wouter";
 import { CabinetSidebar } from "@/components/layout/CabinetSidebar";
 import Dashboard from "@/pages/dashboard";
 import Courses from "@/pages/courses";
@@ -6,7 +6,6 @@ import CourseDetail from "@/pages/course-detail";
 import Tasks from "@/pages/tasks";
 import QuizDetail from "@/pages/quiz-detail";
 import Community from "@/pages/community";
-import Profile from "@/pages/profile";
 
 export default function Cabinet() {
   return (
@@ -20,7 +19,6 @@ export default function Cabinet() {
           <Route path="/cabinet/tasks/quiz/:id" component={QuizDetail} />
           <Route path="/cabinet/tasks" component={() => <Tasks />} />
           <Route path="/cabinet/community" component={Community} />
-          <Route path="/cabinet/profile" component={Profile} />
           <Route><Redirect to="/cabinet" /></Route>
         </Switch>
       </main>
