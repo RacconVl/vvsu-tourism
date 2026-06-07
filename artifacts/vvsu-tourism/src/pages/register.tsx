@@ -23,8 +23,8 @@ export default function RegisterPage() {
     register.mutate(
       { data: form },
       {
-        onSuccess: async () => {
-          qc.removeQueries({ queryKey: getGetMeQueryKey() });
+        onSuccess: (userData) => {
+          qc.setQueryData(getGetMeQueryKey(), { user: userData });
           toast({ title: "Аккаунт создан!", description: "Добро пожаловать в институт." });
           setLocation("/cabinet");
         },

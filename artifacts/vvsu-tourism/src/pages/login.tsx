@@ -23,8 +23,8 @@ export default function LoginPage() {
     login.mutate(
       { data: { email, password } },
       {
-        onSuccess: async () => {
-          qc.removeQueries({ queryKey: getGetMeQueryKey() });
+        onSuccess: (userData) => {
+          qc.setQueryData(getGetMeQueryKey(), { user: userData });
           toast({ title: "Добро пожаловать!", description: "Вы вошли в личный кабинет." });
           setLocation("/cabinet");
         },
