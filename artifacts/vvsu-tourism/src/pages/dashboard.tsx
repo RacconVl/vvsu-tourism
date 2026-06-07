@@ -319,20 +319,6 @@ export default function Dashboard() {
     });
   };
 
-  // Admin sees only Обзор + Настройки tabs
-  const studentTabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
-    { key: "overview",     label: "Обзор",      icon: <Anchor className="h-4 w-4" /> },
-    { key: "achievements", label: "Достижения", icon: <Award className="h-4 w-4" /> },
-    { key: "activity",     label: "Активность", icon: <Activity className="h-4 w-4" /> },
-    { key: "results",      label: "Результаты", icon: <Brain className="h-4 w-4" /> },
-    { key: "settings",     label: "Настройки",  icon: <Settings className="h-4 w-4" /> },
-  ];
-  const adminTabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
-    { key: "overview",  label: "Обзор",     icon: <Shield className="h-4 w-4" /> },
-    { key: "settings",  label: "Настройки", icon: <Settings className="h-4 w-4" /> },
-  ];
-  const tabs = isAdmin ? adminTabs : studentTabs;
-
   return (
     <div className="min-h-screen bg-background">
       {/* Profile Hero */}
@@ -452,24 +438,8 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Tabs */}
+      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 pb-10 -mt-2">
-        <div className="flex gap-1 mb-6 p-1 rounded-2xl border border-border/60 bg-muted/30 w-fit overflow-x-auto">
-          {tabs.map((t) => (
-            <button
-              key={t.key}
-              onClick={() => setActiveTab(t.key)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
-                activeTab === t.key
-                  ? "bg-background shadow-sm text-foreground border border-border/60"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t.icon} {t.label}
-            </button>
-          ))}
-        </div>
-
         {/* ── ОБЗОР АДМИНА ──────────────────────────────────── */}
         {activeTab === "overview" && isAdmin && <AdminOverview />}
 
@@ -533,16 +503,10 @@ export default function Dashboard() {
                 {/* Recent Activity */}
                 <Card className="rounded-2xl border-border/60 overflow-hidden">
                   <div className="h-1" style={{ background: "linear-gradient(90deg, #EB7124, #d97706)" }} />
-                  <CardHeader className="pb-3 pt-4 flex flex-row items-center justify-between space-y-0">
+                  <CardHeader className="pb-3 pt-4">
                     <CardTitle className="text-sm font-semibold text-foreground flex items-center gap-2">
                       <Activity className="h-4 w-4 text-accent" /> Последняя активность
                     </CardTitle>
-                    <button
-                      onClick={() => setActiveTab("activity")}
-                      className="text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-0.5"
-                    >
-                      Все <ChevronRight className="h-3 w-3" />
-                    </button>
                   </CardHeader>
                   <CardContent className="px-4 pb-4 space-y-2">
                     {summaryLoading ? (
