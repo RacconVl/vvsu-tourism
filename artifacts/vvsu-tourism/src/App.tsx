@@ -14,12 +14,11 @@ import RegisterPage from "@/pages/register";
 import AdminPage from "@/pages/admin";
 import Courses from "@/pages/courses";
 import CourseDetail from "@/pages/course-detail";
-import Quests from "@/pages/quests";
+import Tasks from "@/pages/tasks";
 import MapPage from "@/pages/map-page";
 import Community from "@/pages/community";
 import LibraryPage from "@/pages/library";
 import Leaderboard from "@/pages/leaderboard";
-import Quizzes from "@/pages/quizzes";
 import QuizDetail from "@/pages/quiz-detail";
 import NotFound from "@/pages/not-found";
 import { useAuth } from "@/hooks/use-auth";
@@ -52,9 +51,12 @@ function Router() {
         <Route path="/admin" component={() => <RequireAuth adminOnly><AdminPage /></RequireAuth>} />
         <Route path="/courses" component={Courses} />
         <Route path="/courses/:id" component={CourseDetail} />
-        <Route path="/quizzes" component={() => <RequireAuth><Quizzes /></RequireAuth>} />
+        {/* Unified tasks page — quizzes tab */}
+        <Route path="/tasks" component={() => <RequireAuth><Tasks defaultTab="quizzes" /></RequireAuth>} />
+        {/* Legacy URLs keep working */}
+        <Route path="/quizzes" component={() => <RequireAuth><Tasks defaultTab="quizzes" /></RequireAuth>} />
+        <Route path="/quests" component={() => <RequireAuth><Tasks defaultTab="quests" /></RequireAuth>} />
         <Route path="/quiz/:id" component={() => <RequireAuth><QuizDetail /></RequireAuth>} />
-        <Route path="/quests" component={() => <RequireAuth><Quests /></RequireAuth>} />
         <Route path="/map" component={MapPage} />
         <Route path="/community" component={Community} />
         <Route path="/library" component={LibraryPage} />

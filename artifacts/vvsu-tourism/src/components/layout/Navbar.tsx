@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
-import { Compass, BookOpen, Map as MapIcon, Users, Library, Trophy, LayoutDashboard, Brain, Sun, Moon, Menu, X, LogIn, LogOut, Shield, UserPlus } from "lucide-react";
+import { Compass, BookOpen, Map as MapIcon, Users, Library, Trophy, LayoutDashboard, Swords, Sun, Moon, Menu, X, LogIn, LogOut, Shield, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 import { useAuth } from "@/hooks/use-auth";
@@ -20,8 +20,7 @@ export function Navbar() {
   const navItems = [
     { href: "/dashboard", label: "Кабинет", icon: LayoutDashboard },
     { href: "/courses", label: "Курсы", icon: BookOpen },
-    { href: "/quizzes", label: "Тесты", icon: Brain },
-    { href: "/quests", label: "Квесты", icon: Compass },
+    { href: "/tasks", label: "Задания", icon: Swords },
     { href: "/map", label: "Карта", icon: MapIcon },
     { href: "/community", label: "Сообщество", icon: Users },
     { href: "/library", label: "Библиотека", icon: Library },
@@ -49,7 +48,8 @@ export function Navbar() {
 
         <nav className="hidden lg:flex items-center gap-1 flex-1">
           {navItems.map((item) => {
-            const isActive = location.startsWith(item.href);
+            const isActive = location.startsWith(item.href) ||
+              (item.href === "/tasks" && (location.startsWith("/quizzes") || location.startsWith("/quests") || location.startsWith("/quiz")));
             return (
               <Link
                 key={item.href}
