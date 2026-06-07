@@ -75,6 +75,8 @@ router.post("/auth/logout", (req, res): void => {
 });
 
 router.get("/auth/me", (req, res): void => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
   res.json(GetMeResponse.parse({ user: req.user ? publicUser(req.user) : null }));
 });
 

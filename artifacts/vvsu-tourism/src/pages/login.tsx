@@ -24,7 +24,7 @@ export default function LoginPage() {
       { data: { email, password } },
       {
         onSuccess: async () => {
-          await qc.refetchQueries({ queryKey: getGetMeQueryKey() });
+          qc.removeQueries({ queryKey: getGetMeQueryKey() });
           toast({ title: "Добро пожаловать!", description: "Вы вошли в личный кабинет." });
           setLocation("/cabinet");
         },

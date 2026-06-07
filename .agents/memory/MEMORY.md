@@ -1,0 +1,1 @@
+- [Auth 304 cache bug](auth-304-cache-bug.md) — customFetch must use `cache: "no-store"` or browser ETags break session-based auth after login

@@ -24,7 +24,7 @@ export default function RegisterPage() {
       { data: form },
       {
         onSuccess: async () => {
-          await qc.refetchQueries({ queryKey: getGetMeQueryKey() });
+          qc.removeQueries({ queryKey: getGetMeQueryKey() });
           toast({ title: "Аккаунт создан!", description: "Добро пожаловать в институт." });
           setLocation("/cabinet");
         },
