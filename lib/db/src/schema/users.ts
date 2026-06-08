@@ -14,6 +14,7 @@ export const usersTable = pgTable("users", {
   level: integer("level").notNull().default(1),
   xp: integer("xp").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  lastSeenAt: timestamp("last_seen_at", { withTimezone: true }),
 }, (t) => ({
   emailIdx: uniqueIndex("users_email_idx").on(t.email),
 }));

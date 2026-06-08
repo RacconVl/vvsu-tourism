@@ -1,5 +1,5 @@
-import { createContext, useContext, type ReactNode } from "react";
-import { useGetMe, getGetMeQueryKey } from "@workspace/api-client-react";
+import { createContext, useContext, useEffect, type ReactNode } from "react";
+import { useGetMe, getGetMeQueryKey, heartbeat } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 export type AuthUser = {
@@ -27,6 +27,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { data, isLoading } = useGetMe();
   const qc = useQueryClient();
   const user = (data?.user ?? null) as AuthUser | null;
+
+  useEffect(() => {
+    if (!user) return;
+    heartbeat().catch(() => {});
+    const id = setInterval(() => heartbeat().catch(() => {}), 30_000);
+    return () => clearInterval(id);
+  }, [user?.id]);
+
   return (
     <Ctx.Provider
       value={{

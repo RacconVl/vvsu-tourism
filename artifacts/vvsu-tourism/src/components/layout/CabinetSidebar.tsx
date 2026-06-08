@@ -1,16 +1,17 @@
 import { Link, useLocation, useSearch } from "wouter";
 import { motion } from "framer-motion";
-import { LayoutDashboard, BookOpen, Swords, Users, Settings, MessageSquare } from "lucide-react";
+import { LayoutDashboard, BookOpen, Swords, Users, Settings, MessageSquare, UserCheck } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useListConversations } from "@workspace/api-client-react";
+import { useListConversations, useListFriendRequests } from "@workspace/api-client-react";
 
 const sidebarItems = [
-  { href: "/cabinet",           label: "Обзор",        icon: LayoutDashboard },
-  { href: "/cabinet/courses",   label: "Курсы",        icon: BookOpen },
-  { href: "/cabinet/tasks",     label: "Задания",      icon: Swords },
-  { href: "/cabinet/community", label: "Сообщество",   icon: Users },
-  { href: "/cabinet/messages",  label: "Сообщения",    icon: MessageSquare },
+  { href: "/cabinet",           label: "Обзор",      icon: LayoutDashboard },
+  { href: "/cabinet/courses",   label: "Курсы",      icon: BookOpen },
+  { href: "/cabinet/tasks",     label: "Задания",    icon: Swords },
+  { href: "/cabinet/community", label: "Сообщество", icon: Users },
+  { href: "/cabinet/friends",   label: "Друзья",     icon: UserCheck },
+  { href: "/cabinet/messages",  label: "Сообщения",  icon: MessageSquare },
 ];
 
 function isActive(href: string, location: string, search: string) {
@@ -32,9 +33,20 @@ export function CabinetSidebar() {
   });
   const totalUnread = conversations?.reduce((sum, c) => sum + c.unreadCount, 0) ?? 0;
 
+  const { data: friendRequests } = useListFriendRequests({
+    query: { enabled: !!user, refetchInterval: 30_000 } as never,
+  });
+  const pendingRequests = friendRequests?.length ?? 0;
+
   const settingsActive =
     (location === "/cabinet" || location === "/cabinet/") &&
     new URLSearchParams(search).get("tab") === "settings";
+
+  function getBadge(href: string) {
+    if (href === "/cabinet/messages" && totalUnread > 0) return totalUnread > 99 ? "99+" : String(totalUnread);
+    if (href === "/cabinet/friends" && pendingRequests > 0) return pendingRequests > 9 ? "9+" : String(pendingRequests);
+    return null;
+  }
 
   return (
     <>
@@ -60,7 +72,7 @@ export function CabinetSidebar() {
         <nav className="flex-1 p-3 space-y-1">
           {sidebarItems.map(item => {
             const active = isActive(item.href, location, search);
-            const isMsgs = item.href === "/cabinet/messages";
+            const badge = getBadge(item.href);
             return (
               <Link key={item.href} href={item.href}>
                 <motion.div
@@ -73,9 +85,9 @@ export function CabinetSidebar() {
                 >
                   <item.icon className="h-4 w-4 shrink-0" />
                   <span className="flex-1">{item.label}</span>
-                  {isMsgs && totalUnread > 0 && (
+                  {badge && (
                     <span className="h-5 min-w-5 px-1 rounded-full bg-accent text-white text-[10px] font-bold flex items-center justify-center">
-                      {totalUnread > 99 ? "99+" : totalUnread}
+                      {badge}
                     </span>
                   )}
                 </motion.div>
@@ -109,16 +121,16 @@ export function CabinetSidebar() {
             item.href === "/cabinet?tab=settings"
               ? settingsActive
               : isActive(item.href, location, search);
-          const isMsgs = item.href === "/cabinet/messages";
+          const badge = getBadge(item.href);
           return (
             <Link key={item.href} href={item.href} className="flex-1">
               <div className={`relative flex flex-col items-center justify-center h-full gap-1 transition-colors ${active ? "text-accent" : "text-muted-foreground"}`}>
                 <div className={`absolute top-0 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-accent transition-all duration-200 ${active ? "w-8 opacity-100" : "w-0 opacity-0"}`} />
                 <div className="relative">
                   <item.icon className={`h-5 w-5 transition-all duration-200 ${active ? "scale-110" : ""}`} />
-                  {isMsgs && totalUnread > 0 && (
+                  {badge && (
                     <span className="absolute -top-1.5 -right-1.5 h-4 min-w-4 px-0.5 rounded-full bg-accent text-white text-[9px] font-bold flex items-center justify-center">
-                      {totalUnread > 9 ? "9+" : totalUnread}
+                      {badge}
                     </span>
                   )}
                 </div>

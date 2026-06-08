@@ -8,6 +8,7 @@ import QuizDetail from "@/pages/quiz-detail";
 import Community from "@/pages/community";
 import Messages from "@/pages/messages";
 import Conversation from "@/pages/conversation";
+import Friends from "@/pages/friends";
 
 export default function Cabinet() {
   return (
@@ -35,6 +36,7 @@ export default function Cabinet() {
             )}
           </Route>
           <Route path="/cabinet/messages" component={Messages} />
+          <Route path="/cabinet/friends" component={Friends} />
           <Route><Redirect to="/cabinet" /></Route>
         </Switch>
       </main>

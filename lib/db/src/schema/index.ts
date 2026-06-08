@@ -6,3 +6,4 @@ export * from "./community";
 export * from "./library";
 export * from "./users";
 export * from "./messages";
+export * from "./friendships";

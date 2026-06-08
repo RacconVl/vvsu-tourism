@@ -427,6 +427,27 @@ export interface CreateQuestRequest {
   timeEstimate?: number;
 }
 
+export interface FriendUser {
+  id: number;
+  name: string;
+  studentRole: string;
+  level: number;
+  avatarUrl?: string | null;
+  isOnline: boolean;
+}
+
+export interface FriendRequest {
+  id: number;
+  requester: FriendUser;
+  createdAt: string;
+}
+
+export interface FriendStatus {
+  isOnline: boolean;
+  /** none | pending_sent | pending_received | friends */
+  status: string;
+}
+
 export interface MessageUser {
   id: number;
   name: string;

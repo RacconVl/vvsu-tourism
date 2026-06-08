@@ -1,14 +1,14 @@
 import { Router, type IRouter } from "express";
 import bcrypt from "bcryptjs";
 import { db, usersTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import {
   RegisterBody,
   LoginBody,
   GetMeResponse,
   LogoutResponse,
 } from "@workspace/api-zod";
-import { publicUser, signJwt } from "../lib/auth";
+import { publicUser, requireAuth, signJwt } from "../lib/auth";
 
 const router: IRouter = Router();
 
@@ -74,6 +74,11 @@ router.get("/auth/me", (req, res): void => {
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
   res.setHeader("Pragma", "no-cache");
   res.json(GetMeResponse.parse({ user: req.user ? publicUser(req.user) : null }));
+});
+
+router.patch("/auth/heartbeat", requireAuth, async (req, res): Promise<void> => {
+  await db.update(usersTable).set({ lastSeenAt: sql`NOW()` }).where(eq(usersTable.id, req.user!.id));
+  res.status(204).end();
 });
 
 export default router;

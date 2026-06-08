@@ -242,6 +242,73 @@ export const CreateCommunityPostBody = zod.object({
 });
 
 /**
+ * @summary List my accepted friends with online status
+ */
+export const ListFriendsResponseItem = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  studentRole: zod.string(),
+  level: zod.number(),
+  avatarUrl: zod.string().nullish(),
+  isOnline: zod.boolean(),
+});
+export const ListFriendsResponse = zod.array(ListFriendsResponseItem);
+
+/**
+ * @summary List pending incoming friend requests
+ */
+export const ListFriendRequestsResponseItem = zod.object({
+  id: zod.number(),
+  requester: zod.object({
+    id: zod.number(),
+    name: zod.string(),
+    studentRole: zod.string(),
+    level: zod.number(),
+    avatarUrl: zod.string().nullish(),
+    isOnline: zod.boolean(),
+  }),
+  createdAt: zod.string(),
+});
+export const ListFriendRequestsResponse = zod.array(
+  ListFriendRequestsResponseItem,
+);
+
+/**
+ * @summary Get friendship and online status with a user
+ */
+export const GetFriendStatusParams = zod.object({
+  userId: zod.coerce.number(),
+});
+
+export const GetFriendStatusResponse = zod.object({
+  isOnline: zod.boolean(),
+  status: zod
+    .string()
+    .describe("none | pending_sent | pending_received | friends"),
+});
+
+/**
+ * @summary Send a friend request
+ */
+export const AddFriendParams = zod.object({
+  userId: zod.coerce.number(),
+});
+
+/**
+ * @summary Remove friend or cancel/decline request
+ */
+export const RemoveFriendParams = zod.object({
+  userId: zod.coerce.number(),
+});
+
+/**
+ * @summary Accept a friend request
+ */
+export const AcceptFriendParams = zod.object({
+  userId: zod.coerce.number(),
+});
+
+/**
  * @summary List all users (for messaging)
  */
 export const ListUsersResponseItem = zod.object({
