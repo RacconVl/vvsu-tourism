@@ -11,7 +11,7 @@ export default function Cabinet() {
   return (
     <div className="flex min-h-[calc(100vh-4rem)] bg-background">
       <CabinetSidebar />
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto pb-16 md:pb-0">
         <Switch>
           <Route path="/cabinet" component={Dashboard} />
           <Route path="/cabinet/courses/:id" component={CourseDetail} />
