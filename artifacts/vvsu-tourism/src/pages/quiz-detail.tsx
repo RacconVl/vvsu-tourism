@@ -81,7 +81,7 @@ export default function QuizDetailPage() {
     return (
       <div className="min-h-screen bg-background py-8 px-4">
         <div className="max-w-3xl mx-auto">
-          <Link href="/quizzes" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
+          <Link href="/cabinet/tasks" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
             <ArrowLeft className="h-4 w-4" /> К списку тестов
           </Link>
 
@@ -152,7 +152,7 @@ export default function QuizDetailPage() {
                   <Button onClick={handleRestart} variant="outline" className="rounded-xl flex-1">
                     <RotateCcw className="h-4 w-4 mr-2" /> Пройти ещё раз
                   </Button>
-                  <Link href="/quizzes" className="flex-1">
+                  <Link href="/cabinet/tasks" className="flex-1">
                     <Button className="rounded-xl w-full">
                       К списку тестов
                     </Button>
@@ -170,7 +170,7 @@ export default function QuizDetailPage() {
   return (
     <div className="min-h-screen bg-background py-8 px-4">
       <div className="max-w-3xl mx-auto">
-        <Link href="/quizzes" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
+        <Link href="/cabinet/tasks" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
           <ArrowLeft className="h-4 w-4" /> К списку тестов
         </Link>
 

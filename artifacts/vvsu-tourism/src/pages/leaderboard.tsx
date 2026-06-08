@@ -51,7 +51,7 @@ export default function Leaderboard() {
               const heights = [idx === 1 ? "h-36" : "h-28"];
               return (
                 <div key={entry.rank} className="flex flex-col items-center gap-2">
-                  <img src={entry.avatarUrl} alt={entry.studentName} className="h-14 w-14 rounded-full object-cover ring-4 ring-white shadow-lg" />
+                  <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-14 w-14 rounded-full object-cover ring-4 ring-white shadow-lg" />
                   <p className="text-sm font-semibold text-foreground text-center max-w-20 line-clamp-2">{entry.studentName}</p>
                   <p className="text-xs text-muted-foreground">{entry.xp.toLocaleString()} XP</p>
                   <div className={`w-24 ${heights[0] ?? "h-28"} rounded-t-2xl bg-gradient-to-t ${styles.bg || "from-muted to-muted-foreground/30"} flex items-start justify-center pt-3`}>
@@ -87,7 +87,7 @@ export default function Leaderboard() {
                       <div className={`w-8 text-center font-bold text-sm ${styles.text}`}>
                         {entry.rank <= 3 ? ["🥇","🥈","🥉"][entry.rank-1] : entry.rank}
                       </div>
-                      <img src={entry.avatarUrl} alt={entry.studentName} className="h-10 w-10 rounded-full object-cover flex-shrink-0" />
+                      <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-10 w-10 rounded-full object-cover flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <p className={`font-semibold text-sm ${isMe ? "text-accent" : "text-foreground"}`}>{entry.studentName}</p>

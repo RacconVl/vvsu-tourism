@@ -62,7 +62,7 @@ export default function PublicProfile() {
             <div className="bg-gradient-to-r from-primary to-secondary p-6 text-primary-foreground">
               <div className="flex items-center gap-5">
                 <Avatar className="h-20 w-20 ring-4 ring-white/20">
-                  <AvatarImage src={u.avatarUrl ?? undefined} />
+                  <AvatarImage src={u.avatarUrl || undefined} />
                   <AvatarFallback className="bg-accent text-white text-xl font-bold">
                     {u.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                   </AvatarFallback>

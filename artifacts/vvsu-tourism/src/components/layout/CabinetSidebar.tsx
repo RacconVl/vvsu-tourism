@@ -35,7 +35,7 @@ export function CabinetSidebar() {
       <div className="p-5 border-b border-border/60">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10 ring-2 ring-accent/30">
-            <AvatarImage src={user?.avatarUrl ?? undefined} />
+            <AvatarImage src={user?.avatarUrl || undefined} />
             <AvatarFallback className="bg-accent text-white text-sm font-bold">
               {user?.name?.split(" ").map(s => s[0]).join("").slice(0, 2) ?? "??"}
             </AvatarFallback>

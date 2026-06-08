@@ -104,7 +104,7 @@ export default function ProfilePage() {
             <div className="bg-gradient-to-r from-primary to-secondary p-6 text-primary-foreground">
               <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
                 <Avatar className="h-24 w-24 ring-4 ring-white/20">
-                  <AvatarImage src={u.avatarUrl ?? undefined} />
+                  <AvatarImage src={u.avatarUrl || undefined} />
                   <AvatarFallback className="bg-accent text-white text-xl font-bold">
                     {u.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                   </AvatarFallback>

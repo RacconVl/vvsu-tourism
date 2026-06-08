@@ -276,7 +276,7 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
                     }`}>
                       <div className="relative h-44 overflow-hidden">
                         <img
-                          src={quest.imageUrl ?? "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
+                          src={quest.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                           alt={quest.title}
                           className="w-full h-full object-cover"
                         />

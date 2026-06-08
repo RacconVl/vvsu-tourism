@@ -57,13 +57,13 @@ export default function CourseDetail() {
           {/* Hero */}
           <div className="relative h-72 overflow-hidden">
             <img
-              src={course.imageUrl ?? "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200"}
+              src={course.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200"}
               alt={course.title}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent" />
             <div className="absolute inset-0 flex flex-col justify-end p-8">
-              <Link href="/courses">
+              <Link href="/cabinet/courses">
                 <Button variant="ghost" size="sm" className="text-white/80 hover:text-white mb-4 w-fit gap-1">
                   <ArrowLeft className="h-4 w-4" /> Назад к курсам
                 </Button>

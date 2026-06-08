@@ -353,7 +353,7 @@ export default function Dashboard() {
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="flex items-center gap-5">
                   <Avatar className="h-24 w-24 ring-4 ring-white/20 shrink-0">
-                    <AvatarImage src={profile.user.avatarUrl ?? undefined} />
+                    <AvatarImage src={profile.user.avatarUrl || undefined} />
                     <AvatarFallback className="bg-accent text-white text-xl font-bold">
                       {profile.user.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                     </AvatarFallback>
@@ -580,7 +580,7 @@ export default function Dashboard() {
                       leaderboard?.length ? leaderboard.slice(0, 4).map((entry) => (
                         <div key={entry.rank} className="flex items-center gap-3 p-2 rounded-xl transition-colors hover:bg-muted/40" style={entry.rank <= 3 ? { background: "rgba(235,113,36,0.05)" } : {}}>
                           <span className={`text-sm font-bold w-5 text-center shrink-0 ${entry.rank === 1 ? "text-yellow-500" : entry.rank === 2 ? "text-gray-400" : entry.rank === 3 ? "text-amber-600" : "text-muted-foreground"}`}>{entry.rank}</span>
-                          <img src={entry.avatarUrl} alt={entry.studentName} className="h-7 w-7 rounded-full object-cover ring-1 ring-border" />
+                          <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-7 w-7 rounded-full object-cover ring-1 ring-border" />
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-medium truncate">{entry.studentName}</p>
                             <p className="text-xs text-muted-foreground">Ур. {entry.level}</p>

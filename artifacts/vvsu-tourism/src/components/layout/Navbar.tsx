@@ -102,7 +102,7 @@ export function Navbar() {
                     data-testid="button-user-menu"
                   >
                     <Avatar className="h-7 w-7">
-                      <AvatarImage src={user.avatarUrl ?? undefined} />
+                      <AvatarImage src={user.avatarUrl || undefined} />
                       <AvatarFallback className="bg-accent text-white text-xs">
                         {user.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                       </AvatarFallback>

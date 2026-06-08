@@ -149,7 +149,7 @@ export default function Community() {
                 >
                   <Card className="overflow-hidden rounded-2xl border-border/60 hover:shadow-xl transition-shadow">
                     <div className="h-48 overflow-hidden">
-                      <img src={work.imageUrl} alt={work.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                      <img src={work.imageUrl || undefined} alt={work.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     </div>
                     <CardContent className="p-4">
                       <Badge className={`${galleryCategories[work.category]?.color ?? "bg-muted text-muted-foreground"} text-xs border-0 mb-2`}>
