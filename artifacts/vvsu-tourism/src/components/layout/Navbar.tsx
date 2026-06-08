@@ -14,6 +14,7 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 const publicNavItems = [
   { href: "/admission",   label: "Поступление", icon: GraduationCap },
@@ -30,7 +31,6 @@ export function Navbar() {
   const qc = useQueryClient();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Close mobile menu whenever the route changes
   useEffect(() => { setMobileOpen(false); }, [location]);
 
   const handleLogout = () => {
@@ -77,7 +77,7 @@ export function Navbar() {
         </nav>
 
         {/* Right side */}
-        <div className="flex items-center gap-2 ml-auto">
+        <div className="flex items-center gap-1 ml-auto">
           {user ? (
             <>
               {/* Cabinet shortcut */}
@@ -95,6 +95,9 @@ export function Navbar() {
                   Кабинет
                 </Button>
               </Link>
+
+              {/* Notification bell */}
+              <NotificationBell />
 
               {/* User menu */}
               <DropdownMenu>

@@ -6,6 +6,7 @@ import {
   useAdminGetStats,
   useAdminCreateCourse,
   useAdminCreateQuest,
+  useAdminCreateNotification,
   getAdminListUsersQueryKey,
   getAdminGetStatsQueryKey,
 } from "@workspace/api-client-react";
@@ -18,8 +19,20 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { Users, BarChart3, BookOpen, Compass, Plus, Shield, Trophy, Brain, Activity } from "lucide-react";
+import {
+  Users, BarChart3, BookOpen, Compass, Plus, Shield, Trophy, Brain,
+  Activity, Bell, Zap, AlertTriangle, Megaphone, RefreshCw, Info, Send,
+} from "lucide-react";
+
+const NOTIF_CATEGORIES = [
+  { value: "urgent",    label: "Срочно",           icon: <Zap className="h-4 w-4 text-red-500" />,    color: "border-red-300 bg-red-50 dark:bg-red-950/30" },
+  { value: "important", label: "Важно",             icon: <AlertTriangle className="h-4 w-4 text-orange-500" />, color: "border-orange-300 bg-orange-50 dark:bg-orange-950/30" },
+  { value: "notice",    label: "Обратите внимание", icon: <Megaphone className="h-4 w-4 text-yellow-500" />, color: "border-yellow-300 bg-yellow-50 dark:bg-yellow-950/30" },
+  { value: "update",    label: "Обновление",        icon: <RefreshCw className="h-4 w-4 text-blue-500" />,   color: "border-blue-300 bg-blue-50 dark:bg-blue-950/30" },
+  { value: "info",      label: "Информация",        icon: <Info className="h-4 w-4 text-slate-500" />,       color: "border-slate-300 bg-slate-50 dark:bg-slate-900/30" },
+];
 
 export default function AdminPage() {
   const { data: users } = useAdminListUsers();
@@ -51,8 +64,11 @@ export default function AdminPage() {
         )}
 
         <Tabs defaultValue="users" className="w-full">
-          <TabsList className="grid grid-cols-3 max-w-md rounded-2xl">
+          <TabsList className="grid grid-cols-4 max-w-lg rounded-2xl">
             <TabsTrigger value="users">Пользователи</TabsTrigger>
+            <TabsTrigger value="notify" className="flex items-center gap-1">
+              <Bell className="h-3.5 w-3.5" /> Уведомления
+            </TabsTrigger>
             <TabsTrigger value="course">Новый курс</TabsTrigger>
             <TabsTrigger value="quest">Новый квест</TabsTrigger>
           </TabsList>
@@ -98,6 +114,10 @@ export default function AdminPage() {
             </Card>
           </TabsContent>
 
+          <TabsContent value="notify" className="mt-5">
+            <NotificationForm users={users ?? []} />
+          </TabsContent>
+
           <TabsContent value="course" className="mt-5">
             <NewCourseForm />
           </TabsContent>
@@ -122,6 +142,200 @@ function StatCard({ icon, value, label }: { icon: React.ReactNode; value: number
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+type UserRow = { id: number; name: string; role: string; email: string };
+
+function NotificationForm({ users }: { users: UserRow[] }) {
+  const create = useAdminCreateNotification();
+  const { toast } = useToast();
+
+  const [f, setF] = useState({
+    type: "info",
+    title: "",
+    body: "",
+    link: "",
+  });
+  const [broadcast, setBroadcast] = useState(true);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+
+  const toggleUser = (id: number) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const students = users.filter(u => u.role !== "admin");
+  const selectedCategory = NOTIF_CATEGORIES.find(c => c.value === f.type);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const userIds = broadcast ? null : Array.from(selectedIds);
+    if (!broadcast && selectedIds.size === 0) {
+      toast({ title: "Выберите получателей", variant: "destructive" });
+      return;
+    }
+    create.mutate({
+      data: {
+        type: f.type,
+        title: f.title,
+        body: f.body,
+        link: f.link || undefined,
+        userIds,
+      },
+    }, {
+      onSuccess: (result) => {
+        toast({ title: `Отправлено ${result.count} получателям!` });
+        setF({ type: "info", title: "", body: "", link: "" });
+        setSelectedIds(new Set());
+        setBroadcast(true);
+      },
+      onError: () => toast({ title: "Ошибка отправки", variant: "destructive" }),
+    });
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Form */}
+      <Card className="rounded-2xl border-border/60">
+        <CardContent className="p-6">
+          <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+            <Bell className="h-5 w-5 text-accent" /> Создать уведомление
+          </h2>
+          <form onSubmit={submit} className="space-y-4">
+            {/* Category picker */}
+            <div className="space-y-2">
+              <Label>Категория</Label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {NOTIF_CATEGORIES.map(cat => (
+                  <button
+                    key={cat.value}
+                    type="button"
+                    onClick={() => setF(s => ({ ...s, type: cat.value }))}
+                    className={`flex items-center gap-2.5 p-3 rounded-xl border-2 text-sm font-medium transition-all text-left ${
+                      f.type === cat.value
+                        ? `${cat.color} border-current`
+                        : "border-border/50 hover:border-border bg-card"
+                    }`}
+                  >
+                    {cat.icon}
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Заголовок</Label>
+              <Input
+                required
+                value={f.title}
+                onChange={e => setF(s => ({ ...s, title: e.target.value }))}
+                placeholder="Краткое и понятное название..."
+                className="rounded-xl"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Текст уведомления</Label>
+              <Textarea
+                required
+                rows={4}
+                value={f.body}
+                onChange={e => setF(s => ({ ...s, body: e.target.value }))}
+                placeholder="Подробное описание или инструкция..."
+                className="rounded-xl"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Ссылка (опционально)</Label>
+              <Input
+                value={f.link}
+                onChange={e => setF(s => ({ ...s, link: e.target.value }))}
+                placeholder="/cabinet/tasks или /cabinet/courses"
+                className="rounded-xl"
+              />
+              <p className="text-xs text-muted-foreground">Пользователь перейдёт по ссылке при клике на уведомление</p>
+            </div>
+
+            {/* Preview */}
+            {f.title && (
+              <div className={`rounded-xl border p-3 ${selectedCategory?.color ?? ""}`}>
+                <div className="flex items-start gap-2">
+                  {selectedCategory?.icon}
+                  <div>
+                    <p className="font-medium text-sm">{f.title}</p>
+                    {f.body && <p className="text-xs text-muted-foreground mt-0.5">{f.body.slice(0, 100)}{f.body.length > 100 ? "..." : ""}</p>}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              className="w-full rounded-xl gap-2"
+              disabled={create.isPending}
+            >
+              <Send className="h-4 w-4" />
+              {create.isPending ? "Отправка..." : broadcast ? `Отправить всем студентам (${students.length})` : `Отправить выбранным (${selectedIds.size})`}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Recipients picker */}
+      <Card className="rounded-2xl border-border/60">
+        <CardContent className="p-6">
+          <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+            <Users className="h-5 w-5 text-accent" /> Получатели
+          </h2>
+
+          <div className="flex items-center gap-3 mb-4 p-3 rounded-xl bg-primary/5 border border-primary/20">
+            <Checkbox
+              id="broadcast"
+              checked={broadcast}
+              onCheckedChange={(v) => { setBroadcast(!!v); setSelectedIds(new Set()); }}
+            />
+            <Label htmlFor="broadcast" className="cursor-pointer font-medium">
+              Всем студентам ({students.length})
+            </Label>
+          </div>
+
+          {!broadcast && (
+            <div className="space-y-1 max-h-72 overflow-y-auto pr-1">
+              {students.map(u => (
+                <label
+                  key={u.id}
+                  className={`flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-colors ${
+                    selectedIds.has(u.id) ? "bg-primary/8 border border-primary/20" : "hover:bg-muted/50"
+                  }`}
+                >
+                  <Checkbox
+                    checked={selectedIds.has(u.id)}
+                    onCheckedChange={() => toggleUser(u.id)}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">{u.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{u.email}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          )}
+
+          {broadcast && (
+            <div className="text-sm text-muted-foreground text-center py-8">
+              Уведомление получат все студенты платформы
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 

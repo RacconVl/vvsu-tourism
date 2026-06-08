@@ -2,6 +2,7 @@ import { Router, type IRouter } from "express";
 import { db, usersTable, friendshipsTable } from "@workspace/db";
 import { eq, and, or, sql } from "drizzle-orm";
 import { requireAuth } from "../lib/auth";
+import { createNotification } from "./notifications";
 
 const router: IRouter = Router();
 
@@ -126,7 +127,18 @@ router.post("/friends/:userId", requireAuth, async (req, res): Promise<void> => 
 
   await db.insert(friendshipsTable).values({ requesterId: myId, addresseeId: otherId, status: "pending" });
 
+  const [me] = await db.select({ name: usersTable.name }).from(usersTable).where(eq(usersTable.id, myId)).limit(1);
   const [other] = await db.select({ lastSeenAt: usersTable.lastSeenAt }).from(usersTable).where(eq(usersTable.id, otherId)).limit(1);
+
+  createNotification({
+    userId: otherId,
+    senderId: myId,
+    type: "friend_request",
+    title: "Новый запрос в друзья",
+    body: `${me?.name ?? "Студент"} хочет добавить вас в друзья`,
+    link: "/cabinet/friends",
+  }).catch(() => {});
+
   res.status(201).json({ isOnline: isOnline(other?.lastSeenAt ?? null), status: "pending_sent" });
 });
 
@@ -143,6 +155,16 @@ router.patch("/friends/:userId/accept", requireAuth, async (req, res): Promise<v
       eq(friendshipsTable.addresseeId, myId),
       eq(friendshipsTable.status, "pending"),
     ));
+
+  const [me] = await db.select({ name: usersTable.name }).from(usersTable).where(eq(usersTable.id, myId)).limit(1);
+  createNotification({
+    userId: requesterId,
+    senderId: myId,
+    type: "friend_request",
+    title: "Запрос в друзья принят",
+    body: `${me?.name ?? "Студент"} принял(а) ваш запрос в друзья`,
+    link: "/cabinet/friends",
+  }).catch(() => {});
 
   res.status(204).end();
 });

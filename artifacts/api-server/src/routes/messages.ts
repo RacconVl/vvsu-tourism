@@ -2,6 +2,7 @@ import { Router, type IRouter } from "express";
 import { db, messagesTable, usersTable } from "@workspace/db";
 import { desc, asc, eq, or, and, ne, sql } from "drizzle-orm";
 import { requireAuth } from "../lib/auth";
+import { createNotification } from "./notifications";
 
 const router: IRouter = Router();
 
@@ -104,6 +105,16 @@ router.post("/messages/:userId", requireAuth, async (req, res): Promise<void> =>
     .insert(messagesTable)
     .values({ senderId: myId, receiverId, content: content.trim(), isRead: false })
     .returning();
+
+  const [sender] = await db.select({ name: usersTable.name }).from(usersTable).where(eq(usersTable.id, myId)).limit(1);
+  createNotification({
+    userId: receiverId,
+    senderId: myId,
+    type: "message",
+    title: "Новое сообщение",
+    body: `${sender?.name ?? "Студент"}: ${content.trim().slice(0, 80)}`,
+    link: `/cabinet/messages/${myId}`,
+  }).catch(() => {});
 
   res.status(201).json({ ...msg, createdAt: msg.createdAt.toISOString() });
 });

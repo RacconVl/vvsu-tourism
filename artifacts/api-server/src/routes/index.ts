@@ -13,6 +13,7 @@ import profileRouter from "./profile";
 import adminRouter from "./admin";
 import messagesRouter from "./messages";
 import friendsRouter from "./friends";
+import notificationsRouter from "./notifications";
 
 const router: IRouter = Router();
 
@@ -30,5 +31,6 @@ router.use(dashboardRouter);
 router.use(quizzesRouter);
 router.use(messagesRouter);
 router.use(friendsRouter);
+router.use(notificationsRouter);
 
 export default router;

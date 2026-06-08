@@ -242,6 +242,57 @@ export const CreateCommunityPostBody = zod.object({
 });
 
 /**
+ * @summary List my notifications (latest 50)
+ */
+export const ListNotificationsResponseItem = zod.object({
+  id: zod.number(),
+  type: zod
+    .string()
+    .describe(
+      "urgent | important | notice | update | info | friend_request | message | achievement",
+    ),
+  title: zod.string(),
+  body: zod.string(),
+  link: zod.string().nullish(),
+  isRead: zod.boolean(),
+  createdAt: zod.string(),
+  sender: zod
+    .object({
+      id: zod.number(),
+      name: zod.string(),
+      studentRole: zod.string(),
+      level: zod.number(),
+      avatarUrl: zod.string().nullish(),
+      isOnline: zod.boolean(),
+    })
+    .nullish(),
+});
+export const ListNotificationsResponse = zod.array(
+  ListNotificationsResponseItem,
+);
+
+/**
+ * @summary Mark one notification as read
+ */
+export const MarkNotificationReadParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+/**
+ * @summary Admin — create and broadcast notification
+ */
+export const AdminCreateNotificationBody = zod.object({
+  userIds: zod
+    .array(zod.number())
+    .nullish()
+    .describe("null or empty array = broadcast to all users"),
+  type: zod.string(),
+  title: zod.string(),
+  body: zod.string(),
+  link: zod.string().nullish(),
+});
+
+/**
  * @summary List my accepted friends with online status
  */
 export const ListFriendsResponseItem = zod.object({

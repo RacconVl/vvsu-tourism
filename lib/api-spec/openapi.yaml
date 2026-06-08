@@ -236,6 +236,68 @@ paths:
               schema:
                 $ref: "#/components/schemas/CommunityPost"
 
+  /notifications:
+    get:
+      operationId: listNotifications
+      tags: [notifications]
+      summary: List my notifications (latest 50)
+      responses:
+        "200":
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+
+  /notifications/read-all:
+    patch:
+      operationId: markAllNotificationsRead
+      tags: [notifications]
+      summary: Mark all my notifications as read
+      responses:
+        "204":
+          description: Done
+
+  /notifications/{id}/read:
+    patch:
+      operationId: markNotificationRead
+      tags: [notifications]
+      summary: Mark one notification as read
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Done
+
+  /notifications/admin:
+    post:
+      operationId: adminCreateNotification
+      tags: [notifications]
+      summary: Admin — create and broadcast notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNotificationBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                required: [count]
+
   /auth/heartbeat:
     patch:
       operationId: heartbeat
@@ -1604,6 +1666,50 @@ components:
         timeEstimate:
           type: integer
       required: [title, description, type, difficulty, location]
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          description: "urgent | important | notice | update | info | friend_request | message | achievement"
+        title:
+          type: string
+        body:
+          type: string
+        link:
+          type: string
+          nullable: true
+        isRead:
+          type: boolean
+        createdAt:
+          type: string
+        sender:
+          $ref: "#/components/schemas/FriendUser"
+          nullable: true
+      required: [id, type, title, body, isRead, createdAt]
+
+    CreateNotificationBody:
+      type: object
+      properties:
+        userIds:
+          type: array
+          items:
+            type: integer
+          nullable: true
+          description: "null or empty array = broadcast to all users"
+        type:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+        link:
+          type: string
+          nullable: true
+      required: [type, title, body]
 
     FriendUser:
       type: object

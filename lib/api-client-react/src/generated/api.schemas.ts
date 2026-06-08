@@ -436,6 +436,27 @@ export interface FriendUser {
   isOnline: boolean;
 }
 
+export interface Notification {
+  id: number;
+  /** urgent | important | notice | update | info | friend_request | message | achievement */
+  type: string;
+  title: string;
+  body: string;
+  link?: string | null;
+  isRead: boolean;
+  createdAt: string;
+  sender?: FriendUser | null;
+}
+
+export interface CreateNotificationBody {
+  /** null or empty array = broadcast to all users */
+  userIds?: number[] | null;
+  type: string;
+  title: string;
+  body: string;
+  link?: string | null;
+}
+
 export interface FriendRequest {
   id: number;
   requester: FriendUser;
@@ -484,3 +505,7 @@ export interface LeaderboardEntry {
   avatarUrl?: string;
   completedQuests: number;
 }
+
+export type AdminCreateNotification201 = {
+  count: number;
+};
