@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import {
   GraduationCap, ClipboardList, FileText, Phone, MapPin,
   ChevronRight, CheckCircle2, Clock, Calendar, ArrowRight,
-  Anchor, Waves, Star, Users, BookOpen, Award,
+  Anchor, Waves, Star, Users, BookOpen, Award, Home, Wifi,
+  Utensils, ShieldCheck, Play, ExternalLink,
 } from "lucide-react";
 
 const programs = [
@@ -109,14 +110,30 @@ const contacts = [
   { label: "Email",              value: "priem@vvsu.ru", icon: <FileText className="h-4 w-4" /> },
 ];
 
-type TabKey = "programs" | "steps" | "documents" | "exams" | "contacts";
+type TabKey = "programs" | "steps" | "documents" | "exams" | "dorm" | "contacts";
 
 const tabs: { key: TabKey; label: string; icon: React.ReactNode }[] = [
   { key: "programs",  label: "Направления",          icon: <GraduationCap className="h-4 w-4" /> },
   { key: "steps",     label: "Этапы поступления",    icon: <ClipboardList className="h-4 w-4" /> },
   { key: "documents", label: "Документы",             icon: <FileText className="h-4 w-4" /> },
   { key: "exams",     label: "Вступительные",         icon: <BookOpen className="h-4 w-4" /> },
+  { key: "dorm",      label: "Общежитие",             icon: <Home className="h-4 w-4" /> },
   { key: "contacts",  label: "Контакты",              icon: <Phone className="h-4 w-4" /> },
+];
+
+const dormAmenities = [
+  { icon: <Wifi className="h-5 w-5" />,        label: "Высокоскоростной Wi-Fi",        desc: "Оптоволоконный интернет во всех комнатах и зонах отдыха" },
+  { icon: <Utensils className="h-5 w-5" />,    label: "Столовая и буфет",              desc: "Горячее питание 3 раза в день, кухни на каждом этаже" },
+  { icon: <ShieldCheck className="h-5 w-5" />, label: "Круглосуточная охрана",         desc: "Пропускная система, видеонаблюдение, комендант" },
+  { icon: <Users className="h-5 w-5" />,       label: "Комнаты отдыха",               desc: "Телевизоры, настольный теннис, зоны для общения" },
+  { icon: <BookOpen className="h-5 w-5" />,    label: "Читальный зал",                 desc: "Тихая учебная зона с доступом к университетским ресурсам" },
+  { icon: <Home className="h-5 w-5" />,        label: "Прачечная",                     desc: "Стиральные машины и сушилки на каждом этаже" },
+];
+
+const dormRooms = [
+  { type: "Одноместная",  price: "4 500 ₽/мес", places: 40,  color: "#033F7E", desc: "Личное пространство с письменным столом, шкафом и кроватью" },
+  { type: "Двухместная",  price: "2 800 ₽/мес", places: 120, color: "#EB7124", desc: "Стандартный блок на 2 студента, раздельные рабочие зоны" },
+  { type: "Трёхместная",  price: "2 200 ₽/мес", places: 60,  color: "#172E46", desc: "Экономичный вариант для иногородних первокурсников" },
 ];
 
 export default function AdmissionPage() {
@@ -369,6 +386,194 @@ export default function AdmissionPage() {
                       </div>
                     ))}
                   </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* ── Общежитие ───────────────────────────────── */}
+          {activeTab === "dorm" && (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8 max-w-4xl">
+
+              {/* Hero card with 3D tour */}
+              <Card className="rounded-2xl border-border/60 overflow-hidden">
+                <div className="h-1.5" style={{ background: "linear-gradient(90deg, #033F7E, #EB7124)" }} />
+                <div className="relative flex flex-col md:flex-row">
+                  {/* 3D Tour panel */}
+                  <div className="md:w-1/2 min-h-[280px] flex flex-col items-center justify-center gap-5 p-8 relative overflow-hidden"
+                    style={{ background: "linear-gradient(135deg, #0a1a2e 0%, #033F7E 100%)" }}>
+                    {/* Animated dot grid */}
+                    <div className="absolute inset-0 pointer-events-none opacity-40"
+                      style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+                    {/* Animated building SVG */}
+                    <motion.svg viewBox="0 0 160 120" className="w-44 h-32 relative z-10" fill="none"
+                      initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}>
+                      {/* Building */}
+                      <rect x="20" y="35" width="120" height="80" rx="3" fill="#033F7E" opacity="0.6" />
+                      <rect x="20" y="35" width="120" height="80" rx="3" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                      {/* Roof */}
+                      <polygon points="10,35 80,8 150,35" fill="#172E46" opacity="0.8" />
+                      {/* Windows grid */}
+                      {([0,1,2,3] as const).flatMap(col => ([0,1,2] as const).map(row => (
+                        <motion.rect key={`${col}-${row}`} x={32 + col * 28} y={48 + row * 22} width="16" height="14" rx="2"
+                          fill="#EB7124"
+                          animate={{ opacity: [0.4, 0.9, 0.4] }}
+                          transition={{ duration: 2.5, repeat: Infinity, delay: (col + row) * 0.3 }} />
+                      )))}
+                      {/* Door */}
+                      <rect x="68" y="90" width="24" height="25" rx="2" fill="#172E46" opacity="0.9" />
+                      {/* Flag */}
+                      <line x1="80" y1="8" x2="80" y2="0" stroke="white" strokeWidth="1.5" />
+                      <motion.polygon points="80,0 96,-6 80,-12" fill="#EB7124"
+                        animate={{ scaleX: [1, 1.15, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
+                        style={{ transformOrigin: "80px -6px" }} />
+                      {/* Stars */}
+                      {[[15, 15], [145, 18], [10, 60], [152, 55]].map(([x, y], i) => (
+                        <motion.circle key={i} cx={x} cy={y} r="1.5" fill="white"
+                          animate={{ opacity: [0.2, 0.9, 0.2] }} transition={{ duration: 2 + i * 0.5, repeat: Infinity, delay: i * 0.4 }} />
+                      ))}
+                    </motion.svg>
+                    <div className="relative z-10 text-center">
+                      <p className="text-white font-semibold mb-1">3D-тур по кампусу</p>
+                      <p className="text-white/60 text-xs mb-4">Виртуальный осмотр общежития и учебных корпусов</p>
+                      <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" className="rounded-full bg-accent hover:bg-accent/90 text-white gap-2">
+                          <Play className="h-3.5 w-3.5 fill-white" /> Открыть тур
+                          <ExternalLink className="h-3 w-3" />
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                  {/* Info panel */}
+                  <CardContent className="md:w-1/2 p-6 flex flex-col justify-center">
+                    <h2 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+                      <Home className="h-5 w-5 text-accent" /> Студенческое общежитие ВВГУ
+                    </h2>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                      Комфортное проживание в 5 минутах ходьбы от главного корпуса. Все иногородние студенты имеют право на место в общежитии при наличии свободных мест.
+                    </p>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      {[
+                        ["220", "мест всего"],
+                        ["5 мин", "до корпуса"],
+                        ["24/7", "охрана"],
+                        ["от 2 200 ₽", "в месяц"],
+                      ].map(([v, l]) => (
+                        <div key={l} className="rounded-xl bg-muted/50 p-3 text-center">
+                          <p className="font-bold text-foreground text-lg leading-none">{v}</p>
+                          <p className="text-xs text-muted-foreground mt-1">{l}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </div>
+              </Card>
+
+              {/* Room types */}
+              <div>
+                <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
+                  <Home className="h-4 w-4 text-accent" /> Типы комнат
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {dormRooms.map((r, i) => (
+                    <motion.div key={r.type} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
+                      <Card className="rounded-2xl border-border/60 overflow-hidden h-full">
+                        <div className="h-1.5" style={{ background: r.color }} />
+                        <CardContent className="p-5">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-bold text-foreground">{r.type}</h4>
+                            <span className="text-sm font-bold" style={{ color: r.color }}>{r.price}</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground leading-relaxed mb-3">{r.desc}</p>
+                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <Users className="h-3.5 w-3.5" /> {r.places} мест
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Amenities */}
+              <div>
+                <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-accent" /> Удобства и инфраструктура
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {dormAmenities.map((a, i) => (
+                    <motion.div key={a.label} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}>
+                      <div className="flex items-start gap-3 p-4 rounded-xl border border-border/50 bg-muted/20 hover:bg-muted/40 transition-colors">
+                        <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                          {a.icon}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm text-foreground">{a.label}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">{a.desc}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Rules & Application */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <Card className="rounded-2xl border-border/60">
+                  <CardContent className="p-5">
+                    <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+                      <ClipboardList className="h-4 w-4 text-accent" /> Как получить место
+                    </h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {[
+                        "Подать заявление в деканат до 1 августа",
+                        "Предоставить справку об иногороднем адресе прописки",
+                        "Заключить договор найма жилого помещения",
+                        "Пройти инструктаж по правилам проживания",
+                        "Оплатить первый месяц проживания",
+                      ].map((s, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <span className="h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0" style={{ background: "#EB7124" }}>{i + 1}</span>
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+                <Card className="rounded-2xl border-border/60">
+                  <CardContent className="p-5">
+                    <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
+                      <ShieldCheck className="h-4 w-4 text-accent" /> Правила проживания
+                    </h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {[
+                        "Соблюдение тишины с 23:00 до 07:00",
+                        "Запрет курения в здании",
+                        "Гости допускаются до 22:00",
+                        "Еженедельные санитарные дни (суббота)",
+                        "Обязательное страхование имущества",
+                      ].map((r, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" /> {r}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Link to full life page */}
+              <Card className="rounded-2xl border-dashed border-accent/30 bg-accent/5">
+                <CardContent className="p-5 flex items-center justify-between gap-4">
+                  <div>
+                    <p className="font-semibold text-foreground">Жизнь в ВВГУ</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">Полная информация о студенческой жизни, досуге и инфраструктуре кампуса</p>
+                  </div>
+                  <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer" className="shrink-0">
+                    <Button variant="outline" className="rounded-full gap-2">
+                      vvsu.ru/life <ExternalLink className="h-3.5 w-3.5" />
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             </motion.div>
