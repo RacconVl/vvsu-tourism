@@ -651,6 +651,7 @@ export const GetQuizResponse = zod.object({
   category: zod.string(),
   difficulty: zod.string(),
   xpReward: zod.number(),
+  estimatedMinutes: zod.number(),
   imageUrl: zod.string(),
   questions: zod.array(
     zod.object({

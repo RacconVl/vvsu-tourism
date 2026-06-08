@@ -231,6 +231,7 @@ export interface Quiz {
   category: string;
   difficulty: string;
   xpReward: number;
+  estimatedMinutes: number;
   imageUrl: string;
   questions: QuizQuestion[];
 }

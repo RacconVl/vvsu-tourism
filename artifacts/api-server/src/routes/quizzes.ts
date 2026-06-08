@@ -518,6 +518,7 @@ router.get("/quizzes/:id", requireAuth, async (req, res): Promise<void> => {
     category: quiz.category,
     difficulty: quiz.difficulty,
     xpReward: quiz.xpReward,
+    estimatedMinutes: quiz.estimatedMinutes,
     imageUrl: quiz.imageUrl,
     questions: quiz.questions.map(q => ({
       id: q.id,

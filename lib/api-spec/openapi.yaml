@@ -989,13 +989,15 @@ components:
           type: string
         xpReward:
           type: integer
+        estimatedMinutes:
+          type: integer
         imageUrl:
           type: string
         questions:
           type: array
           items:
             $ref: "#/components/schemas/QuizQuestion"
-      required: [id, title, description, category, difficulty, xpReward, imageUrl, questions]
+      required: [id, title, description, category, difficulty, xpReward, estimatedMinutes, imageUrl, questions]
 
     QuizSubmission:
       type: object
