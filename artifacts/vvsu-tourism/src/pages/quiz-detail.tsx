@@ -140,8 +140,8 @@ export default function QuizDetailPage({ quizId: propId }: { quizId?: number } =
         <div className="max-w-2xl mx-auto py-6 px-4">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="rounded-2xl border-border/60 overflow-hidden">
-              <div className="relative h-44 overflow-hidden">
-                <img src={quiz.imageUrl || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"} alt={quiz.title} className="w-full h-full object-cover" />
+              <div className="relative h-44 overflow-hidden bg-gradient-to-br from-[#033F7E] to-[#172E46]">
+                <img src={quiz.imageUrl || "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"} alt={quiz.title} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
                 <div className="absolute bottom-4 left-5 right-5">
                   <div className="flex gap-2 mb-2">

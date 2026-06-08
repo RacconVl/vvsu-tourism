@@ -219,10 +219,15 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
                     >
                       <Link href={`/cabinet/tasks/quiz/${q.id}`}>
                         <Card className="rounded-2xl border-border/60 overflow-hidden cursor-pointer hover-elevate transition-all h-full group">
-                          <div
-                            className="h-32 bg-cover bg-center relative"
-                            style={{ backgroundImage: `url(${q.imageUrl})` }}
-                          >
+                          <div className="h-32 relative bg-gradient-to-br from-[#033F7E] to-[#172E46]">
+                            {q.imageUrl && (
+                              <img
+                                src={q.imageUrl}
+                                alt={q.title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                onError={(e) => { e.currentTarget.style.display = "none"; }}
+                              />
+                            )}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
                             <div className="absolute top-3 left-3 flex gap-2">
                               <Badge className={`${cat.color} border-0 backdrop-blur-sm`}>
@@ -289,11 +294,12 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
                     <Card className={`overflow-hidden rounded-2xl border-border/60 h-full ${
                       quest.isCompleted ? "opacity-70" : "hover:shadow-xl transition-shadow"
                     }`}>
-                      <div className="relative h-44 overflow-hidden">
+                      <div className="relative h-44 overflow-hidden bg-gradient-to-br from-[#033F7E] to-[#172E46]">
                         <img
                           src={quest.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                           alt={quest.title}
                           className="w-full h-full object-cover"
+                          onError={(e) => { e.currentTarget.style.display = "none"; }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         {quest.isCompleted && (
@@ -377,11 +383,12 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
               {submittingQuest && (
                 <>
                   {/* Header with image */}
-                  <div className="relative h-36 overflow-hidden rounded-t-2xl">
+                  <div className="relative h-36 overflow-hidden rounded-t-2xl bg-gradient-to-br from-[#033F7E] to-[#172E46]">
                     <img
                       src={submittingQuest.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                       alt={submittingQuest.title}
                       className="w-full h-full object-cover"
+                      onError={(e) => { e.currentTarget.style.display = "none"; }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     <div className="absolute top-3 left-3">

@@ -124,11 +124,12 @@ export default function Courses() {
                 >
                   <Link href={course.isLocked ? "#" : `/cabinet/courses/${course.id}`}>
                     <Card className={`overflow-hidden rounded-2xl border-border/60 h-full cursor-pointer transition-shadow hover:shadow-xl ${course.isLocked ? "opacity-60" : ""}`}>
-                      <div className="relative h-48 overflow-hidden">
+                      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-[#033F7E] to-[#172E46]">
                         <img
                           src={course.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                           alt={course.title}
                           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                          onError={(e) => { e.currentTarget.style.display = "none"; }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         {course.isLocked && (
