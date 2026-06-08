@@ -150,11 +150,11 @@ export default function PublicProfile() {
       <div className="max-w-4xl mx-auto space-y-6">
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
           <Card className="rounded-2xl border-border/60 overflow-hidden">
-            <div className="bg-gradient-to-r from-primary to-secondary p-6 text-primary-foreground">
-              <div className="flex items-start gap-5 flex-wrap">
-                {/* Avatar with online indicator */}
+            <div className="bg-gradient-to-r from-primary to-secondary p-5 text-primary-foreground">
+              {/* Row 1: Avatar + name/badges */}
+              <div className="flex items-start gap-4 mb-4">
                 <div className="relative shrink-0">
-                  <Avatar className="h-20 w-20 ring-4 ring-white/20">
+                  <Avatar className="h-16 w-16 sm:h-20 sm:w-20 ring-4 ring-white/20">
                     <AvatarImage src={u.avatarUrl || undefined} />
                     <AvatarFallback className="bg-accent text-white text-xl font-bold">
                       {u.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
@@ -163,51 +163,51 @@ export default function PublicProfile() {
                   {!isOwnProfile && user && (
                     <span
                       title={online ? "Онлайн" : "Оффлайн"}
-                      className={`absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-primary ${online ? "bg-green-400" : "bg-white/30"}`}
+                      className={`absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full border-2 border-primary ${online ? "bg-green-400" : "bg-white/30"}`}
                     />
                   )}
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 flex-wrap mb-2">
-                    <h1 className="text-2xl font-bold">{u.name}</h1>
-                    {u.role === "admin" && <Badge className="bg-accent text-white border-0">Администратор</Badge>}
-                    {!isOwnProfile && user && online !== undefined && (
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${online ? "bg-green-400/20 text-green-300" : "bg-white/10 text-white/60"}`}>
-                        {online ? "● онлайн" : "○ не в сети"}
-                      </span>
-                    )}
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <h1 className="text-xl sm:text-2xl font-bold leading-tight break-words">{u.name}</h1>
+                    {u.role === "admin" && <Badge className="bg-accent text-white border-0 shrink-0">Администратор</Badge>}
                   </div>
-                  <div className="flex items-center gap-3 text-sm flex-wrap">
-                    <Badge variant="secondary" className="rounded-full">{roleLabels[u.studentRole] ?? u.studentRole}</Badge>
-                    <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4 text-accent" /> Уровень {u.level}</span>
-                    <span className="flex items-center gap-1.5"><Sparkles className="h-4 w-4 text-accent" /> {u.xp} XP</span>
+                  {!isOwnProfile && user && online !== undefined && (
+                    <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full mb-1.5 ${online ? "bg-green-400/20 text-green-300" : "bg-white/10 text-white/60"}`}>
+                      {online ? "● онлайн" : "○ не в сети"}
+                    </span>
+                  )}
+                  <div className="flex items-center gap-2 text-sm flex-wrap">
+                    <Badge variant="secondary" className="rounded-full text-xs">{roleLabels[u.studentRole] ?? u.studentRole}</Badge>
+                    <span className="flex items-center gap-1 text-xs"><Trophy className="h-3.5 w-3.5 text-accent" /> Ур. {u.level}</span>
+                    <span className="flex items-center gap-1 text-xs"><Sparkles className="h-3.5 w-3.5 text-accent" /> {u.xp} XP</span>
                   </div>
-                  {u.bio && <p className="text-primary-foreground/90 mt-2 max-w-xl text-sm">{u.bio}</p>}
+                  {u.bio && <p className="text-primary-foreground/90 mt-2 text-sm leading-relaxed">{u.bio}</p>}
                 </div>
+              </div>
 
-                {/* Action buttons */}
-                {!isOwnProfile && (
-                  <div className="flex flex-col gap-2 shrink-0 mt-1">
-                    {user ? (
-                      <>
-                        <FriendButton userId={u.id} status={status} onUpdate={onFriendUpdate} />
-                        <Link href={`/cabinet/messages/${u.id}`}>
-                          <Button variant="secondary" className="rounded-xl gap-2 w-full">
-                            <MessageCircle className="h-4 w-4" /> Написать
-                          </Button>
-                        </Link>
-                      </>
-                    ) : (
-                      <Link href="/login">
+              {/* Row 2: Action buttons — always full width below */}
+              {!isOwnProfile && (
+                <div className="flex gap-2 flex-wrap">
+                  {user ? (
+                    <>
+                      <FriendButton userId={u.id} status={status} onUpdate={onFriendUpdate} />
+                      <Link href={`/cabinet/messages/${u.id}`}>
                         <Button variant="secondary" className="rounded-xl gap-2">
-                          <MessageCircle className="h-4 w-4" /> Написать сообщение
+                          <MessageCircle className="h-4 w-4" /> Написать
                         </Button>
                       </Link>
-                    )}
-                  </div>
-                )}
-              </div>
+                    </>
+                  ) : (
+                    <Link href="/login">
+                      <Button variant="secondary" className="rounded-xl gap-2">
+                        <MessageCircle className="h-4 w-4" /> Написать сообщение
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
 
             <CardContent className="p-6 grid grid-cols-3 gap-4">
