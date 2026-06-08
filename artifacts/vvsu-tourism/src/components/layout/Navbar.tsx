@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Compass, Map as MapIcon, Library, Trophy, GraduationCap,
   Sun, Moon, Menu, X, LogIn, LogOut, Shield, UserPlus, LayoutDashboard,
@@ -29,6 +29,9 @@ export function Navbar() {
   const logout = useLogout();
   const qc = useQueryClient();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile menu whenever the route changes
+  useEffect(() => { setMobileOpen(false); }, [location]);
 
   const handleLogout = () => {
     localStorage.removeItem("vvsu_auth_token");

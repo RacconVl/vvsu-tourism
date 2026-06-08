@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Lock, Star, ChevronRight, BookOpen, Plus } from "lucide-react";
+import { Lock, Star, ChevronRight, BookOpen, Plus, ArrowLeft } from "lucide-react";
 
 const roleColors: Record<string, string> = {
   guide: "bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-300",
@@ -75,7 +75,15 @@ export default function Courses() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-10 px-4">
+    <div className="min-h-screen bg-background">
+      {/* Sticky back bar */}
+      <div className="sticky top-0 z-20 bg-card/95 backdrop-blur-md border-b border-border/50 px-4 py-3 flex items-center gap-3">
+        <Link href="/cabinet" className="flex items-center gap-2 text-sm font-semibold text-foreground shrink-0">
+          <ArrowLeft className="h-5 w-5" /> Обзор
+        </Link>
+        <span className="text-muted-foreground text-sm">Курсы</span>
+      </div>
+      <div className="py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
           <div className="flex items-center justify-between">
@@ -233,6 +241,7 @@ export default function Courses() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      </div>
     </div>
   );
 }

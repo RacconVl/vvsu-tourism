@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Compass, Brain, CheckCircle, MapPin, Star, Swords,
   Filter, Clock, Award, ChevronRight, BookOpen, Palette, Trees, Mountain, Plus,
-  Target, Zap, ListChecks, Trophy,
+  Target, Zap, ListChecks, Trophy, ArrowLeft,
 } from "lucide-react";
 
 /* ── Quest config ─────────────────────────────────────────── */
@@ -129,7 +129,17 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
   };
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
+    <div className="min-h-screen bg-background">
+      {/* Sticky back bar */}
+      <div className="sticky top-0 z-20 bg-card/95 backdrop-blur-md border-b border-border/50 px-4 py-3 flex items-center gap-3">
+        <Link href="/cabinet" className="flex items-center gap-2 text-sm font-semibold text-foreground shrink-0">
+          <ArrowLeft className="h-5 w-5" /> Обзор
+        </Link>
+        <span className="text-muted-foreground text-sm">
+          {activeTab === "quizzes" ? "Тесты" : "Квесты"}
+        </span>
+      </div>
+      <div className="py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
@@ -515,6 +525,7 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      </div>
     </div>
   );
 }
