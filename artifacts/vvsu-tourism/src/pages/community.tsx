@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { useListCommunityPosts, useListGalleryWorks, useCreateCommunityPost, getListCommunityPostsQueryKey } from "@workspace/api-client-react";
@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Heart, MessageCircle, Image, PlusCircle, Palette, Route, Megaphone } from "lucide-react";
+import { Users, Heart, MessageCircle, Image, PlusCircle, Palette, Route, Megaphone, ArrowLeft, ExternalLink, HandHeart } from "lucide-react";
 
 const roleLabels: Record<string, string> = {
   guide: "Экскурсовод", marketer: "Маркетолог", designer: "Дизайнер", operator: "Туроператор"
@@ -33,6 +33,39 @@ const galleryCategories: Record<string, { label: string; color: string }> = {
   concept: { label: "Концепция", color: "bg-blue-100 text-blue-700" },
 };
 
+const REACTION_EMOJIS = ["❤️", "👍", "🔥", "🤔"] as const;
+type Emoji = typeof REACTION_EMOJIS[number];
+
+type ReactionsState = Record<string, Record<Emoji, { count: number; mine: boolean }>>;
+
+const STORAGE_KEY = "vvsu_post_reactions";
+
+function loadReactions(): ReactionsState {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveReactions(state: ReactionsState) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function initPostReactions(reactions: ReactionsState, postId: string, baseLikes: number): ReactionsState {
+  if (reactions[postId]) return reactions;
+  return {
+    ...reactions,
+    [postId]: {
+      "❤️": { count: baseLikes, mine: false },
+      "👍": { count: Math.floor(baseLikes * 0.6), mine: false },
+      "🔥": { count: Math.floor(baseLikes * 0.3), mine: false },
+      "🤔": { count: Math.floor(baseLikes * 0.15), mine: false },
+    },
+  };
+}
+
 export default function Community() {
   const { user } = useAuth();
   const { data: posts, isLoading: postsLoading } = useListCommunityPosts();
@@ -43,6 +76,35 @@ export default function Community() {
   const [activeTab, setActiveTab] = useState<"forum" | "gallery">("forum");
   const [showDialog, setShowDialog] = useState(false);
   const [form, setForm] = useState({ title: "", content: "", category: "Маркетинг" });
+  const [reactions, setReactions] = useState<ReactionsState>(loadReactions);
+
+  useEffect(() => {
+    if (!posts) return;
+    setReactions(prev => {
+      let next = { ...prev };
+      posts.forEach(p => {
+        next = initPostReactions(next, String(p.id), p.likes);
+      });
+      saveReactions(next);
+      return next;
+    });
+  }, [posts]);
+
+  const toggleReaction = (postId: string, emoji: Emoji) => {
+    setReactions(prev => {
+      const postR = prev[postId] ?? {};
+      const cur = postR[emoji] ?? { count: 0, mine: false };
+      const next: ReactionsState = {
+        ...prev,
+        [postId]: {
+          ...postR,
+          [emoji]: { count: cur.mine ? cur.count - 1 : cur.count + 1, mine: !cur.mine },
+        },
+      };
+      saveReactions(next);
+      return next;
+    });
+  };
 
   const handleCreate = () => {
     if (!form.title || !form.content) return;
@@ -57,7 +119,16 @@ export default function Community() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-10 px-4">
+    <div className="min-h-screen bg-background">
+      {/* Sticky back bar */}
+      <div className="sticky top-0 z-20 bg-card/95 backdrop-blur-md border-b border-border/50 px-4 py-3 flex items-center gap-3">
+        <Link href="/cabinet" className="flex items-center gap-2 text-sm font-semibold text-foreground shrink-0">
+          <ArrowLeft className="h-5 w-5" /> Обзор
+        </Link>
+        <span className="text-muted-foreground text-sm">Сообщество</span>
+      </div>
+
+      <div className="py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-3 mb-2">
@@ -94,43 +165,108 @@ export default function Community() {
 
         {activeTab === "forum" && (
           <div className="space-y-4">
-            {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-32 w-full rounded-2xl" />) :
-              posts?.map((post, i) => (
-                <motion.div
-                  key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.06 }}
-                  data-testid={`card-post-${post.id}`}
-                >
-                  <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow cursor-pointer">
-                    <CardContent className="p-5">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Badge variant="outline" className="text-xs">{post.category}</Badge>
-                            {categoryIcons[post.category]}
-                          </div>
-                          <h3 className="font-bold text-foreground text-base mb-1">{post.title}</h3>
-                          <p className="text-sm text-muted-foreground line-clamp-2">{post.content}</p>
-                          <div className="flex items-center gap-4 mt-3">
-                            <span className="text-xs text-muted-foreground">
-                              {post.authorName} · {roleLabels[post.authorRole] ?? post.authorRole}
-                            </span>
-                            <span className="text-xs text-muted-foreground">
-                              {new Date(post.createdAt).toLocaleDateString("ru-RU")}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-end gap-2 text-xs text-muted-foreground flex-shrink-0">
-                          <span className="flex items-center gap-1"><Heart className="h-3.5 w-3.5 text-rose-400" /> {post.likes}</span>
-                          <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" /> {post.replies}</span>
-                        </div>
+            {/* Pinned volunteer news */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+              <Card className="rounded-2xl border-2 border-accent/30 bg-accent/5 hover:shadow-lg transition-shadow">
+                <CardContent className="p-5">
+                  <div className="flex items-start gap-4">
+                    <div className="shrink-0 w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                      <HandHeart className="h-5 w-5 text-accent" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <Badge className="bg-accent text-accent-foreground border-0 text-xs">📌 Новость ВВГУ</Badge>
+                        <Badge variant="outline" className="text-xs">Волонтёрство</Badge>
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))
+                      <h3 className="font-bold text-foreground text-base mb-2">
+                        Студенты ВВГУ познакомились с работой добровольцев «ЛизаАлерт» в Приморье
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Центр волонтёров ВВГУ — первый в Приморье с 1998 года. Наши студенты участвовали в подготовке 
+                        добровольцев для Олимпийских игр в Сочи, чемпионата мира по водным видам спорта, Восточного 
+                        экономического форума. Ежегодно Центр задействован в более чем 300 событиях — от городского 
+                        до международного уровня. Волонтёры ВВГУ — первые лица добровольчества в Приморье.
+                      </p>
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <span className="text-xs text-muted-foreground">vvsu.ru/mc · Центр молодёжных коммуникаций</span>
+                        <a
+                          href="https://www.vvsu.ru/mc/volunteering/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-xs font-medium text-accent hover:underline"
+                        >
+                          Подробнее <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Forum posts */}
+            {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-32 w-full rounded-2xl" />) :
+              posts?.map((post, i) => {
+                const postId = String(post.id);
+                const postReactions = reactions[postId];
+                return (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.06 }}
+                    data-testid={`card-post-${post.id}`}
+                  >
+                    <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow">
+                      <CardContent className="p-5">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="outline" className="text-xs">{post.category}</Badge>
+                              {categoryIcons[post.category]}
+                            </div>
+                            <h3 className="font-bold text-foreground text-base mb-1">{post.title}</h3>
+                            <p className="text-sm text-muted-foreground line-clamp-2">{post.content}</p>
+                            <div className="flex items-center gap-4 mt-3 mb-4">
+                              <span className="text-xs text-muted-foreground">
+                                {post.authorName} · {roleLabels[post.authorRole] ?? post.authorRole}
+                              </span>
+                              <span className="text-xs text-muted-foreground">
+                                {new Date(post.createdAt).toLocaleDateString("ru-RU")}
+                              </span>
+                            </div>
+                            {/* Emoji reactions */}
+                            <div className="flex items-center gap-2 flex-wrap">
+                              {REACTION_EMOJIS.map(emoji => {
+                                const r = postReactions?.[emoji];
+                                const count = r?.count ?? 0;
+                                const mine = r?.mine ?? false;
+                                return (
+                                  <button
+                                    key={emoji}
+                                    onClick={() => toggleReaction(postId, emoji)}
+                                    className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border transition-all select-none ${
+                                      mine
+                                        ? "bg-accent/15 border-accent/50 text-accent"
+                                        : "bg-muted/40 border-border/50 text-muted-foreground hover:bg-muted hover:border-border"
+                                    }`}
+                                  >
+                                    <span>{emoji}</span>
+                                    {count > 0 && <span>{count}</span>}
+                                  </button>
+                                );
+                              })}
+                              <span className="flex items-center gap-1 text-xs text-muted-foreground ml-2">
+                                <MessageCircle className="h-3.5 w-3.5" /> {post.replies}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })
             }
           </div>
         )}
@@ -170,6 +306,7 @@ export default function Community() {
             }
           </div>
         )}
+      </div>
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
