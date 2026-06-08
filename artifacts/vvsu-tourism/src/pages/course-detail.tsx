@@ -318,6 +318,14 @@ export default function CourseDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Mobile sticky back bar */}
+      <div className="md:hidden sticky top-0 z-20 bg-card/95 backdrop-blur-md border-b border-border/50 px-4 py-3 flex items-center gap-3">
+        <Link href="/cabinet/courses" className="flex items-center gap-2 text-sm font-semibold text-foreground shrink-0">
+          <ArrowLeft className="h-5 w-5" /> Курсы
+        </Link>
+        <span className="text-muted-foreground text-sm truncate">{course.title}</span>
+      </div>
+
       {/* Hero */}
       <div className="relative h-56 overflow-hidden">
         <img src={course.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200"} alt={course.title} className="w-full h-full object-cover" />

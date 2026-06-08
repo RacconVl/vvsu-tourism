@@ -129,11 +129,15 @@ export default function QuizDetailPage() {
   /* ── INTRO ── */
   if (phase === "intro") {
     return (
-      <div className="min-h-screen bg-background py-8 px-4">
-        <div className="max-w-2xl mx-auto">
-          <Link href="/cabinet/tasks" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6">
-            <ArrowLeft className="h-4 w-4" /> К списку тестов
+      <div className="min-h-screen bg-background">
+        {/* Mobile sticky back bar */}
+        <div className="sticky top-0 z-20 bg-card/95 backdrop-blur-md border-b border-border/50 px-4 py-3 flex items-center gap-3">
+          <Link href="/cabinet/tasks" className="flex items-center gap-2 text-sm font-semibold text-foreground shrink-0">
+            <ArrowLeft className="h-5 w-5" /> Задания
           </Link>
+          <span className="text-muted-foreground text-sm truncate">{quiz.title}</span>
+        </div>
+        <div className="max-w-2xl mx-auto py-6 px-4">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="rounded-2xl border-border/60 overflow-hidden">
               <div className="relative h-44 overflow-hidden">
@@ -198,11 +202,15 @@ export default function QuizDetailPage() {
     const pct = Math.round((result.score / result.total) * 100);
     const passedColor = result.passed ? "from-secondary to-teal-600" : "from-amber-500 to-orange-600";
     return (
-      <div className="min-h-screen bg-background py-8 px-4">
-        <div className="max-w-3xl mx-auto">
-          <Link href="/cabinet/tasks" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="h-4 w-4" /> К списку тестов
+      <div className="min-h-screen bg-background">
+        {/* Sticky back bar */}
+        <div className="sticky top-0 z-20 bg-card/95 backdrop-blur-md border-b border-border/50 px-4 py-3 flex items-center gap-3">
+          <Link href="/cabinet/tasks" className="flex items-center gap-2 text-sm font-semibold text-foreground shrink-0">
+            <ArrowLeft className="h-5 w-5" /> Задания
           </Link>
+          <span className="text-muted-foreground text-sm truncate">Результаты: {quiz.title}</span>
+        </div>
+        <div className="max-w-3xl mx-auto py-6 px-4">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <Card className="rounded-2xl border-border/60 overflow-hidden">
               <div className={`bg-gradient-to-br ${passedColor} text-white p-8 text-center`}>
