@@ -50,6 +50,7 @@ function Router() {
         {/* Personal cabinet — explicit routes first, then catch-all */}
         <Route path="/cabinet/courses/:id" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
         <Route path="/cabinet/tasks/quiz/:id" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
+        <Route path="/cabinet/messages/:userId" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
         <Route path="/cabinet/:rest*" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
         <Route path="/cabinet" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
 

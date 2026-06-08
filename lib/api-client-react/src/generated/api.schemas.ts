@@ -427,6 +427,33 @@ export interface CreateQuestRequest {
   timeEstimate?: number;
 }
 
+export interface MessageUser {
+  id: number;
+  name: string;
+  studentRole: string;
+  level: number;
+  avatarUrl?: string | null;
+}
+
+export interface DirectMessage {
+  id: number;
+  senderId: number;
+  receiverId: number;
+  content: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
+export interface Conversation {
+  partner: MessageUser;
+  lastMessage: DirectMessage;
+  unreadCount: number;
+}
+
+export interface SendMessageBody {
+  content: string;
+}
+
 export interface LeaderboardEntry {
   rank: number;
   studentName: string;

@@ -6,6 +6,8 @@ import CourseDetail from "@/pages/course-detail";
 import Tasks from "@/pages/tasks";
 import QuizDetail from "@/pages/quiz-detail";
 import Community from "@/pages/community";
+import Messages from "@/pages/messages";
+import Conversation from "@/pages/conversation";
 
 export default function Cabinet() {
   return (
@@ -27,6 +29,12 @@ export default function Cabinet() {
           </Route>
           <Route path="/cabinet/tasks" component={() => <Tasks />} />
           <Route path="/cabinet/community" component={Community} />
+          <Route path="/cabinet/messages/:userId">
+            {(params: { userId?: string }) => (
+              <Conversation partnerId={parseInt(params?.userId ?? "0", 10)} />
+            )}
+          </Route>
+          <Route path="/cabinet/messages" component={Messages} />
           <Route><Redirect to="/cabinet" /></Route>
         </Switch>
       </main>

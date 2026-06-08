@@ -236,6 +236,95 @@ paths:
               schema:
                 $ref: "#/components/schemas/CommunityPost"
 
+  /users:
+    get:
+      operationId: listUsers
+      tags: [users]
+      summary: List all users (for messaging)
+      responses:
+        "200":
+          description: User list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MessageUser"
+
+  /messages/conversations:
+    get:
+      operationId: listConversations
+      tags: [messages]
+      summary: List conversations for current user
+      responses:
+        "200":
+          description: Conversations list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Conversation"
+
+  /messages/{userId}:
+    get:
+      operationId: getMessages
+      tags: [messages]
+      summary: Get messages with a specific user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Messages list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DirectMessage"
+    post:
+      operationId: sendMessage
+      tags: [messages]
+      summary: Send a message to a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SendMessageBody"
+      responses:
+        "201":
+          description: Sent message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DirectMessage"
+
+  /messages/{userId}/read:
+    patch:
+      operationId: markMessagesRead
+      tags: [messages]
+      summary: Mark all messages from a user as read
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Marked as read
+
   /community/posts/{id}/comments:
     get:
       operationId: listPostComments
@@ -1410,6 +1499,57 @@ components:
         timeEstimate:
           type: integer
       required: [title, description, type, difficulty, location]
+
+    MessageUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        studentRole:
+          type: string
+        level:
+          type: integer
+        avatarUrl:
+          type: string
+          nullable: true
+      required: [id, name, studentRole, level]
+
+    DirectMessage:
+      type: object
+      properties:
+        id:
+          type: integer
+        senderId:
+          type: integer
+        receiverId:
+          type: integer
+        content:
+          type: string
+        isRead:
+          type: boolean
+        createdAt:
+          type: string
+      required: [id, senderId, receiverId, content, isRead, createdAt]
+
+    Conversation:
+      type: object
+      properties:
+        partner:
+          $ref: "#/components/schemas/MessageUser"
+        lastMessage:
+          $ref: "#/components/schemas/DirectMessage"
+        unreadCount:
+          type: integer
+      required: [partner, lastMessage, unreadCount]
+
+    SendMessageBody:
+      type: object
+      properties:
+        content:
+          type: string
+      required: [content]
 
     LeaderboardEntry:
       type: object

@@ -1,10 +1,12 @@
 import type React from "react";
-import { useRoute } from "wouter";
+import { useRoute, Link } from "wouter";
 import { motion } from "framer-motion";
 import { useGetPublicProfile } from "@workspace/api-client-react";
+import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Award, Brain, Compass, BookOpen, Trophy, Sparkles, Anchor, MessageCircle, Star, Map as MapIcon } from "lucide-react";
 
@@ -30,6 +32,7 @@ const iconMap: Record<string, React.ReactNode> = {
 export default function PublicProfile() {
   const [, params] = useRoute("/profile/:id");
   const id = Number(params?.id);
+  const { user } = useAuth();
   const { data: profile, isLoading, error } = useGetPublicProfile(id, {
     query: { enabled: Number.isFinite(id) } as never,
   });
@@ -53,6 +56,7 @@ export default function PublicProfile() {
   }
 
   const u = profile.user;
+  const isOwnProfile = user?.id === u.id;
 
   return (
     <div className="min-h-screen bg-background py-10 px-4">
@@ -60,25 +64,43 @@ export default function PublicProfile() {
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
           <Card className="rounded-2xl border-border/60 overflow-hidden">
             <div className="bg-gradient-to-r from-primary to-secondary p-6 text-primary-foreground">
-              <div className="flex items-center gap-5">
-                <Avatar className="h-20 w-20 ring-4 ring-white/20">
+              <div className="flex items-start gap-5 flex-wrap">
+                <Avatar className="h-20 w-20 ring-4 ring-white/20 shrink-0">
                   <AvatarImage src={u.avatarUrl || undefined} />
                   <AvatarFallback className="bg-accent text-white text-xl font-bold">
                     {u.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                   </AvatarFallback>
                 </Avatar>
-                <div>
+                <div className="flex-1 min-w-0">
                   <h1 className="text-2xl font-bold flex items-center gap-2 flex-wrap">
                     {u.name}
                     {u.role === "admin" && <Badge className="bg-accent text-white border-0">Администратор</Badge>}
                   </h1>
-                  <div className="flex items-center gap-3 mt-2 text-sm">
+                  <div className="flex items-center gap-3 mt-2 text-sm flex-wrap">
                     <Badge variant="secondary" className="rounded-full">{roleLabels[u.studentRole] ?? u.studentRole}</Badge>
                     <span className="flex items-center gap-1.5"><Trophy className="h-4 w-4 text-accent" /> Уровень {u.level}</span>
                     <span className="flex items-center gap-1.5"><Sparkles className="h-4 w-4 text-accent" /> {u.xp} XP</span>
                   </div>
                   {u.bio && <p className="text-primary-foreground/90 mt-2 max-w-xl text-sm">{u.bio}</p>}
                 </div>
+                {/* Action button */}
+                {!isOwnProfile && (
+                  user ? (
+                    <Link href={`/cabinet/messages/${u.id}`}>
+                      <Button variant="secondary" className="rounded-xl gap-2 mt-1 shrink-0">
+                        <MessageCircle className="h-4 w-4" />
+                        Написать сообщение
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href="/login">
+                      <Button variant="secondary" className="rounded-xl gap-2 mt-1 shrink-0">
+                        <MessageCircle className="h-4 w-4" />
+                        Написать сообщение
+                      </Button>
+                    </Link>
+                  )
+                )}
               </div>
             </div>
             <CardContent className="p-6 grid grid-cols-3 gap-4">

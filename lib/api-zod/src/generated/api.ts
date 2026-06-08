@@ -242,6 +242,78 @@ export const CreateCommunityPostBody = zod.object({
 });
 
 /**
+ * @summary List all users (for messaging)
+ */
+export const ListUsersResponseItem = zod.object({
+  id: zod.number(),
+  name: zod.string(),
+  studentRole: zod.string(),
+  level: zod.number(),
+  avatarUrl: zod.string().nullish(),
+});
+export const ListUsersResponse = zod.array(ListUsersResponseItem);
+
+/**
+ * @summary List conversations for current user
+ */
+export const ListConversationsResponseItem = zod.object({
+  partner: zod.object({
+    id: zod.number(),
+    name: zod.string(),
+    studentRole: zod.string(),
+    level: zod.number(),
+    avatarUrl: zod.string().nullish(),
+  }),
+  lastMessage: zod.object({
+    id: zod.number(),
+    senderId: zod.number(),
+    receiverId: zod.number(),
+    content: zod.string(),
+    isRead: zod.boolean(),
+    createdAt: zod.string(),
+  }),
+  unreadCount: zod.number(),
+});
+export const ListConversationsResponse = zod.array(
+  ListConversationsResponseItem,
+);
+
+/**
+ * @summary Get messages with a specific user
+ */
+export const GetMessagesParams = zod.object({
+  userId: zod.coerce.number(),
+});
+
+export const GetMessagesResponseItem = zod.object({
+  id: zod.number(),
+  senderId: zod.number(),
+  receiverId: zod.number(),
+  content: zod.string(),
+  isRead: zod.boolean(),
+  createdAt: zod.string(),
+});
+export const GetMessagesResponse = zod.array(GetMessagesResponseItem);
+
+/**
+ * @summary Send a message to a user
+ */
+export const SendMessageParams = zod.object({
+  userId: zod.coerce.number(),
+});
+
+export const SendMessageBody = zod.object({
+  content: zod.string(),
+});
+
+/**
+ * @summary Mark all messages from a user as read
+ */
+export const MarkMessagesReadParams = zod.object({
+  userId: zod.coerce.number(),
+});
+
+/**
  * @summary List comments for a post
  */
 export const ListPostCommentsParams = zod.object({

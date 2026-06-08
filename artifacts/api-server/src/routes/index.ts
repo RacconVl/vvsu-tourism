@@ -11,6 +11,7 @@ import quizzesRouter from "./quizzes";
 import authRouter from "./auth";
 import profileRouter from "./profile";
 import adminRouter from "./admin";
+import messagesRouter from "./messages";
 
 const router: IRouter = Router();
 
@@ -26,5 +27,6 @@ router.use(communityRouter);
 router.use(libraryRouter);
 router.use(dashboardRouter);
 router.use(quizzesRouter);
+router.use(messagesRouter);
 
 export default router;

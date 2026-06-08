@@ -5,3 +5,4 @@ export * from "./map";
 export * from "./community";
 export * from "./library";
 export * from "./users";
+export * from "./messages";
