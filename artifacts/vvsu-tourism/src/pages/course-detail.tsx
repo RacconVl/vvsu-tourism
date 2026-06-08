@@ -253,9 +253,9 @@ function TestLesson({ data, module, onComplete, isPending }: { data: TestData; m
 
 /* ── Main Component ─────────────────────────────────────────────────── */
 
-export default function CourseDetail() {
+export default function CourseDetail({ courseId: propId }: { courseId?: number } = {}) {
   const params = useParams<{ id: string }>();
-  const courseId = parseInt(params.id ?? "0", 10);
+  const courseId = (propId && propId > 0) ? propId : parseInt(params.id ?? "0", 10);
   const queryClient = useQueryClient();
   const { toast } = useToast();
 

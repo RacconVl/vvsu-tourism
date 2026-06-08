@@ -24,9 +24,9 @@ function formatTime(seconds: number) {
   return `${m}:${s}`;
 }
 
-export default function QuizDetailPage() {
+export default function QuizDetailPage({ quizId: propId }: { quizId?: number } = {}) {
   const params = useParams<{ id: string }>();
-  const id = Number(params?.id ?? "0");
+  const id = (propId && propId > 0) ? propId : Number(params?.id ?? "0");
   const { data: quiz, isLoading } = useGetQuiz(id);
   const submitMutation = useSubmitQuiz();
   const queryClient = useQueryClient();
