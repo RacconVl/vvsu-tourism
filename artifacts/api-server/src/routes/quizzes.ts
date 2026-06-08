@@ -463,7 +463,7 @@ const QUIZZES: QuizData[] = [
 
 router.get("/quizzes", async (req, res): Promise<void> => {
   let passedSet = new Set<number>();
-  const bestScoreMap = new Map<number, string>();
+  const bestScoreMap = new Map<number, number>();
 
   if (req.user) {
     const attempts = await db
@@ -476,7 +476,7 @@ router.get("/quizzes", async (req, res): Promise<void> => {
       const ratio = a.score / a.total;
       if (ratio > (bestRatioMap.get(a.quizId) ?? -1)) {
         bestRatioMap.set(a.quizId, ratio);
-        bestScoreMap.set(a.quizId, `${a.score}/${a.total}`);
+        bestScoreMap.set(a.quizId, a.score);
       }
       if (a.passed === 1) passedSet.add(a.quizId);
     }

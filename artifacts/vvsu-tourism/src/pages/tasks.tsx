@@ -20,6 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Compass, Brain, CheckCircle, MapPin, Star, Swords,
   Filter, Clock, Award, ChevronRight, BookOpen, Palette, Trees, Mountain, Plus,
+  Target, Zap, ListChecks, Trophy,
 } from "lucide-react";
 
 /* ── Quest config ─────────────────────────────────────────── */
@@ -334,26 +335,117 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
       </div>
 
       {/* Quest submit dialog */}
-      <Dialog open={!!submittingId} onOpenChange={() => setSubmittingId(null)}>
-        <DialogContent className="rounded-2xl">
-          <DialogHeader>
-            <DialogTitle>Отправить ответ на квест</DialogTitle>
-          </DialogHeader>
-          <Textarea
-            placeholder="Опишите ваше решение задания..."
-            value={answer}
-            onChange={e => setAnswer(e.target.value)}
-            rows={5}
-            className="rounded-xl"
-          />
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setSubmittingId(null)}>Отмена</Button>
-            <Button onClick={handleQuestSubmit} disabled={submitQuest.isPending || !answer.trim()}>
-              {submitQuest.isPending ? "Отправляю..." : "Отправить"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {(() => {
+        const submittingQuest = quests?.find(q => q.id === submittingId) ?? null;
+        const questSteps: Record<string, { icon: React.ReactNode; step: string }[]> = {
+          route: [
+            { icon: <MapPin className="h-4 w-4 text-teal-600" />, step: "Изучите локацию на карте, отметьте ключевые точки маршрута и препятствия" },
+            { icon: <Target className="h-4 w-4 text-teal-600" />, step: "Составьте детальный план маршрута с тайммингом и описанием каждого участка" },
+            { icon: <Zap className="h-4 w-4 text-teal-600" />, step: "Опишите туристический потенциал, рекомендации и возможные улучшения" },
+          ],
+          budget: [
+            { icon: <ListChecks className="h-4 w-4 text-amber-600" />, step: "Соберите актуальные цены на транспорт, размещение, питание и экскурсии" },
+            { icon: <Target className="h-4 w-4 text-amber-600" />, step: "Составьте детальную смету с разбивкой по статьям затрат" },
+            { icon: <Zap className="h-4 w-4 text-amber-600" />, step: "Рассчитайте итоговую стоимость, наценку и рентабельность тура" },
+          ],
+          marketing: [
+            { icon: <Target className="h-4 w-4 text-purple-600" />, step: "Определите целевую аудиторию и проанализируйте конкурентов" },
+            { icon: <ListChecks className="h-4 w-4 text-purple-600" />, step: "Разработайте контент-план и список маркетинговых активностей" },
+            { icon: <Zap className="h-4 w-4 text-purple-600" />, step: "Укажите KPI, бюджет и методы оценки эффективности кампании" },
+          ],
+          design: [
+            { icon: <Target className="h-4 w-4 text-rose-600" />, step: "Изучите фирменный стиль бренда и особенности целевой аудитории" },
+            { icon: <ListChecks className="h-4 w-4 text-rose-600" />, step: "Разработайте концепцию дизайна с визуальными примерами и обоснованием" },
+            { icon: <Zap className="h-4 w-4 text-rose-600" />, step: "Опишите технические требования и процесс реализации дизайн-решения" },
+          ],
+        };
+        const steps = submittingQuest ? (questSteps[submittingQuest.type] ?? questSteps.route) : [];
+
+        return (
+          <Dialog open={!!submittingId} onOpenChange={() => { setSubmittingId(null); setAnswer(""); }}>
+            <DialogContent className="rounded-2xl max-w-lg max-h-[90vh] overflow-y-auto p-0">
+              {submittingQuest && (
+                <>
+                  {/* Header with image */}
+                  <div className="relative h-36 overflow-hidden rounded-t-2xl">
+                    <img
+                      src={submittingQuest.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
+                      alt={submittingQuest.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                    <div className="absolute top-3 left-3">
+                      <Badge className={`${questTypeColors[submittingQuest.type] ?? ""} text-xs border-0`}>
+                        {questTypeLabels[submittingQuest.type] ?? submittingQuest.type}
+                      </Badge>
+                    </div>
+                    <div className="absolute bottom-3 left-4 right-4">
+                      <h2 className="text-white font-bold text-lg leading-tight">{submittingQuest.title}</h2>
+                    </div>
+                  </div>
+
+                  <div className="p-5 space-y-5">
+                    {/* Meta */}
+                    <div className="flex items-center gap-4 flex-wrap">
+                      <span className="flex items-center gap-1.5 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" />{submittingQuest.locationName}</span>
+                      <span className={`flex items-center gap-1.5 text-xs font-medium ${difficultyColors[submittingQuest.difficulty] ?? ""}`}>
+                        <Swords className="h-3.5 w-3.5" />{difficultyLabels[submittingQuest.difficulty]}
+                      </span>
+                      <span className="flex items-center gap-1.5 text-xs font-bold text-accent ml-auto">
+                        <Trophy className="h-3.5 w-3.5" />+{submittingQuest.xpReward} XP
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm text-muted-foreground leading-relaxed">{submittingQuest.description}</p>
+
+                    {/* Step-by-step guide */}
+                    <div className="space-y-2">
+                      <p className="text-sm font-semibold text-foreground flex items-center gap-2"><ListChecks className="h-4 w-4 text-accent" />Задание</p>
+                      {steps.map((s, i) => (
+                        <div key={i} className="flex gap-3 p-3 rounded-xl bg-muted/40 border border-border/40">
+                          <span className="w-6 h-6 rounded-full bg-background border border-border flex items-center justify-center text-[11px] font-bold text-muted-foreground shrink-0">{i + 1}</span>
+                          <div className="flex items-start gap-2 flex-1">
+                            {s.icon}
+                            <p className="text-sm text-foreground leading-snug">{s.step}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Submission */}
+                    <div className="space-y-2">
+                      <Label className="text-sm font-semibold">Ваш ответ</Label>
+                      <Textarea
+                        placeholder="Опишите ваше решение подробно. Покажите, что вы изучили локацию, продумали детали и готовы к реальной работе..."
+                        value={answer}
+                        onChange={e => setAnswer(e.target.value)}
+                        rows={5}
+                        className="rounded-xl resize-none"
+                      />
+                      <p className="text-xs text-muted-foreground">Минимум 50 символов. Сейчас: {answer.length}</p>
+                    </div>
+
+                    <div className="flex gap-3">
+                      <Button variant="outline" onClick={() => { setSubmittingId(null); setAnswer(""); }} className="flex-1 rounded-xl">Отмена</Button>
+                      <Button
+                        onClick={handleQuestSubmit}
+                        disabled={submitQuest.isPending || answer.trim().length < 50}
+                        className="flex-1 rounded-xl gap-2"
+                      >
+                        {submitQuest.isPending
+                          ? "Отправляю..."
+                          : <><Zap className="h-4 w-4" />Сдать квест · +{submittingQuest.xpReward} XP</>
+                        }
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
+        );
+      })()}
 
       {/* Admin: Create Quest Dialog */}
       <Dialog open={questDialogOpen} onOpenChange={setQuestDialogOpen}>
