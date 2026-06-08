@@ -9,13 +9,26 @@ import {
   SubmitQuestBody,
   SubmitQuestResponse,
 } from "@workspace/api-zod";
-import { requireAuth } from "../lib/auth";
+import { requireAuth, levelForXp } from "../lib/auth";
 
 const router: IRouter = Router();
 
-router.get("/quests", async (_req, res): Promise<void> => {
+router.get("/quests", async (req, res): Promise<void> => {
   const quests = await db.select().from(questsTable).orderBy(asc(questsTable.id));
-  res.json(ListQuestsResponse.parse(quests));
+
+  if (!req.user) {
+    res.json(ListQuestsResponse.parse(quests.map((q) => ({ ...q, isCompleted: false }))));
+    return;
+  }
+
+  const submissions = await db
+    .select({ questId: userQuestSubmissionsTable.questId })
+    .from(userQuestSubmissionsTable)
+    .where(eq(userQuestSubmissionsTable.userId, req.user.id));
+
+  const completedSet = new Set(submissions.map((s) => s.questId));
+  const result = quests.map((q) => ({ ...q, isCompleted: completedSet.has(q.id) }));
+  res.json(ListQuestsResponse.parse(result));
 });
 
 router.get("/quests/:id", requireAuth, async (req, res): Promise<void> => {
@@ -50,31 +63,52 @@ router.post("/quests/:id/submit", requireAuth, async (req, res): Promise<void> =
     res.status(404).json({ error: "Quest not found" });
     return;
   }
+
   const u = req.user!;
-  const inserted = await db.insert(userQuestSubmissionsTable).values({
-    userId: u.id,
-    questId: quest.id,
-    answer: body.data.answer ?? "",
-    status: "submitted",
-  }).onConflictDoNothing({ target: [userQuestSubmissionsTable.userId, userQuestSubmissionsTable.questId] }).returning();
-  const isFirst = inserted.length > 0;
-  if (isFirst) {
-    await db.insert(userActivityTable).values({
+  const inserted = await db
+    .insert(userQuestSubmissionsTable)
+    .values({
       userId: u.id,
-      type: "quest",
-      description: `Выполнен квест «${quest.title}»`,
-      xpEarned: quest.xpReward,
-    });
-    await db.update(usersTable).set({ xp: sql`${usersTable.xp} + ${quest.xpReward}` }).where(eq(usersTable.id, u.id));
+      questId: quest.id,
+      answer: body.data.answer ?? "",
+      status: "submitted",
+    })
+    .onConflictDoNothing({ target: [userQuestSubmissionsTable.userId, userQuestSubmissionsTable.questId] })
+    .returning();
+
+  const isFirst = inserted.length > 0;
+
+  if (isFirst) {
+    const [updated] = await db
+      .update(usersTable)
+      .set({ xp: sql`${usersTable.xp} + ${quest.xpReward}` })
+      .where(eq(usersTable.id, u.id))
+      .returning({ newXp: usersTable.xp });
+
+    const newXp = updated?.newXp ?? u.xp + quest.xpReward;
+    const { level } = levelForXp(newXp);
+
+    await Promise.all([
+      db.update(usersTable).set({ level }).where(eq(usersTable.id, u.id)),
+      db.insert(userActivityTable).values({
+        userId: u.id,
+        type: "quest",
+        description: `Выполнен квест «${quest.title}»`,
+        xpEarned: quest.xpReward,
+      }),
+    ]);
   }
-  res.json(SubmitQuestResponse.parse({
-    success: true,
-    xpEarned: isFirst ? quest.xpReward : 0,
-    feedback: isFirst
-      ? "Отлично! Задание принято и записано в вашем профиле."
-      : "Вы уже сдавали этот квест ранее. Повторная отправка не приносит XP.",
-    newAchievements: [],
-  }));
+
+  res.json(
+    SubmitQuestResponse.parse({
+      success: true,
+      xpEarned: isFirst ? quest.xpReward : 0,
+      feedback: isFirst
+        ? "Отлично! Задание принято и записано в вашем профиле."
+        : "Вы уже сдавали этот квест ранее. Повторная отправка не приносит XP.",
+      newAchievements: [],
+    }),
+  );
 });
 
 export default router;

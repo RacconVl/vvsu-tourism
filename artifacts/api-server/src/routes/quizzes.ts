@@ -9,7 +9,7 @@ import {
 } from "@workspace/api-zod";
 import { db, userQuizAttemptsTable, userActivityTable, usersTable } from "@workspace/db";
 import { eq, and, desc, sql } from "drizzle-orm";
-import { requireAuth } from "../lib/auth";
+import { requireAuth, levelForXp } from "../lib/auth";
 
 const router: IRouter = Router();
 
@@ -461,8 +461,28 @@ const QUIZZES: QuizData[] = [
   },
 ];
 
-router.get("/quizzes", async (_req, res): Promise<void> => {
-  const summaries = QUIZZES.map(q => ({
+router.get("/quizzes", async (req, res): Promise<void> => {
+  let passedSet = new Set<number>();
+  const bestScoreMap = new Map<number, string>();
+
+  if (req.user) {
+    const attempts = await db
+      .select()
+      .from(userQuizAttemptsTable)
+      .where(eq(userQuizAttemptsTable.userId, req.user.id));
+
+    const bestRatioMap = new Map<number, number>();
+    for (const a of attempts) {
+      const ratio = a.score / a.total;
+      if (ratio > (bestRatioMap.get(a.quizId) ?? -1)) {
+        bestRatioMap.set(a.quizId, ratio);
+        bestScoreMap.set(a.quizId, `${a.score}/${a.total}`);
+      }
+      if (a.passed === 1) passedSet.add(a.quizId);
+    }
+  }
+
+  const summaries = QUIZZES.map((q) => ({
     id: q.id,
     title: q.title,
     description: q.description,
@@ -472,8 +492,8 @@ router.get("/quizzes", async (_req, res): Promise<void> => {
     xpReward: q.xpReward,
     estimatedMinutes: q.estimatedMinutes,
     imageUrl: q.imageUrl,
-    isCompleted: q.isCompleted,
-    bestScore: q.bestScore,
+    isCompleted: passedSet.has(q.id),
+    bestScore: bestScoreMap.get(q.id) ?? null,
   }));
   res.json(ListQuizzesResponse.parse(summaries));
 });
@@ -557,7 +577,14 @@ router.post("/quizzes/:id/submit", requireAuth, async (req, res): Promise<void> 
   });
 
   if (xpEarned > 0) {
-    await db.update(usersTable).set({ xp: sql`${usersTable.xp} + ${xpEarned}` }).where(eq(usersTable.id, u.id));
+    const [updated] = await db
+      .update(usersTable)
+      .set({ xp: sql`${usersTable.xp} + ${xpEarned}` })
+      .where(eq(usersTable.id, u.id))
+      .returning({ newXp: usersTable.xp });
+    const newXp = updated?.newXp ?? u.xp + xpEarned;
+    const { level } = levelForXp(newXp);
+    await db.update(usersTable).set({ level }).where(eq(usersTable.id, u.id));
   }
   if (previous.length === 0 && passed) {
     await db.insert(userActivityTable).values({

@@ -38,7 +38,9 @@ export const userModuleProgressTable = pgTable("user_module_progress", {
   moduleId: integer("module_id").notNull(),
   courseId: integer("course_id").notNull(),
   completedAt: timestamp("completed_at", { withTimezone: true }).notNull().defaultNow(),
-});
+}, (t) => ({
+  userModuleUnique: uniqueIndex("user_module_progress_user_module_idx").on(t.userId, t.moduleId),
+}));
 export type UserModuleProgress = typeof userModuleProgressTable.$inferSelect;
 
 export const userQuestSubmissionsTable = pgTable("user_quest_submissions", {

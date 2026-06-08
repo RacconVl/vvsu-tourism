@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import {
   useListQuests, useSubmitQuest, getListQuestsQueryKey,
-  useListQuizzes, useAdminCreateQuest,
+  useListQuizzes, useAdminCreateQuest, getGetDashboardSummaryQueryKey,
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
@@ -98,8 +98,12 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
     if (!submittingId || !answer.trim()) return;
     submitQuest.mutate({ id: submittingId, data: { answer } }, {
       onSuccess: (result) => {
-        toast({ title: result.success ? "Квест выполнен!" : "Попробуйте ещё раз", description: result.feedback });
+        toast({
+          title: result.success ? "Квест выполнен!" : "Попробуйте ещё раз",
+          description: result.xpEarned > 0 ? `${result.feedback} +${result.xpEarned} XP` : result.feedback,
+        });
         queryClient.invalidateQueries({ queryKey: getListQuestsQueryKey() });
+        queryClient.invalidateQueries({ queryKey: getGetDashboardSummaryQueryKey() });
         setSubmittingId(null);
         setAnswer("");
       },

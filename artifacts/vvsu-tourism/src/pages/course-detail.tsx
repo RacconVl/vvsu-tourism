@@ -1,6 +1,12 @@
 import { useParams } from "wouter";
 import { motion } from "framer-motion";
-import { useGetCourse, useCompleteModule, getListCoursesQueryKey } from "@workspace/api-client-react";
+import {
+  useGetCourse,
+  useCompleteModule,
+  getListCoursesQueryKey,
+  getGetDashboardSummaryQueryKey,
+} from "@workspace/api-client-react";
+import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,6 +37,7 @@ export default function CourseDetail() {
 
   const { data: course, isLoading } = useGetCourse(id);
   const completeModule = useCompleteModule();
+  const { toast } = useToast();
 
   const progress = course && course.totalModules > 0
     ? Math.round((course.completedModules / course.totalModules) * 100)
@@ -38,9 +45,13 @@ export default function CourseDetail() {
 
   const handleCompleteModule = (moduleId: number) => {
     completeModule.mutate({ id: moduleId }, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         queryClient.invalidateQueries({ queryKey: getListCoursesQueryKey() });
         queryClient.invalidateQueries({ queryKey: ["getCourse", id] });
+        queryClient.invalidateQueries({ queryKey: getGetDashboardSummaryQueryKey() });
+        if (data.xpEarned > 0) {
+          toast({ title: `+${data.xpEarned} XP заработано`, description: "Модуль успешно завершён!" });
+        }
       }
     });
   };

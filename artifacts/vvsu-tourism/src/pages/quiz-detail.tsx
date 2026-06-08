@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useRoute, Link } from "wouter";
+import { useParams, Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { useGetQuiz, useSubmitQuiz } from "@workspace/api-client-react";
+import { useGetQuiz, useSubmitQuiz, getGetDashboardSummaryQueryKey } from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,10 +11,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, ArrowRight, Brain, CheckCircle2, XCircle, Trophy, RotateCcw, Sparkles } from "lucide-react";
 
 export default function QuizDetailPage() {
-  const [, params] = useRoute("/quiz/:id");
+  const params = useParams<{ id: string }>();
   const id = Number(params?.id ?? "0");
   const { data: quiz, isLoading } = useGetQuiz(id);
   const submitMutation = useSubmitQuiz();
+  const queryClient = useQueryClient();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -56,6 +58,7 @@ export default function QuizDetailPage() {
     const res = await submitMutation.mutateAsync({ id, data: { answers } });
     setResult(res);
     setShowResult(true);
+    void queryClient.invalidateQueries({ queryKey: getGetDashboardSummaryQueryKey() });
   }
 
   function handleNext() {

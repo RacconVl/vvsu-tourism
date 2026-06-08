@@ -2,10 +2,12 @@ import { Router, type IRouter } from "express";
 import {
   db,
   coursesTable,
+  modulesTable,
   questsTable,
   achievementsTable,
   usersTable,
   userQuestSubmissionsTable,
+  userModuleProgressTable,
   userActivityTable,
   userAchievementsTable,
 } from "@workspace/db";
@@ -23,26 +25,42 @@ router.get("/dashboard/summary", requireAuth, async (req, res): Promise<void> =>
   const userId = req.user!.id;
   const u = req.user!;
 
-  const [courses, quests, achievements] = await Promise.all([
-    db.select().from(coursesTable),
-    db.select().from(questsTable),
-    db.select().from(achievementsTable),
-  ]);
+  const [courses, quests, achievements, allModules, userProgress, userQuestSubs, unlockedRows, activityRows] =
+    await Promise.all([
+      db.select().from(coursesTable),
+      db.select().from(questsTable),
+      db.select().from(achievementsTable),
+      db.select({ id: modulesTable.id, courseId: modulesTable.courseId }).from(modulesTable),
+      db
+        .select({ moduleId: userModuleProgressTable.moduleId })
+        .from(userModuleProgressTable)
+        .where(eq(userModuleProgressTable.userId, userId)),
+      db
+        .select({ questId: userQuestSubmissionsTable.questId })
+        .from(userQuestSubmissionsTable)
+        .where(eq(userQuestSubmissionsTable.userId, userId)),
+      db.select().from(userAchievementsTable).where(eq(userAchievementsTable.userId, userId)),
+      db
+        .select()
+        .from(userActivityTable)
+        .where(eq(userActivityTable.userId, userId))
+        .orderBy(desc(userActivityTable.createdAt))
+        .limit(5),
+    ]);
 
-  const completedCourses = courses.filter(
-    (c) => c.completedModules >= c.totalModules && c.totalModules > 0,
-  ).length;
-  const completedQuests = quests.filter((q) => q.isCompleted).length;
-
-  const [unlockedRows, activityRows] = await Promise.all([
-    db.select().from(userAchievementsTable).where(eq(userAchievementsTable.userId, userId)),
-    db
-      .select()
-      .from(userActivityTable)
-      .where(eq(userActivityTable.userId, userId))
-      .orderBy(desc(userActivityTable.createdAt))
-      .limit(5),
-  ]);
+  const completedModuleIds = new Set(userProgress.map((p) => p.moduleId));
+  const modulesPerCourse = new Map<number, number[]>();
+  for (const m of allModules) {
+    const arr = modulesPerCourse.get(m.courseId) ?? [];
+    arr.push(m.id);
+    modulesPerCourse.set(m.courseId, arr);
+  }
+  let completedCourses = 0;
+  for (const course of courses) {
+    const mIds = modulesPerCourse.get(course.id) ?? [];
+    if (mIds.length > 0 && mIds.every((id) => completedModuleIds.has(id))) completedCourses++;
+  }
+  const completedQuests = userQuestSubs.length;
 
   const unlockedAchievements = unlockedRows.length;
   const lv = levelForXp(u.xp);
