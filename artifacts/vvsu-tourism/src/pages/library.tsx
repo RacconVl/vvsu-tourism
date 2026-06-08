@@ -69,7 +69,11 @@ export default function LibraryPage() {
                 >
                   <Card className="overflow-hidden rounded-2xl border-border/60 hover:shadow-xl transition-shadow h-full flex flex-col">
                     <div className="h-40 overflow-hidden">
-                      <img src={resource.thumbnailUrl} alt={resource.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                      <img
+                        src={resource.thumbnailUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
+                        alt={resource.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
                     <CardContent className="p-4 flex-1 flex flex-col">
                       <div className="flex items-center gap-2 mb-3">

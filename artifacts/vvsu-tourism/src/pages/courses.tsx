@@ -118,7 +118,7 @@ export default function Courses() {
                     <Card className={`overflow-hidden rounded-2xl border-border/60 h-full cursor-pointer transition-shadow hover:shadow-xl ${course.isLocked ? "opacity-60" : ""}`}>
                       <div className="relative h-48 overflow-hidden">
                         <img
-                          src={course.imageUrl ?? "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
+                          src={course.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                           alt={course.title}
                           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                         />

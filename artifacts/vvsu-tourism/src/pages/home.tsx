@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Compass, Map as MapIcon, ArrowRight, Shield, Anchor, Waves, Star, Users, Trophy, BookOpen, GraduationCap, Zap, Globe } from "lucide-react";
+import { Compass, Map as MapIcon, ArrowRight, Shield, Anchor, Waves, Star, Users, Trophy, BookOpen, GraduationCap, Zap, Globe, Briefcase, Building2, Plane, UtensilsCrossed, Camera, Ship } from "lucide-react";
 
 /* ── SVG Illustrations ──────────────────────────────────────── */
 
@@ -9,9 +9,10 @@ function CompassIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
       {/* Outer ring */}
-      <motion.circle cx="100" cy="100" r="80" stroke="#033F7E" strokeWidth="3" strokeDasharray="8 4" opacity="0.3"
-        animate={{ rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        style={{ transformOrigin: "100px 100px" }} />
+      <motion.g style={{ transformOrigin: "100px 100px" }}
+        animate={{ rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }}>
+        <circle cx="100" cy="100" r="80" stroke="#033F7E" strokeWidth="3" strokeDasharray="8 4" opacity="0.3" />
+      </motion.g>
       {/* Middle ring */}
       <circle cx="100" cy="100" r="60" stroke="#EB7124" strokeWidth="1.5" opacity="0.2" />
       {/* Inner circle */}
@@ -92,12 +93,12 @@ function TrophyIllustration() {
         <polygon points="100,60 103,71 115,71 106,78 109,89 100,82 91,89 94,78 85,71 97,71" fill="white" opacity="0.9" />
       </motion.g>
       {/* Orbiting stars */}
-      {[0, 120, 240].map((deg, i) => (
-        <motion.circle key={i} cx={100 + 65 * Math.cos((deg * Math.PI) / 180)} cy={85 + 65 * Math.sin((deg * Math.PI) / 180)} r="4"
-          fill="#EB7124"
-          animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
-          style={{ transformOrigin: "100px 85px" }} />
-      ))}
+      <motion.g style={{ transformOrigin: "100px 85px" }}
+        animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }}>
+        {[0, 120, 240].map((deg, i) => (
+          <circle key={i} cx={100 + 65 * Math.cos((deg * Math.PI) / 180)} cy={85 + 65 * Math.sin((deg * Math.PI) / 180)} r="4" fill="#EB7124" />
+        ))}
+      </motion.g>
     </svg>
   );
 }
@@ -407,6 +408,135 @@ export default function Home() {
               <Link href="/admission">Узнать о поступлении <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── Careers ───────────────────────────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
+              <Briefcase className="h-4 w-4 text-accent" /> Карьера выпускников
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Кем вы можете<br />
+              <span className="text-accent">стать после ВВГУ</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+              Наши выпускники работают по всему Азиатско-Тихоокеанскому региону — от отелей Владивостока до туроператоров Японии и Кореи.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { icon: <Plane className="h-7 w-7" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽" },
+              { icon: <Building2 className="h-7 w-7" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽" },
+              { icon: <Globe className="h-7 w-7" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽" },
+              { icon: <Camera className="h-7 w-7" />, title: "Специалист по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽" },
+              { icon: <UtensilsCrossed className="h-7 w-7" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽" },
+              { icon: <Ship className="h-7 w-7" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽" },
+            ].map((job, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                whileHover={{ y: -4 }}>
+                <div className="rounded-2xl border border-border/60 bg-card p-5 h-full flex flex-col gap-3 hover:shadow-lg transition-shadow group">
+                  <div className="flex items-start justify-between">
+                    <div className="h-12 w-12 rounded-xl flex items-center justify-center text-white shrink-0"
+                      style={{ background: `linear-gradient(135deg, ${job.color}cc, ${job.color})` }}>
+                      {job.icon}
+                    </div>
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">{job.salary}</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-foreground mb-1">{job.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{job.desc}</p>
+                  </div>
+                  <div className="mt-auto pt-2">
+                    <div className="h-0.5 w-8 rounded-full transition-all group-hover:w-16" style={{ background: job.color }} />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Partners ───────────────────────────────────────────── */}
+      <section className="py-20 border-y border-border/40" style={{ background: "linear-gradient(180deg, hsl(var(--muted)/0.2) 0%, hsl(var(--background)) 100%)" }}>
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
+              <Building2 className="h-4 w-4 text-accent" /> Партнёры университета
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">Наши партнёры</h2>
+            <p className="text-muted-foreground max-w-lg mx-auto">
+              Ведущие компании туристической индустрии, с которыми сотрудничает ВВГУ
+            </p>
+          </motion.div>
+
+          {/* Partner logos grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+            {[
+              { name: "Hyundai Merchant Marine", category: "Морские перевозки", color: "#033F7E", abbr: "HMM" },
+              { name: "Azimuth Airlines", category: "Авиаперевозки", color: "#EB7124", abbr: "AZ" },
+              { name: "Приморье Resort & Casino", category: "Гостеприимство", color: "#7c3aed", abbr: "PR" },
+              { name: "Сопка Тур", category: "Туроператор", color: "#0891b2", abbr: "ST" },
+              { name: "Tigre de Cristal", category: "Развлечения", color: "#16a34a", abbr: "TC" },
+              { name: "Far East Travel", category: "Туризм АТР", color: "#b45309", abbr: "FE" },
+              { name: "Туристический Кластер ДВФО", category: "Государственный партнёр", color: "#172E46", abbr: "ТК" },
+              { name: "Pacific Hotel Group", category: "Гостиничная сеть", color: "#be123c", abbr: "PH" },
+            ].map((p, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+                whileHover={{ y: -3 }}>
+                <div className="rounded-2xl border border-border/60 bg-card p-4 flex flex-col items-center text-center gap-3 hover:shadow-md transition-shadow cursor-default h-full">
+                  {/* Logo placeholder with animated initials */}
+                  <div className="relative">
+                    <motion.div className="h-14 w-14 rounded-xl flex items-center justify-center text-white font-bold text-lg shrink-0"
+                      style={{ background: `linear-gradient(135deg, ${p.color}cc, ${p.color})` }}
+                      whileHover={{ rotate: [0, -3, 3, 0] }}
+                      transition={{ duration: 0.4 }}>
+                      {p.abbr}
+                    </motion.div>
+                    {/* Shine effect */}
+                    <div className="absolute inset-0 rounded-xl overflow-hidden">
+                      <div className="absolute -top-4 -left-4 w-8 h-16 bg-white/20 rotate-12 blur-sm" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-xs leading-tight">{p.name}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{p.category}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Partnership types */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { icon: <GraduationCap className="h-5 w-5" />, title: "Практика и стажировки", desc: "Студенты проходят практику на объектах партнёров в Приморье и за рубежом", color: "#033F7E" },
+              { icon: <Briefcase className="h-5 w-5" />, title: "Трудоустройство", desc: "Целевые программы найма и эксклюзивные вакансии для выпускников ВВГУ", color: "#EB7124" },
+              { icon: <Globe className="h-5 w-5" />, title: "Международный обмен", desc: "Совместные программы с университетами Японии, Кореи, Китая и Вьетнама", color: "#7c3aed" },
+            ].map((t, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                <div className="flex items-start gap-4 p-5 rounded-2xl border border-border/60 bg-card">
+                  <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
+                    style={{ background: `linear-gradient(135deg, ${t.color}cc, ${t.color})` }}>
+                    {t.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-foreground mb-1">{t.title}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

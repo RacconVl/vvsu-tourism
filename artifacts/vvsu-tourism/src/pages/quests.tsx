@@ -106,7 +106,7 @@ export default function Quests() {
                 <Card className={`overflow-hidden rounded-2xl border-border/60 h-full ${quest.isCompleted ? "opacity-70" : "hover:shadow-xl transition-shadow"}`}>
                   <div className="relative h-44 overflow-hidden">
                     <img
-                      src={quest.imageUrl ?? "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
+                      src={quest.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                       alt={quest.title}
                       className="w-full h-full object-cover"
                     />
