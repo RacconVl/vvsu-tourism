@@ -19,6 +19,20 @@ export const insertCommunityPostSchema = createInsertSchema(communityPostsTable)
 export type InsertCommunityPost = z.infer<typeof insertCommunityPostSchema>;
 export type CommunityPost = typeof communityPostsTable.$inferSelect;
 
+export const postCommentsTable = pgTable("post_comments", {
+  id: serial("id").primaryKey(),
+  postId: integer("post_id").notNull(),
+  userId: integer("user_id"),
+  authorName: text("author_name").notNull(),
+  authorRole: text("author_role").notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const insertPostCommentSchema = createInsertSchema(postCommentsTable).omit({ id: true, createdAt: true });
+export type InsertPostComment = z.infer<typeof insertPostCommentSchema>;
+export type PostComment = typeof postCommentsTable.$inferSelect;
+
 export const galleryWorksTable = pgTable("gallery_works", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),

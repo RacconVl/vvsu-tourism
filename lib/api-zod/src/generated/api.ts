@@ -242,6 +242,34 @@ export const CreateCommunityPostBody = zod.object({
 });
 
 /**
+ * @summary List comments for a post
+ */
+export const ListPostCommentsParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const ListPostCommentsResponseItem = zod.object({
+  id: zod.number(),
+  postId: zod.number(),
+  authorName: zod.string(),
+  authorRole: zod.string(),
+  content: zod.string(),
+  createdAt: zod.string(),
+});
+export const ListPostCommentsResponse = zod.array(ListPostCommentsResponseItem);
+
+/**
+ * @summary Add a comment to a post
+ */
+export const CreatePostCommentParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const CreatePostCommentBody = zod.object({
+  content: zod.string(),
+});
+
+/**
  * @summary List student gallery works
  */
 export const ListGalleryWorksResponseItem = zod.object({

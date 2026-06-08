@@ -128,6 +128,19 @@ export interface CreateCommunityPostBody {
   category: string;
 }
 
+export interface PostComment {
+  id: number;
+  postId: number;
+  authorName: string;
+  authorRole: string;
+  content: string;
+  createdAt: string;
+}
+
+export interface CreatePostCommentBody {
+  content: string;
+}
+
 export interface GalleryWork {
   id: number;
   title: string;

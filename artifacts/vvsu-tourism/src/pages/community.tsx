@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
-import { useListCommunityPosts, useListGalleryWorks, useCreateCommunityPost, getListCommunityPostsQueryKey } from "@workspace/api-client-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  useListCommunityPosts,
+  useListGalleryWorks,
+  useCreateCommunityPost,
+  getListCommunityPostsQueryKey,
+  useListPostComments,
+  useCreatePostComment,
+  getListPostCommentsQueryKey,
+} from "@workspace/api-client-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Heart, MessageCircle, Image, PlusCircle, Palette, Route, Megaphone, ArrowLeft, ExternalLink, HandHeart } from "lucide-react";
+import { Users, Heart, MessageCircle, Image, PlusCircle, Palette, Route, Megaphone, ArrowLeft, ExternalLink, HandHeart, Send, ChevronDown, ChevronUp } from "lucide-react";
 
 const roleLabels: Record<string, string> = {
   guide: "Экскурсовод", marketer: "Маркетолог", designer: "Дизайнер", operator: "Туроператор"
@@ -35,18 +43,14 @@ const galleryCategories: Record<string, { label: string; color: string }> = {
 
 const REACTION_EMOJIS = ["❤️", "👍", "🔥", "🤔"] as const;
 type Emoji = typeof REACTION_EMOJIS[number];
-
 type ReactionsState = Record<string, Record<Emoji, { count: number; mine: boolean }>>;
-
 const STORAGE_KEY = "vvsu_post_reactions";
 
 function loadReactions(): ReactionsState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  } catch { return {}; }
 }
 
 function saveReactions(state: ReactionsState) {
@@ -66,6 +70,110 @@ function initPostReactions(reactions: ReactionsState, postId: string, baseLikes:
   };
 }
 
+/* ── Comments section for a single post ─────────────────────────── */
+function PostCommentsSection({ postId, onRepliesChange }: { postId: number; onRepliesChange: () => void }) {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const [text, setText] = useState("");
+  const { data: comments, isLoading } = useListPostComments(postId);
+  const createComment = useCreatePostComment();
+
+  const handleSubmit = () => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    createComment.mutate(
+      { id: postId, data: { content: trimmed } },
+      {
+        onSuccess: () => {
+          setText("");
+          queryClient.invalidateQueries({ queryKey: getListPostCommentsQueryKey(postId) });
+          queryClient.invalidateQueries({ queryKey: getListCommunityPostsQueryKey() });
+          onRepliesChange();
+        },
+        onError: () => {
+          toast({ title: "Ошибка", description: "Не удалось отправить комментарий.", variant: "destructive" });
+        },
+      }
+    );
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.2 }}
+      className="overflow-hidden"
+    >
+      <div className="mt-3 pt-3 border-t border-border/50 space-y-3">
+        {isLoading ? (
+          <div className="space-y-2">
+            <Skeleton className="h-10 w-full rounded-xl" />
+            <Skeleton className="h-10 w-3/4 rounded-xl" />
+          </div>
+        ) : comments && comments.length > 0 ? (
+          <div className="space-y-3">
+            {comments.map(c => (
+              <div key={c.id} className="flex gap-2.5">
+                <div className="shrink-0 w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">
+                  {c.authorName.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs font-semibold text-foreground">{c.authorName}</span>
+                    <span className="text-xs text-muted-foreground">{roleLabels[c.authorRole] ?? c.authorRole}</span>
+                    <span className="text-xs text-muted-foreground">·</span>
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(c.createdAt).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })}
+                    </span>
+                  </div>
+                  <p className="text-sm text-foreground mt-0.5 leading-relaxed">{c.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-xs text-muted-foreground text-center py-1">Пока нет комментариев. Будьте первым!</p>
+        )}
+
+        {user ? (
+          <div className="flex gap-2">
+            <div className="shrink-0 w-7 h-7 rounded-full bg-accent/20 flex items-center justify-center text-xs font-bold text-accent">
+              {user.name?.charAt(0).toUpperCase() ?? "?"}
+            </div>
+            <div className="flex-1 flex gap-2">
+              <Input
+                placeholder="Написать комментарий..."
+                value={text}
+                onChange={e => setText(e.target.value)}
+                onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmit(); } }}
+                className="rounded-xl text-sm h-8 flex-1"
+                disabled={createComment.isPending}
+              />
+              <Button
+                size="sm"
+                className="h-8 px-3 rounded-xl"
+                onClick={handleSubmit}
+                disabled={!text.trim() || createComment.isPending}
+              >
+                <Send className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <Link href="/login">
+            <p className="text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors text-center">
+              Войдите, чтобы оставить комментарий →
+            </p>
+          </Link>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── Main Component ──────────────────────────────────────────────── */
 export default function Community() {
   const { user } = useAuth();
   const { data: posts, isLoading: postsLoading } = useListCommunityPosts();
@@ -77,14 +185,13 @@ export default function Community() {
   const [showDialog, setShowDialog] = useState(false);
   const [form, setForm] = useState({ title: "", content: "", category: "Маркетинг" });
   const [reactions, setReactions] = useState<ReactionsState>(loadReactions);
+  const [expandedPostId, setExpandedPostId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!posts) return;
     setReactions(prev => {
       let next = { ...prev };
-      posts.forEach(p => {
-        next = initPostReactions(next, String(p.id), p.likes);
-      });
+      posts.forEach(p => { next = initPostReactions(next, String(p.id), p.likes); });
       saveReactions(next);
       return next;
     });
@@ -182,9 +289,9 @@ export default function Community() {
                         Студенты ВВГУ познакомились с работой добровольцев «ЛизаАлерт» в Приморье
                       </h3>
                       <p className="text-sm text-muted-foreground mb-3">
-                        Центр волонтёров ВВГУ — первый в Приморье с 1998 года. Наши студенты участвовали в подготовке 
-                        добровольцев для Олимпийских игр в Сочи, чемпионата мира по водным видам спорта, Восточного 
-                        экономического форума. Ежегодно Центр задействован в более чем 300 событиях — от городского 
+                        Центр волонтёров ВВГУ — первый в Приморье с 1998 года. Наши студенты участвовали в подготовке
+                        добровольцев для Олимпийских игр в Сочи, чемпионата мира по водным видам спорта, Восточного
+                        экономического форума. Ежегодно Центр задействован в более чем 300 событиях — от городского
                         до международного уровня. Волонтёры ВВГУ — первые лица добровольчества в Приморье.
                       </p>
                       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -205,10 +312,12 @@ export default function Community() {
             </motion.div>
 
             {/* Forum posts */}
-            {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-32 w-full rounded-2xl" />) :
+            {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-36 w-full rounded-2xl" />) :
               posts?.map((post, i) => {
                 const postId = String(post.id);
                 const postReactions = reactions[postId];
+                const isExpanded = expandedPostId === post.id;
+
                 return (
                   <motion.div
                     key={post.id}
@@ -219,48 +328,67 @@ export default function Community() {
                   >
                     <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow">
                       <CardContent className="p-5">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Badge variant="outline" className="text-xs">{post.category}</Badge>
-                              {categoryIcons[post.category]}
-                            </div>
-                            <h3 className="font-bold text-foreground text-base mb-1">{post.title}</h3>
-                            <p className="text-sm text-muted-foreground line-clamp-2">{post.content}</p>
-                            <div className="flex items-center gap-4 mt-3 mb-4">
-                              <span className="text-xs text-muted-foreground">
-                                {post.authorName} · {roleLabels[post.authorRole] ?? post.authorRole}
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                {new Date(post.createdAt).toLocaleDateString("ru-RU")}
-                              </span>
-                            </div>
-                            {/* Emoji reactions */}
-                            <div className="flex items-center gap-2 flex-wrap">
-                              {REACTION_EMOJIS.map(emoji => {
-                                const r = postReactions?.[emoji];
-                                const count = r?.count ?? 0;
-                                const mine = r?.mine ?? false;
-                                return (
-                                  <button
-                                    key={emoji}
-                                    onClick={() => toggleReaction(postId, emoji)}
-                                    className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border transition-all select-none ${
-                                      mine
-                                        ? "bg-accent/15 border-accent/50 text-accent"
-                                        : "bg-muted/40 border-border/50 text-muted-foreground hover:bg-muted hover:border-border"
-                                    }`}
-                                  >
-                                    <span>{emoji}</span>
-                                    {count > 0 && <span>{count}</span>}
-                                  </button>
-                                );
-                              })}
-                              <span className="flex items-center gap-1 text-xs text-muted-foreground ml-2">
-                                <MessageCircle className="h-3.5 w-3.5" /> {post.replies}
-                              </span>
-                            </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Badge variant="outline" className="text-xs">{post.category}</Badge>
+                            {categoryIcons[post.category]}
                           </div>
+                          <h3 className="font-bold text-foreground text-base mb-1">{post.title}</h3>
+                          <p className="text-sm text-muted-foreground line-clamp-2">{post.content}</p>
+                          <div className="flex items-center gap-4 mt-3 mb-3">
+                            <span className="text-xs text-muted-foreground">
+                              {post.authorName} · {roleLabels[post.authorRole] ?? post.authorRole}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(post.createdAt).toLocaleDateString("ru-RU")}
+                            </span>
+                          </div>
+                          {/* Reactions + comments toggle */}
+                          <div className="flex items-center gap-2 flex-wrap">
+                            {REACTION_EMOJIS.map(emoji => {
+                              const r = postReactions?.[emoji];
+                              const count = r?.count ?? 0;
+                              const mine = r?.mine ?? false;
+                              return (
+                                <button
+                                  key={emoji}
+                                  onClick={() => toggleReaction(postId, emoji)}
+                                  className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border transition-all select-none ${
+                                    mine
+                                      ? "bg-accent/15 border-accent/50 text-accent"
+                                      : "bg-muted/40 border-border/50 text-muted-foreground hover:bg-muted hover:border-border"
+                                  }`}
+                                >
+                                  <span>{emoji}</span>
+                                  {count > 0 && <span>{count}</span>}
+                                </button>
+                              );
+                            })}
+                            {/* Comments toggle button */}
+                            <button
+                              onClick={() => setExpandedPostId(isExpanded ? null : post.id)}
+                              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all select-none ml-1 ${
+                                isExpanded
+                                  ? "bg-primary/10 border-primary/40 text-primary"
+                                  : "bg-muted/40 border-border/50 text-muted-foreground hover:bg-muted hover:border-border"
+                              }`}
+                            >
+                              <MessageCircle className="h-3.5 w-3.5" />
+                              <span>{post.replies} комм.</span>
+                              {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                            </button>
+                          </div>
+
+                          {/* Expandable comments */}
+                          <AnimatePresence>
+                            {isExpanded && (
+                              <PostCommentsSection
+                                key={post.id}
+                                postId={post.id}
+                                onRepliesChange={() => {}}
+                              />
+                            )}
+                          </AnimatePresence>
                         </div>
                       </CardContent>
                     </Card>

@@ -1,10 +1,11 @@
 import { Router, type IRouter } from "express";
-import { db, communityPostsTable, galleryWorksTable, userActivityTable, usersTable } from "@workspace/db";
-import { desc, eq, sql } from "drizzle-orm";
+import { db, communityPostsTable, galleryWorksTable, userActivityTable, usersTable, postCommentsTable } from "@workspace/db";
+import { desc, asc, eq, sql } from "drizzle-orm";
 import {
   ListCommunityPostsResponse,
   CreateCommunityPostBody,
   ListGalleryWorksResponse,
+  CreatePostCommentBody,
 } from "@workspace/api-zod";
 import { requireAuth } from "../lib/auth";
 
@@ -48,6 +49,47 @@ router.post("/community/posts", requireAuth, async (req, res): Promise<void> => 
     ...post,
     createdAt: post.createdAt.toISOString(),
   });
+});
+
+router.get("/community/posts/:id/comments", async (req, res): Promise<void> => {
+  const postId = parseInt(req.params.id as string, 10);
+  if (isNaN(postId)) {
+    res.status(400).json({ error: "Invalid post id" });
+    return;
+  }
+  const comments = await db
+    .select()
+    .from(postCommentsTable)
+    .where(eq(postCommentsTable.postId, postId))
+    .orderBy(asc(postCommentsTable.createdAt));
+  res.json(comments.map(c => ({ ...c, createdAt: c.createdAt.toISOString() })));
+});
+
+router.post("/community/posts/:id/comments", requireAuth, async (req, res): Promise<void> => {
+  const postId = parseInt(req.params.id as string, 10);
+  if (isNaN(postId)) {
+    res.status(400).json({ error: "Invalid post id" });
+    return;
+  }
+  const body = CreatePostCommentBody.safeParse(req.body);
+  if (!body.success) {
+    res.status(400).json({ error: body.error.message });
+    return;
+  }
+  const u = req.user!;
+  const [comment] = await db.insert(postCommentsTable).values({
+    postId,
+    userId: u.id,
+    authorName: u.name,
+    authorRole: u.studentRole,
+    content: body.data.content,
+  }).returning();
+
+  await db.update(communityPostsTable)
+    .set({ replies: sql`${communityPostsTable.replies} + 1` })
+    .where(eq(communityPostsTable.id, postId));
+
+  res.status(201).json({ ...comment, createdAt: comment.createdAt.toISOString() });
 });
 
 router.get("/community/gallery", async (_req, res): Promise<void> => {

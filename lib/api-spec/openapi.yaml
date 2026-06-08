@@ -236,6 +236,50 @@ paths:
               schema:
                 $ref: "#/components/schemas/CommunityPost"
 
+  /community/posts/{id}/comments:
+    get:
+      operationId: listPostComments
+      tags: [community]
+      summary: List comments for a post
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PostComment"
+    post:
+      operationId: createPostComment
+      tags: [community]
+      summary: Add a comment to a post
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePostCommentBody"
+      responses:
+        "201":
+          description: Created comment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostComment"
+
   /community/gallery:
     get:
       operationId: listGalleryWorks
@@ -785,6 +829,30 @@ components:
         category:
           type: string
       required: [title, content, category]
+
+    PostComment:
+      type: object
+      properties:
+        id:
+          type: integer
+        postId:
+          type: integer
+        authorName:
+          type: string
+        authorRole:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: string
+      required: [id, postId, authorName, authorRole, content, createdAt]
+
+    CreatePostCommentBody:
+      type: object
+      properties:
+        content:
+          type: string
+      required: [content]
 
     GalleryWork:
       type: object
