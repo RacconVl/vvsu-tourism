@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "9ahUXRp63g3tOehtF8GYd"
@@ -24,3 +23,9 @@ id = "kZSLWtYByPRHKbt3kGysw"
 uri = "file://artifacts/vvsu-tourism/public/images/vladivostok-map-bg.png"
 type = "image"
 title = "Stylized Vladivostok map illustration"
+
+[[outputs]]
+id = "X4bGMY3qMGlHwKMwnDon9"
+uri = "file://vvsu-tourism.zip"
+type = "unspecified"
+title = "ВВГУ — Институт туризма (исходники + деплой)"
