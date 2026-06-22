@@ -40,7 +40,7 @@ services:
     depends_on:
       - api
     ports:
-      - "80:80"
+      - "8888:80"
 
 volumes:
   pg_data:
