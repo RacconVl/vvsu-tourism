@@ -1,0 +1,111 @@
+root@RacconQ:~/vvsu-tourism# docker compose up -d --build
+WARN[0000] /root/vvsu-tourism/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion
+[+] Building 3.1s (30/46)
+ => [internal] load local bake definitions                                                                                                                              0.0s
+ => => reading from stdin 893B                                                                                                                                          0.0s
+ => [web internal] load build definition from Dockerfile.web                                                                                                            0.0s
+ => => transferring dockerfile: 1.60kB                                                                                                                                  0.0s
+ => [api internal] load build definition from Dockerfile.api                                                                                                            0.0s
+ => => transferring dockerfile: 1.50kB                                                                                                                                  0.0s
+ => [web internal] load metadata for docker.io/library/node:20-alpine                                                                                                   1.9s
+ => [web internal] load metadata for docker.io/library/nginx:alpine                                                                                                     0.0s
+ => [web internal] load .dockerignore                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                         0.0s
+ => [web internal] load build context                                                                                                                                   0.1s
+ => => transferring context: 7.97MB                                                                                                                                     0.1s
+ => CACHED [web runtime 1/3] FROM docker.io/library/nginx:alpine@sha256:20316569d8f81a160065d7d2a5eeffc7ca97d79022462ee255fd23fa103a6b5c                                0.0s
+ => => resolve docker.io/library/nginx:alpine@sha256:20316569d8f81a160065d7d2a5eeffc7ca97d79022462ee255fd23fa103a6b5c                                                   0.0s
+ => [web builder  1/18] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293                                   0.0s
+ => => resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293                                                 0.0s
+ => [api internal] load build context                                                                                                                                   0.0s
+ => => transferring context: 558.30kB                                                                                                                                   0.0s
+ => CACHED [web builder  2/18] WORKDIR /app                                                                                                                             0.0s
+ => CACHED [web builder  3/18] RUN corepack enable && corepack prepare pnpm@latest --activate                                                                           0.0s
+ => CACHED [api builder  4/17] COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./                                                                           0.0s
+ => CACHED [api builder  5/17] COPY tsconfig.base.json tsconfig.json ./                                                                                                 0.0s
+ => CACHED [api builder  6/17] COPY lib/db/package.json ./lib/db/                                                                                                       0.0s
+ => CACHED [api builder  7/17] COPY lib/api-spec/package.json ./lib/api-spec/                                                                                           0.0s
+ => CACHED [api builder  8/17] COPY lib/api-zod/package.json ./lib/api-zod/                                                                                             0.0s
+ => CACHED [api builder  9/17] COPY lib/api-client-react/package.json ./lib/api-client-react/                                                                           0.0s
+ => CACHED [api builder 10/17] COPY artifacts/api-server/package.json ./artifacts/api-server/                                                                           0.0s
+ => CACHED [api builder 11/17] COPY scripts/package.json ./scripts/                                                                                                     0.0s
+ => ERROR [api builder 12/17] RUN pnpm install --frozen-lockfile                                                                                                        0.9s
+ => CACHED [web builder  4/18] COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./                                                                           0.0s
+ => CACHED [web builder  5/18] COPY tsconfig.base.json tsconfig.json ./                                                                                                 0.0s
+ => CACHED [web builder  6/18] COPY lib/db/package.json ./lib/db/                                                                                                       0.0s
+ => CACHED [web builder  7/18] COPY lib/api-spec/package.json ./lib/api-spec/                                                                                           0.0s
+ => CACHED [web builder  8/18] COPY lib/api-zod/package.json ./lib/api-zod/                                                                                             0.0s
+ => CACHED [web builder  9/18] COPY lib/api-client-react/package.json ./lib/api-client-react/                                                                           0.0s
+ => CACHED [web builder 10/18] COPY artifacts/vvsu-tourism/package.json ./artifacts/vvsu-tourism/                                                                       0.0s
+ => CACHED [web builder 11/18] COPY scripts/package.json ./scripts/                                                                                                     0.0s
+ => ERROR [web builder 12/18] RUN pnpm install --frozen-lockfile                                                                                                        0.9s
+------
+ > [api builder 12/17] RUN pnpm install --frozen-lockfile:
+0.704 warn: This version of pnpm requires at least Node.js v22.13
+0.704 warn: The current version of Node.js is v20.20.2
+0.704 warn: Visit https://r.pnpm.io/comp to see the list of past pnpm versions with respective Node.js version support.
+0.919 node:internal/modules/cjs/loader:1031
+0.919       throw new ERR_UNKNOWN_BUILTIN_MODULE(request);
+0.919             ^
+0.919
+0.919 Error [ERR_UNKNOWN_BUILTIN_MODULE]: No such built-in module: node:sqlite
+0.919     at Module._load (node:internal/modules/cjs/loader:1031:13)
+0.919     at Module.require (node:internal/modules/cjs/loader:1289:19)
+0.919     at require (node:internal/modules/helpers:182:18)
+0.919     at ../store/index/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:54379:25)
+0.919     at __init (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:17:58)
+0.919     at ../resolving/npm-resolver/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:65325:5)
+0.919     at __init (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:17:58)
+0.919     at ../workspace/projects-graph/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:65463:5)
+0.919     at __init (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:17:58)
+0.919     at ../workspace/projects-filter/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:72857:5) {
+0.919   code: 'ERR_UNKNOWN_BUILTIN_MODULE'
+0.919 }
+0.919
+0.919 Node.js v20.20.2
+------
+------
+ > [web builder 12/18] RUN pnpm install --frozen-lockfile:
+0.676 warn: This version of pnpm requires at least Node.js v22.13
+0.676 warn: The current version of Node.js is v20.20.2
+0.676 warn: Visit https://r.pnpm.io/comp to see the list of past pnpm versions with respective Node.js version support.
+0.892 node:internal/modules/cjs/loader:1031
+0.892       throw new ERR_UNKNOWN_BUILTIN_MODULE(request);
+0.892             ^
+0.892
+0.892 Error [ERR_UNKNOWN_BUILTIN_MODULE]: No such built-in module: node:sqlite
+0.892     at Module._load (node:internal/modules/cjs/loader:1031:13)
+0.892     at Module.require (node:internal/modules/cjs/loader:1289:19)
+0.892     at require (node:internal/modules/helpers:182:18)
+0.892     at ../store/index/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:54379:25)
+0.892     at __init (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:17:58)
+0.892     at ../resolving/npm-resolver/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:65325:5)
+0.892     at __init (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:17:58)
+0.892     at ../workspace/projects-graph/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:65463:5)
+0.892     at __init (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:17:58)
+0.892     at ../workspace/projects-filter/lib/index.js (file:///root/.cache/node/corepack/v1/pnpm/11.8.0/dist/pnpm.mjs:72857:5) {
+0.892   code: 'ERR_UNKNOWN_BUILTIN_MODULE'
+0.892 }
+0.892
+0.892 Node.js v20.20.2
+------
+[+] up 0/2
+ ⠙ Image vvsu-tourism-web Building                                                                                                                                       3.1s
+ ⠙ Image vvsu-tourism-api Building                                                                                                                                       3.1s
+Dockerfile.web:20
+
+--------------------
+
+  18 |
+
+  19 |     # Install ALL dependencies
+
+  20 | >>> RUN pnpm install --frozen-lockfile
+
+  21 |
+
+  22 |     # Copy source
+
+--------------------
+
+target web: failed to solve: process "/bin/sh -c pnpm install --frozen-lockfile" did not complete successfully: exit code: 1
