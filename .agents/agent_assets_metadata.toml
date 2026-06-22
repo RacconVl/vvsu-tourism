@@ -35,3 +35,9 @@ id = "DBWS4XP3do4fU8LgLbPNU"
 uri = "file://УСТАНОВКА.md"
 type = "text"
 title = "Подробная инструкция по установке"
+
+[[outputs]]
+id = "Pd9G5ydU_0Al3vYCRfirB"
+uri = "file://vvsu-tourism.tar.gz"
+type = "unspecified"
+title = "ВВГУ — Исходники v2 (исправленные Dockerfile)"

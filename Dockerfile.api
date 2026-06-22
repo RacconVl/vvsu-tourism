@@ -2,14 +2,13 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy workspace config files
+# Workspace config files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY tsconfig.base.json tsconfig.json ./
 
-# Copy all package.json files first (for layer caching)
+# package.json files for all packages (layer cache)
 COPY lib/db/package.json ./lib/db/
 COPY lib/api-spec/package.json ./lib/api-spec/
 COPY lib/api-zod/package.json ./lib/api-zod/
@@ -17,40 +16,31 @@ COPY lib/api-client-react/package.json ./lib/api-client-react/
 COPY artifacts/api-server/package.json ./artifacts/api-server/
 COPY scripts/package.json ./scripts/
 
-# Install all dependencies
+# Install ALL dependencies (including devDeps — needed for drizzle-kit and tsc)
 RUN pnpm install --frozen-lockfile
 
-# Copy source code
+# Copy source
 COPY lib/ ./lib/
 COPY artifacts/api-server/ ./artifacts/api-server/
 COPY scripts/ ./scripts/
 
-# Build shared libs
+# Build shared libs (generates .d.ts declarations)
 RUN pnpm run typecheck:libs
 
 # Build API server
 RUN pnpm --filter @workspace/api-server run build
 
-# --- Production image ---
+# --- Runtime image ---
+# We copy all of /app from the builder so that:
+#   - node_modules (including drizzle-kit devDep) are present for the push step
+#   - lib/db source + config is present for drizzle-kit
 FROM node:20-alpine AS runtime
 
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Copy the entire built workspace (includes node_modules with drizzle-kit)
+COPY --from=builder /app .
 
-# Copy workspace files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-COPY lib/db/package.json ./lib/db/
-COPY artifacts/api-server/package.json ./artifacts/api-server/
-
-# Install production dependencies only
-RUN pnpm install --frozen-lockfile --prod
-
-# Copy built output
-COPY --from=builder /app/artifacts/api-server/dist ./artifacts/api-server/dist
-COPY --from=builder /app/lib/db ./lib/db
-
-# Push DB schema on startup, then launch API
 COPY docker-entrypoint-api.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 

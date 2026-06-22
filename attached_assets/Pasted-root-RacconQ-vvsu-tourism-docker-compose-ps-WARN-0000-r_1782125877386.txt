@@ -1,0 +1,98 @@
+root@RacconQ:~/vvsu-tourism# docker compose ps
+WARN[0000] /root/vvsu-tourism/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion
+NAME                 IMAGE                COMMAND                  SERVICE   CREATED         STATUS                          PORTS
+vvsu-tourism-api-1   vvsu-tourism-api     "entrypoint.sh"          api       4 minutes ago   Restarting (1) 37 seconds ago
+vvsu-tourism-db-1    postgres:16-alpine   "docker-entrypoint.s…"   db        4 minutes ago   Up 4 minutes (healthy)          0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+vvsu-tourism-web-1   vvsu-tourism-web     "/docker-entrypoint.…"   web       4 minutes ago   Up 4 minutes                    0.0.0.0:80->80/tcp, [::]:80->80/tcp
+root@RacconQ:~/vvsu-tourism# docker compose logs --tail=30
+WARN[0000] /root/vvsu-tourism/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion
+api-1  |   requireStack: []
+api-1  | }
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+web-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: using the "epoll" event method
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: nginx/1.31.2
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0)
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: OS: Linux 5.15.167.4-microsoft-standard-WSL2
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1024:1048576
+db-1   |
+db-1   | waiting for server to start....2026-06-22 10:52:25.205 UTC [42] LOG:  starting PostgreSQL 16.14 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1   | 2026-06-22 10:52:25.207 UTC [42] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1   | 2026-06-22 10:52:25.211 UTC [45] LOG:  database system was shut down at 2026-06-22 10:52:25 UTC
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker processes
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 29
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 30
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 31
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 32
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 33
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 34
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 35
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 36
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 37
+db-1   | 2026-06-22 10:52:25.214 UTC [42] LOG:  database system is ready to accept connections
+db-1   |  done
+db-1   | server started
+db-1   | CREATE DATABASE
+db-1   |
+db-1   |
+db-1   | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 38
+api-1  |
+api-1  | Node.js v24.17.0
+api-1  | /app/lib/db:
+api-1  | [ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @workspace/db@0.0.0 push: `drizzle-kit push --config ./drizzle.config.ts`
+api-1  | Exit status 1
+api-1  | ⏳ Применение схемы базы данных...
+api-1  | $ drizzle-kit push --config ./drizzle.config.ts
+api-1  | node:internal/modules/cjs/loader:1503
+api-1  |   throw err;
+api-1  |   ^
+db-1   |
+db-1   | waiting for server to shut down...2026-06-22 10:52:25.338 UTC [42] LOG:  received fast shutdown request
+db-1   | .2026-06-22 10:52:25.339 UTC [42] LOG:  aborting any active transactions
+db-1   | 2026-06-22 10:52:25.340 UTC [42] LOG:  background worker "logical replication launcher" (PID 48) exited with exit code 1
+db-1   | 2026-06-22 10:52:25.340 UTC [43] LOG:  shutting down
+db-1   | 2026-06-22 10:52:25.342 UTC [43] LOG:  checkpoint starting: shutdown immediate
+db-1   | 2026-06-22 10:52:25.396 UTC [43] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.043 s, total=0.056 s; sync files=301, longest=0.004 s, average=0.001 s; distance=4283 kB, estimate=4283 kB; lsn=0/1925D60, redo lsn=0/1925D60
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 39
+web-1  | 2026/06/22 10:52:30 [notice] 1#1: start worker process 40
+web-1  | 172.30.32.1 - - [22/Jun/2026:10:53:25 +0000] "GET / HTTP/1.1" 200 896 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.4.0.0 Safari/537.36" "-"
+web-1  | 172.30.32.1 - - [22/Jun/2026:10:53:26 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "http://172.30.43.34/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.4.0.0 Safari/537.36" "-"
+web-1  | 2026/06/22 10:53:26 [error] 33#33: *2 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.30.32.1, server: _, request: "GET /favicon.ico HTTP/1.1", host: "172.30.43.34", referrer: "http://172.30.43.34/"
+web-1  | 172.30.32.1 - - [22/Jun/2026:10:53:48 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.4.0.0 Safari/537.36" "-"
+web-1  | 2026/06/22 10:54:57 [error] 34#34: *3 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.30.32.1, server: _, request: "GET /favicon.ico HTTP/1.1", host: "172.30.43.34"
+web-1  | 172.30.32.1 - - [22/Jun/2026:10:54:57 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.4.0.0 Safari/537.36" "-"
+web-1  | 172.18.0.1 - - [22/Jun/2026:10:55:02 +0000] "GET / HTTP/1.1" 200 896 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.4.0.0 Safari/537.36" "-"
+web-1  | 172.18.0.1 - - [22/Jun/2026:10:55:02 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "http://127.0.0.1/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 YaBrowser/26.4.0.0 Safari/537.36" "-"
+web-1  | 2026/06/22 10:55:02 [error] 29#29: *4 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.18.0.1, server: _, request: "GET /favicon.ico HTTP/1.1", host: "127.0.0.1", referrer: "http://127.0.0.1/"
+db-1   | 2026-06-22 10:52:25.398 UTC [42] LOG:  database system is shut down
+db-1   |  done
+db-1   | server stopped
+db-1   |
+db-1   | PostgreSQL init process complete; ready for start up.
+db-1   |
+db-1   | 2026-06-22 10:52:25.450 UTC [1] LOG:  starting PostgreSQL 16.14 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1   | 2026-06-22 10:52:25.450 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1   | 2026-06-22 10:52:25.450 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1   | 2026-06-22 10:52:25.452 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1   | 2026-06-22 10:52:25.456 UTC [58] LOG:  database system was shut down at 2026-06-22 10:52:25 UTC
+db-1   | 2026-06-22 10:52:25.459 UTC [1] LOG:  database system is ready to accept connections
+api-1  |
+api-1  | Error: Cannot find module '/app/lib/db/node_modules/drizzle-kit/bin.cjs'
+api-1  |     at Module._resolveFilename (node:internal/modules/cjs/loader:1500:15)
+api-1  |     at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+api-1  |     at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+api-1  |     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1116:12)
+api-1  |     at Module._load (node:internal/modules/cjs/loader:1285:25)
+api-1  |     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+api-1  |     at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+api-1  |     at node:internal/main/run_main_module:33:47 {
+api-1  |   code: 'MODULE_NOT_FOUND',
+api-1  |   requireStack: []
+api-1  | }
+api-1  |
+api-1  | Node.js v24.17.0
+api-1  | /app/lib/db:
+api-1  | [ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @workspace/db@0.0.0 push: `drizzle-kit push --config ./drizzle.config.ts`
+api-1  | Exit status 1
