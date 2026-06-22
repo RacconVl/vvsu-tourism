@@ -29,3 +29,9 @@ id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"
 type = "unspecified"
 title = "ВВГУ — Институт туризма (исходники + деплой)"
+
+[[outputs]]
+id = "DBWS4XP3do4fU8LgLbPNU"
+uri = "file://УСТАНОВКА.md"
+type = "text"
+title = "Подробная инструкция по установке"
