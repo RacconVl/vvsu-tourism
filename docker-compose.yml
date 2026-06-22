@@ -31,12 +31,6 @@ services:
       SESSION_SECRET: ${SESSION_SECRET:-change-this-secret-in-production}
     ports:
       - "8080:8080"
-    healthcheck:
-      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:8080/api/healthz',r=>{process.exitCode=r.statusCode===200?0:1}).on('error',()=>{process.exitCode=1})\""]
-      interval: 10s
-      timeout: 5s
-      retries: 15
-      start_period: 60s
 
   web:
     build:
@@ -44,8 +38,7 @@ services:
       dockerfile: Dockerfile.web
     restart: unless-stopped
     depends_on:
-      api:
-        condition: service_healthy
+      - api
     ports:
       - "80:80"
 
