@@ -1,0 +1,126 @@
+root@RacconQ:~/vvsu-tourism# docker compose up -d --build
+[+] Building 35.7s (45/48)
+ => [internal] load local bake definitions                                                                                                                              0.0s
+ => => reading from stdin 893B                                                                                                                                          0.0s
+ => [web internal] load build definition from Dockerfile.web                                                                                                            0.0s
+ => => transferring dockerfile: 1.60kB                                                                                                                                  0.0s
+ => [api internal] load build definition from Dockerfile.api                                                                                                            0.0s
+ => => transferring dockerfile: 1.50kB                                                                                                                                  0.0s
+ => [web internal] load metadata for docker.io/library/node:22-alpine                                                                                                   1.6s
+ => [web internal] load metadata for docker.io/library/nginx:alpine                                                                                                     0.0s
+ => [api internal] load .dockerignore                                                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                                                         0.0s
+ => [api builder  1/17] FROM docker.io/library/node:22-alpine@sha256:ab07539e0988b63558ff621f5fbe1077054c39d9809112974fb79993949d41cd                                   0.0s
+ => => resolve docker.io/library/node:22-alpine@sha256:ab07539e0988b63558ff621f5fbe1077054c39d9809112974fb79993949d41cd                                                 0.0s
+ => [api internal] load build context                                                                                                                                   0.0s
+ => => transferring context: 4.18kB                                                                                                                                     0.0s
+ => [web internal] load build context                                                                                                                                   0.0s
+ => => transferring context: 10.42kB                                                                                                                                    0.0s
+ => CACHED [web runtime 1/3] FROM docker.io/library/nginx:alpine@sha256:20316569d8f81a160065d7d2a5eeffc7ca97d79022462ee255fd23fa103a6b5c                                0.0s
+ => => resolve docker.io/library/nginx:alpine@sha256:20316569d8f81a160065d7d2a5eeffc7ca97d79022462ee255fd23fa103a6b5c                                                   0.0s
+ => CACHED [web builder  2/17] WORKDIR /app                                                                                                                             0.0s
+ => [api builder  3/17] RUN corepack enable && corepack prepare pnpm@10.26.1 --activate                                                                                 3.2s
+ => [web builder  4/17] COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./                                                                                  0.0s
+ => [web builder  5/17] COPY tsconfig.base.json tsconfig.json ./                                                                                                        0.0s
+ => [api builder  6/17] COPY lib/db/package.json ./lib/db/                                                                                                              0.0s
+ => [api builder  7/17] COPY lib/api-spec/package.json ./lib/api-spec/                                                                                                  0.0s
+ => [web builder  8/17] COPY lib/api-zod/package.json ./lib/api-zod/                                                                                                    0.0s
+ => [web builder  9/17] COPY lib/api-client-react/package.json ./lib/api-client-react/                                                                                  0.0s
+ => [api builder 10/17] COPY artifacts/api-server/package.json ./artifacts/api-server/                                                                                  0.0s
+ => CACHED [web builder  4/18] COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./                                                                           0.0s
+ => CACHED [web builder  5/18] COPY tsconfig.base.json tsconfig.json ./                                                                                                 0.0s
+ => CACHED [web builder  6/18] COPY lib/db/package.json ./lib/db/                                                                                                       0.0s
+ => CACHED [web builder  7/18] COPY lib/api-spec/package.json ./lib/api-spec/                                                                                           0.0s
+ => CACHED [web builder  8/18] COPY lib/api-zod/package.json ./lib/api-zod/                                                                                             0.0s
+ => CACHED [web builder  9/18] COPY lib/api-client-react/package.json ./lib/api-client-react/                                                                           0.0s
+ => [web builder 10/18] COPY artifacts/vvsu-tourism/package.json ./artifacts/vvsu-tourism/                                                                              0.0s
+ => [api builder 11/17] COPY scripts/package.json ./scripts/                                                                                                            0.0s
+ => [web builder 11/18] COPY scripts/package.json ./scripts/                                                                                                            0.0s
+ => [api builder 12/17] RUN pnpm install --frozen-lockfile                                                                                                              7.0s
+ => [web builder 12/18] RUN pnpm install --frozen-lockfile                                                                                                             26.2s
+ => [api builder 13/17] COPY lib/ ./lib/                                                                                                                                0.1s
+ => [api builder 14/17] COPY artifacts/api-server/ ./artifacts/api-server/                                                                                              0.1s
+ => [api builder 15/17] COPY scripts/ ./scripts/                                                                                                                        0.1s
+ => [api builder 16/17] RUN pnpm run typecheck:libs                                                                                                                     2.7s
+ => [api builder 17/17] RUN pnpm --filter @workspace/api-server run build                                                                                               0.8s
+ => [api runtime 3/5] COPY --from=builder /app .                                                                                                                        0.9s
+ => [api runtime 4/5] COPY docker-entrypoint-api.sh /usr/local/bin/entrypoint.sh                                                                                        0.1s
+ => [api runtime 5/5] RUN chmod +x /usr/local/bin/entrypoint.sh                                                                                                         0.3s
+ => [api] exporting to image                                                                                                                                            4.4s
+ => => exporting layers                                                                                                                                                 2.4s
+ => => exporting manifest sha256:ef341634ba204588fa3729c9789c8c69447b2df5761f15c6089901b91eaab099                                                                       0.0s
+ => => exporting config sha256:cfbf0b6c357368479e970afb17d5dc7ce971c904be3d830c69468355c02a8c6b                                                                         0.0s
+ => => exporting attestation manifest sha256:5d562270821822b823c1844a7d42bb3f604df72a5d5d568632a38e529cbad649                                                           0.0s
+ => => exporting manifest list sha256:2a8fc73659ffaff6b66e9258b52b13e88fcec498d6406d985a14915345968b13                                                                  0.0s
+ => => naming to docker.io/library/vvsu-tourism-api:latest                                                                                                              0.0s
+ => => unpacking to docker.io/library/vvsu-tourism-api:latest                                                                                                           1.9s
+ => [api] resolving provenance for metadata file                                                                                                                        0.0s
+ => [web builder 13/18] COPY lib/ ./lib/                                                                                                                                0.2s
+ => [web builder 14/18] COPY artifacts/vvsu-tourism/ ./artifacts/vvsu-tourism/                                                                                          0.1s
+ => [web builder 15/18] COPY scripts/ ./scripts/                                                                                                                        0.1s
+ => [web builder 16/18] RUN pnpm run typecheck:libs                                                                                                                     2.9s
+ => ERROR [web builder 17/18] RUN PORT=3000 BASE_PATH=/ NODE_ENV=production     pnpm --filter @workspace/vvsu-tourism run build                                         0.7s
+------
+ > [web builder 17/18] RUN PORT=3000 BASE_PATH=/ NODE_ENV=production     pnpm --filter @workspace/vvsu-tourism run build:
+0.610
+0.610 > @workspace/vvsu-tourism@0.0.0 build /app/artifacts/vvsu-tourism
+0.610 > vite build --config vite.config.ts
+0.610
+0.702 /app/node_modules/.pnpm/rollup@4.59.0/node_modules/rollup/dist/native.js:115
+0.702           throw new Error(
+0.702                 ^
+0.702
+0.702 Error: Cannot find module @rollup/rollup-linux-x64-musl. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+0.702     at requireWithFriendlyError (/app/node_modules/.pnpm/rollup@4.59.0/node_modules/rollup/dist/native.js:115:9)
+0.702     at Object.<anonymous> (/app/node_modules/.pnpm/rollup@4.59.0/node_modules/rollup/dist/native.js:124:76)
+0.702     at Module._compile (node:internal/modules/cjs/loader:1781:14)
+0.702     at Object..js (node:internal/modules/cjs/loader:1913:10)
+0.702     at Module.load (node:internal/modules/cjs/loader:1505:32)
+0.702     at Function._load (node:internal/modules/cjs/loader:1309:12)
+0.702     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+0.702     at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:335:3)
+0.702     at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:235:7)
+0.702     at ModuleJob.run (node:internal/modules/esm/module_job:343:25) {
+0.702   [cause]: Error: Cannot find module '@rollup/rollup-linux-x64-musl'
+0.702   Require stack:
+0.702   - /app/node_modules/.pnpm/rollup@4.59.0/node_modules/rollup/dist/native.js
+0.702       at Function._resolveFilename (node:internal/modules/cjs/loader:1430:15)
+0.702       at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+0.702       at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+0.702       at Function._load (node:internal/modules/cjs/loader:1216:25)
+0.702       at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+0.702       at Module.require (node:internal/modules/cjs/loader:1527:12)
+0.702       at require (node:internal/modules/helpers:147:16)
+0.702       at requireWithFriendlyError (/app/node_modules/.pnpm/rollup@4.59.0/node_modules/rollup/dist/native.js:97:10)
+0.702       at Object.<anonymous> (/app/node_modules/.pnpm/rollup@4.59.0/node_modules/rollup/dist/native.js:124:76)
+0.702       at Module._compile (node:internal/modules/cjs/loader:1781:14) {
+0.702     code: 'MODULE_NOT_FOUND',
+0.702     requireStack: [
+0.702       '/app/node_modules/.pnpm/rollup@4.59.0/node_modules/rollup/dist/native.js'
+0.702     ]
+0.702   }
+0.702 }
+0.702
+0.702 Node.js v22.23.0
+0.719 /app/artifacts/vvsu-tourism:
+0.719  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/vvsu-tourism@0.0.0 build: `vite build --config vite.config.ts`
+0.719 Exit status 1
+------
+[+] up 0/2
+ ⠙ Image vvsu-tourism-web Building                                                                                                                                      35.7s
+ ⠙ Image vvsu-tourism-api Building                                                                                                                                      35.7s
+Dockerfile.web:34
+
+--------------------
+
+  33 |     # BASE_PATH=/ means the app is served from the root of the domain.
+
+  34 | >>> RUN PORT=3000 BASE_PATH=/ NODE_ENV=production \
+
+  35 | >>>     pnpm --filter @workspace/vvsu-tourism run build
+
+  36 |
+
+--------------------
+
+target web: failed to solve: process "/bin/sh -c PORT=3000 BASE_PATH=/ NODE_ENV=production     pnpm --filter @workspace/vvsu-tourism run build" did not complete successfully: exit code: 1
