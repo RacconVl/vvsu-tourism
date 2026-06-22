@@ -1,0 +1,56 @@
+root@RacconQ:~/vvsu-tourism# docker compose ps
+NAME                 IMAGE                COMMAND                  SERVICE   CREATED              STATUS                        PORTS
+vvsu-tourism-api-1   vvsu-tourism-api     "entrypoint.sh"          api       About a minute ago   Up About a minute             0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+vvsu-tourism-db-1    postgres:16-alpine   "docker-entrypoint.s…"   db        About a minute ago   Up About a minute (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+vvsu-tourism-web-1   vvsu-tourism-web     "/docker-entrypoint.…"   web       About a minute ago   Up About a minute             0.0.0.0:80->80/tcp, [::]:80->80/tcp
+root@RacconQ:~/vvsu-tourism# docker compose logs --tail=50
+api-1  | ⏳ Применение схемы базы данных...
+api-1  |
+api-1  | > @workspace/db@0.0.0 push /app/lib/db
+api-1  | > drizzle-kit push --config ./drizzle.config.ts
+api-1  |
+api-1  | Reading config file '/app/lib/db/drizzle.config.ts'
+api-1  | Using 'pg' driver for database querying
+web-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+web-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+api-1  | [⣷] Pulling schema from database...
+[⣯] Pulling schema from database...
+[⣟] Pulling schema from database...
+[✓] Pulling schema from database...
+api-1  | [✓] Changes applied
+api-1  | 🚀 Запуск API сервера...
+api-1  | {"level":30,"time":1782171459393,"pid":1,"hostname":"dbec454c848b","port":8080,"msg":"Server listening"}
+db-1   |
+db-1   | PostgreSQL Database directory appears to contain a database; Skipping initialization
+db-1   |
+db-1   | 2026-06-22 23:37:32.401 UTC [1] LOG:  starting PostgreSQL 16.14 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1   | 2026-06-22 23:37:32.401 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+db-1   | 2026-06-22 23:37:32.401 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1   | 2026-06-22 23:37:32.404 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1   | 2026-06-22 23:37:32.408 UTC [29] LOG:  database system was shut down at 2026-06-22 23:37:22 UTC
+web-1  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+db-1   | 2026-06-22 23:37:32.413 UTC [1] LOG:  database system is ready to accept connections
+web-1  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version
+web-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+web-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+web-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: using the "epoll" event method
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: nginx/1.31.2
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0)
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: OS: Linux 5.15.167.4-microsoft-standard-WSL2
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1024:1048576
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker processes
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 29
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 30
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 31
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 32
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 33
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 34
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 35
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 36
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 37
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 38
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 39
+web-1  | 2026/06/22 23:37:38 [notice] 1#1: start worker process 40
