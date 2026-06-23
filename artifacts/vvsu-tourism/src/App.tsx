@@ -10,7 +10,6 @@ import Home from "@/pages/home";
 import Cabinet from "@/pages/cabinet";
 import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
-import AdminPage from "@/pages/admin";
 import MapPage from "@/pages/map-page";
 import LibraryPage from "@/pages/library";
 import Leaderboard from "@/pages/leaderboard";
@@ -44,8 +43,8 @@ function Router() {
         <Route path="/leaderboard" component={Leaderboard} />
         <Route path="/profile/:id" component={PublicProfile} />
 
-        {/* Admin */}
-        <Route path="/admin" component={() => <RequireAuth adminOnly><AdminPage /></RequireAuth>} />
+        {/* Admin panel moved to /cabinet dashboard tab */}
+        <Route path="/admin"><Redirect to="/cabinet" /></Route>
 
         {/* Personal cabinet — explicit routes first, then catch-all */}
         <Route path="/cabinet/courses/:id" component={() => <RequireAuth><Cabinet /></RequireAuth>} />

@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import {
   Compass, Map as MapIcon, Library, Trophy, GraduationCap,
-  Sun, Moon, Menu, X, LogIn, LogOut, Shield, UserPlus, LayoutDashboard,
+  Sun, Moon, Menu, X, LogIn, LogOut, UserPlus, LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
@@ -127,13 +127,6 @@ export function Navbar() {
                       <LayoutDashboard className="h-4 w-4 mr-2" /> Мой кабинет
                     </Link>
                   </DropdownMenuItem>
-                  {isAdmin && (
-                    <DropdownMenuItem asChild>
-                      <Link href="/admin">
-                        <Shield className="h-4 w-4 mr-2" /> Админ-панель
-                      </Link>
-                    </DropdownMenuItem>
-                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} data-testid="menu-logout">
                     <LogOut className="h-4 w-4 mr-2" /> Выйти

@@ -5,7 +5,7 @@ import {
   useGetDashboardSummary, useGetProgressMap, useGetLeaderboard,
   useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey, getGetMeQueryKey,
   useAdminListUsers, useAdminGetStats, useAdminCreateCourse, useAdminCreateQuest,
-  getAdminGetStatsQueryKey,
+  useAdminCreateNotification, getAdminGetStatsQueryKey,
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +16,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
@@ -24,6 +26,7 @@ import {
   BookOpen, Compass, Award, Star, Clock, ChevronRight, Trophy, Flame,
   Anchor, MapPin, Waves, Brain, Activity, Settings, MessageCircle,
   Sparkles, Lock, Map as MapIcon, Zap, Users, BarChart3, Shield, Plus,
+  Bell, Send, AlertTriangle, Megaphone, RefreshCw, Info,
 } from "lucide-react";
 
 const roleLabels: Record<string, string> = {
@@ -68,32 +71,35 @@ const iconMap: Record<string, React.ReactNode> = {
 type Tab = "overview" | "achievements" | "activity" | "results" | "settings";
 const VALID_TABS: Tab[] = ["overview", "achievements", "activity", "results", "settings"];
 
-/* ─── Admin sub-panels ──────────────────────────────────────── */
-type AdminPanel = "users" | "course" | "quest";
+/* ─── Admin: notification categories ───────────────────────── */
+const NOTIF_CATEGORIES = [
+  { value: "urgent",    label: "Срочно",           icon: <Zap className="h-4 w-4 text-red-500" />,             color: "border-red-300 bg-red-50 dark:bg-red-950/30" },
+  { value: "important", label: "Важно",             icon: <AlertTriangle className="h-4 w-4 text-orange-500" />, color: "border-orange-300 bg-orange-50 dark:bg-orange-950/30" },
+  { value: "notice",    label: "Обратите внимание", icon: <Megaphone className="h-4 w-4 text-yellow-500" />,     color: "border-yellow-300 bg-yellow-50 dark:bg-yellow-950/30" },
+  { value: "update",    label: "Обновление",        icon: <RefreshCw className="h-4 w-4 text-blue-500" />,       color: "border-blue-300 bg-blue-50 dark:bg-blue-950/30" },
+  { value: "info",      label: "Информация",        icon: <Info className="h-4 w-4 text-slate-500" />,           color: "border-slate-300 bg-slate-50 dark:bg-slate-900/30" },
+];
 
 function AdminOverview() {
   const { data: stats } = useAdminGetStats();
   const { data: users } = useAdminListUsers();
-  const [panel, setPanel] = useState<AdminPanel>("users");
   const qc = useQueryClient();
   const { toast } = useToast();
 
   const statCards = stats ? [
-    { icon: <Users className="h-5 w-5" />,     value: stats.totalUsers,              label: "Пользователей",         color: "#033F7E" },
-    { icon: <Shield className="h-5 w-5" />,    value: stats.totalAdmins,             label: "Администраторов",       color: "#172E46" },
-    { icon: <BookOpen className="h-5 w-5" />,  value: stats.totalCourses,            label: "Курсов",                color: "#EB7124" },
-    { icon: <Compass className="h-5 w-5" />,   value: stats.totalQuests,             label: "Квестов",               color: "#d97706" },
-    { icon: <Brain className="h-5 w-5" />,     value: stats.totalQuizzes,            label: "Тестов",                color: "#7c3aed" },
-    { icon: <Activity className="h-5 w-5" />,  value: stats.totalCommunityPosts,     label: "Постов в сообществе",   color: "#0891b2" },
+    { icon: <Users className="h-5 w-5" />,     value: stats.totalUsers,              label: "Пользователей",          color: "#033F7E" },
+    { icon: <Shield className="h-5 w-5" />,    value: stats.totalAdmins,             label: "Администраторов",        color: "#172E46" },
+    { icon: <BookOpen className="h-5 w-5" />,  value: stats.totalCourses,            label: "Курсов",                 color: "#EB7124" },
+    { icon: <Compass className="h-5 w-5" />,   value: stats.totalQuests,             label: "Квестов",                color: "#d97706" },
+    { icon: <Brain className="h-5 w-5" />,     value: stats.totalQuizzes,            label: "Тестов",                 color: "#7c3aed" },
+    { icon: <Activity className="h-5 w-5" />,  value: stats.totalCommunityPosts,     label: "Постов в сообществе",    color: "#0891b2" },
     { icon: <BarChart3 className="h-5 w-5" />, value: stats.quizAttemptsLast7d,      label: "Попыток тестов / 7 дн", color: "#059669" },
-    { icon: <Trophy className="h-5 w-5" />,    value: stats.moduleCompletionsLast7d, label: "Модулей закрыто / 7 дн",color: "#ca8a04" },
+    { icon: <Trophy className="h-5 w-5" />,    value: stats.moduleCompletionsLast7d, label: "Модулей закрыто / 7 дн", color: "#ca8a04" },
   ] : [];
 
+  /* ── Course form state ── */
   const [course, setCourse] = useState({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
-  const [quest, setQuest] = useState({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150 });
   const createCourse = useAdminCreateCourse();
-  const createQuest = useAdminCreateQuest();
-
   const submitCourse = (e: React.FormEvent) => {
     e.preventDefault();
     createCourse.mutate({ data: { ...course, xpReward: Number(course.xpReward) } }, {
@@ -102,18 +108,57 @@ function AdminOverview() {
         qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
         setCourse({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
       },
-      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+      onError: () => toast({ title: "Ошибка при создании курса", variant: "destructive" }),
     });
   };
 
+  /* ── Quest form state ── */
+  const [quest, setQuest] = useState({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150 });
+  const createQuest = useAdminCreateQuest();
   const submitQuest = (e: React.FormEvent) => {
     e.preventDefault();
     createQuest.mutate({ data: { ...quest, xpReward: Number(quest.xpReward) } }, {
       onSuccess: () => {
         toast({ title: "Квест создан" });
+        qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
         setQuest({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150 });
       },
-      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+      onError: () => toast({ title: "Ошибка при создании квеста", variant: "destructive" }),
+    });
+  };
+
+  /* ── Notification form state ── */
+  const [notif, setNotif] = useState({ type: "info", title: "", body: "", link: "" });
+  const [broadcast, setBroadcast] = useState(true);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const createNotif = useAdminCreateNotification();
+  const students = users?.filter((u) => u.role !== "admin") ?? [];
+  const selectedCategory = NOTIF_CATEGORIES.find((c) => c.value === notif.type);
+
+  const toggleUser = (id: number) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const submitNotif = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!broadcast && selectedIds.size === 0) {
+      toast({ title: "Выберите получателей", variant: "destructive" });
+      return;
+    }
+    createNotif.mutate({
+      data: { type: notif.type, title: notif.title, body: notif.body, link: notif.link || undefined, userIds: broadcast ? null : Array.from(selectedIds) },
+    }, {
+      onSuccess: (result) => {
+        toast({ title: `Отправлено ${result.count} получателям!` });
+        setNotif({ type: "info", title: "", body: "", link: "" });
+        setSelectedIds(new Set());
+        setBroadcast(true);
+      },
+      onError: () => toast({ title: "Ошибка отправки", variant: "destructive" }),
     });
   };
 
@@ -143,133 +188,217 @@ function AdminOverview() {
         </div>
       )}
 
-      {/* Sub-panel tabs */}
-      <div className="flex gap-1 p-1 rounded-2xl border border-border/60 bg-muted/30 w-fit">
-        {([["users","Пользователи"], ["course","Новый курс"], ["quest","Новый квест"]] as [AdminPanel, string][]).map(([key, label]) => (
-          <button
-            key={key}
-            onClick={() => setPanel(key)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-              panel === key ? "bg-background shadow-sm text-foreground border border-border/60" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {/* 4-tab admin panel */}
+      <Tabs defaultValue="users" className="w-full">
+        <TabsList className="grid grid-cols-4 max-w-xl rounded-2xl">
+          <TabsTrigger value="users">Пользователи</TabsTrigger>
+          <TabsTrigger value="notify" className="flex items-center gap-1">
+            <Bell className="h-3.5 w-3.5" /> Уведомления
+          </TabsTrigger>
+          <TabsTrigger value="course">Новый курс</TabsTrigger>
+          <TabsTrigger value="quest">Новый квест</TabsTrigger>
+        </TabsList>
 
-      {/* Users table */}
-      {panel === "users" && (
-        <Card className="rounded-2xl border-border/60 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-muted/50 text-left">
-                <tr>
-                  <th className="p-3 font-semibold">Имя</th>
-                  <th className="p-3 font-semibold">Email</th>
-                  <th className="p-3 font-semibold">Роль</th>
-                  <th className="p-3 font-semibold">Уровень</th>
-                  <th className="p-3 font-semibold">XP</th>
-                  <th className="p-3 font-semibold">Тесты</th>
-                  <th className="p-3 font-semibold">Квесты</th>
-                  <th className="p-3 font-semibold">Регистрация</th>
-                  <th className="p-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {users?.map((u) => (
-                  <tr key={u.id} className="border-t border-border/50 hover:bg-muted/30">
-                    <td className="p-3 font-medium">{u.name}</td>
-                    <td className="p-3 text-muted-foreground">{u.email}</td>
-                    <td className="p-3">
-                      {u.role === "admin"
-                        ? <Badge className="bg-accent text-white border-0">Админ</Badge>
-                        : <Badge variant="outline">{roleLabels[u.studentRole] ?? u.studentRole}</Badge>}
-                    </td>
-                    <td className="p-3">{u.level}</td>
-                    <td className="p-3 font-semibold" style={{ color: "#EB7124" }}>{u.xp}</td>
-                    <td className="p-3">{u.completedQuizzes}</td>
-                    <td className="p-3">{u.completedQuests}</td>
-                    <td className="p-3 text-muted-foreground">{new Date(u.createdAt).toLocaleDateString("ru-RU")}</td>
-                    <td className="p-3">
-                      <Link href={`/profile/${u.id}`} className="text-accent hover:underline text-xs">Профиль</Link>
-                    </td>
+        {/* ── Users tab ── */}
+        <TabsContent value="users" className="mt-5">
+          <Card className="rounded-2xl border-border/60 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-muted/50 text-left">
+                  <tr>
+                    <th className="p-3 font-semibold">Имя</th>
+                    <th className="p-3 font-semibold">Email</th>
+                    <th className="p-3 font-semibold">Роль</th>
+                    <th className="p-3 font-semibold">Уровень</th>
+                    <th className="p-3 font-semibold">XP</th>
+                    <th className="p-3 font-semibold">Тесты</th>
+                    <th className="p-3 font-semibold">Квесты</th>
+                    <th className="p-3 font-semibold">Регистрация</th>
+                    <th className="p-3"></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            {!users && <div className="p-6"><Skeleton className="h-32 rounded-xl" /></div>}
+                </thead>
+                <tbody>
+                  {users?.map((u) => (
+                    <tr key={u.id} className="border-t border-border/50 hover:bg-muted/30">
+                      <td className="p-3 font-medium">{u.name}</td>
+                      <td className="p-3 text-muted-foreground">{u.email}</td>
+                      <td className="p-3">
+                        {u.role === "admin"
+                          ? <Badge className="bg-accent text-white border-0">Админ</Badge>
+                          : <Badge variant="outline">{roleLabels[u.studentRole] ?? u.studentRole}</Badge>}
+                      </td>
+                      <td className="p-3">{u.level}</td>
+                      <td className="p-3 font-semibold" style={{ color: "#EB7124" }}>{u.xp}</td>
+                      <td className="p-3">{u.completedQuizzes}</td>
+                      <td className="p-3">{u.completedQuests}</td>
+                      <td className="p-3 text-muted-foreground">{new Date(u.createdAt).toLocaleDateString("ru-RU")}</td>
+                      <td className="p-3">
+                        <Link href={`/profile/${u.id}`} className="text-accent hover:underline text-xs">Профиль</Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {!users && <div className="p-6"><Skeleton className="h-32 rounded-xl" /></div>}
+            </div>
+          </Card>
+        </TabsContent>
+
+        {/* ── Notifications tab ── */}
+        <TabsContent value="notify" className="mt-5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="rounded-2xl border-border/60">
+              <CardContent className="p-6">
+                <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+                  <Bell className="h-5 w-5 text-accent" /> Создать уведомление
+                </h2>
+                <form onSubmit={submitNotif} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Категория</Label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {NOTIF_CATEGORIES.map((cat) => (
+                        <button
+                          key={cat.value}
+                          type="button"
+                          onClick={() => setNotif((s) => ({ ...s, type: cat.value }))}
+                          className={`flex items-center gap-2.5 p-3 rounded-xl border-2 text-sm font-medium transition-all text-left ${
+                            notif.type === cat.value ? `${cat.color} border-current` : "border-border/50 hover:border-border bg-card"
+                          }`}
+                        >
+                          {cat.icon} {cat.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Заголовок</Label>
+                    <Input required value={notif.title} onChange={(e) => setNotif((s) => ({ ...s, title: e.target.value }))} placeholder="Краткое и понятное название..." className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Текст уведомления</Label>
+                    <Textarea required rows={4} value={notif.body} onChange={(e) => setNotif((s) => ({ ...s, body: e.target.value }))} placeholder="Подробное описание или инструкция..." className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Ссылка (опционально)</Label>
+                    <Input value={notif.link} onChange={(e) => setNotif((s) => ({ ...s, link: e.target.value }))} placeholder="/cabinet/tasks или /cabinet/courses" className="rounded-xl" />
+                    <p className="text-xs text-muted-foreground">Пользователь перейдёт по ссылке при клике на уведомление</p>
+                  </div>
+                  {notif.title && (
+                    <div className={`rounded-xl border p-3 ${selectedCategory?.color ?? ""}`}>
+                      <div className="flex items-start gap-2">
+                        {selectedCategory?.icon}
+                        <div>
+                          <p className="font-medium text-sm">{notif.title}</p>
+                          {notif.body && <p className="text-xs text-muted-foreground mt-0.5">{notif.body.slice(0, 100)}{notif.body.length > 100 ? "..." : ""}</p>}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <Button type="submit" className="w-full rounded-xl gap-2" disabled={createNotif.isPending}>
+                    <Send className="h-4 w-4" />
+                    {createNotif.isPending ? "Отправка..." : broadcast ? `Отправить всем студентам (${students.length})` : `Отправить выбранным (${selectedIds.size})`}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            <Card className="rounded-2xl border-border/60">
+              <CardContent className="p-6">
+                <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+                  <Users className="h-5 w-5 text-accent" /> Получатели
+                </h2>
+                <div className="flex items-center gap-3 mb-4 p-3 rounded-xl bg-primary/5 border border-primary/20">
+                  <Checkbox id="broadcast" checked={broadcast} onCheckedChange={(v) => { setBroadcast(!!v); setSelectedIds(new Set()); }} />
+                  <Label htmlFor="broadcast" className="cursor-pointer font-medium">Всем студентам ({students.length})</Label>
+                </div>
+                {!broadcast ? (
+                  <div className="space-y-1 max-h-72 overflow-y-auto pr-1">
+                    {students.map((u) => (
+                      <label key={u.id} className={`flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-colors ${selectedIds.has(u.id) ? "bg-primary/8 border border-primary/20" : "hover:bg-muted/50"}`}>
+                        <Checkbox checked={selectedIds.has(u.id)} onCheckedChange={() => toggleUser(u.id)} />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">{u.name}</p>
+                          <p className="text-xs text-muted-foreground truncate">{u.email}</p>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-sm text-muted-foreground text-center py-8">Уведомление получат все студенты платформы</div>
+                )}
+              </CardContent>
+            </Card>
           </div>
-        </Card>
-      )}
+        </TabsContent>
 
-      {/* New Course form */}
-      {panel === "course" && (
-        <Card className="rounded-2xl border-border/60">
-          <CardContent className="p-6">
-            <form onSubmit={submitCourse} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={course.title} onChange={(e) => setCourse(s => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
-              <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={course.description} onChange={(e) => setCourse(s => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
-              <div className="space-y-2"><Label>Специализация</Label>
-                <Select value={course.role} onValueChange={(v) => setCourse(s => ({ ...s, role: v }))}>
-                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="guide">Экскурсовод</SelectItem>
-                    <SelectItem value="marketer">Маркетолог</SelectItem>
-                    <SelectItem value="designer">Дизайнер</SelectItem>
-                    <SelectItem value="operator">Туроператор</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2"><Label>Этап</Label><Input value={course.stage} onChange={(e) => setCourse(s => ({ ...s, stage: e.target.value }))} className="rounded-xl" /></div>
-              <div className="space-y-2"><Label>Категория</Label><Input value={course.category} onChange={(e) => setCourse(s => ({ ...s, category: e.target.value }))} className="rounded-xl" /></div>
-              <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={course.xpReward} onChange={(e) => setCourse(s => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
-              <div className="space-y-2 md:col-span-2"><Label>Картинка (URL, опционально)</Label><Input value={course.imageUrl} onChange={(e) => setCourse(s => ({ ...s, imageUrl: e.target.value }))} className="rounded-xl" placeholder="https://..." /></div>
-              <Button type="submit" className="md:col-span-2 rounded-full" disabled={createCourse.isPending}>
-                <Plus className="h-4 w-4 mr-1" /> {createCourse.isPending ? "Создание..." : "Создать курс"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      )}
+        {/* ── New Course tab ── */}
+        <TabsContent value="course" className="mt-5">
+          <Card className="rounded-2xl border-border/60">
+            <CardContent className="p-6">
+              <form onSubmit={submitCourse} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={course.title} onChange={(e) => setCourse((s) => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
+                <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={course.description} onChange={(e) => setCourse((s) => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
+                <div className="space-y-2"><Label>Специализация</Label>
+                  <Select value={course.role} onValueChange={(v) => setCourse((s) => ({ ...s, role: v }))}>
+                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="guide">Экскурсовод</SelectItem>
+                      <SelectItem value="marketer">Маркетолог</SelectItem>
+                      <SelectItem value="designer">Дизайнер</SelectItem>
+                      <SelectItem value="operator">Туроператор</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2"><Label>Этап</Label><Input value={course.stage} onChange={(e) => setCourse((s) => ({ ...s, stage: e.target.value }))} className="rounded-xl" /></div>
+                <div className="space-y-2"><Label>Категория</Label><Input value={course.category} onChange={(e) => setCourse((s) => ({ ...s, category: e.target.value }))} className="rounded-xl" /></div>
+                <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={course.xpReward} onChange={(e) => setCourse((s) => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
+                <div className="space-y-2 md:col-span-2"><Label>Картинка (URL, опционально)</Label><Input value={course.imageUrl} onChange={(e) => setCourse((s) => ({ ...s, imageUrl: e.target.value }))} className="rounded-xl" placeholder="https://..." /></div>
+                <Button type="submit" className="md:col-span-2 rounded-full" disabled={createCourse.isPending}>
+                  <Plus className="h-4 w-4 mr-1" /> {createCourse.isPending ? "Создание..." : "Создать курс"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-      {/* New Quest form */}
-      {panel === "quest" && (
-        <Card className="rounded-2xl border-border/60">
-          <CardContent className="p-6">
-            <form onSubmit={submitQuest} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={quest.title} onChange={(e) => setQuest(s => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
-              <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={quest.description} onChange={(e) => setQuest(s => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
-              <div className="space-y-2"><Label>Тип</Label>
-                <Select value={quest.type} onValueChange={(v) => setQuest(s => ({ ...s, type: v }))}>
-                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="exploration">Исследование</SelectItem>
-                    <SelectItem value="creative">Творческое</SelectItem>
-                    <SelectItem value="research">Аналитика</SelectItem>
-                    <SelectItem value="practice">Практика</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2"><Label>Сложность</Label>
-                <Select value={quest.difficulty} onValueChange={(v) => setQuest(s => ({ ...s, difficulty: v }))}>
-                  <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="easy">Лёгкий</SelectItem>
-                    <SelectItem value="medium">Средний</SelectItem>
-                    <SelectItem value="hard">Сложный</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2 md:col-span-2"><Label>Место (Владивосток)</Label><Input required value={quest.location} onChange={(e) => setQuest(s => ({ ...s, location: e.target.value }))} className="rounded-xl" placeholder="Например: Золотой мост" /></div>
-              <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={quest.xpReward} onChange={(e) => setQuest(s => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
-              <Button type="submit" className="md:col-span-2 rounded-full" disabled={createQuest.isPending}>
-                <Plus className="h-4 w-4 mr-1" /> {createQuest.isPending ? "Создание..." : "Создать квест"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      )}
+        {/* ── New Quest tab ── */}
+        <TabsContent value="quest" className="mt-5">
+          <Card className="rounded-2xl border-border/60">
+            <CardContent className="p-6">
+              <form onSubmit={submitQuest} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={quest.title} onChange={(e) => setQuest((s) => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
+                <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={quest.description} onChange={(e) => setQuest((s) => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
+                <div className="space-y-2"><Label>Тип</Label>
+                  <Select value={quest.type} onValueChange={(v) => setQuest((s) => ({ ...s, type: v }))}>
+                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="exploration">Исследование</SelectItem>
+                      <SelectItem value="creative">Творческое</SelectItem>
+                      <SelectItem value="research">Аналитика</SelectItem>
+                      <SelectItem value="practice">Практика</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2"><Label>Сложность</Label>
+                  <Select value={quest.difficulty} onValueChange={(v) => setQuest((s) => ({ ...s, difficulty: v }))}>
+                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="easy">Лёгкий</SelectItem>
+                      <SelectItem value="medium">Средний</SelectItem>
+                      <SelectItem value="hard">Сложный</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2 md:col-span-2"><Label>Место (Владивосток)</Label><Input required value={quest.location} onChange={(e) => setQuest((s) => ({ ...s, location: e.target.value }))} className="rounded-xl" placeholder="Например: Золотой мост" /></div>
+                <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={quest.xpReward} onChange={(e) => setQuest((s) => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
+                <Button type="submit" className="md:col-span-2 rounded-full" disabled={createQuest.isPending}>
+                  <Plus className="h-4 w-4 mr-1" /> {createQuest.isPending ? "Создание..." : "Создать квест"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </motion.div>
   );
 }
