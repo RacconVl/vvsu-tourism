@@ -1,0 +1,18 @@
+root@RacconQ:~/vvsu-tourism# sudo systemctl restart cloudflared && sleep 8 && sudo journalctl -u cloudflared -n 15 --no-pager
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF |  UDP Connectivity  region2.v2.argotunnel.com  PASS    QUIC connection successful     |
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF |  TCP Connectivity  region1.v2.argotunnel.com  PASS    HTTP/2 connection successful   |
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF |  TCP Connectivity  region2.v2.argotunnel.com  PASS    HTTP/2 connection successful   |
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF |  Cloudflare API    api.cloudflare.com:443     PASS    API is reachable               |
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF |                                                                                      |
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF |  SUMMARY: Environment is healthy. cloudflared will use 'http2' as primary protocol.  |
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF +--------------------------------------------------------------------------------------+
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck component="DNS Resolution" details="DNS Resolved successfully" run_id=2144f815-80b5-44bb-b3f4-482e136899f5 status=pass target=region1.v2.argotunnel.com
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck component="DNS Resolution" details="DNS Resolved successfully" run_id=2144f815-80b5-44bb-b3f4-482e136899f5 status=pass target=region2.v2.argotunnel.com
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck component="UDP Connectivity" details="QUIC connection successful" run_id=2144f815-80b5-44bb-b3f4-482e136899f5 status=pass target=region1.v2.argotunnel.com
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck component="UDP Connectivity" details="QUIC connection successful" run_id=2144f815-80b5-44bb-b3f4-482e136899f5 status=pass target=region2.v2.argotunnel.com
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck component="TCP Connectivity" details="HTTP/2 connection successful" run_id=2144f815-80b5-44bb-b3f4-482e136899f5 status=pass target=region1.v2.argotunnel.com
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck component="TCP Connectivity" details="HTTP/2 connection successful" run_id=2144f815-80b5-44bb-b3f4-482e136899f5 status=pass target=region2.v2.argotunnel.com
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck component="Cloudflare API" details="API is reachable" run_id=2144f815-80b5-44bb-b3f4-482e136899f5 status=pass target=api.cloudflare.com:443
+Jun 23 17:45:17 RacconQ cloudflared[131930]: 2026-06-23T07:45:17Z INF precheck complete hard_fail=false run_id=2144f815-80b5-44bb-b3f4-482e136899f5 suggested_protocol=http2
+root@RacconQ:~/vvsu-tourism# curl -s https://darkpixel.online -o /dev/null -w "%{http_code}"
+502root@RacconQ:~/vvsu-tourism#
