@@ -1,0 +1,31 @@
+root@RacconQ:~/vvsu-tourism# sudo journalctl -u cloudflared -n 30 --no-pager
+Jun 23 17:26:40 RacconQ cloudflared[127321]: 2026-06-23T07:26:40Z INF Registered tunnel connection connIndex=3 connection=936b4662-6156-4177-8ccf-534bbae3954f event=0 ip=198.41.200.33 location=dme06 protocol=quic
+Jun 23 17:26:40 RacconQ cloudflared[127321]: 2026-06-23T07:26:40Z INF Registered tunnel connection connIndex=1 connection=a62b65ab-cd8a-404b-a73e-8a53733e64cc event=0 ip=198.41.200.113 location=dme01 protocol=quic
+Jun 23 17:26:40 RacconQ cloudflared[127321]: 2026-06-23T07:26:40Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:40 RacconQ cloudflared[127321]: 2026-06-23T07:26:40Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:40 RacconQ cloudflared[127321]: 2026-06-23T07:26:40Z WRN failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:40 RacconQ cloudflared[127321]: 2026-06-23T07:26:40Z WRN Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:40 RacconQ cloudflared[127321]: 2026-06-23T07:26:40Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:42 RacconQ cloudflared[127321]: 2026-06-23T07:26:42Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=2 event=0 ip=198.41.192.77
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=2 event=0 ip=198.41.192.77
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z WRN failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=198.41.192.77
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z WRN Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=198.41.192.77
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.77
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z WRN Failed to dial a quic connection error="failed to dial to edge with quic: timeout: no recent network activity" connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z INF Retrying connection in up to 4s connIndex=0 event=0 ip=198.41.192.67
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=3 event=0 ip=198.41.200.33
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR failed to run the datagram handler error="timeout: no recent network activity" connIndex=3 event=0 ip=198.41.200.33
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z WRN failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=198.41.200.33
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z WRN Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=198.41.200.33
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.33
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR failed to accept incoming stream requests error="failed to accept QUIC stream: timeout: no recent network activity" connIndex=1 event=0 ip=198.41.200.113
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR failed to run the datagram handler error="context canceled" connIndex=1 event=0 ip=198.41.200.113
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.200.113
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.200.113
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.200.113
+Jun 23 17:26:47 RacconQ cloudflared[127321]: 2026-06-23T07:26:47Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=2
+Jun 23 17:26:48 RacconQ cloudflared[127321]: 2026-06-23T07:26:48Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=1
+Jun 23 17:26:49 RacconQ cloudflared[127321]: 2026-06-23T07:26:49Z ERR Connection terminated error="accept stream listener encountered a failure while serving" connIndex=3
+Jun 23 17:26:50 RacconQ cloudflared[127321]: 2026-06-23T07:26:50Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.192.7
+Jun 23 17:26:51 RacconQ cloudflared[127321]: 2026-06-23T07:26:51Z INF Registered tunnel connection connIndex=0 connection=ea1a7420-ce6e-4a71-b280-36abf2981237 event=0 ip=198.41.192.7 location=dme05 protocol=quic
