@@ -1,0 +1,151 @@
+lines 1-19/19 (END)
+● cloudflared.service - cloudflared
+     Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-06-23 11:22:41 +10; 34min ago
+   Main PID: 31500 (cloudflared)
+      Tasks: 16 (limit: 28414)
+     Memory: 29.6M ()
+     CGroup: /system.slice/cloudflared.service
+             └─31500 /usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run
+
+Jun 23 11:46:12 RacconQ cloudflared[31500]: 2026-06-23T01:46:12Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 11:46:23 RacconQ cloudflared[31500]: 2026-06-23T01:46:23Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.73
+Jun 23 11:46:24 RacconQ cloudflared[31500]: 2026-06-23T01:46:24Z INF Registered tunnel connection connIndex=0 connection=cfc79c7e-d55f-441e-a4a9-e028cb93d3b1 event=0 ip=198.41.200.73 location=dme01 protocol=http2
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z INF Lost connection with the edge connIndex=2
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 11:46:27 RacconQ cloudflared[31500]: 2026-06-23T01:46:27Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 11:46:58 RacconQ cloudflared[31500]: 2026-06-23T01:46:58Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:59 RacconQ cloudflared[31500]: 2026-06-23T01:46:59Z INF Registered tunnel connection connIndex=2 connection=b9e1c483-2321-461a-b1b4-70884c06950e event=0 ip=198.41.200.23 location=dme06 protocol=http2
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+lines 1-19/19 (END)
+● cloudflared.service - cloudflared
+     Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-06-23 11:22:41 +10; 34min ago
+   Main PID: 31500 (cloudflared)
+      Tasks: 16 (limit: 28414)
+     Memory: 29.6M ()
+     CGroup: /system.slice/cloudflared.service
+             └─31500 /usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run
+
+Jun 23 11:46:12 RacconQ cloudflared[31500]: 2026-06-23T01:46:12Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 11:46:23 RacconQ cloudflared[31500]: 2026-06-23T01:46:23Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.73
+Jun 23 11:46:24 RacconQ cloudflared[31500]: 2026-06-23T01:46:24Z INF Registered tunnel connection connIndex=0 connection=cfc79c7e-d55f-441e-a4a9-e028cb93d3b1 event=0 ip=198.41.200.73 location=dme01 protocol=http2
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z INF Lost connection with the edge connIndex=2
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 11:46:27 RacconQ cloudflared[31500]: 2026-06-23T01:46:27Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 11:46:58 RacconQ cloudflared[31500]: 2026-06-23T01:46:58Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:59 RacconQ cloudflared[31500]: 2026-06-23T01:46:59Z INF Registered tunnel connection connIndex=2 connection=b9e1c483-2321-461a-b1b4-70884c06950e event=0 ip=198.41.200.23 location=dme06 protocol=http2
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+lines 1-19/19 (END)
+● cloudflared.service - cloudflared
+     Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-06-23 11:22:41 +10; 34min ago
+   Main PID: 31500 (cloudflared)
+      Tasks: 16 (limit: 28414)
+     Memory: 29.6M ()
+     CGroup: /system.slice/cloudflared.service
+             └─31500 /usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run
+
+Jun 23 11:46:12 RacconQ cloudflared[31500]: 2026-06-23T01:46:12Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 11:46:23 RacconQ cloudflared[31500]: 2026-06-23T01:46:23Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.73
+Jun 23 11:46:24 RacconQ cloudflared[31500]: 2026-06-23T01:46:24Z INF Registered tunnel connection connIndex=0 connection=cfc79c7e-d55f-441e-a4a9-e028cb93d3b1 event=0 ip=198.41.200.73 location=dme01 protocol=http2
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z INF Lost connection with the edge connIndex=2
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:25 RacconQ cloudflared[31500]: 2026-06-23T01:46:25Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 11:46:27 RacconQ cloudflared[31500]: 2026-06-23T01:46:27Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 11:46:58 RacconQ cloudflared[31500]: 2026-06-23T01:46:58Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.200.23
+Jun 23 11:46:59 RacconQ cloudflared[31500]: 2026-06-23T01:46:59Z INF Registered tunnel connection connIndex=2 connection=b9e1c483-2321-461a-b1b4-70884c06950e event=0 ip=198.41.200.23 location=dme06 protocol=http2
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+lines 1-19/19 (END)
+root@RacconQ:~/vvsu-tourism# curl -s -o /dev/null -w "%{http_code}" http://localhost:8888
+200root@RacconQ:~/vvsu-touriscurl -s -o /dev/null -w "%{http_code}" https://darkpixel.onlineine
+200root@RacconQ:~/vvsu-tourism#
