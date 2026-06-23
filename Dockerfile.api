@@ -16,8 +16,10 @@ COPY lib/api-client-react/package.json ./lib/api-client-react/
 COPY artifacts/api-server/package.json ./artifacts/api-server/
 COPY scripts/package.json ./scripts/
 
-# Install ALL dependencies (including devDeps — needed for drizzle-kit and tsc)
-RUN pnpm install --frozen-lockfile
+# Install — pnpm store is kept in a BuildKit mount cache.
+# The cache persists across builds on this machine: reused ≫ downloaded.
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
 
 # Copy source
 COPY lib/ ./lib/
@@ -31,17 +33,12 @@ RUN pnpm run typecheck:libs
 RUN pnpm --filter @workspace/api-server run build
 
 # --- Runtime image ---
-# We copy all of /app from the builder so that:
-#   - node_modules (including drizzle-kit devDep) are present for the push step
-#   - lib/db source + config is present for drizzle-kit
 FROM node:22-slim AS runtime
 
 WORKDIR /app
 
-# pnpm is needed at runtime for the drizzle-kit push step
 RUN corepack enable && corepack prepare pnpm@10.26.1 --activate
 
-# Copy the entire built workspace (includes node_modules with drizzle-kit)
 COPY --from=builder /app .
 
 COPY docker-entrypoint-api.sh /usr/local/bin/entrypoint.sh

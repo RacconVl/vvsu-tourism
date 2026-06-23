@@ -48,8 +48,9 @@ while true; do
   git pull origin "$BRANCH" --ff-only
 
   # Rebuild and restart containers
+  # DOCKER_BUILDKIT=1 enables --mount=type=cache in Dockerfiles (fast pnpm installs)
   log "🐳 Rebuilding Docker containers..."
-  docker compose up -d --build
+  DOCKER_BUILDKIT=1 docker compose up -d --build
 
   LAST_DEPLOYED="$REMOTE_COMMIT"
   log "✅ Deploy complete! Commit: $LAST_DEPLOYED"
