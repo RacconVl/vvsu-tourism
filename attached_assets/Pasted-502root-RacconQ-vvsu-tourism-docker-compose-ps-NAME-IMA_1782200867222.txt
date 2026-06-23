@@ -1,0 +1,26 @@
+502root@RacconQ:~/vvsu-tourism# docker compose ps
+NAME                 IMAGE                COMMAND                  SERVICE   CREATED             STATUS                 PORTS
+vvsu-tourism-api-1   vvsu-tourism-api     "entrypoint.sh"          api       About an hour ago   Up About an hour       0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+vvsu-tourism-db-1    postgres:16-alpine   "docker-entrypoint.s…"   db        8 hours ago         Up 8 hours (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+vvsu-tourism-web-1   vvsu-tourism-web     "/docker-entrypoint.…"   web       About an hour ago   Up About an hour       0.0.0.0:8888->80/tcp, [::]:8888->80/tcp
+root@RacconQ:~/vvsu-tourism# docker compose logs --tail=20 api
+api-1  | {"level":30,"time":1782200423471,"pid":1,"hostname":"26a7b1092974","req":{"id":204,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":21,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200483352,"pid":1,"hostname":"26a7b1092974","req":{"id":205,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":18,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200543251,"pid":1,"hostname":"26a7b1092974","req":{"id":206,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":17,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200603148,"pid":1,"hostname":"26a7b1092974","req":{"id":207,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":18,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200663033,"pid":1,"hostname":"26a7b1092974","req":{"id":208,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":7,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200722941,"pid":1,"hostname":"26a7b1092974","req":{"id":209,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":17,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200782840,"pid":1,"hostname":"26a7b1092974","req":{"id":210,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":16,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800787,"pid":1,"hostname":"26a7b1092974","req":{"id":211,"method":"GET","url":"/api/auth/me"},"res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800789,"pid":1,"hostname":"26a7b1092974","req":{"id":213,"method":"GET","url":"/api/messages/conversations"},"res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800793,"pid":1,"hostname":"26a7b1092974","req":{"id":212,"method":"GET","url":"/api/notifications"},"res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800794,"pid":1,"hostname":"26a7b1092974","req":{"id":214,"method":"GET","url":"/api/friends/requests"},"res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800795,"pid":1,"hostname":"26a7b1092974","req":{"id":216,"method":"GET","url":"/api/dashboard/progress"},"res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800799,"pid":1,"hostname":"26a7b1092974","req":{"id":217,"method":"GET","url":"/api/dashboard/leaderboard"},"res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800808,"pid":1,"hostname":"26a7b1092974","req":{"id":220,"method":"GET","url":"/api/admin/users"},"res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800813,"pid":1,"hostname":"26a7b1092974","req":{"id":215,"method":"GET","url":"/api/dashboard/summary"},"res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800814,"pid":1,"hostname":"26a7b1092974","req":{"id":219,"method":"GET","url":"/api/admin/stats"},"res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800816,"pid":1,"hostname":"26a7b1092974","req":{"id":218,"method":"GET","url":"/api/profile"},"res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200800817,"pid":1,"hostname":"26a7b1092974","req":{"id":221,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":6,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200825257,"pid":1,"hostname":"26a7b1092974","req":{"id":222,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":17,"msg":"request completed"}
+api-1  | {"level":30,"time":1782200842741,"pid":1,"hostname":"26a7b1092974","req":{"id":223,"method":"PATCH","url":"/api/auth/heartbeat"},"res":{"statusCode":204},"responseTime":8,"msg":"request completed"}
