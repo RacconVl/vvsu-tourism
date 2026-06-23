@@ -1,0 +1,51 @@
+root@RacconQ:~/vvsu-tourism# sudo journalctl -u cloudflared --no-pager -n 50
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF +--------------------------------------------------------------------------------------+
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |                               CONNECTIVITY PRE-CHECKS                                |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF +--------------------------------------------------------------------------------------+
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  COMPONENT         TARGET                     STATUS  DETAILS                        |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  DNS Resolution    region1.v2.argotunnel.com  PASS    DNS Resolved successfully      |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  DNS Resolution    region2.v2.argotunnel.com  PASS    DNS Resolved successfully      |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  UDP Connectivity  region1.v2.argotunnel.com  PASS    QUIC connection successful     |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  UDP Connectivity  region2.v2.argotunnel.com  PASS    QUIC connection successful     |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  TCP Connectivity  region1.v2.argotunnel.com  PASS    HTTP/2 connection successful   |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  TCP Connectivity  region2.v2.argotunnel.com  PASS    HTTP/2 connection successful   |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  Cloudflare API    api.cloudflare.com:443     PASS    API is reachable               |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |                                                                                      |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  SUMMARY: Environment is healthy. cloudflared will use 'http2' as primary protocol.  |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF +--------------------------------------------------------------------------------------+
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="DNS Resolution" details="DNS Resolved successfully" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region1.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="DNS Resolution" details="DNS Resolved successfully" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region2.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="UDP Connectivity" details="QUIC connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region1.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="UDP Connectivity" details="QUIC connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region2.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="TCP Connectivity" details="HTTP/2 connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region1.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="TCP Connectivity" details="HTTP/2 connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region2.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="Cloudflare API" details="API is reachable" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=api.cloudflare.com:443
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck complete hard_fail=false run_id=a128c898-f837-4e57-8ca1-e12318a8d684 suggested_protocol=http2
+Jun 23 12:08:08 RacconQ cloudflared[42331]: 2026-06-23T02:08:08Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:08:08 RacconQ cloudflared[42331]: 2026-06-23T02:08:08Z INF Lost connection with the edge connIndex=1
+Jun 23 12:08:08 RacconQ cloudflared[42331]: 2026-06-23T02:08:08Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:08:08 RacconQ cloudflared[42331]: 2026-06-23T02:08:08Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:08:10 RacconQ cloudflared[42331]: 2026-06-23T02:08:10Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 12:08:10 RacconQ cloudflared[42331]: 2026-06-23T02:08:10Z INF Lost connection with the edge connIndex=3
+Jun 23 12:08:10 RacconQ cloudflared[42331]: 2026-06-23T02:08:10Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:08:10 RacconQ cloudflared[42331]: 2026-06-23T02:08:10Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:08:10 RacconQ cloudflared[42331]: 2026-06-23T02:08:10Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:08:11 RacconQ cloudflared[42331]: 2026-06-23T02:08:11Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 12:08:24 RacconQ cloudflared[42331]: 2026-06-23T02:08:24Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:08:24 RacconQ cloudflared[42331]: 2026-06-23T02:08:24Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:08:25 RacconQ cloudflared[42331]: 2026-06-23T02:08:25Z INF Registered tunnel connection connIndex=1 connection=813fdbea-6c9e-4035-ade1-e94901343427 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 12:08:25 RacconQ cloudflared[42331]: 2026-06-23T02:08:25Z INF Registered tunnel connection connIndex=3 connection=2798f8cc-5529-420e-ac7c-dbf97b426b5f event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z INF Lost connection with the edge connIndex=1
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z INF Lost connection with the edge connIndex=3
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:11:19 RacconQ cloudflared[42331]: 2026-06-23T02:11:19Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:11:20 RacconQ cloudflared[42331]: 2026-06-23T02:11:20Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 12:11:21 RacconQ cloudflared[42331]: 2026-06-23T02:11:21Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 12:11:36 RacconQ cloudflared[42331]: 2026-06-23T02:11:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:11:36 RacconQ cloudflared[42331]: 2026-06-23T02:11:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:11:37 RacconQ cloudflared[42331]: 2026-06-23T02:11:37Z INF Registered tunnel connection connIndex=1 connection=583e672f-11f5-4fdc-add0-283db94170d7 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 12:11:37 RacconQ cloudflared[42331]: 2026-06-23T02:11:37Z INF Registered tunnel connection connIndex=3 connection=b83f2c03-982e-4036-a2ce-c403b588327c event=0 ip=198.41.200.193 location=dme06 protocol=http2
