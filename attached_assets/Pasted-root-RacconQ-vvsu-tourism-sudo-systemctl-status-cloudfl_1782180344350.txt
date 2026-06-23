@@ -1,0 +1,21 @@
+root@RacconQ:~/vvsu-tourism# sudo systemctl status cloudflared
+● cloudflared.service - cloudflared
+     Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-06-23 12:05:13 +10; 14s ago
+   Main PID: 42331 (cloudflared)
+      Tasks: 16 (limit: 28414)
+     Memory: 43.1M ()
+     CGroup: /system.slice/cloudflared.service
+             └─42331 /usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run
+
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF |  SUMMARY: Environment is healthy. cloudflared will use 'http2' as primary protocol.  |
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF +--------------------------------------------------------------------------------------+
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="DNS Resolution" details="DNS Resolved successfully" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region1.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="DNS Resolution" details="DNS Resolved successfully" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region2.v2.argotunnel.com
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="UDP Connectivity" details="QUIC connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region1.v2.argotunnel>
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="UDP Connectivity" details="QUIC connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region2.v2.argotunnel>
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="TCP Connectivity" details="HTTP/2 connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region1.v2.argotunn>
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="TCP Connectivity" details="HTTP/2 connection successful" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=region2.v2.argotunn>
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck component="Cloudflare API" details="API is reachable" run_id=a128c898-f837-4e57-8ca1-e12318a8d684 status=pass target=api.cloudflare.com:443
+Jun 23 12:05:18 RacconQ cloudflared[42331]: 2026-06-23T02:05:18Z INF precheck complete hard_fail=false run_id=a128c898-f837-4e57-8ca1-e12318a8d684 suggested_protocol=http2
+lines 1-19/19 (END)
