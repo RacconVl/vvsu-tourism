@@ -6,6 +6,8 @@ import {
   useGetMyProfile, useUpdateMyProfile, getGetMyProfileQueryKey, getGetMeQueryKey,
   useAdminListUsers, useAdminGetStats, useAdminCreateCourse, useAdminCreateQuest,
   useAdminCreateNotification, getAdminGetStatsQueryKey,
+  useAdminCreateQuiz, getListQuizzesQueryKey,
+  getListCoursesQueryKey, getListQuestsQueryKey,
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -166,6 +168,7 @@ function AdminOverview() {
       onSuccess: () => {
         toast({ title: "Курс создан" });
         qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
+        qc.invalidateQueries({ queryKey: getListCoursesQueryKey() });
         setCourse({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
         setCourseImageFile(null); setCourseImagePreview("");
       },
@@ -192,10 +195,66 @@ function AdminOverview() {
       onSuccess: () => {
         toast({ title: "Квест создан" });
         qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
+        qc.invalidateQueries({ queryKey: getListQuestsQueryKey() });
         setQuest({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150, imageUrl: "" });
         setQuestImageFile(null); setQuestImagePreview("");
       },
       onError: () => toast({ title: "Ошибка при создании квеста", variant: "destructive" }),
+    });
+  };
+
+  /* ── Quiz form state ── */
+  type QuizQuestionForm = { question: string; options: [string, string, string, string]; correctIndex: number; explanation: string };
+  const emptyQ = (): QuizQuestionForm => ({ question: "", options: ["", "", "", ""], correctIndex: 0, explanation: "" });
+  const [quiz, setQuiz] = useState({ title: "", description: "", category: "history", difficulty: "easy", xpReward: 150, estimatedMinutes: 10, imageUrl: "" });
+  const [quizImageFile, setQuizImageFile] = useState<File | null>(null);
+  const [quizImagePreview, setQuizImagePreview] = useState("");
+  const [quizUploading, setQuizUploading] = useState(false);
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestionForm[]>([emptyQ()]);
+  const createQuiz = useAdminCreateQuiz();
+
+  const addQuizQuestion = () => setQuizQuestions((prev) => [...prev, emptyQ()]);
+  const removeQuizQuestion = (i: number) => setQuizQuestions((prev) => prev.filter((_, idx) => idx !== i));
+  const updateQuizQ = (i: number, updates: Partial<QuizQuestionForm>) =>
+    setQuizQuestions((prev) => prev.map((q, idx) => idx === i ? { ...q, ...updates } : q));
+  const updateQuizOption = (qi: number, oi: number, value: string) =>
+    setQuizQuestions((prev) => prev.map((q, idx) => {
+      if (idx !== qi) return q;
+      const options = [...q.options] as [string, string, string, string];
+      options[oi] = value;
+      return { ...q, options };
+    }));
+
+  const submitQuiz = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!quiz.title.trim() || !quiz.description.trim()) return;
+    const incomplete = quizQuestions.find((q) => !q.question.trim() || q.options.some((o) => !o.trim()));
+    if (incomplete) { toast({ title: "Заполните все поля вопросов", variant: "destructive" }); return; }
+    let imageUrl = quiz.imageUrl;
+    if (quizImageFile) {
+      setQuizUploading(true);
+      try { imageUrl = await uploadFile(quizImageFile); }
+      catch { toast({ title: "Ошибка загрузки изображения", variant: "destructive" }); setQuizUploading(false); return; }
+      setQuizUploading(false);
+    }
+    createQuiz.mutate({
+      data: {
+        ...quiz,
+        imageUrl,
+        xpReward: Number(quiz.xpReward),
+        estimatedMinutes: Number(quiz.estimatedMinutes),
+        questions: quizQuestions.map((q) => ({ question: q.question, options: Array.from(q.options), correctIndex: q.correctIndex, explanation: q.explanation })),
+      },
+    }, {
+      onSuccess: () => {
+        toast({ title: "Тест создан", description: `«${quiz.title}» добавлен в список тестов.` });
+        qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
+        qc.invalidateQueries({ queryKey: getListQuizzesQueryKey() });
+        setQuiz({ title: "", description: "", category: "history", difficulty: "easy", xpReward: 150, estimatedMinutes: 10, imageUrl: "" });
+        setQuizQuestions([emptyQ()]);
+        setQuizImageFile(null); setQuizImagePreview("");
+      },
+      onError: () => toast({ title: "Ошибка при создании теста", variant: "destructive" }),
     });
   };
 
@@ -260,15 +319,18 @@ function AdminOverview() {
         </div>
       )}
 
-      {/* 4-tab admin panel */}
+      {/* 5-tab admin panel */}
       <Tabs defaultValue="users" className="w-full">
-        <TabsList className="grid grid-cols-4 max-w-xl rounded-2xl">
+        <TabsList className="grid grid-cols-5 max-w-2xl rounded-2xl">
           <TabsTrigger value="users">Пользователи</TabsTrigger>
           <TabsTrigger value="notify" className="flex items-center gap-1">
             <Bell className="h-3.5 w-3.5" /> Уведомления
           </TabsTrigger>
           <TabsTrigger value="course">Новый курс</TabsTrigger>
           <TabsTrigger value="quest">Новый квест</TabsTrigger>
+          <TabsTrigger value="quiz" className="flex items-center gap-1">
+            <Brain className="h-3.5 w-3.5" /> Новый тест
+          </TabsTrigger>
         </TabsList>
 
         {/* ── Users tab ── */}
@@ -507,6 +569,165 @@ function AdminOverview() {
               <div className="rounded-xl bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
                 <p className="font-medium">Подсказка</p>
                 <p>После создания курса добавьте модули через страницу управления курсами. Каждый модуль может быть видео, интерактивом или тестом.</p>
+              </div>
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* ── New Quiz tab ── */}
+        <TabsContent value="quiz" className="mt-5">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <Card className="rounded-2xl border-border/60 lg:col-span-3">
+              <CardContent className="p-6">
+                <h2 className="font-bold text-lg mb-5 flex items-center gap-2">
+                  <Brain className="h-5 w-5 text-accent" /> Создать тест
+                </h2>
+                <form onSubmit={submitQuiz} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Название теста <span className="text-destructive">*</span></Label>
+                    <Input required value={quiz.title} onChange={(e) => setQuiz((s) => ({ ...s, title: e.target.value }))} placeholder="Например: История Владивостока" className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Описание <span className="text-destructive">*</span></Label>
+                    <Textarea rows={3} required value={quiz.description} onChange={(e) => setQuiz((s) => ({ ...s, description: e.target.value }))} placeholder="Кратко опишите тему теста..." className="rounded-xl resize-none" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label>Категория</Label>
+                      <Select value={quiz.category} onValueChange={(v) => setQuiz((s) => ({ ...s, category: v }))}>
+                        <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="history">🏛 История</SelectItem>
+                          <SelectItem value="geography">🗺 География</SelectItem>
+                          <SelectItem value="nature">🌿 Природа</SelectItem>
+                          <SelectItem value="culture">🎭 Культура</SelectItem>
+                          <SelectItem value="tourism">✈️ Туризм</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Сложность</Label>
+                      <Select value={quiz.difficulty} onValueChange={(v) => setQuiz((s) => ({ ...s, difficulty: v }))}>
+                        <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="easy">🟢 Лёгкий</SelectItem>
+                          <SelectItem value="medium">🟡 Средний</SelectItem>
+                          <SelectItem value="hard">🔴 Сложный</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label>XP награда</Label>
+                      <Input type="number" min={10} max={2000} value={quiz.xpReward} onChange={(e) => setQuiz((s) => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Время (мин)</Label>
+                      <Input type="number" min={1} max={120} value={quiz.estimatedMinutes} onChange={(e) => setQuiz((s) => ({ ...s, estimatedMinutes: Number(e.target.value) }))} className="rounded-xl" />
+                    </div>
+                  </div>
+                  <ImageUploadField
+                    label="Обложка теста"
+                    preview={quizImagePreview}
+                    onFile={(file, prev) => { setQuizImageFile(file); setQuizImagePreview(prev); }}
+                  />
+
+                  {/* Questions */}
+                  <div className="space-y-4 pt-2">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-base font-semibold">Вопросы ({quizQuestions.length})</Label>
+                      <Button type="button" variant="outline" size="sm" onClick={addQuizQuestion} className="rounded-xl gap-1.5 text-xs">
+                        <Plus className="h-3.5 w-3.5" /> Добавить вопрос
+                      </Button>
+                    </div>
+                    {quizQuestions.map((q, qi) => (
+                      <div key={qi} className="rounded-xl border border-border/60 p-4 space-y-3 bg-muted/20">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-semibold text-muted-foreground">Вопрос {qi + 1}</span>
+                          {quizQuestions.length > 1 && (
+                            <button type="button" onClick={() => removeQuizQuestion(qi)} className="h-6 w-6 rounded-full bg-destructive/10 text-destructive flex items-center justify-center hover:bg-destructive/20 transition-colors">
+                              <X className="h-3.5 w-3.5" />
+                            </button>
+                          )}
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label className="text-xs text-muted-foreground">Текст вопроса <span className="text-destructive">*</span></Label>
+                          <Textarea rows={2} value={q.question} onChange={(e) => updateQuizQ(qi, { question: e.target.value })} placeholder="Введите вопрос..." className="rounded-lg resize-none text-sm" />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label className="text-xs text-muted-foreground">Варианты ответов (отметьте правильный)</Label>
+                          <div className="space-y-2">
+                            {q.options.map((opt, oi) => (
+                              <div key={oi} className="flex items-center gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuizQ(qi, { correctIndex: oi })}
+                                  className={`h-5 w-5 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${
+                                    q.correctIndex === oi
+                                      ? "border-green-500 bg-green-500"
+                                      : "border-border hover:border-green-400"
+                                  }`}
+                                >
+                                  {q.correctIndex === oi && <div className="h-2 w-2 rounded-full bg-white" />}
+                                </button>
+                                <Input
+                                  value={opt}
+                                  onChange={(e) => updateQuizOption(qi, oi, e.target.value)}
+                                  placeholder={`Вариант ${oi + 1}`}
+                                  className={`rounded-lg text-sm h-8 flex-1 ${q.correctIndex === oi ? "border-green-500/50 bg-green-50/50 dark:bg-green-950/20" : ""}`}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                          <p className="text-xs text-muted-foreground">Нажмите на кружок слева чтобы отметить правильный ответ</p>
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label className="text-xs text-muted-foreground">Объяснение (показывается после ответа)</Label>
+                          <Input value={q.explanation} onChange={(e) => updateQuizQ(qi, { explanation: e.target.value })} placeholder="Почему этот ответ правильный..." className="rounded-lg text-sm" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button type="submit" className="w-full rounded-full gap-2" disabled={createQuiz.isPending || quizUploading}>
+                    {quizUploading
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Загрузка изображения...</>
+                      : createQuiz.isPending
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Создание теста...</>
+                      : <><Plus className="h-4 w-4" /> Создать тест</>}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Preview */}
+            <div className="lg:col-span-2 space-y-3">
+              <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5"><Sparkles className="h-4 w-4" /> Предварительный вид</p>
+              <Card className="rounded-2xl border-border/60 overflow-hidden">
+                {quizImagePreview
+                  ? <img src={quizImagePreview} alt="" className="w-full h-40 object-cover" />
+                  : <div className="h-40 bg-gradient-to-br from-violet-500/10 to-purple-600/10 flex items-center justify-center"><Brain className="h-14 w-14 text-violet-400/30" /></div>
+                }
+                <CardContent className="p-4 space-y-2">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Badge variant="outline" className="text-xs capitalize">{quiz.category}</Badge>
+                    <Badge variant={quiz.difficulty === "hard" ? "destructive" : quiz.difficulty === "medium" ? "secondary" : "outline"} className="text-xs">
+                      {quiz.difficulty === "easy" ? "Лёгкий" : quiz.difficulty === "medium" ? "Средний" : "Сложный"}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">{quiz.estimatedMinutes} мин</span>
+                  </div>
+                  <h3 className="font-bold leading-snug">{quiz.title || <span className="text-muted-foreground font-normal italic">Название теста</span>}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-3">{quiz.description || "Описание теста появится здесь"}</p>
+                  <div className="flex items-center justify-between pt-1 text-xs">
+                    <span className="text-muted-foreground">{quizQuestions.length} {quizQuestions.length === 1 ? "вопрос" : quizQuestions.length < 5 ? "вопроса" : "вопросов"}</span>
+                    <span className="text-accent font-bold">+{quiz.xpReward} XP</span>
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="rounded-xl bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
+                <p className="font-medium">Подсказка</p>
+                <p>Добавьте минимум 1 вопрос с 4 вариантами ответа. Зелёный кружок означает правильный ответ. Объяснение показывается студенту после прохождения теста.</p>
               </div>
             </div>
           </div>

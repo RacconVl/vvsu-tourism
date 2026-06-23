@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { db, usersTable, coursesTable, questsTable, communityPostsTable, userQuizAttemptsTable, userModuleProgressTable, userQuestSubmissionsTable, achievementsTable } from "@workspace/db";
+import { db, usersTable, coursesTable, questsTable, quizzesTable, quizQuestionsTable, communityPostsTable, userQuizAttemptsTable, userModuleProgressTable, userQuestSubmissionsTable, achievementsTable } from "@workspace/db";
 import { sql, eq, gte, desc } from "drizzle-orm";
 import {
   AdminListUsersResponse,
@@ -8,6 +8,8 @@ import {
   AdminCreateCourseResponse,
   AdminCreateQuestBody,
   AdminCreateQuestResponse,
+  AdminCreateQuizBody,
+  AdminCreateQuizResponse,
 } from "@workspace/api-zod";
 import { requireAdmin } from "../lib/auth";
 
@@ -103,6 +105,36 @@ router.post("/admin/quests", requireAdmin, async (req, res): Promise<void> => {
     imageUrl: parsed.data.imageUrl,
   }).returning();
   res.json(AdminCreateQuestResponse.parse({ ...q, createdAt: q.createdAt.toISOString() }));
+});
+
+router.post("/admin/quizzes", requireAdmin, async (req, res): Promise<void> => {
+  const parsed = AdminCreateQuizBody.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: parsed.error.message });
+    return;
+  }
+  const [quiz] = await db.insert(quizzesTable).values({
+    title: parsed.data.title,
+    description: parsed.data.description,
+    category: parsed.data.category,
+    difficulty: parsed.data.difficulty,
+    xpReward: parsed.data.xpReward,
+    estimatedMinutes: parsed.data.estimatedMinutes,
+    imageUrl: parsed.data.imageUrl,
+  }).returning();
+  if (parsed.data.questions.length > 0) {
+    await db.insert(quizQuestionsTable).values(
+      parsed.data.questions.map((q, i) => ({
+        quizId: quiz.id,
+        question: q.question,
+        options: q.options,
+        correctIndex: q.correctIndex,
+        explanation: q.explanation,
+        order: i,
+      })),
+    );
+  }
+  res.json(AdminCreateQuizResponse.parse({ id: quiz.id, title: quiz.title, createdAt: quiz.createdAt.toISOString() }));
 });
 
 export default router;

@@ -428,6 +428,30 @@ export interface CreateQuestRequest {
   imageUrl?: string;
 }
 
+export interface AdminCreateQuizQuestionInput {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
+export interface AdminCreateQuizBody {
+  title: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  xpReward: number;
+  estimatedMinutes: number;
+  imageUrl?: string;
+  questions: AdminCreateQuizQuestionInput[];
+}
+
+export interface AdminCreateQuizResponse {
+  id: number;
+  title: string;
+  createdAt: string;
+}
+
 export interface FriendUser {
   id: number;
   name: string;

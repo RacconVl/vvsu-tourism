@@ -837,6 +837,33 @@ export const AdminCreateQuestResponse = zod.object({
 });
 
 /**
+ * @summary Create a new quiz with questions
+ */
+export const AdminCreateQuizBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  difficulty: zod.string(),
+  xpReward: zod.number(),
+  estimatedMinutes: zod.number(),
+  imageUrl: zod.string().optional(),
+  questions: zod.array(
+    zod.object({
+      question: zod.string(),
+      options: zod.array(zod.string()),
+      correctIndex: zod.number(),
+      explanation: zod.string(),
+    }),
+  ),
+});
+
+export const AdminCreateQuizResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  createdAt: zod.string(),
+});
+
+/**
  * @summary List all quizzes
  */
 export const ListQuizzesResponseItem = zod.object({

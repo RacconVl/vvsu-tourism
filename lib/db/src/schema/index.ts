@@ -1,5 +1,6 @@
 export * from "./courses";
 export * from "./quests";
+export * from "./quizzes";
 export * from "./achievements";
 export * from "./map";
 export * from "./community";

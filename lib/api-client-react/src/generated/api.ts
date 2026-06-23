@@ -19,6 +19,8 @@ import type {
 import type {
   Achievement,
   AdminCreateNotification201,
+  AdminCreateQuizBody,
+  AdminCreateQuizResponse,
   AdminStats,
   AdminUserRow,
   AuthUser,
@@ -3674,6 +3676,92 @@ export const useAdminCreateQuest = <
   TContext
 > => {
   return useMutation(getAdminCreateQuestMutationOptions(options));
+};
+
+/**
+ * @summary Create a new quiz with questions
+ */
+export const getAdminCreateQuizUrl = () => {
+  return `/api/admin/quizzes`;
+};
+
+export const adminCreateQuiz = async (
+  adminCreateQuizBody: AdminCreateQuizBody,
+  options?: RequestInit,
+): Promise<AdminCreateQuizResponse> => {
+  return customFetch<AdminCreateQuizResponse>(getAdminCreateQuizUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(adminCreateQuizBody),
+  });
+};
+
+export const getAdminCreateQuizMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminCreateQuiz>>,
+    TError,
+    { data: BodyType<AdminCreateQuizBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminCreateQuiz>>,
+  TError,
+  { data: BodyType<AdminCreateQuizBody> },
+  TContext
+> => {
+  const mutationKey = ["adminCreateQuiz"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminCreateQuiz>>,
+    { data: BodyType<AdminCreateQuizBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return adminCreateQuiz(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminCreateQuizMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminCreateQuiz>>
+>;
+export type AdminCreateQuizMutationBody = BodyType<AdminCreateQuizBody>;
+export type AdminCreateQuizMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Create a new quiz with questions
+ */
+export const useAdminCreateQuiz = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminCreateQuiz>>,
+    TError,
+    { data: BodyType<AdminCreateQuizBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminCreateQuiz>>,
+  TError,
+  { data: BodyType<AdminCreateQuizBody> },
+  TContext
+> => {
+  return useMutation(getAdminCreateQuizMutationOptions(options));
 };
 
 /**
