@@ -425,6 +425,7 @@ export interface CreateQuestRequest {
   location: string;
   xpReward?: number;
   timeEstimate?: number;
+  imageUrl?: string;
 }
 
 export interface FriendUser {

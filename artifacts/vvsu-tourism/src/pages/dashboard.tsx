@@ -27,7 +27,48 @@ import {
   Anchor, MapPin, Waves, Brain, Activity, Settings, MessageCircle,
   Sparkles, Lock, Map as MapIcon, Zap, Users, BarChart3, Shield, Plus,
   Bell, Send, AlertTriangle, Megaphone, RefreshCw, Info,
+  X, Loader2, ImageIcon,
 } from "lucide-react";
+
+function ImageUploadField({ preview, label, onFile }: {
+  preview: string;
+  label: string;
+  onFile: (file: File | null, preview: string) => void;
+}) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => onFile(file, ev.target?.result as string ?? "");
+    reader.readAsDataURL(file);
+  };
+  return (
+    <div className="space-y-2">
+      <Label>{label}</Label>
+      <div className="border-2 border-dashed border-border/60 rounded-xl overflow-hidden hover:border-primary/50 transition-colors">
+        {preview ? (
+          <div className="relative">
+            <img src={preview} alt="Превью" className="w-full max-h-44 object-cover" />
+            <button type="button" onClick={() => onFile(null, "")} className="absolute top-2 right-2 h-7 w-7 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-destructive transition-colors">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        ) : (
+          <label className="flex flex-col items-center justify-center gap-2 p-6 cursor-pointer">
+            <div className="h-12 w-12 rounded-xl bg-muted flex items-center justify-center">
+              <ImageIcon className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-medium">Выберите изображение</p>
+              <p className="text-xs text-muted-foreground mt-0.5">PNG, JPG, WebP, GIF — до 10 МБ</p>
+            </div>
+            <input type="file" accept="image/*" onChange={handleChange} className="hidden" />
+          </label>
+        )}
+      </div>
+    </div>
+  );
+}
 
 const roleLabels: Record<string, string> = {
   guide: "Экскурсовод", marketer: "Маркетолог", designer: "Дизайнер",
@@ -97,31 +138,62 @@ function AdminOverview() {
     { icon: <Trophy className="h-5 w-5" />,    value: stats.moduleCompletionsLast7d, label: "Модулей закрыто / 7 дн", color: "#ca8a04" },
   ] : [];
 
+  const uploadFile = async (file: File): Promise<string> => {
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch("/api/uploads", { method: "POST", body: fd });
+    if (!res.ok) throw new Error("upload failed");
+    const json = await res.json() as { url: string };
+    return json.url;
+  };
+
   /* ── Course form state ── */
   const [course, setCourse] = useState({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
+  const [courseImageFile, setCourseImageFile] = useState<File | null>(null);
+  const [courseImagePreview, setCourseImagePreview] = useState("");
+  const [courseUploading, setCourseUploading] = useState(false);
   const createCourse = useAdminCreateCourse();
-  const submitCourse = (e: React.FormEvent) => {
+  const submitCourse = async (e: React.FormEvent) => {
     e.preventDefault();
-    createCourse.mutate({ data: { ...course, xpReward: Number(course.xpReward) } }, {
+    let imageUrl = course.imageUrl;
+    if (courseImageFile) {
+      setCourseUploading(true);
+      try { imageUrl = await uploadFile(courseImageFile); }
+      catch { toast({ title: "Ошибка загрузки изображения", variant: "destructive" }); setCourseUploading(false); return; }
+      setCourseUploading(false);
+    }
+    createCourse.mutate({ data: { ...course, imageUrl, xpReward: Number(course.xpReward) } }, {
       onSuccess: () => {
         toast({ title: "Курс создан" });
         qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
         setCourse({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
+        setCourseImageFile(null); setCourseImagePreview("");
       },
       onError: () => toast({ title: "Ошибка при создании курса", variant: "destructive" }),
     });
   };
 
   /* ── Quest form state ── */
-  const [quest, setQuest] = useState({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150 });
+  const [quest, setQuest] = useState({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150, imageUrl: "" });
+  const [questImageFile, setQuestImageFile] = useState<File | null>(null);
+  const [questImagePreview, setQuestImagePreview] = useState("");
+  const [questUploading, setQuestUploading] = useState(false);
   const createQuest = useAdminCreateQuest();
-  const submitQuest = (e: React.FormEvent) => {
+  const submitQuest = async (e: React.FormEvent) => {
     e.preventDefault();
-    createQuest.mutate({ data: { ...quest, xpReward: Number(quest.xpReward) } }, {
+    let imageUrl = quest.imageUrl;
+    if (questImageFile) {
+      setQuestUploading(true);
+      try { imageUrl = await uploadFile(questImageFile); }
+      catch { toast({ title: "Ошибка загрузки изображения", variant: "destructive" }); setQuestUploading(false); return; }
+      setQuestUploading(false);
+    }
+    createQuest.mutate({ data: { ...quest, imageUrl, xpReward: Number(quest.xpReward) } }, {
       onSuccess: () => {
         toast({ title: "Квест создан" });
         qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
-        setQuest({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150 });
+        setQuest({ title: "", description: "", type: "exploration", difficulty: "medium", location: "", xpReward: 150, imageUrl: "" });
+        setQuestImageFile(null); setQuestImagePreview("");
       },
       onError: () => toast({ title: "Ошибка при создании квеста", variant: "destructive" }),
     });
@@ -333,70 +405,213 @@ function AdminOverview() {
 
         {/* ── New Course tab ── */}
         <TabsContent value="course" className="mt-5">
-          <Card className="rounded-2xl border-border/60">
-            <CardContent className="p-6">
-              <form onSubmit={submitCourse} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={course.title} onChange={(e) => setCourse((s) => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
-                <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={course.description} onChange={(e) => setCourse((s) => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
-                <div className="space-y-2"><Label>Специализация</Label>
-                  <Select value={course.role} onValueChange={(v) => setCourse((s) => ({ ...s, role: v }))}>
-                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="guide">Экскурсовод</SelectItem>
-                      <SelectItem value="marketer">Маркетолог</SelectItem>
-                      <SelectItem value="designer">Дизайнер</SelectItem>
-                      <SelectItem value="operator">Туроператор</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2"><Label>Этап</Label><Input value={course.stage} onChange={(e) => setCourse((s) => ({ ...s, stage: e.target.value }))} className="rounded-xl" /></div>
-                <div className="space-y-2"><Label>Категория</Label><Input value={course.category} onChange={(e) => setCourse((s) => ({ ...s, category: e.target.value }))} className="rounded-xl" /></div>
-                <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={course.xpReward} onChange={(e) => setCourse((s) => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
-                <div className="space-y-2 md:col-span-2"><Label>Картинка (URL, опционально)</Label><Input value={course.imageUrl} onChange={(e) => setCourse((s) => ({ ...s, imageUrl: e.target.value }))} className="rounded-xl" placeholder="https://..." /></div>
-                <Button type="submit" className="md:col-span-2 rounded-full" disabled={createCourse.isPending}>
-                  <Plus className="h-4 w-4 mr-1" /> {createCourse.isPending ? "Создание..." : "Создать курс"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <Card className="rounded-2xl border-border/60 lg:col-span-3">
+              <CardContent className="p-6">
+                <h2 className="font-bold text-lg mb-5 flex items-center gap-2">
+                  <BookOpen className="h-5 w-5 text-accent" /> Создать курс
+                </h2>
+                <form onSubmit={submitCourse} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Название курса <span className="text-destructive">*</span></Label>
+                    <Input required value={course.title} onChange={(e) => setCourse((s) => ({ ...s, title: e.target.value }))} placeholder="Введите название..." className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Описание <span className="text-destructive">*</span></Label>
+                    <Textarea rows={4} required value={course.description} onChange={(e) => setCourse((s) => ({ ...s, description: e.target.value }))} placeholder="Опишите содержание и цели курса..." className="rounded-xl resize-none" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label>Специализация</Label>
+                      <Select value={course.role} onValueChange={(v) => setCourse((s) => ({ ...s, role: v }))}>
+                        <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="guide">Экскурсовод</SelectItem>
+                          <SelectItem value="marketer">Маркетолог</SelectItem>
+                          <SelectItem value="designer">Дизайнер</SelectItem>
+                          <SelectItem value="operator">Туроператор</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Категория</Label>
+                      <Select value={course.category} onValueChange={(v) => setCourse((s) => ({ ...s, category: v }))}>
+                        <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="tourism">Туризм</SelectItem>
+                          <SelectItem value="marketing">Маркетинг</SelectItem>
+                          <SelectItem value="design">Дизайн</SelectItem>
+                          <SelectItem value="ecology">Экология</SelectItem>
+                          <SelectItem value="gastronomy">Гастрономия</SelectItem>
+                          <SelectItem value="culture">Культура</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label>Этап пути</Label>
+                      <Select value={course.stage} onValueChange={(v) => setCourse((s) => ({ ...s, stage: v }))}>
+                        <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Бухта открытий">Бухта открытий</SelectItem>
+                          <SelectItem value="Мыс знаний">Мыс знаний</SelectItem>
+                          <SelectItem value="Архипелаг практики">Архипелаг практики</SelectItem>
+                          <SelectItem value="Пролив испытаний">Пролив испытаний</SelectItem>
+                          <SelectItem value="Тихоокеанский горизонт">Тихоокеанский горизонт</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>XP награда</Label>
+                      <Input type="number" min={10} max={2000} value={course.xpReward} onChange={(e) => setCourse((s) => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" />
+                    </div>
+                  </div>
+                  <ImageUploadField
+                    label="Обложка курса"
+                    preview={courseImagePreview}
+                    onFile={(file, prev) => { setCourseImageFile(file); setCourseImagePreview(prev); }}
+                  />
+                  <Button type="submit" className="w-full rounded-full gap-2" disabled={createCourse.isPending || courseUploading}>
+                    {courseUploading
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Загрузка изображения...</>
+                      : createCourse.isPending
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Создание курса...</>
+                      : <><Plus className="h-4 w-4" /> Создать курс</>}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Preview */}
+            <div className="lg:col-span-2 space-y-3">
+              <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5"><Sparkles className="h-4 w-4" /> Предварительный вид</p>
+              <Card className="rounded-2xl border-border/60 overflow-hidden">
+                {courseImagePreview
+                  ? <img src={courseImagePreview} alt="" className="w-full h-40 object-cover" />
+                  : <div className="h-40 bg-gradient-to-br from-primary/15 to-secondary/15 flex items-center justify-center"><BookOpen className="h-14 w-14 text-primary/20" /></div>
+                }
+                <CardContent className="p-4 space-y-2">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Badge variant="outline" className="text-xs">{roleLabels[course.role] ?? course.role}</Badge>
+                    <Badge variant="secondary" className="text-xs">{course.stage}</Badge>
+                  </div>
+                  <h3 className="font-bold leading-snug">{course.title || <span className="text-muted-foreground font-normal italic">Название курса</span>}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-3">{course.description || "Описание появится здесь"}</p>
+                  <div className="flex items-center justify-between pt-1 text-xs">
+                    <span className="text-muted-foreground">{course.category}</span>
+                    <span className="text-accent font-bold">+{course.xpReward} XP</span>
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="rounded-xl bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
+                <p className="font-medium">Подсказка</p>
+                <p>После создания курса добавьте модули через страницу управления курсами. Каждый модуль может быть видео, интерактивом или тестом.</p>
+              </div>
+            </div>
+          </div>
         </TabsContent>
 
         {/* ── New Quest tab ── */}
         <TabsContent value="quest" className="mt-5">
-          <Card className="rounded-2xl border-border/60">
-            <CardContent className="p-6">
-              <form onSubmit={submitQuest} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2 md:col-span-2"><Label>Название</Label><Input required value={quest.title} onChange={(e) => setQuest((s) => ({ ...s, title: e.target.value }))} className="rounded-xl" /></div>
-                <div className="space-y-2 md:col-span-2"><Label>Описание</Label><Textarea rows={3} required value={quest.description} onChange={(e) => setQuest((s) => ({ ...s, description: e.target.value }))} className="rounded-xl" /></div>
-                <div className="space-y-2"><Label>Тип</Label>
-                  <Select value={quest.type} onValueChange={(v) => setQuest((s) => ({ ...s, type: v }))}>
-                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="exploration">Исследование</SelectItem>
-                      <SelectItem value="creative">Творческое</SelectItem>
-                      <SelectItem value="research">Аналитика</SelectItem>
-                      <SelectItem value="practice">Практика</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2"><Label>Сложность</Label>
-                  <Select value={quest.difficulty} onValueChange={(v) => setQuest((s) => ({ ...s, difficulty: v }))}>
-                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="easy">Лёгкий</SelectItem>
-                      <SelectItem value="medium">Средний</SelectItem>
-                      <SelectItem value="hard">Сложный</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2 md:col-span-2"><Label>Место (Владивосток)</Label><Input required value={quest.location} onChange={(e) => setQuest((s) => ({ ...s, location: e.target.value }))} className="rounded-xl" placeholder="Например: Золотой мост" /></div>
-                <div className="space-y-2"><Label>XP награда</Label><Input type="number" value={quest.xpReward} onChange={(e) => setQuest((s) => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" /></div>
-                <Button type="submit" className="md:col-span-2 rounded-full" disabled={createQuest.isPending}>
-                  <Plus className="h-4 w-4 mr-1" /> {createQuest.isPending ? "Создание..." : "Создать квест"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <Card className="rounded-2xl border-border/60 lg:col-span-3">
+              <CardContent className="p-6">
+                <h2 className="font-bold text-lg mb-5 flex items-center gap-2">
+                  <Compass className="h-5 w-5 text-accent" /> Создать квест
+                </h2>
+                <form onSubmit={submitQuest} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Название квеста <span className="text-destructive">*</span></Label>
+                    <Input required value={quest.title} onChange={(e) => setQuest((s) => ({ ...s, title: e.target.value }))} placeholder="Введите название..." className="rounded-xl" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Описание задания <span className="text-destructive">*</span></Label>
+                    <Textarea rows={4} required value={quest.description} onChange={(e) => setQuest((s) => ({ ...s, description: e.target.value }))} placeholder="Опишите задание, что нужно сделать студенту..." className="rounded-xl resize-none" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label>Тип</Label>
+                      <Select value={quest.type} onValueChange={(v) => setQuest((s) => ({ ...s, type: v }))}>
+                        <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="exploration">🗺 Исследование</SelectItem>
+                          <SelectItem value="creative">🎨 Творческое</SelectItem>
+                          <SelectItem value="research">🔬 Аналитика</SelectItem>
+                          <SelectItem value="practice">⚙️ Практика</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Сложность</Label>
+                      <Select value={quest.difficulty} onValueChange={(v) => setQuest((s) => ({ ...s, difficulty: v }))}>
+                        <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="easy">🟢 Лёгкий</SelectItem>
+                          <SelectItem value="medium">🟡 Средний</SelectItem>
+                          <SelectItem value="hard">🔴 Сложный</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2 col-span-2">
+                      <Label>Место во Владивостоке <span className="text-destructive">*</span></Label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input required value={quest.location} onChange={(e) => setQuest((s) => ({ ...s, location: e.target.value }))} className="rounded-xl pl-9" placeholder="Напр.: Золотой мост, Маяк Эгершельд..." />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>XP награда</Label>
+                    <Input type="number" min={10} max={2000} value={quest.xpReward} onChange={(e) => setQuest((s) => ({ ...s, xpReward: Number(e.target.value) }))} className="rounded-xl" />
+                  </div>
+                  <ImageUploadField
+                    label="Изображение квеста"
+                    preview={questImagePreview}
+                    onFile={(file, prev) => { setQuestImageFile(file); setQuestImagePreview(prev); }}
+                  />
+                  <Button type="submit" className="w-full rounded-full gap-2" disabled={createQuest.isPending || questUploading}>
+                    {questUploading
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Загрузка изображения...</>
+                      : createQuest.isPending
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Создание квеста...</>
+                      : <><Plus className="h-4 w-4" /> Создать квест</>}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Preview */}
+            <div className="lg:col-span-2 space-y-3">
+              <p className="text-sm font-medium text-muted-foreground flex items-center gap-1.5"><Sparkles className="h-4 w-4" /> Предварительный вид</p>
+              <Card className="rounded-2xl border-border/60 overflow-hidden">
+                {questImagePreview
+                  ? <img src={questImagePreview} alt="" className="w-full h-40 object-cover" />
+                  : <div className="h-40 bg-gradient-to-br from-accent/10 to-orange-400/10 flex items-center justify-center"><Compass className="h-14 w-14 text-accent/20" /></div>
+                }
+                <CardContent className="p-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-xs capitalize">{quest.type}</Badge>
+                    <Badge variant={quest.difficulty === "hard" ? "destructive" : quest.difficulty === "medium" ? "secondary" : "outline"} className="text-xs">
+                      {quest.difficulty === "easy" ? "Лёгкий" : quest.difficulty === "medium" ? "Средний" : "Сложный"}
+                    </Badge>
+                  </div>
+                  <h3 className="font-bold leading-snug">{quest.title || <span className="text-muted-foreground font-normal italic">Название квеста</span>}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-3">{quest.description || "Описание задания появится здесь"}</p>
+                  <div className="flex items-center justify-between pt-1 text-xs">
+                    <span className="flex items-center gap-1 text-muted-foreground"><MapPin className="h-3 w-3" /> {quest.location || "Место не задано"}</span>
+                    <span className="text-accent font-bold">+{quest.xpReward} XP</span>
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="rounded-xl bg-muted/50 p-3 text-xs text-muted-foreground space-y-1">
+                <p className="font-medium">Подсказка</p>
+                <p>Студент загружает фото или текстовый ответ. Привязывайте квесты к реальным местам Владивостока для лучшей вовлечённости.</p>
+              </div>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
     </motion.div>

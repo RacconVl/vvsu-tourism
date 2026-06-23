@@ -100,6 +100,7 @@ router.post("/admin/quests", requireAdmin, async (req, res): Promise<void> => {
     difficulty: parsed.data.difficulty,
     locationName: parsed.data.location,
     xpReward: parsed.data.xpReward ?? 150,
+    imageUrl: parsed.data.imageUrl,
   }).returning();
   res.json(AdminCreateQuestResponse.parse({ ...q, createdAt: q.createdAt.toISOString() }));
 });

@@ -29,6 +29,9 @@ services:
       PORT: 8080
       DATABASE_URL: postgresql://vvsu:vvsupassword@db:5432/vvsu_tourism
       SESSION_SECRET: ${SESSION_SECRET:-change-this-secret-in-production}
+      UPLOADS_DIR: /app/uploads
+    volumes:
+      - uploads_data:/app/uploads
     ports:
       - "8080:8080"
 
@@ -44,3 +47,4 @@ services:
 
 volumes:
   pg_data:
+  uploads_data:

@@ -14,6 +14,7 @@ import adminRouter from "./admin";
 import messagesRouter from "./messages";
 import friendsRouter from "./friends";
 import notificationsRouter from "./notifications";
+import uploadsRouter from "./uploads";
 
 const router: IRouter = Router();
 
@@ -21,6 +22,7 @@ router.use(healthRouter);
 router.use(authRouter);
 router.use(profileRouter);
 router.use(adminRouter);
+router.use(uploadsRouter);
 router.use(coursesRouter);
 router.use(questsRouter);
 router.use(achievementsRouter);

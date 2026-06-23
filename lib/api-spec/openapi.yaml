@@ -1665,6 +1665,8 @@ components:
           type: integer
         timeEstimate:
           type: integer
+        imageUrl:
+          type: string
       required: [title, description, type, difficulty, location]
 
     Notification:

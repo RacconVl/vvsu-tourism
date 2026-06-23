@@ -1,6 +1,8 @@
 import express, { type Express } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
+import path from "path";
+import fs from "fs";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import { buildSessionMiddleware, loadUser } from "./lib/auth";
@@ -41,6 +43,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(buildSessionMiddleware());
 app.use(loadUser);
+
+const uploadsDir = process.env.UPLOADS_DIR ?? path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+app.use("/api/uploads", express.static(uploadsDir, { maxAge: "1d" }));
 
 app.use("/api", router);
 

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, useRef, type ReactNode } from "react";
 import type React from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -22,7 +22,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
-import { Award, BookOpen, Compass, Brain, Trophy, Settings, Activity, Sparkles, Anchor, MessageCircle, Star, Map as MapIcon, Lock } from "lucide-react";
+import { Award, BookOpen, Compass, Brain, Trophy, Settings, Activity, Sparkles, Anchor, MessageCircle, Star, Map as MapIcon, Lock, Camera, Loader2 } from "lucide-react";
 
 const roleLabels: Record<string, string> = {
   guide: "Экскурсовод",
@@ -64,6 +64,19 @@ export default function ProfilePage() {
     avatarUrl: user?.avatarUrl ?? "",
     studentRole: user?.studentRole ?? "guide",
   });
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string>("");
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  const handleAvatarFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarFile(file);
+    const reader = new FileReader();
+    reader.onload = (ev) => setAvatarPreview(ev.target?.result as string ?? "");
+    reader.readAsDataURL(file);
+  };
 
   if (isLoading || !profile) {
     return (
@@ -80,15 +93,34 @@ export default function ProfilePage() {
   const totalLevelXp = profile.currentLevelXp + profile.nextLevelXp;
   const xpPercent = Math.round((profile.currentLevelXp / Math.max(totalLevelXp, 1)) * 100);
 
-  const saveProfile = () => {
+  const saveProfile = async () => {
+    let avatarUrl = edit.avatarUrl;
+    if (avatarFile) {
+      setAvatarUploading(true);
+      try {
+        const fd = new FormData();
+        fd.append("file", avatarFile);
+        const res = await fetch("/api/uploads", { method: "POST", body: fd });
+        if (!res.ok) throw new Error("upload failed");
+        const json = await res.json() as { url: string };
+        avatarUrl = json.url;
+      } catch {
+        toast({ title: "Ошибка загрузки аватара", variant: "destructive" });
+        setAvatarUploading(false);
+        return;
+      }
+      setAvatarUploading(false);
+    }
     update.mutate(
-      { data: edit },
+      { data: { ...edit, avatarUrl } },
       {
         onSuccess: async () => {
           await Promise.all([
             qc.invalidateQueries({ queryKey: getGetMyProfileQueryKey() }),
             qc.invalidateQueries({ queryKey: getGetMeQueryKey() }),
           ]);
+          setAvatarFile(null);
+          setAvatarPreview("");
           toast({ title: "Профиль обновлён", description: "Изменения сохранены." });
         },
         onError: () => toast({ title: "Не удалось сохранить", variant: "destructive" }),
@@ -269,37 +301,110 @@ export default function ProfilePage() {
           </TabsContent>
 
           <TabsContent value="settings" className="mt-5">
-            <Card className="rounded-2xl border-border/60">
-              <CardContent className="p-6 space-y-4 max-w-2xl">
-                <div className="space-y-2">
-                  <Label>Имя</Label>
-                  <Input value={edit.name} onChange={(e) => setEdit((s) => ({ ...s, name: e.target.value }))} className="rounded-xl" data-testid="input-edit-name" />
-                </div>
-                <div className="space-y-2">
-                  <Label>О себе</Label>
-                  <Textarea rows={3} value={edit.bio} onChange={(e) => setEdit((s) => ({ ...s, bio: e.target.value }))} className="rounded-xl" data-testid="input-edit-bio" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Ссылка на аватар (URL)</Label>
-                  <Input value={edit.avatarUrl} onChange={(e) => setEdit((s) => ({ ...s, avatarUrl: e.target.value }))} className="rounded-xl" placeholder="https://..." data-testid="input-edit-avatar" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Специализация</Label>
-                  <Select value={edit.studentRole} onValueChange={(v) => setEdit((s) => ({ ...s, studentRole: v }))}>
-                    <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="guide">Экскурсовод</SelectItem>
-                      <SelectItem value="marketer">Маркетолог</SelectItem>
-                      <SelectItem value="designer">Дизайнер</SelectItem>
-                      <SelectItem value="operator">Туроператор</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button onClick={saveProfile} disabled={update.isPending} className="rounded-full" data-testid="button-save-profile">
-                  {update.isPending ? "Сохранение..." : "Сохранить"}
-                </Button>
-              </CardContent>
-            </Card>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <Card className="rounded-2xl border-border/60 lg:col-span-2">
+                <CardContent className="p-6 space-y-5">
+                  <h3 className="font-bold text-base flex items-center gap-2"><Settings className="h-4 w-4 text-muted-foreground" /> Настройки профиля</h3>
+
+                  {/* Avatar upload */}
+                  <div className="space-y-2">
+                    <Label>Фото профиля</Label>
+                    <div className="flex items-center gap-4">
+                      <div className="relative shrink-0">
+                        <Avatar className="h-20 w-20 ring-2 ring-border">
+                          <AvatarImage src={avatarPreview || edit.avatarUrl || undefined} />
+                          <AvatarFallback className="bg-accent text-white text-xl font-bold">
+                            {(edit.name || u.name).split(" ").map((s) => s[0]).join("").slice(0, 2)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <button
+                          type="button"
+                          onClick={() => avatarInputRef.current?.click()}
+                          className="absolute -bottom-1 -right-1 h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow hover:opacity-90 transition-opacity"
+                        >
+                          <Camera className="h-3.5 w-3.5" />
+                        </button>
+                        <input
+                          ref={avatarInputRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          data-testid="input-edit-avatar"
+                          onChange={handleAvatarFileChange}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <button
+                          type="button"
+                          onClick={() => avatarInputRef.current?.click()}
+                          className="text-sm font-medium text-primary hover:underline"
+                        >
+                          Загрузить новое фото
+                        </button>
+                        <p className="text-xs text-muted-foreground mt-0.5">PNG, JPG, WebP — до 10 МБ</p>
+                        {avatarFile && (
+                          <p className="text-xs text-accent mt-1 flex items-center gap-1">
+                            <span className="h-1.5 w-1.5 rounded-full bg-accent inline-block" />
+                            {avatarFile.name} — готово к сохранению
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Имя</Label>
+                    <Input value={edit.name} onChange={(e) => setEdit((s) => ({ ...s, name: e.target.value }))} className="rounded-xl" data-testid="input-edit-name" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>О себе</Label>
+                    <Textarea rows={3} value={edit.bio} onChange={(e) => setEdit((s) => ({ ...s, bio: e.target.value }))} className="rounded-xl resize-none" data-testid="input-edit-bio" placeholder="Расскажите немного о себе..." />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Специализация</Label>
+                    <Select value={edit.studentRole} onValueChange={(v) => setEdit((s) => ({ ...s, studentRole: v }))}>
+                      <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="guide">Экскурсовод</SelectItem>
+                        <SelectItem value="marketer">Маркетолог</SelectItem>
+                        <SelectItem value="designer">Дизайнер</SelectItem>
+                        <SelectItem value="operator">Туроператор</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <Button onClick={saveProfile} disabled={update.isPending || avatarUploading} className="rounded-full gap-2" data-testid="button-save-profile">
+                    {avatarUploading
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Загрузка фото...</>
+                      : update.isPending
+                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Сохранение...</>
+                      : "Сохранить изменения"}
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="rounded-2xl border-border/60 h-fit">
+                <CardContent className="p-5 space-y-3">
+                  <h3 className="font-semibold text-sm">Предварительный вид</h3>
+                  <div className="flex flex-col items-center text-center gap-3 py-4">
+                    <Avatar className="h-20 w-20 ring-2 ring-border">
+                      <AvatarImage src={avatarPreview || edit.avatarUrl || undefined} />
+                      <AvatarFallback className="bg-accent text-white text-xl font-bold">
+                        {(edit.name || u.name).split(" ").map((s) => s[0]).join("").slice(0, 2)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-bold">{edit.name || u.name}</p>
+                      <p className="text-sm text-muted-foreground">{u.email}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{roleLabels[edit.studentRole] ?? edit.studentRole}</p>
+                    </div>
+                    {edit.bio && <p className="text-xs text-muted-foreground px-2 line-clamp-3">{edit.bio}</p>}
+                  </div>
+                  <div className="text-xs text-center text-muted-foreground border-t pt-3">
+                    Так вас видят другие студенты
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
         </Tabs>
       </div>

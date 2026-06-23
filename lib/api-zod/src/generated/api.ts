@@ -821,6 +821,7 @@ export const AdminCreateQuestBody = zod.object({
   location: zod.string(),
   xpReward: zod.number().optional(),
   timeEstimate: zod.number().optional(),
+  imageUrl: zod.string().optional(),
 });
 
 export const AdminCreateQuestResponse = zod.object({
