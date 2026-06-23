@@ -864,6 +864,169 @@ export const AdminCreateQuizResponse = zod.object({
 });
 
 /**
+ * @summary Update a course
+ */
+export const AdminUpdateCourseParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminUpdateCourseBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  role: zod.string(),
+  stage: zod.string(),
+  category: zod.string(),
+  xpReward: zod.number().optional(),
+  imageUrl: zod.string().optional(),
+});
+
+export const AdminUpdateCourseResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  role: zod
+    .string()
+    .describe("Student role: guide, marketer, designer, operator"),
+  stage: zod.string().describe("Journey stage name (e.g. Порт отправления)"),
+  imageUrl: zod.string().nullish(),
+  totalModules: zod.number(),
+  completedModules: zod.number(),
+  xpReward: zod.number(),
+  isLocked: zod.boolean(),
+  category: zod.string(),
+});
+
+/**
+ * @summary Delete a course
+ */
+export const AdminDeleteCourseParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminDeleteCourseResponse = zod.object({
+  success: zod.boolean(),
+});
+
+/**
+ * @summary Add a module to a course
+ */
+export const AdminAddModuleParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminAddModuleBody = zod.object({
+  title: zod.string(),
+  type: zod.string().describe("video | interactive | animation | test"),
+  durationMinutes: zod.number(),
+  xpReward: zod.number(),
+});
+
+export const AdminAddModuleResponse = zod.object({
+  id: zod.number(),
+  courseId: zod.number(),
+  title: zod.string(),
+  type: zod.string().describe("video, interactive, animation, test"),
+  order: zod.number(),
+  isCompleted: zod.boolean(),
+  durationMinutes: zod.number(),
+  xpReward: zod.number(),
+});
+
+/**
+ * @summary Delete a module
+ */
+export const AdminDeleteModuleParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminDeleteModuleResponse = zod.object({
+  success: zod.boolean(),
+});
+
+/**
+ * @summary Update a quest
+ */
+export const AdminUpdateQuestParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminUpdateQuestBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  type: zod.string(),
+  difficulty: zod.string(),
+  location: zod.string(),
+  xpReward: zod.number().optional(),
+  timeEstimate: zod.number().optional(),
+  imageUrl: zod.string().optional(),
+});
+
+export const AdminUpdateQuestResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  description: zod.string(),
+  type: zod.string().describe("route, budget, marketing, design"),
+  difficulty: zod.string().describe("easy, medium, hard"),
+  xpReward: zod.number(),
+  isCompleted: zod.boolean(),
+  imageUrl: zod.string().nullish(),
+  locationName: zod.string(),
+});
+
+/**
+ * @summary Delete a quest
+ */
+export const AdminDeleteQuestParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminDeleteQuestResponse = zod.object({
+  success: zod.boolean(),
+});
+
+/**
+ * @summary Update a quiz
+ */
+export const AdminUpdateQuizParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminUpdateQuizBody = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  category: zod.string(),
+  difficulty: zod.string(),
+  xpReward: zod.number(),
+  estimatedMinutes: zod.number(),
+  imageUrl: zod.string().optional(),
+  questions: zod.array(
+    zod.object({
+      question: zod.string(),
+      options: zod.array(zod.string()),
+      correctIndex: zod.number(),
+      explanation: zod.string(),
+    }),
+  ),
+});
+
+export const AdminUpdateQuizResponse = zod.object({
+  id: zod.number(),
+  title: zod.string(),
+  createdAt: zod.string(),
+});
+
+/**
+ * @summary Delete a quiz
+ */
+export const AdminDeleteQuizParams = zod.object({
+  id: zod.coerce.number(),
+});
+
+export const AdminDeleteQuizResponse = zod.object({
+  success: zod.boolean(),
+});
+
+/**
  * @summary List all quizzes
  */
 export const ListQuizzesResponseItem = zod.object({

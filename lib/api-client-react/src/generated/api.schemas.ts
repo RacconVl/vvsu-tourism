@@ -531,6 +531,18 @@ export interface LeaderboardEntry {
   completedQuests: number;
 }
 
+export interface AdminDeleteResponse {
+  success: boolean;
+}
+
+export interface AdminCreateModuleBody {
+  title: string;
+  /** video | interactive | animation | test */
+  type: string;
+  durationMinutes: number;
+  xpReward: number;
+}
+
 export type AdminCreateNotification201 = {
   count: number;
 };

@@ -790,6 +790,176 @@ paths:
               schema:
                 $ref: "#/components/schemas/AdminCreateQuizResponse"
 
+  /admin/courses/{id}:
+    put:
+      operationId: adminUpdateCourse
+      tags: [admin]
+      summary: Update a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCourseRequest"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+    delete:
+      operationId: adminDeleteCourse
+      tags: [admin]
+      summary: Delete a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminDeleteResponse"
+
+  /admin/courses/{id}/modules:
+    post:
+      operationId: adminAddModule
+      tags: [admin]
+      summary: Add a module to a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCreateModuleBody"
+      responses:
+        "200":
+          description: Module created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Module"
+
+  /admin/modules/{id}:
+    delete:
+      operationId: adminDeleteModule
+      tags: [admin]
+      summary: Delete a module
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminDeleteResponse"
+
+  /admin/quests/{id}:
+    put:
+      operationId: adminUpdateQuest
+      tags: [admin]
+      summary: Update a quest
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateQuestRequest"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Quest"
+    delete:
+      operationId: adminDeleteQuest
+      tags: [admin]
+      summary: Delete a quest
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminDeleteResponse"
+
+  /admin/quizzes/{id}:
+    put:
+      operationId: adminUpdateQuiz
+      tags: [admin]
+      summary: Update a quiz
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminCreateQuizBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCreateQuizResponse"
+    delete:
+      operationId: adminDeleteQuiz
+      tags: [admin]
+      summary: Delete a quiz
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminDeleteResponse"
+
   /quizzes:
     get:
       operationId: listQuizzes
@@ -1891,3 +2061,24 @@ components:
         completedQuests:
           type: integer
       required: [rank, studentName, level, xp, role, completedQuests]
+
+    AdminDeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required: [success]
+
+    AdminCreateModuleBody:
+      type: object
+      properties:
+        title:
+          type: string
+        type:
+          type: string
+          description: "video | interactive | animation | test"
+        durationMinutes:
+          type: integer
+        xpReward:
+          type: integer
+      required: [title, type, durationMinutes, xpReward]

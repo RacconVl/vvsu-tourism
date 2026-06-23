@@ -8,6 +8,12 @@ import {
   useAdminCreateNotification, getAdminGetStatsQueryKey,
   useAdminCreateQuiz, getListQuizzesQueryKey,
   getListCoursesQueryKey, getListQuestsQueryKey,
+  useListCourses, useListQuests, useListQuizzes, useGetCourse,
+  useAdminUpdateCourse, useAdminDeleteCourse,
+  useAdminAddModule, useAdminDeleteModule,
+  useAdminUpdateQuest, useAdminDeleteQuest,
+  useAdminUpdateQuiz, useAdminDeleteQuiz,
+  getGetCourseQueryKey,
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,7 +35,8 @@ import {
   Anchor, MapPin, Waves, Brain, Activity, Settings, MessageCircle,
   Sparkles, Lock, Map as MapIcon, Zap, Users, BarChart3, Shield, Plus,
   Bell, Send, AlertTriangle, Megaphone, RefreshCw, Info,
-  X, Loader2, ImageIcon,
+  X, Loader2, ImageIcon, Pencil, Trash2, FolderOpen, Layers,
+  ChevronDown, ChevronUp, GraduationCap, FileQuestion,
 } from "lucide-react";
 
 function ImageUploadField({ preview, label, onFile }: {
@@ -123,6 +130,437 @@ const NOTIF_CATEGORIES = [
   { value: "info",      label: "Информация",        icon: <Info className="h-4 w-4 text-slate-500" />,           color: "border-slate-300 bg-slate-50 dark:bg-slate-900/30" },
 ];
 
+/* ─── CourseModuleManager ───────────────────────────────────── */
+function CourseModuleManager({ courseId }: { courseId: number }) {
+  const { data: course, isFetching } = useGetCourse(courseId);
+  const addModule = useAdminAddModule();
+  const deleteModule = useAdminDeleteModule();
+  const qc = useQueryClient();
+  const { toast } = useToast();
+  const emptyMod = () => ({ title: "", type: "video", durationMinutes: 15, xpReward: 25 });
+  const [newMod, setNewMod] = useState(emptyMod());
+
+  const handleAdd = () => {
+    if (!newMod.title.trim()) return;
+    addModule.mutate({ id: courseId, data: { title: newMod.title, type: newMod.type, durationMinutes: Number(newMod.durationMinutes), xpReward: Number(newMod.xpReward) } }, {
+      onSuccess: () => {
+        toast({ title: "Модуль добавлен" });
+        qc.invalidateQueries({ queryKey: getGetCourseQueryKey(courseId) });
+        qc.invalidateQueries({ queryKey: getListCoursesQueryKey() });
+        setNewMod(emptyMod());
+      },
+      onError: () => toast({ title: "Ошибка добавления", variant: "destructive" }),
+    });
+  };
+
+  const handleDelete = (moduleId: number) => {
+    if (!confirm("Удалить этот модуль?")) return;
+    deleteModule.mutate({ id: moduleId }, {
+      onSuccess: () => {
+        toast({ title: "Модуль удалён" });
+        qc.invalidateQueries({ queryKey: getGetCourseQueryKey(courseId) });
+        qc.invalidateQueries({ queryKey: getListCoursesQueryKey() });
+      },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const typeLabels: Record<string, string> = { video: "🎬 Видео", interactive: "⚙️ Интерактив", animation: "✨ Анимация", test: "📝 Тест" };
+
+  return (
+    <div className="mt-3 rounded-xl border border-border/60 bg-muted/20 p-4 space-y-3">
+      <p className="text-sm font-semibold flex items-center gap-2"><Layers className="h-4 w-4 text-accent" /> Модули курса</p>
+      {isFetching && <div className="text-xs text-muted-foreground">Загрузка...</div>}
+      {course?.modules && course.modules.length > 0 ? (
+        <div className="space-y-1.5">
+          {course.modules.map((m, i) => (
+            <div key={m.id} className="flex items-center gap-3 p-2.5 rounded-lg bg-background border border-border/40">
+              <span className="text-xs font-bold text-muted-foreground w-5 text-center">{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">{m.title}</p>
+                <p className="text-xs text-muted-foreground">{typeLabels[m.type] ?? m.type} · {m.durationMinutes} мин · +{m.xpReward} XP</p>
+              </div>
+              <button type="button" onClick={() => handleDelete(m.id)} className="h-7 w-7 rounded-lg flex items-center justify-center hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors">
+                <Trash2 className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        !isFetching && <p className="text-xs text-muted-foreground text-center py-2">Модулей нет</p>
+      )}
+      <div className="border-t border-border/40 pt-3 space-y-2">
+        <p className="text-xs font-medium text-muted-foreground">Добавить модуль</p>
+        <Input value={newMod.title} onChange={(e) => setNewMod((s) => ({ ...s, title: e.target.value }))} placeholder="Название модуля..." className="rounded-lg h-8 text-sm" />
+        <div className="grid grid-cols-3 gap-2">
+          <Select value={newMod.type} onValueChange={(v) => setNewMod((s) => ({ ...s, type: v }))}>
+            <SelectTrigger className="rounded-lg h-8 text-xs"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="video">🎬 Видео</SelectItem>
+              <SelectItem value="interactive">⚙️ Интерактив</SelectItem>
+              <SelectItem value="animation">✨ Анимация</SelectItem>
+              <SelectItem value="test">📝 Тест</SelectItem>
+            </SelectContent>
+          </Select>
+          <Input type="number" min={1} max={180} value={newMod.durationMinutes} onChange={(e) => setNewMod((s) => ({ ...s, durationMinutes: Number(e.target.value) }))} placeholder="Мин" className="rounded-lg h-8 text-sm" />
+          <Input type="number" min={0} max={500} value={newMod.xpReward} onChange={(e) => setNewMod((s) => ({ ...s, xpReward: Number(e.target.value) }))} placeholder="XP" className="rounded-lg h-8 text-sm" />
+        </div>
+        <Button type="button" variant="outline" size="sm" onClick={handleAdd} disabled={!newMod.title.trim() || addModule.isPending} className="w-full rounded-lg gap-1.5 text-xs h-8">
+          {addModule.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />} Добавить модуль
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── ContentManagement ─────────────────────────────────────── */
+function ContentManagement() {
+  const qc = useQueryClient();
+  const { toast } = useToast();
+  const { data: courses } = useListCourses();
+  const { data: quests } = useListQuests();
+  const { data: quizzes } = useListQuizzes();
+
+  const updateCourse = useAdminUpdateCourse();
+  const deleteCourse = useAdminDeleteCourse();
+  const updateQuest = useAdminUpdateQuest();
+  const deleteQuest = useAdminDeleteQuest();
+  const updateQuiz = useAdminUpdateQuiz();
+  const deleteQuiz = useAdminDeleteQuiz();
+
+  type QuizQF = { question: string; options: [string,string,string,string]; correctIndex: number; explanation: string };
+  const emptyQQ = (): QuizQF => ({ question: "", options: ["","","",""], correctIndex: 0, explanation: "" });
+
+  const [expandedCourse, setExpandedCourse] = useState<number | null>(null);
+  const [moduleCourse, setModuleCourse] = useState<number | null>(null);
+  const [editCourse, setEditCourse] = useState<Record<number, { title: string; description: string; role: string; stage: string; category: string; xpReward: number }>>({});
+
+  const [expandedQuest, setExpandedQuest] = useState<number | null>(null);
+  const [editQuest, setEditQuest] = useState<Record<number, { title: string; description: string; type: string; difficulty: string; location: string; xpReward: number }>>({});
+
+  const [expandedQuiz, setExpandedQuiz] = useState<number | null>(null);
+  const [editQuizMeta, setEditQuizMeta] = useState<Record<number, { title: string; description: string; category: string; difficulty: string; xpReward: number; estimatedMinutes: number }>>({});
+  const [editQuizQs, setEditQuizQs] = useState<Record<number, QuizQF[]>>({});
+
+  type CourseItem = { id: number; title: string; description: string; role: string; stage: string; category: string; xpReward: number; totalModules: number };
+  type QuestItem = { id: number; title: string; description: string; type: string; difficulty: string; xpReward: number; locationName: string };
+  type QuizItem = { id: number; title: string; description: string; category: string; difficulty: string; xpReward: number; estimatedMinutes: number; questionCount: number };
+
+  const toggleCourse = (c: CourseItem) => {
+    if (expandedCourse === c.id) { setExpandedCourse(null); return; }
+    setExpandedCourse(c.id);
+    setEditCourse((prev) => ({ ...prev, [c.id]: { title: c.title, description: c.description, role: c.role, stage: c.stage, category: c.category, xpReward: c.xpReward } }));
+  };
+
+  const toggleQuest = (q: QuestItem) => {
+    if (expandedQuest === q.id) { setExpandedQuest(null); return; }
+    setExpandedQuest(q.id);
+    setEditQuest((prev) => ({ ...prev, [q.id]: { title: q.title, description: q.description, type: q.type, difficulty: q.difficulty, location: q.locationName, xpReward: q.xpReward } }));
+  };
+
+  const toggleQuiz = (q: QuizItem) => {
+    if (expandedQuiz === q.id) { setExpandedQuiz(null); return; }
+    setExpandedQuiz(q.id);
+    setEditQuizMeta((prev) => ({ ...prev, [q.id]: { title: q.title, description: q.description, category: q.category, difficulty: q.difficulty, xpReward: q.xpReward, estimatedMinutes: q.estimatedMinutes } }));
+    setEditQuizQs((prev) => ({ ...prev, [q.id]: prev[q.id] ?? [emptyQQ()] }));
+  };
+
+  const saveCourse = (id: number) => {
+    const d = editCourse[id]; if (!d) return;
+    updateCourse.mutate({ id, data: d }, {
+      onSuccess: () => { toast({ title: "Курс обновлён" }); setExpandedCourse(null); qc.invalidateQueries({ queryKey: getListCoursesQueryKey() }); },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const handleDeleteCourse = (id: number, title: string) => {
+    if (!confirm(`Удалить курс «${title}»? Все модули тоже будут удалены.`)) return;
+    deleteCourse.mutate({ id }, {
+      onSuccess: () => { toast({ title: "Курс удалён" }); qc.invalidateQueries({ queryKey: getListCoursesQueryKey() }); qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() }); },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const saveQuest = (id: number) => {
+    const d = editQuest[id]; if (!d) return;
+    updateQuest.mutate({ id, data: d }, {
+      onSuccess: () => { toast({ title: "Квест обновлён" }); setExpandedQuest(null); qc.invalidateQueries({ queryKey: getListQuestsQueryKey() }); },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const handleDeleteQuest = (id: number, title: string) => {
+    if (!confirm(`Удалить квест «${title}»?`)) return;
+    deleteQuest.mutate({ id }, {
+      onSuccess: () => { toast({ title: "Квест удалён" }); qc.invalidateQueries({ queryKey: getListQuestsQueryKey() }); qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() }); },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const saveQuiz = (id: number) => {
+    const meta = editQuizMeta[id]; const qs = editQuizQs[id]; if (!meta || !qs) return;
+    const incomplete = qs.find((q) => !q.question.trim() || q.options.some((o) => !o.trim()));
+    if (incomplete) { toast({ title: "Заполните все вопросы", variant: "destructive" }); return; }
+    updateQuiz.mutate({ id, data: { ...meta, questions: qs.map((q) => ({ question: q.question, options: Array.from(q.options), correctIndex: q.correctIndex, explanation: q.explanation })) } }, {
+      onSuccess: () => { toast({ title: "Тест обновлён" }); setExpandedQuiz(null); qc.invalidateQueries({ queryKey: getListQuizzesQueryKey() }); },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const handleDeleteQuiz = (id: number, title: string) => {
+    if (!confirm(`Удалить тест «${title}»?`)) return;
+    deleteQuiz.mutate({ id }, {
+      onSuccess: () => { toast({ title: "Тест удалён" }); qc.invalidateQueries({ queryKey: getListQuizzesQueryKey() }); qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() }); },
+      onError: () => toast({ title: "Ошибка", variant: "destructive" }),
+    });
+  };
+
+  const difficultyLabel: Record<string, string> = { easy: "Лёгкий", medium: "Средний", hard: "Сложный" };
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+      <Tabs defaultValue="courses" className="w-full">
+        <TabsList className="grid grid-cols-3 max-w-sm rounded-2xl">
+          <TabsTrigger value="courses" className="flex items-center gap-1.5 text-xs"><BookOpen className="h-3.5 w-3.5" /> Курсы ({courses?.length ?? 0})</TabsTrigger>
+          <TabsTrigger value="quests" className="flex items-center gap-1.5 text-xs"><Compass className="h-3.5 w-3.5" /> Квесты ({quests?.length ?? 0})</TabsTrigger>
+          <TabsTrigger value="quizzes" className="flex items-center gap-1.5 text-xs"><Brain className="h-3.5 w-3.5" /> Тесты ({quizzes?.length ?? 0})</TabsTrigger>
+        </TabsList>
+
+        {/* ── Courses ── */}
+        <TabsContent value="courses" className="mt-4 space-y-2">
+          {!courses && <Skeleton className="h-24 rounded-xl" />}
+          {courses?.map((c) => (
+            <Card key={c.id} className="rounded-xl border-border/60 overflow-hidden">
+              <div className="flex items-center gap-3 p-4">
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(3,63,126,0.1)" }}>
+                  <BookOpen className="h-4 w-4" style={{ color: "#033F7E" }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm truncate">{c.title}</p>
+                  <p className="text-xs text-muted-foreground">{c.role} · {c.stage} · {c.totalModules} мод. · +{c.xpReward} XP</p>
+                </div>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button type="button" onClick={() => setModuleCourse(moduleCourse === c.id ? null : c.id)} className="h-8 px-2.5 rounded-lg text-xs font-medium border border-border/60 hover:bg-muted/50 flex items-center gap-1.5 transition-colors">
+                    <Layers className="h-3.5 w-3.5" /> Модули
+                  </button>
+                  <button type="button" onClick={() => toggleCourse(c)} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-muted/50 transition-colors">
+                    {expandedCourse === c.id ? <ChevronUp className="h-4 w-4" /> : <Pencil className="h-4 w-4 text-muted-foreground" />}
+                  </button>
+                  <button type="button" onClick={() => handleDeleteCourse(c.id, c.title)} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-destructive/10 transition-colors">
+                    <Trash2 className="h-4 w-4 text-muted-foreground hover:text-destructive" />
+                  </button>
+                </div>
+              </div>
+              {moduleCourse === c.id && <div className="px-4 pb-4"><CourseModuleManager courseId={c.id} /></div>}
+              {expandedCourse === c.id && editCourse[c.id] && (
+                <div className="border-t border-border/40 px-4 pb-4 pt-4 space-y-3 bg-muted/10">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Редактировать курс</p>
+                  <Input value={editCourse[c.id].title} onChange={(e) => setEditCourse((s) => ({ ...s, [c.id]: { ...s[c.id], title: e.target.value } }))} placeholder="Название" className="rounded-xl text-sm" />
+                  <Textarea rows={3} value={editCourse[c.id].description} onChange={(e) => setEditCourse((s) => ({ ...s, [c.id]: { ...s[c.id], description: e.target.value } }))} placeholder="Описание" className="rounded-xl text-sm resize-none" />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Select value={editCourse[c.id].role} onValueChange={(v) => setEditCourse((s) => ({ ...s, [c.id]: { ...s[c.id], role: v } }))}>
+                      <SelectTrigger className="rounded-xl h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="guide">Экскурсовод</SelectItem>
+                        <SelectItem value="marketer">Маркетолог</SelectItem>
+                        <SelectItem value="designer">Дизайнер</SelectItem>
+                        <SelectItem value="operator">Туроператор</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={editCourse[c.id].stage} onValueChange={(v) => setEditCourse((s) => ({ ...s, [c.id]: { ...s[c.id], stage: v } }))}>
+                      <SelectTrigger className="rounded-xl h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Бухта открытий">Бухта открытий</SelectItem>
+                        <SelectItem value="Мыс знаний">Мыс знаний</SelectItem>
+                        <SelectItem value="Архипелаг практики">Архипелаг практики</SelectItem>
+                        <SelectItem value="Пролив испытаний">Пролив испытаний</SelectItem>
+                        <SelectItem value="Тихоокеанский горизонт">Тихоокеанский горизонт</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Select value={editCourse[c.id].category} onValueChange={(v) => setEditCourse((s) => ({ ...s, [c.id]: { ...s[c.id], category: v } }))}>
+                      <SelectTrigger className="rounded-xl h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="tourism">Туризм</SelectItem>
+                        <SelectItem value="marketing">Маркетинг</SelectItem>
+                        <SelectItem value="design">Дизайн</SelectItem>
+                        <SelectItem value="ecology">Экология</SelectItem>
+                        <SelectItem value="gastronomy">Гастрономия</SelectItem>
+                        <SelectItem value="culture">Культура</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Input type="number" value={editCourse[c.id].xpReward} onChange={(e) => setEditCourse((s) => ({ ...s, [c.id]: { ...s[c.id], xpReward: Number(e.target.value) } }))} placeholder="XP" className="rounded-xl h-8 text-sm" />
+                  </div>
+                  <div className="flex gap-2 pt-1">
+                    <Button size="sm" onClick={() => saveCourse(c.id)} disabled={updateCourse.isPending} className="rounded-xl gap-1.5 flex-1">
+                      {updateCourse.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null} Сохранить
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => setExpandedCourse(null)} className="rounded-xl">Отмена</Button>
+                  </div>
+                </div>
+              )}
+            </Card>
+          ))}
+        </TabsContent>
+
+        {/* ── Quests ── */}
+        <TabsContent value="quests" className="mt-4 space-y-2">
+          {!quests && <Skeleton className="h-24 rounded-xl" />}
+          {quests?.map((q) => (
+            <Card key={q.id} className="rounded-xl border-border/60 overflow-hidden">
+              <div className="flex items-center gap-3 p-4">
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(235,113,36,0.1)" }}>
+                  <Compass className="h-4 w-4 text-accent" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm truncate">{q.title}</p>
+                  <p className="text-xs text-muted-foreground">{q.type} · {difficultyLabel[q.difficulty] ?? q.difficulty} · {q.locationName} · +{q.xpReward} XP</p>
+                </div>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button type="button" onClick={() => toggleQuest(q)} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-muted/50 transition-colors">
+                    {expandedQuest === q.id ? <ChevronUp className="h-4 w-4" /> : <Pencil className="h-4 w-4 text-muted-foreground" />}
+                  </button>
+                  <button type="button" onClick={() => handleDeleteQuest(q.id, q.title)} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-destructive/10 transition-colors">
+                    <Trash2 className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                </div>
+              </div>
+              {expandedQuest === q.id && editQuest[q.id] && (
+                <div className="border-t border-border/40 px-4 pb-4 pt-4 space-y-3 bg-muted/10">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Редактировать квест</p>
+                  <Input value={editQuest[q.id].title} onChange={(e) => setEditQuest((s) => ({ ...s, [q.id]: { ...s[q.id], title: e.target.value } }))} placeholder="Название" className="rounded-xl text-sm" />
+                  <Textarea rows={3} value={editQuest[q.id].description} onChange={(e) => setEditQuest((s) => ({ ...s, [q.id]: { ...s[q.id], description: e.target.value } }))} placeholder="Описание" className="rounded-xl text-sm resize-none" />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Select value={editQuest[q.id].type} onValueChange={(v) => setEditQuest((s) => ({ ...s, [q.id]: { ...s[q.id], type: v } }))}>
+                      <SelectTrigger className="rounded-xl h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="exploration">🗺 Исследование</SelectItem>
+                        <SelectItem value="creative">🎨 Творческое</SelectItem>
+                        <SelectItem value="research">🔬 Аналитика</SelectItem>
+                        <SelectItem value="practice">⚙️ Практика</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={editQuest[q.id].difficulty} onValueChange={(v) => setEditQuest((s) => ({ ...s, [q.id]: { ...s[q.id], difficulty: v } }))}>
+                      <SelectTrigger className="rounded-xl h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="easy">🟢 Лёгкий</SelectItem>
+                        <SelectItem value="medium">🟡 Средний</SelectItem>
+                        <SelectItem value="hard">🔴 Сложный</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input value={editQuest[q.id].location} onChange={(e) => setEditQuest((s) => ({ ...s, [q.id]: { ...s[q.id], location: e.target.value } }))} placeholder="Место" className="rounded-xl h-8 text-sm" />
+                    <Input type="number" value={editQuest[q.id].xpReward} onChange={(e) => setEditQuest((s) => ({ ...s, [q.id]: { ...s[q.id], xpReward: Number(e.target.value) } }))} placeholder="XP" className="rounded-xl h-8 text-sm" />
+                  </div>
+                  <div className="flex gap-2 pt-1">
+                    <Button size="sm" onClick={() => saveQuest(q.id)} disabled={updateQuest.isPending} className="rounded-xl gap-1.5 flex-1">Сохранить</Button>
+                    <Button size="sm" variant="outline" onClick={() => setExpandedQuest(null)} className="rounded-xl">Отмена</Button>
+                  </div>
+                </div>
+              )}
+            </Card>
+          ))}
+        </TabsContent>
+
+        {/* ── Quizzes ── */}
+        <TabsContent value="quizzes" className="mt-4 space-y-2">
+          {!quizzes && <Skeleton className="h-24 rounded-xl" />}
+          {quizzes?.map((q) => (
+            <Card key={q.id} className="rounded-xl border-border/60 overflow-hidden">
+              <div className="flex items-center gap-3 p-4">
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(124,58,237,0.1)" }}>
+                  <Brain className="h-4 w-4" style={{ color: "#7c3aed" }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-sm truncate">{q.title}</p>
+                  <p className="text-xs text-muted-foreground">{q.category} · {difficultyLabel[q.difficulty] ?? q.difficulty} · {q.questionCount} вопр. · +{q.xpReward} XP</p>
+                </div>
+                <div className="flex items-center gap-1 shrink-0">
+                  <button type="button" onClick={() => toggleQuiz(q)} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-muted/50 transition-colors">
+                    {expandedQuiz === q.id ? <ChevronUp className="h-4 w-4" /> : <Pencil className="h-4 w-4 text-muted-foreground" />}
+                  </button>
+                  <button type="button" onClick={() => handleDeleteQuiz(q.id, q.title)} className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-destructive/10 transition-colors">
+                    <Trash2 className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                </div>
+              </div>
+              {expandedQuiz === q.id && editQuizMeta[q.id] && (
+                <div className="border-t border-border/40 px-4 pb-4 pt-4 space-y-3 bg-muted/10">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Редактировать тест</p>
+                  <Input value={editQuizMeta[q.id].title} onChange={(e) => setEditQuizMeta((s) => ({ ...s, [q.id]: { ...s[q.id], title: e.target.value } }))} placeholder="Название" className="rounded-xl text-sm" />
+                  <Textarea rows={2} value={editQuizMeta[q.id].description} onChange={(e) => setEditQuizMeta((s) => ({ ...s, [q.id]: { ...s[q.id], description: e.target.value } }))} placeholder="Описание" className="rounded-xl text-sm resize-none" />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Select value={editQuizMeta[q.id].category} onValueChange={(v) => setEditQuizMeta((s) => ({ ...s, [q.id]: { ...s[q.id], category: v } }))}>
+                      <SelectTrigger className="rounded-xl h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="history">🏛 История</SelectItem>
+                        <SelectItem value="geography">🗺 География</SelectItem>
+                        <SelectItem value="nature">🌿 Природа</SelectItem>
+                        <SelectItem value="culture">🎭 Культура</SelectItem>
+                        <SelectItem value="tourism">✈️ Туризм</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={editQuizMeta[q.id].difficulty} onValueChange={(v) => setEditQuizMeta((s) => ({ ...s, [q.id]: { ...s[q.id], difficulty: v } }))}>
+                      <SelectTrigger className="rounded-xl h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="easy">🟢 Лёгкий</SelectItem>
+                        <SelectItem value="medium">🟡 Средний</SelectItem>
+                        <SelectItem value="hard">🔴 Сложный</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input type="number" value={editQuizMeta[q.id].xpReward} onChange={(e) => setEditQuizMeta((s) => ({ ...s, [q.id]: { ...s[q.id], xpReward: Number(e.target.value) } }))} placeholder="XP" className="rounded-xl h-8 text-sm" />
+                    <Input type="number" value={editQuizMeta[q.id].estimatedMinutes} onChange={(e) => setEditQuizMeta((s) => ({ ...s, [q.id]: { ...s[q.id], estimatedMinutes: Number(e.target.value) } }))} placeholder="Мин" className="rounded-xl h-8 text-sm" />
+                  </div>
+                  <div className="space-y-3 pt-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold">Вопросы ({editQuizQs[q.id]?.length ?? 0})</p>
+                      <Button type="button" variant="outline" size="sm" onClick={() => setEditQuizQs((s) => ({ ...s, [q.id]: [...(s[q.id] ?? []), emptyQQ()] }))} className="rounded-lg h-7 text-xs gap-1">
+                        <Plus className="h-3 w-3" /> Добавить
+                      </Button>
+                    </div>
+                    {editQuizQs[q.id]?.map((qq, qi) => (
+                      <div key={qi} className="rounded-lg border border-border/50 p-3 space-y-2 bg-background">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium text-muted-foreground">Вопрос {qi + 1}</span>
+                          {(editQuizQs[q.id]?.length ?? 0) > 1 && (
+                            <button type="button" onClick={() => setEditQuizQs((s) => ({ ...s, [q.id]: s[q.id].filter((_, i) => i !== qi) }))} className="h-5 w-5 rounded flex items-center justify-center hover:bg-destructive/10 text-muted-foreground hover:text-destructive">
+                              <X className="h-3 w-3" />
+                            </button>
+                          )}
+                        </div>
+                        <Textarea rows={2} value={qq.question} onChange={(e) => setEditQuizQs((s) => ({ ...s, [q.id]: s[q.id].map((item, i) => i === qi ? { ...item, question: e.target.value } : item) }))} placeholder="Текст вопроса..." className="rounded-lg text-xs resize-none" />
+                        <div className="grid grid-cols-2 gap-1.5">
+                          {qq.options.map((opt, oi) => (
+                            <div key={oi} className="flex items-center gap-1.5">
+                              <button type="button" onClick={() => setEditQuizQs((s) => ({ ...s, [q.id]: s[q.id].map((item, i) => i === qi ? { ...item, correctIndex: oi } : item) }))} className={`h-4 w-4 rounded-full border-2 shrink-0 transition-colors ${qq.correctIndex === oi ? "bg-green-500 border-green-500" : "border-border"}`} />
+                              <Input value={opt} onChange={(e) => setEditQuizQs((s) => ({ ...s, [q.id]: s[q.id].map((item, i) => { if (i !== qi) return item; const opts = [...item.options] as [string,string,string,string]; opts[oi] = e.target.value; return { ...item, options: opts }; }) }))} placeholder={`Вариант ${oi + 1}`} className="rounded-lg h-7 text-xs" />
+                            </div>
+                          ))}
+                        </div>
+                        <Input value={qq.explanation} onChange={(e) => setEditQuizQs((s) => ({ ...s, [q.id]: s[q.id].map((item, i) => i === qi ? { ...item, explanation: e.target.value } : item) }))} placeholder="Объяснение ответа..." className="rounded-lg h-7 text-xs" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 pt-1">
+                    <Button size="sm" onClick={() => saveQuiz(q.id)} disabled={updateQuiz.isPending} className="rounded-xl gap-1.5 flex-1">
+                      {updateQuiz.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null} Сохранить
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => setExpandedQuiz(null)} className="rounded-xl">Отмена</Button>
+                  </div>
+                </div>
+              )}
+            </Card>
+          ))}
+        </TabsContent>
+      </Tabs>
+    </motion.div>
+  );
+}
+
 function AdminOverview() {
   const { data: stats } = useAdminGetStats();
   const { data: users } = useAdminListUsers();
@@ -150,11 +588,21 @@ function AdminOverview() {
   };
 
   /* ── Course form state ── */
+  type CourseModuleForm = { title: string; type: string; durationMinutes: number; xpReward: number };
+  const emptyModule = (): CourseModuleForm => ({ title: "", type: "video", durationMinutes: 15, xpReward: 25 });
   const [course, setCourse] = useState({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
   const [courseImageFile, setCourseImageFile] = useState<File | null>(null);
   const [courseImagePreview, setCourseImagePreview] = useState("");
   const [courseUploading, setCourseUploading] = useState(false);
+  const [courseModules, setCourseModules] = useState<CourseModuleForm[]>([]);
   const createCourse = useAdminCreateCourse();
+  const addModuleForNew = useAdminAddModule();
+
+  const addCourseModule = () => setCourseModules((prev) => [...prev, emptyModule()]);
+  const removeCourseModule = (i: number) => setCourseModules((prev) => prev.filter((_, idx) => idx !== i));
+  const updateCourseModule = (i: number, updates: Partial<CourseModuleForm>) =>
+    setCourseModules((prev) => prev.map((m, idx) => idx === i ? { ...m, ...updates } : m));
+
   const submitCourse = async (e: React.FormEvent) => {
     e.preventDefault();
     let imageUrl = course.imageUrl;
@@ -165,12 +613,21 @@ function AdminOverview() {
       setCourseUploading(false);
     }
     createCourse.mutate({ data: { ...course, imageUrl, xpReward: Number(course.xpReward) } }, {
-      onSuccess: () => {
-        toast({ title: "Курс создан" });
+      onSuccess: async (created) => {
+        for (const m of courseModules) {
+          await new Promise<void>((resolve) => {
+            addModuleForNew.mutate({ id: created.id, data: { title: m.title, type: m.type, durationMinutes: Number(m.durationMinutes), xpReward: Number(m.xpReward) } }, {
+              onSuccess: () => resolve(),
+              onError: () => resolve(),
+            });
+          });
+        }
+        toast({ title: "Курс создан", description: courseModules.length > 0 ? `Добавлено ${courseModules.length} модулей` : undefined });
         qc.invalidateQueries({ queryKey: getAdminGetStatsQueryKey() });
         qc.invalidateQueries({ queryKey: getListCoursesQueryKey() });
         setCourse({ title: "", description: "", role: "guide", stage: "Бухта открытий", category: "tourism", xpReward: 100, imageUrl: "" });
         setCourseImageFile(null); setCourseImagePreview("");
+        setCourseModules([]);
       },
       onError: () => toast({ title: "Ошибка при создании курса", variant: "destructive" }),
     });
@@ -319,17 +776,26 @@ function AdminOverview() {
         </div>
       )}
 
-      {/* 5-tab admin panel */}
+      {/* 6-tab admin panel */}
       <Tabs defaultValue="users" className="w-full">
-        <TabsList className="grid grid-cols-5 max-w-2xl rounded-2xl">
-          <TabsTrigger value="users">Пользователи</TabsTrigger>
-          <TabsTrigger value="notify" className="flex items-center gap-1">
-            <Bell className="h-3.5 w-3.5" /> Уведомления
+        <TabsList className="grid grid-cols-6 max-w-3xl rounded-2xl">
+          <TabsTrigger value="users" className="flex items-center gap-1 text-xs">
+            <Users className="h-3.5 w-3.5" /> Польз.
           </TabsTrigger>
-          <TabsTrigger value="course">Новый курс</TabsTrigger>
-          <TabsTrigger value="quest">Новый квест</TabsTrigger>
-          <TabsTrigger value="quiz" className="flex items-center gap-1">
-            <Brain className="h-3.5 w-3.5" /> Новый тест
+          <TabsTrigger value="notify" className="flex items-center gap-1 text-xs">
+            <Bell className="h-3.5 w-3.5" /> Увед.
+          </TabsTrigger>
+          <TabsTrigger value="course" className="flex items-center gap-1 text-xs">
+            <BookOpen className="h-3.5 w-3.5" /> Курс
+          </TabsTrigger>
+          <TabsTrigger value="quest" className="flex items-center gap-1 text-xs">
+            <Compass className="h-3.5 w-3.5" /> Квест
+          </TabsTrigger>
+          <TabsTrigger value="quiz" className="flex items-center gap-1 text-xs">
+            <Brain className="h-3.5 w-3.5" /> Тест
+          </TabsTrigger>
+          <TabsTrigger value="content" className="flex items-center gap-1 text-xs">
+            <FolderOpen className="h-3.5 w-3.5" /> Контент
           </TabsTrigger>
         </TabsList>
 
@@ -534,12 +1000,49 @@ function AdminOverview() {
                     preview={courseImagePreview}
                     onFile={(file, prev) => { setCourseImageFile(file); setCourseImagePreview(prev); }}
                   />
+                  {/* Modules builder */}
+                  <div className="space-y-3 pt-1">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-semibold flex items-center gap-2"><Layers className="h-4 w-4 text-accent" /> Модули ({courseModules.length})</Label>
+                      <Button type="button" variant="outline" size="sm" onClick={addCourseModule} className="rounded-xl gap-1.5 text-xs">
+                        <Plus className="h-3.5 w-3.5" /> Добавить
+                      </Button>
+                    </div>
+                    {courseModules.length === 0 && (
+                      <p className="text-xs text-muted-foreground text-center py-3 border border-dashed border-border/60 rounded-xl">Модули можно добавить сейчас или позже через вкладку «Контент»</p>
+                    )}
+                    {courseModules.map((m, i) => (
+                      <div key={i} className="rounded-xl border border-border/60 p-3 space-y-2 bg-muted/20">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-semibold text-muted-foreground">Модуль {i + 1}</span>
+                          <button type="button" onClick={() => removeCourseModule(i)} className="h-6 w-6 rounded-full bg-destructive/10 text-destructive flex items-center justify-center hover:bg-destructive/20 transition-colors">
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                        <Input value={m.title} onChange={(e) => updateCourseModule(i, { title: e.target.value })} placeholder="Название модуля..." className="rounded-lg text-sm h-8" />
+                        <div className="grid grid-cols-3 gap-2">
+                          <Select value={m.type} onValueChange={(v) => updateCourseModule(i, { type: v })}>
+                            <SelectTrigger className="rounded-lg h-8 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="video">🎬 Видео</SelectItem>
+                              <SelectItem value="interactive">⚙️ Интерактив</SelectItem>
+                              <SelectItem value="animation">✨ Анимация</SelectItem>
+                              <SelectItem value="test">📝 Тест</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Input type="number" min={1} max={180} value={m.durationMinutes} onChange={(e) => updateCourseModule(i, { durationMinutes: Number(e.target.value) })} placeholder="Мин" className="rounded-lg h-8 text-sm" />
+                          <Input type="number" min={0} max={500} value={m.xpReward} onChange={(e) => updateCourseModule(i, { xpReward: Number(e.target.value) })} placeholder="XP" className="rounded-lg h-8 text-sm" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                   <Button type="submit" className="w-full rounded-full gap-2" disabled={createCourse.isPending || courseUploading}>
                     {courseUploading
                       ? <><Loader2 className="h-4 w-4 animate-spin" /> Загрузка изображения...</>
                       : createCourse.isPending
                       ? <><Loader2 className="h-4 w-4 animate-spin" /> Создание курса...</>
-                      : <><Plus className="h-4 w-4" /> Создать курс</>}
+                      : <><Plus className="h-4 w-4" /> Создать курс{courseModules.length > 0 ? ` + ${courseModules.length} модулей` : ""}</>}
                   </Button>
                 </form>
               </CardContent>
@@ -833,6 +1336,11 @@ function AdminOverview() {
               </div>
             </div>
           </div>
+        </TabsContent>
+
+        {/* ── Content Management tab ── */}
+        <TabsContent value="content" className="mt-5">
+          <ContentManagement />
         </TabsContent>
       </Tabs>
     </motion.div>

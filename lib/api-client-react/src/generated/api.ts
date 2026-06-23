@@ -18,9 +18,11 @@ import type {
 
 import type {
   Achievement,
+  AdminCreateModuleBody,
   AdminCreateNotification201,
   AdminCreateQuizBody,
   AdminCreateQuizResponse,
+  AdminDeleteResponse,
   AdminStats,
   AdminUserRow,
   AuthUser,
@@ -47,6 +49,7 @@ import type {
   MapPoint,
   MeResponse,
   MessageUser,
+  Module,
   ModuleCompletion,
   Notification,
   OkResponse,
@@ -3762,6 +3765,690 @@ export const useAdminCreateQuiz = <
   TContext
 > => {
   return useMutation(getAdminCreateQuizMutationOptions(options));
+};
+
+/**
+ * @summary Update a course
+ */
+export const getAdminUpdateCourseUrl = (id: number) => {
+  return `/api/admin/courses/${id}`;
+};
+
+export const adminUpdateCourse = async (
+  id: number,
+  createCourseRequest: CreateCourseRequest,
+  options?: RequestInit,
+): Promise<Course> => {
+  return customFetch<Course>(getAdminUpdateCourseUrl(id), {
+    ...options,
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(createCourseRequest),
+  });
+};
+
+export const getAdminUpdateCourseMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminUpdateCourse>>,
+    TError,
+    { id: number; data: BodyType<CreateCourseRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminUpdateCourse>>,
+  TError,
+  { id: number; data: BodyType<CreateCourseRequest> },
+  TContext
+> => {
+  const mutationKey = ["adminUpdateCourse"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminUpdateCourse>>,
+    { id: number; data: BodyType<CreateCourseRequest> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return adminUpdateCourse(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminUpdateCourseMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminUpdateCourse>>
+>;
+export type AdminUpdateCourseMutationBody = BodyType<CreateCourseRequest>;
+export type AdminUpdateCourseMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Update a course
+ */
+export const useAdminUpdateCourse = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminUpdateCourse>>,
+    TError,
+    { id: number; data: BodyType<CreateCourseRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminUpdateCourse>>,
+  TError,
+  { id: number; data: BodyType<CreateCourseRequest> },
+  TContext
+> => {
+  return useMutation(getAdminUpdateCourseMutationOptions(options));
+};
+
+/**
+ * @summary Delete a course
+ */
+export const getAdminDeleteCourseUrl = (id: number) => {
+  return `/api/admin/courses/${id}`;
+};
+
+export const adminDeleteCourse = async (
+  id: number,
+  options?: RequestInit,
+): Promise<AdminDeleteResponse> => {
+  return customFetch<AdminDeleteResponse>(getAdminDeleteCourseUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getAdminDeleteCourseMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteCourse>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminDeleteCourse>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["adminDeleteCourse"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminDeleteCourse>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return adminDeleteCourse(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminDeleteCourseMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminDeleteCourse>>
+>;
+
+export type AdminDeleteCourseMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Delete a course
+ */
+export const useAdminDeleteCourse = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteCourse>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminDeleteCourse>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getAdminDeleteCourseMutationOptions(options));
+};
+
+/**
+ * @summary Add a module to a course
+ */
+export const getAdminAddModuleUrl = (id: number) => {
+  return `/api/admin/courses/${id}/modules`;
+};
+
+export const adminAddModule = async (
+  id: number,
+  adminCreateModuleBody: AdminCreateModuleBody,
+  options?: RequestInit,
+): Promise<Module> => {
+  return customFetch<Module>(getAdminAddModuleUrl(id), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(adminCreateModuleBody),
+  });
+};
+
+export const getAdminAddModuleMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminAddModule>>,
+    TError,
+    { id: number; data: BodyType<AdminCreateModuleBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminAddModule>>,
+  TError,
+  { id: number; data: BodyType<AdminCreateModuleBody> },
+  TContext
+> => {
+  const mutationKey = ["adminAddModule"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminAddModule>>,
+    { id: number; data: BodyType<AdminCreateModuleBody> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return adminAddModule(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminAddModuleMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminAddModule>>
+>;
+export type AdminAddModuleMutationBody = BodyType<AdminCreateModuleBody>;
+export type AdminAddModuleMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Add a module to a course
+ */
+export const useAdminAddModule = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminAddModule>>,
+    TError,
+    { id: number; data: BodyType<AdminCreateModuleBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminAddModule>>,
+  TError,
+  { id: number; data: BodyType<AdminCreateModuleBody> },
+  TContext
+> => {
+  return useMutation(getAdminAddModuleMutationOptions(options));
+};
+
+/**
+ * @summary Delete a module
+ */
+export const getAdminDeleteModuleUrl = (id: number) => {
+  return `/api/admin/modules/${id}`;
+};
+
+export const adminDeleteModule = async (
+  id: number,
+  options?: RequestInit,
+): Promise<AdminDeleteResponse> => {
+  return customFetch<AdminDeleteResponse>(getAdminDeleteModuleUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getAdminDeleteModuleMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteModule>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminDeleteModule>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["adminDeleteModule"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminDeleteModule>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return adminDeleteModule(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminDeleteModuleMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminDeleteModule>>
+>;
+
+export type AdminDeleteModuleMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Delete a module
+ */
+export const useAdminDeleteModule = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteModule>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminDeleteModule>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getAdminDeleteModuleMutationOptions(options));
+};
+
+/**
+ * @summary Update a quest
+ */
+export const getAdminUpdateQuestUrl = (id: number) => {
+  return `/api/admin/quests/${id}`;
+};
+
+export const adminUpdateQuest = async (
+  id: number,
+  createQuestRequest: CreateQuestRequest,
+  options?: RequestInit,
+): Promise<Quest> => {
+  return customFetch<Quest>(getAdminUpdateQuestUrl(id), {
+    ...options,
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(createQuestRequest),
+  });
+};
+
+export const getAdminUpdateQuestMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminUpdateQuest>>,
+    TError,
+    { id: number; data: BodyType<CreateQuestRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminUpdateQuest>>,
+  TError,
+  { id: number; data: BodyType<CreateQuestRequest> },
+  TContext
+> => {
+  const mutationKey = ["adminUpdateQuest"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminUpdateQuest>>,
+    { id: number; data: BodyType<CreateQuestRequest> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return adminUpdateQuest(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminUpdateQuestMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminUpdateQuest>>
+>;
+export type AdminUpdateQuestMutationBody = BodyType<CreateQuestRequest>;
+export type AdminUpdateQuestMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Update a quest
+ */
+export const useAdminUpdateQuest = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminUpdateQuest>>,
+    TError,
+    { id: number; data: BodyType<CreateQuestRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminUpdateQuest>>,
+  TError,
+  { id: number; data: BodyType<CreateQuestRequest> },
+  TContext
+> => {
+  return useMutation(getAdminUpdateQuestMutationOptions(options));
+};
+
+/**
+ * @summary Delete a quest
+ */
+export const getAdminDeleteQuestUrl = (id: number) => {
+  return `/api/admin/quests/${id}`;
+};
+
+export const adminDeleteQuest = async (
+  id: number,
+  options?: RequestInit,
+): Promise<AdminDeleteResponse> => {
+  return customFetch<AdminDeleteResponse>(getAdminDeleteQuestUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getAdminDeleteQuestMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteQuest>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminDeleteQuest>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["adminDeleteQuest"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminDeleteQuest>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return adminDeleteQuest(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminDeleteQuestMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminDeleteQuest>>
+>;
+
+export type AdminDeleteQuestMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Delete a quest
+ */
+export const useAdminDeleteQuest = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteQuest>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminDeleteQuest>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getAdminDeleteQuestMutationOptions(options));
+};
+
+/**
+ * @summary Update a quiz
+ */
+export const getAdminUpdateQuizUrl = (id: number) => {
+  return `/api/admin/quizzes/${id}`;
+};
+
+export const adminUpdateQuiz = async (
+  id: number,
+  adminCreateQuizBody: AdminCreateQuizBody,
+  options?: RequestInit,
+): Promise<AdminCreateQuizResponse> => {
+  return customFetch<AdminCreateQuizResponse>(getAdminUpdateQuizUrl(id), {
+    ...options,
+    method: "PUT",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(adminCreateQuizBody),
+  });
+};
+
+export const getAdminUpdateQuizMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminUpdateQuiz>>,
+    TError,
+    { id: number; data: BodyType<AdminCreateQuizBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminUpdateQuiz>>,
+  TError,
+  { id: number; data: BodyType<AdminCreateQuizBody> },
+  TContext
+> => {
+  const mutationKey = ["adminUpdateQuiz"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminUpdateQuiz>>,
+    { id: number; data: BodyType<AdminCreateQuizBody> }
+  > = (props) => {
+    const { id, data } = props ?? {};
+
+    return adminUpdateQuiz(id, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminUpdateQuizMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminUpdateQuiz>>
+>;
+export type AdminUpdateQuizMutationBody = BodyType<AdminCreateQuizBody>;
+export type AdminUpdateQuizMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Update a quiz
+ */
+export const useAdminUpdateQuiz = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminUpdateQuiz>>,
+    TError,
+    { id: number; data: BodyType<AdminCreateQuizBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminUpdateQuiz>>,
+  TError,
+  { id: number; data: BodyType<AdminCreateQuizBody> },
+  TContext
+> => {
+  return useMutation(getAdminUpdateQuizMutationOptions(options));
+};
+
+/**
+ * @summary Delete a quiz
+ */
+export const getAdminDeleteQuizUrl = (id: number) => {
+  return `/api/admin/quizzes/${id}`;
+};
+
+export const adminDeleteQuiz = async (
+  id: number,
+  options?: RequestInit,
+): Promise<AdminDeleteResponse> => {
+  return customFetch<AdminDeleteResponse>(getAdminDeleteQuizUrl(id), {
+    ...options,
+    method: "DELETE",
+  });
+};
+
+export const getAdminDeleteQuizMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteQuiz>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof adminDeleteQuiz>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  const mutationKey = ["adminDeleteQuiz"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof adminDeleteQuiz>>,
+    { id: number }
+  > = (props) => {
+    const { id } = props ?? {};
+
+    return adminDeleteQuiz(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AdminDeleteQuizMutationResult = NonNullable<
+  Awaited<ReturnType<typeof adminDeleteQuiz>>
+>;
+
+export type AdminDeleteQuizMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Delete a quiz
+ */
+export const useAdminDeleteQuiz = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof adminDeleteQuiz>>,
+    TError,
+    { id: number },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof adminDeleteQuiz>>,
+  TError,
+  { id: number },
+  TContext
+> => {
+  return useMutation(getAdminDeleteQuizMutationOptions(options));
 };
 
 /**
