@@ -25,7 +25,7 @@ export const ListCoursesResponseItem = zod.object({
     .string()
     .describe("Student role: guide, marketer, designer, operator"),
   stage: zod.string().describe("Journey stage name (e.g. Порт отправления)"),
-  imageUrl: zod.string().optional(),
+  imageUrl: zod.string().nullish(),
   totalModules: zod.number(),
   completedModules: zod.number(),
   xpReward: zod.number(),
@@ -50,7 +50,7 @@ export const GetCourseResponse = zod
       .string()
       .describe("Student role: guide, marketer, designer, operator"),
     stage: zod.string().describe("Journey stage name (e.g. Порт отправления)"),
-    imageUrl: zod.string().optional(),
+    imageUrl: zod.string().nullish(),
     totalModules: zod.number(),
     completedModules: zod.number(),
     xpReward: zod.number(),
@@ -109,7 +109,7 @@ export const ListQuestsResponseItem = zod.object({
   difficulty: zod.string().describe("easy, medium, hard"),
   xpReward: zod.number(),
   isCompleted: zod.boolean(),
-  imageUrl: zod.string().optional(),
+  imageUrl: zod.string().nullish(),
   locationName: zod.string(),
 });
 export const ListQuestsResponse = zod.array(ListQuestsResponseItem);
@@ -129,7 +129,7 @@ export const GetQuestResponse = zod.object({
   difficulty: zod.string().describe("easy, medium, hard"),
   xpReward: zod.number(),
   isCompleted: zod.boolean(),
-  imageUrl: zod.string().optional(),
+  imageUrl: zod.string().nullish(),
   locationName: zod.string(),
 });
 
@@ -802,7 +802,7 @@ export const AdminCreateCourseResponse = zod.object({
     .string()
     .describe("Student role: guide, marketer, designer, operator"),
   stage: zod.string().describe("Journey stage name (e.g. Порт отправления)"),
-  imageUrl: zod.string().optional(),
+  imageUrl: zod.string().nullish(),
   totalModules: zod.number(),
   completedModules: zod.number(),
   xpReward: zod.number(),
@@ -832,7 +832,7 @@ export const AdminCreateQuestResponse = zod.object({
   difficulty: zod.string().describe("easy, medium, hard"),
   xpReward: zod.number(),
   isCompleted: zod.boolean(),
-  imageUrl: zod.string().optional(),
+  imageUrl: zod.string().nullish(),
   locationName: zod.string(),
 });
 

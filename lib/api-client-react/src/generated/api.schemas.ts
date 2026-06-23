@@ -17,7 +17,7 @@ export interface Course {
   role: string;
   /** Journey stage name (e.g. Порт отправления) */
   stage: string;
-  imageUrl?: string;
+  imageUrl?: string | null;
   totalModules: number;
   completedModules: number;
   xpReward: number;
@@ -69,7 +69,7 @@ export interface Quest {
   difficulty: string;
   xpReward: number;
   isCompleted: boolean;
-  imageUrl?: string;
+  imageUrl?: string | null;
   locationName: string;
 }
 

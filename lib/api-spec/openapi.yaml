@@ -890,6 +890,7 @@ components:
           description: "Journey stage name (e.g. Порт отправления)"
         imageUrl:
           type: string
+          nullable: true
         totalModules:
           type: integer
         completedModules:
@@ -969,6 +970,7 @@ components:
           type: boolean
         imageUrl:
           type: string
+          nullable: true
         locationName:
           type: string
       required: [id, title, description, type, difficulty, xpReward, isCompleted, locationName]
