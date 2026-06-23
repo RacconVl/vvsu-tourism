@@ -1,0 +1,659 @@
+root@RacconQ:~# sudo journalctl -u cloudflared -f
+Jun 23 12:11:36 RacconQ cloudflared[42331]: 2026-06-23T02:11:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:11:37 RacconQ cloudflared[42331]: 2026-06-23T02:11:37Z INF Registered tunnel connection connIndex=1 connection=583e672f-11f5-4fdc-add0-283db94170d7 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 12:11:37 RacconQ cloudflared[42331]: 2026-06-23T02:11:37Z INF Registered tunnel connection connIndex=3 connection=b83f2c03-982e-4036-a2ce-c403b588327c event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 12:14:31 RacconQ cloudflared[42331]: 2026-06-23T02:14:31Z INF Lost connection with the edge connIndex=3
+Jun 23 12:14:31 RacconQ cloudflared[42331]: 2026-06-23T02:14:31Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:14:31 RacconQ cloudflared[42331]: 2026-06-23T02:14:31Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:14:31 RacconQ cloudflared[42331]: 2026-06-23T02:14:31Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:14:32 RacconQ cloudflared[42331]: 2026-06-23T02:14:32Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 12:14:33 RacconQ cloudflared[42331]: 2026-06-23T02:14:33Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:14:34 RacconQ cloudflared[42331]: 2026-06-23T02:14:34Z INF Registered tunnel connection connIndex=3 connection=0df74bd8-4f60-44b1-a29d-66d7c7c94710 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 12:17:28 RacconQ cloudflared[42331]: 2026-06-23T02:17:28Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:17:28 RacconQ cloudflared[42331]: 2026-06-23T02:17:28Z WRN Serve tunnel error error="Error shutting down control stream: client disconnected" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:17:28 RacconQ cloudflared[42331]: 2026-06-23T02:17:28Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:17:29 RacconQ cloudflared[42331]: 2026-06-23T02:17:29Z WRN Connection terminated error="Error shutting down control stream: client disconnected" connIndex=3
+Jun 23 12:17:30 RacconQ cloudflared[42331]: 2026-06-23T02:17:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:17:31 RacconQ cloudflared[42331]: 2026-06-23T02:17:31Z INF Registered tunnel connection connIndex=3 connection=cb9f65b1-158b-420e-9da6-762c86e553df event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 12:22:41 RacconQ cloudflared[42331]: 2026-06-23T02:22:41Z INF Lost connection with the edge connIndex=0
+Jun 23 12:22:41 RacconQ cloudflared[42331]: 2026-06-23T02:22:41Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:22:41 RacconQ cloudflared[42331]: 2026-06-23T02:22:41Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:22:41 RacconQ cloudflared[42331]: 2026-06-23T02:22:41Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:22:42 RacconQ cloudflared[42331]: 2026-06-23T02:22:42Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 12:22:46 RacconQ cloudflared[42331]: 2026-06-23T02:22:46Z INF Lost connection with the edge connIndex=2
+Jun 23 12:22:46 RacconQ cloudflared[42331]: 2026-06-23T02:22:46Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:22:46 RacconQ cloudflared[42331]: 2026-06-23T02:22:46Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:22:46 RacconQ cloudflared[42331]: 2026-06-23T02:22:46Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:22:46 RacconQ cloudflared[42331]: 2026-06-23T02:22:46Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 12:22:57 RacconQ cloudflared[42331]: 2026-06-23T02:22:57Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:22:57 RacconQ cloudflared[42331]: 2026-06-23T02:22:57Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:22:58 RacconQ cloudflared[42331]: 2026-06-23T02:22:58Z INF Registered tunnel connection connIndex=0 connection=97d6b87a-5795-4be8-9d91-36b1a314ca59 event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 12:22:58 RacconQ cloudflared[42331]: 2026-06-23T02:22:58Z INF Registered tunnel connection connIndex=2 connection=536103de-9fe7-4649-afc0-7c7186bd4eb3 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 12:29:05 RacconQ cloudflared[42331]: 2026-06-23T02:29:05Z INF Lost connection with the edge connIndex=1
+Jun 23 12:29:05 RacconQ cloudflared[42331]: 2026-06-23T02:29:05Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:29:05 RacconQ cloudflared[42331]: 2026-06-23T02:29:05Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:29:05 RacconQ cloudflared[42331]: 2026-06-23T02:29:05Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:29:05 RacconQ cloudflared[42331]: 2026-06-23T02:29:05Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 12:29:11 RacconQ cloudflared[42331]: 2026-06-23T02:29:11Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:29:12 RacconQ cloudflared[42331]: 2026-06-23T02:29:12Z INF Registered tunnel connection connIndex=1 connection=e37ee214-93e0-498e-b0be-acf40071f5c6 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 12:34:52 RacconQ cloudflared[42331]: 2026-06-23T02:34:52Z INF Lost connection with the edge connIndex=3
+Jun 23 12:34:52 RacconQ cloudflared[42331]: 2026-06-23T02:34:52Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:34:52 RacconQ cloudflared[42331]: 2026-06-23T02:34:52Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:34:52 RacconQ cloudflared[42331]: 2026-06-23T02:34:52Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:34:53 RacconQ cloudflared[42331]: 2026-06-23T02:34:53Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 12:35:03 RacconQ cloudflared[42331]: 2026-06-23T02:35:03Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:35:04 RacconQ cloudflared[42331]: 2026-06-23T02:35:04Z INF Registered tunnel connection connIndex=3 connection=1e03752b-c06b-4998-b644-bc63577a5271 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 12:37:56 RacconQ cloudflared[42331]: 2026-06-23T02:37:56Z INF Lost connection with the edge connIndex=3
+Jun 23 12:37:56 RacconQ cloudflared[42331]: 2026-06-23T02:37:56Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:37:56 RacconQ cloudflared[42331]: 2026-06-23T02:37:56Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:37:56 RacconQ cloudflared[42331]: 2026-06-23T02:37:56Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:37:56 RacconQ cloudflared[42331]: 2026-06-23T02:37:56Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 12:37:58 RacconQ cloudflared[42331]: 2026-06-23T02:37:58Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:37:58 RacconQ cloudflared[42331]: 2026-06-23T02:37:58Z INF Registered tunnel connection connIndex=3 connection=cdd9af38-675f-4954-8008-42a923b1f4d7 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 12:40:15 RacconQ cloudflared[42331]: 2026-06-23T02:40:15Z INF Lost connection with the edge connIndex=0
+Jun 23 12:40:15 RacconQ cloudflared[42331]: 2026-06-23T02:40:15Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:40:15 RacconQ cloudflared[42331]: 2026-06-23T02:40:15Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:40:15 RacconQ cloudflared[42331]: 2026-06-23T02:40:15Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:40:15 RacconQ cloudflared[42331]: 2026-06-23T02:40:15Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 12:40:20 RacconQ cloudflared[42331]: 2026-06-23T02:40:20Z INF Lost connection with the edge connIndex=2
+Jun 23 12:40:20 RacconQ cloudflared[42331]: 2026-06-23T02:40:20Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:40:20 RacconQ cloudflared[42331]: 2026-06-23T02:40:20Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:40:20 RacconQ cloudflared[42331]: 2026-06-23T02:40:20Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:40:21 RacconQ cloudflared[42331]: 2026-06-23T02:40:21Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 12:40:30 RacconQ cloudflared[42331]: 2026-06-23T02:40:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:40:30 RacconQ cloudflared[42331]: 2026-06-23T02:40:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:40:31 RacconQ cloudflared[42331]: 2026-06-23T02:40:31Z INF Registered tunnel connection connIndex=2 connection=bdcb3ffe-7c1c-4743-8bea-51ca4ffcd0b5 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 12:40:31 RacconQ cloudflared[42331]: 2026-06-23T02:40:31Z INF Registered tunnel connection connIndex=0 connection=c1f2a4e1-0134-4089-ace7-1db9a5088cab event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 12:43:13 RacconQ cloudflared[42331]: 2026-06-23T02:43:13Z INF Lost connection with the edge connIndex=0
+Jun 23 12:43:13 RacconQ cloudflared[42331]: 2026-06-23T02:43:13Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:43:13 RacconQ cloudflared[42331]: 2026-06-23T02:43:13Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:43:13 RacconQ cloudflared[42331]: 2026-06-23T02:43:13Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:43:13 RacconQ cloudflared[42331]: 2026-06-23T02:43:13Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 12:43:22 RacconQ cloudflared[42331]: 2026-06-23T02:43:22Z INF Lost connection with the edge connIndex=2
+Jun 23 12:43:22 RacconQ cloudflared[42331]: 2026-06-23T02:43:22Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:43:22 RacconQ cloudflared[42331]: 2026-06-23T02:43:22Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:43:22 RacconQ cloudflared[42331]: 2026-06-23T02:43:22Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:43:24 RacconQ cloudflared[42331]: 2026-06-23T02:43:24Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 12:43:25 RacconQ cloudflared[42331]: 2026-06-23T02:43:25Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 12:43:25 RacconQ cloudflared[42331]: 2026-06-23T02:43:25Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:43:26 RacconQ cloudflared[42331]: 2026-06-23T02:43:26Z INF Registered tunnel connection connIndex=2 connection=9ae072aa-7d2b-4e72-84d3-ac91a79e4be5 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 12:43:26 RacconQ cloudflared[42331]: 2026-06-23T02:43:26Z INF Registered tunnel connection connIndex=0 connection=98cb6320-7060-4b1e-a19d-2d8743e21598 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 12:46:08 RacconQ cloudflared[42331]: 2026-06-23T02:46:08Z INF Lost connection with the edge connIndex=0
+Jun 23 12:46:08 RacconQ cloudflared[42331]: 2026-06-23T02:46:08Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:46:08 RacconQ cloudflared[42331]: 2026-06-23T02:46:08Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:46:08 RacconQ cloudflared[42331]: 2026-06-23T02:46:08Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:46:10 RacconQ cloudflared[42331]: 2026-06-23T02:46:10Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 12:46:20 RacconQ cloudflared[42331]: 2026-06-23T02:46:20Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:46:21 RacconQ cloudflared[42331]: 2026-06-23T02:46:21Z INF Registered tunnel connection connIndex=0 connection=6471878d-e362-4e95-904a-e766d8fc93a5 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 12:46:27 RacconQ cloudflared[42331]: 2026-06-23T02:46:27Z INF Lost connection with the edge connIndex=1
+Jun 23 12:46:27 RacconQ cloudflared[42331]: 2026-06-23T02:46:27Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:46:27 RacconQ cloudflared[42331]: 2026-06-23T02:46:27Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:46:27 RacconQ cloudflared[42331]: 2026-06-23T02:46:27Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:46:29 RacconQ cloudflared[42331]: 2026-06-23T02:46:29Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 12:46:48 RacconQ cloudflared[42331]: 2026-06-23T02:46:48Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:46:48 RacconQ cloudflared[42331]: 2026-06-23T02:46:48Z INF Registered tunnel connection connIndex=1 connection=632f9228-9b39-4c4f-b767-4f8dcd42b442 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 12:49:04 RacconQ cloudflared[42331]: 2026-06-23T02:49:04Z INF Lost connection with the edge connIndex=0
+Jun 23 12:49:04 RacconQ cloudflared[42331]: 2026-06-23T02:49:04Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:49:04 RacconQ cloudflared[42331]: 2026-06-23T02:49:04Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:49:04 RacconQ cloudflared[42331]: 2026-06-23T02:49:04Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:49:05 RacconQ cloudflared[42331]: 2026-06-23T02:49:05Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 12:49:13 RacconQ cloudflared[42331]: 2026-06-23T02:49:13Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 12:49:14 RacconQ cloudflared[42331]: 2026-06-23T02:49:14Z INF Registered tunnel connection connIndex=0 connection=6a30b16a-4986-4270-8beb-a416426a05e5 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 12:49:40 RacconQ cloudflared[42331]: 2026-06-23T02:49:40Z INF Lost connection with the edge connIndex=1
+Jun 23 12:49:40 RacconQ cloudflared[42331]: 2026-06-23T02:49:40Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:49:40 RacconQ cloudflared[42331]: 2026-06-23T02:49:40Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:49:40 RacconQ cloudflared[42331]: 2026-06-23T02:49:40Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 12:49:41 RacconQ cloudflared[42331]: 2026-06-23T02:49:41Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 12:49:43 RacconQ cloudflared[42331]: 2026-06-23T02:49:43Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 12:49:44 RacconQ cloudflared[42331]: 2026-06-23T02:49:44Z INF Registered tunnel connection connIndex=1 connection=957dc25f-054e-4c56-80bb-c80914a6f0e9 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 12:55:15 RacconQ cloudflared[42331]: 2026-06-23T02:55:15Z INF Lost connection with the edge connIndex=3
+Jun 23 12:55:15 RacconQ cloudflared[42331]: 2026-06-23T02:55:15Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:55:15 RacconQ cloudflared[42331]: 2026-06-23T02:55:15Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:55:15 RacconQ cloudflared[42331]: 2026-06-23T02:55:15Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 12:55:15 RacconQ cloudflared[42331]: 2026-06-23T02:55:15Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 12:55:27 RacconQ cloudflared[42331]: 2026-06-23T02:55:27Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 12:55:27 RacconQ cloudflared[42331]: 2026-06-23T02:55:27Z INF Registered tunnel connection connIndex=3 connection=6147648d-37b1-4c46-8f79-a2afef5eead4 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 13:00:42 RacconQ cloudflared[42331]: 2026-06-23T03:00:42Z INF Lost connection with the edge connIndex=2
+Jun 23 13:00:42 RacconQ cloudflared[42331]: 2026-06-23T03:00:42Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:00:42 RacconQ cloudflared[42331]: 2026-06-23T03:00:42Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:00:42 RacconQ cloudflared[42331]: 2026-06-23T03:00:42Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:00:43 RacconQ cloudflared[42331]: 2026-06-23T03:00:43Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 13:00:55 RacconQ cloudflared[42331]: 2026-06-23T03:00:55Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:00:56 RacconQ cloudflared[42331]: 2026-06-23T03:00:56Z INF Registered tunnel connection connIndex=2 connection=e2db5290-9bf9-4c54-8e43-50058301eacb event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 13:06:24 RacconQ cloudflared[42331]: 2026-06-23T03:06:24Z INF Lost connection with the edge connIndex=0
+Jun 23 13:06:24 RacconQ cloudflared[42331]: 2026-06-23T03:06:24Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:06:24 RacconQ cloudflared[42331]: 2026-06-23T03:06:24Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:06:24 RacconQ cloudflared[42331]: 2026-06-23T03:06:24Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:06:24 RacconQ cloudflared[42331]: 2026-06-23T03:06:24Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 13:06:32 RacconQ cloudflared[42331]: 2026-06-23T03:06:32Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:06:33 RacconQ cloudflared[42331]: 2026-06-23T03:06:33Z INF Registered tunnel connection connIndex=0 connection=ba77a0a3-fb2d-44f5-bb02-33e735573709 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 13:07:03 RacconQ cloudflared[42331]: 2026-06-23T03:07:03Z INF Lost connection with the edge connIndex=1
+Jun 23 13:07:03 RacconQ cloudflared[42331]: 2026-06-23T03:07:03Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:07:03 RacconQ cloudflared[42331]: 2026-06-23T03:07:03Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:07:03 RacconQ cloudflared[42331]: 2026-06-23T03:07:03Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:07:04 RacconQ cloudflared[42331]: 2026-06-23T03:07:04Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 13:07:28 RacconQ cloudflared[42331]: 2026-06-23T03:07:28Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:07:29 RacconQ cloudflared[42331]: 2026-06-23T03:07:29Z INF Registered tunnel connection connIndex=1 connection=930d3fec-2f4c-483e-9495-fa3ca5675a35 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 13:09:14 RacconQ cloudflared[42331]: 2026-06-23T03:09:14Z INF Lost connection with the edge connIndex=0
+Jun 23 13:09:14 RacconQ cloudflared[42331]: 2026-06-23T03:09:14Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:09:14 RacconQ cloudflared[42331]: 2026-06-23T03:09:14Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:09:14 RacconQ cloudflared[42331]: 2026-06-23T03:09:14Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:09:15 RacconQ cloudflared[42331]: 2026-06-23T03:09:15Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 13:09:17 RacconQ cloudflared[42331]: 2026-06-23T03:09:17Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:09:18 RacconQ cloudflared[42331]: 2026-06-23T03:09:18Z INF Registered tunnel connection connIndex=0 connection=6b2224b3-f8c8-4d70-a463-844672a879cf event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 13:11:59 RacconQ cloudflared[42331]: 2026-06-23T03:11:59Z INF Lost connection with the edge connIndex=0
+Jun 23 13:11:59 RacconQ cloudflared[42331]: 2026-06-23T03:11:59Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:11:59 RacconQ cloudflared[42331]: 2026-06-23T03:11:59Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:11:59 RacconQ cloudflared[42331]: 2026-06-23T03:11:59Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:12:00 RacconQ cloudflared[42331]: 2026-06-23T03:12:00Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 13:12:15 RacconQ cloudflared[42331]: 2026-06-23T03:12:15Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:12:15 RacconQ cloudflared[42331]: 2026-06-23T03:12:15Z INF Registered tunnel connection connIndex=0 connection=379f76e9-471e-4588-9596-c76ee215340d event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 13:12:40 RacconQ cloudflared[42331]: 2026-06-23T03:12:40Z INF Lost connection with the edge connIndex=3
+Jun 23 13:12:40 RacconQ cloudflared[42331]: 2026-06-23T03:12:40Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:12:40 RacconQ cloudflared[42331]: 2026-06-23T03:12:40Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:12:40 RacconQ cloudflared[42331]: 2026-06-23T03:12:40Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:12:41 RacconQ cloudflared[42331]: 2026-06-23T03:12:41Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 13:13:04 RacconQ cloudflared[42331]: 2026-06-23T03:13:04Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:13:05 RacconQ cloudflared[42331]: 2026-06-23T03:13:05Z INF Registered tunnel connection connIndex=3 connection=0f9d3294-f9bf-4bcf-8df1-3e17f3aadcbd event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 13:18:11 RacconQ cloudflared[42331]: 2026-06-23T03:18:11Z INF Lost connection with the edge connIndex=2
+Jun 23 13:18:11 RacconQ cloudflared[42331]: 2026-06-23T03:18:11Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:18:11 RacconQ cloudflared[42331]: 2026-06-23T03:18:11Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:18:11 RacconQ cloudflared[42331]: 2026-06-23T03:18:11Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:18:11 RacconQ cloudflared[42331]: 2026-06-23T03:18:11Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 13:18:23 RacconQ cloudflared[42331]: 2026-06-23T03:18:23Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:18:24 RacconQ cloudflared[42331]: 2026-06-23T03:18:24Z INF Registered tunnel connection connIndex=2 connection=f14da28a-091a-4a66-b7c1-16845f4e46d1 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 13:24:42 RacconQ cloudflared[42331]: 2026-06-23T03:24:42Z INF Lost connection with the edge connIndex=1
+Jun 23 13:24:42 RacconQ cloudflared[42331]: 2026-06-23T03:24:42Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:24:42 RacconQ cloudflared[42331]: 2026-06-23T03:24:42Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:24:42 RacconQ cloudflared[42331]: 2026-06-23T03:24:42Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:24:43 RacconQ cloudflared[42331]: 2026-06-23T03:24:43Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 13:25:01 RacconQ cloudflared[42331]: 2026-06-23T03:25:01Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:25:01 RacconQ cloudflared[42331]: 2026-06-23T03:25:01Z INF Registered tunnel connection connIndex=1 connection=3838b715-6603-412a-997f-4f27af2ba2bf event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 13:29:23 RacconQ cloudflared[42331]: 2026-06-23T03:29:23Z INF Lost connection with the edge connIndex=0
+Jun 23 13:29:23 RacconQ cloudflared[42331]: 2026-06-23T03:29:23Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:29:23 RacconQ cloudflared[42331]: 2026-06-23T03:29:23Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:29:23 RacconQ cloudflared[42331]: 2026-06-23T03:29:23Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:29:25 RacconQ cloudflared[42331]: 2026-06-23T03:29:25Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 13:29:44 RacconQ cloudflared[42331]: 2026-06-23T03:29:44Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:29:44 RacconQ cloudflared[42331]: 2026-06-23T03:29:44Z INF Registered tunnel connection connIndex=0 connection=841b329b-cbac-4186-b600-b96f8995e7bd event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 13:30:18 RacconQ cloudflared[42331]: 2026-06-23T03:30:18Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:30:18 RacconQ cloudflared[42331]: 2026-06-23T03:30:18Z WRN Serve tunnel error error="Error shutting down control stream: context canceled" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:30:18 RacconQ cloudflared[42331]: 2026-06-23T03:30:18Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:30:20 RacconQ cloudflared[42331]: 2026-06-23T03:30:20Z WRN Connection terminated error="Error shutting down control stream: context canceled" connIndex=3
+Jun 23 13:30:47 RacconQ cloudflared[42331]: 2026-06-23T03:30:47Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:30:48 RacconQ cloudflared[42331]: 2026-06-23T03:30:48Z INF Registered tunnel connection connIndex=3 connection=b3b1116c-5c39-4338-a1d7-7a0bd7e76b92 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 13:32:25 RacconQ cloudflared[42331]: 2026-06-23T03:32:25Z INF Lost connection with the edge connIndex=0
+Jun 23 13:32:25 RacconQ cloudflared[42331]: 2026-06-23T03:32:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:32:25 RacconQ cloudflared[42331]: 2026-06-23T03:32:25Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:32:25 RacconQ cloudflared[42331]: 2026-06-23T03:32:25Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:32:25 RacconQ cloudflared[42331]: 2026-06-23T03:32:25Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 13:33:28 RacconQ cloudflared[42331]: 2026-06-23T03:33:28Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:33:28 RacconQ cloudflared[42331]: 2026-06-23T03:33:28Z INF Registered tunnel connection connIndex=0 connection=deeaed72-1d1f-4956-9377-73b94796cff6 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 13:35:39 RacconQ cloudflared[42331]: 2026-06-23T03:35:39Z INF Lost connection with the edge connIndex=2
+Jun 23 13:35:39 RacconQ cloudflared[42331]: 2026-06-23T03:35:39Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:35:39 RacconQ cloudflared[42331]: 2026-06-23T03:35:39Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:35:39 RacconQ cloudflared[42331]: 2026-06-23T03:35:39Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:35:40 RacconQ cloudflared[42331]: 2026-06-23T03:35:40Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 13:35:59 RacconQ cloudflared[42331]: 2026-06-23T03:35:59Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:36:00 RacconQ cloudflared[42331]: 2026-06-23T03:36:00Z INF Registered tunnel connection connIndex=2 connection=1dd2ca9e-9c4c-4482-abb6-0b9cdba24e0e event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 13:36:09 RacconQ cloudflared[42331]: 2026-06-23T03:36:09Z INF Lost connection with the edge connIndex=0
+Jun 23 13:36:09 RacconQ cloudflared[42331]: 2026-06-23T03:36:09Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:36:09 RacconQ cloudflared[42331]: 2026-06-23T03:36:09Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:36:09 RacconQ cloudflared[42331]: 2026-06-23T03:36:09Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:36:11 RacconQ cloudflared[42331]: 2026-06-23T03:36:11Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 13:38:15 RacconQ cloudflared[42331]: 2026-06-23T03:38:15Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:38:16 RacconQ cloudflared[42331]: 2026-06-23T03:38:16Z INF Registered tunnel connection connIndex=0 connection=c0ede1da-9aa2-455d-95a6-89bb5267df07 event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 13:38:46 RacconQ cloudflared[42331]: 2026-06-23T03:38:46Z INF Lost connection with the edge connIndex=2
+Jun 23 13:38:46 RacconQ cloudflared[42331]: 2026-06-23T03:38:46Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:38:46 RacconQ cloudflared[42331]: 2026-06-23T03:38:46Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:38:46 RacconQ cloudflared[42331]: 2026-06-23T03:38:46Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:38:46 RacconQ cloudflared[42331]: 2026-06-23T03:38:46Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 13:40:47 RacconQ cloudflared[42331]: 2026-06-23T03:40:47Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:40:47 RacconQ cloudflared[42331]: 2026-06-23T03:40:47Z INF Registered tunnel connection connIndex=2 connection=e4fd43d7-757d-4230-84dc-08460ba100ff event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 13:42:15 RacconQ cloudflared[42331]: 2026-06-23T03:42:15Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:42:15 RacconQ cloudflared[42331]: 2026-06-23T03:42:15Z WRN Serve tunnel error error="Error shutting down control stream: client disconnected" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:42:15 RacconQ cloudflared[42331]: 2026-06-23T03:42:15Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:42:15 RacconQ cloudflared[42331]: 2026-06-23T03:42:15Z WRN Connection terminated error="Error shutting down control stream: client disconnected" connIndex=1
+Jun 23 13:46:30 RacconQ cloudflared[42331]: 2026-06-23T03:46:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:46:31 RacconQ cloudflared[42331]: 2026-06-23T03:46:31Z INF Registered tunnel connection connIndex=1 connection=09e1f6d2-269a-4954-ad2c-251bff3ddf3e event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 13:48:01 RacconQ cloudflared[42331]: 2026-06-23T03:48:01Z INF Lost connection with the edge connIndex=3
+Jun 23 13:48:01 RacconQ cloudflared[42331]: 2026-06-23T03:48:01Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:48:01 RacconQ cloudflared[42331]: 2026-06-23T03:48:01Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:48:01 RacconQ cloudflared[42331]: 2026-06-23T03:48:01Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:48:01 RacconQ cloudflared[42331]: 2026-06-23T03:48:01Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 13:49:22 RacconQ cloudflared[42331]: 2026-06-23T03:49:22Z INF Lost connection with the edge connIndex=1
+Jun 23 13:49:22 RacconQ cloudflared[42331]: 2026-06-23T03:49:22Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:49:22 RacconQ cloudflared[42331]: 2026-06-23T03:49:22Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:49:22 RacconQ cloudflared[42331]: 2026-06-23T03:49:22Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:49:23 RacconQ cloudflared[42331]: 2026-06-23T03:49:23Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 13:51:34 RacconQ cloudflared[42331]: 2026-06-23T03:51:34Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:51:34 RacconQ cloudflared[42331]: 2026-06-23T03:51:34Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:51:35 RacconQ cloudflared[42331]: 2026-06-23T03:51:35Z INF Registered tunnel connection connIndex=3 connection=d128073f-6d8b-4c80-b741-8f5e4130ba37 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 13:51:35 RacconQ cloudflared[42331]: 2026-06-23T03:51:35Z INF Registered tunnel connection connIndex=1 connection=609fdc73-7ebb-4df6-91b2-e9ea0cc0a1fd event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z INF Lost connection with the edge connIndex=1
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z INF Lost connection with the edge connIndex=3
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:54:25 RacconQ cloudflared[42331]: 2026-06-23T03:54:25Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 13:54:26 RacconQ cloudflared[42331]: 2026-06-23T03:54:26Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 13:54:27 RacconQ cloudflared[42331]: 2026-06-23T03:54:27Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 13:55:27 RacconQ cloudflared[42331]: 2026-06-23T03:55:27Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:55:27 RacconQ cloudflared[42331]: 2026-06-23T03:55:27Z INF Lost connection with the edge connIndex=0
+Jun 23 13:55:27 RacconQ cloudflared[42331]: 2026-06-23T03:55:27Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:55:27 RacconQ cloudflared[42331]: 2026-06-23T03:55:27Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:55:28 RacconQ cloudflared[42331]: 2026-06-23T03:55:28Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 13:57:57 RacconQ cloudflared[42331]: 2026-06-23T03:57:57Z INF Lost connection with the edge connIndex=2
+Jun 23 13:57:57 RacconQ cloudflared[42331]: 2026-06-23T03:57:57Z ERR Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:57:57 RacconQ cloudflared[42331]: 2026-06-23T03:57:57Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:57:57 RacconQ cloudflared[42331]: 2026-06-23T03:57:57Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 13:57:58 RacconQ cloudflared[42331]: 2026-06-23T03:57:58Z ERR Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 13:58:08 RacconQ cloudflared[42331]: 2026-06-23T03:58:08Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 13:58:08 RacconQ cloudflared[42331]: 2026-06-23T03:58:08Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 13:58:08 RacconQ cloudflared[42331]: 2026-06-23T03:58:08Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 13:58:08 RacconQ cloudflared[42331]: 2026-06-23T03:58:08Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 13:58:08 RacconQ cloudflared[42331]: 2026-06-23T03:58:08Z INF Registered tunnel connection connIndex=1 connection=fa8f657f-00d1-4d69-88da-0a90ff06f008 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 13:58:08 RacconQ cloudflared[42331]: 2026-06-23T03:58:08Z INF Registered tunnel connection connIndex=3 connection=9874f738-3a7b-4728-84d3-6697e074ea34 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 13:58:08 RacconQ cloudflared[42331]: 2026-06-23T03:58:08Z INF Registered tunnel connection connIndex=2 connection=e5708c87-3d2c-49d6-994f-d8616edbe58d event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 13:58:09 RacconQ cloudflared[42331]: 2026-06-23T03:58:09Z INF Registered tunnel connection connIndex=0 connection=07a992e1-3cc5-4490-ab08-4403a01f9286 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 14:00:50 RacconQ cloudflared[42331]: 2026-06-23T04:00:50Z INF Lost connection with the edge connIndex=0
+Jun 23 14:00:50 RacconQ cloudflared[42331]: 2026-06-23T04:00:50Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 14:00:50 RacconQ cloudflared[42331]: 2026-06-23T04:00:50Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:00:50 RacconQ cloudflared[42331]: 2026-06-23T04:00:50Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:00:52 RacconQ cloudflared[42331]: 2026-06-23T04:00:52Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z INF Lost connection with the edge connIndex=1
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z INF Lost connection with the edge connIndex=3
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:00:59 RacconQ cloudflared[42331]: 2026-06-23T04:00:59Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:01:00 RacconQ cloudflared[42331]: 2026-06-23T04:01:00Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 14:01:00 RacconQ cloudflared[42331]: 2026-06-23T04:01:00Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 14:05:55 RacconQ cloudflared[42331]: 2026-06-23T04:05:55Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:05:55 RacconQ cloudflared[42331]: 2026-06-23T04:05:55Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:05:55 RacconQ cloudflared[42331]: 2026-06-23T04:05:55Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:05:56 RacconQ cloudflared[42331]: 2026-06-23T04:05:56Z INF Registered tunnel connection connIndex=0 connection=f817b05d-4134-4182-b671-06b4a3894dd2 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 14:05:56 RacconQ cloudflared[42331]: 2026-06-23T04:05:56Z INF Registered tunnel connection connIndex=3 connection=40baa885-40c9-454e-92cf-8341e81bcff4 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 14:05:56 RacconQ cloudflared[42331]: 2026-06-23T04:05:56Z INF Registered tunnel connection connIndex=1 connection=1584a11f-f59e-4ca8-867c-a4103f4666b9 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 14:15:23 RacconQ cloudflared[42331]: 2026-06-23T04:15:23Z WRN Serve tunnel error error="Error shutting down control stream: client disconnected" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:15:23 RacconQ cloudflared[42331]: 2026-06-23T04:15:23Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 14:15:23 RacconQ cloudflared[42331]: 2026-06-23T04:15:23Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:15:24 RacconQ cloudflared[42331]: 2026-06-23T04:15:24Z WRN Connection terminated error="Error shutting down control stream: client disconnected" connIndex=2
+Jun 23 14:15:42 RacconQ cloudflared[42331]: 2026-06-23T04:15:42Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:15:43 RacconQ cloudflared[42331]: 2026-06-23T04:15:43Z INF Registered tunnel connection connIndex=2 connection=89841ec0-b3c6-4825-88f9-10b5ab8779d3 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 14:23:05 RacconQ cloudflared[42331]: 2026-06-23T04:23:05Z INF Lost connection with the edge connIndex=0
+Jun 23 14:23:05 RacconQ cloudflared[42331]: 2026-06-23T04:23:05Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:23:05 RacconQ cloudflared[42331]: 2026-06-23T04:23:05Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:23:05 RacconQ cloudflared[42331]: 2026-06-23T04:23:05Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:23:06 RacconQ cloudflared[42331]: 2026-06-23T04:23:06Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 14:23:10 RacconQ cloudflared[42331]: 2026-06-23T04:23:10Z INF Lost connection with the edge connIndex=3
+Jun 23 14:23:10 RacconQ cloudflared[42331]: 2026-06-23T04:23:10Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 14:23:10 RacconQ cloudflared[42331]: 2026-06-23T04:23:10Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:23:10 RacconQ cloudflared[42331]: 2026-06-23T04:23:10Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:23:10 RacconQ cloudflared[42331]: 2026-06-23T04:23:10Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:23:10 RacconQ cloudflared[42331]: 2026-06-23T04:23:10Z WRN Serve tunnel error error="Error shutting down control stream: context canceled" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:23:10 RacconQ cloudflared[42331]: 2026-06-23T04:23:10Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:23:11 RacconQ cloudflared[42331]: 2026-06-23T04:23:11Z WRN Connection terminated error="Error shutting down control stream: context canceled" connIndex=1
+Jun 23 14:23:11 RacconQ cloudflared[42331]: 2026-06-23T04:23:11Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 14:23:12 RacconQ cloudflared[42331]: 2026-06-23T04:23:12Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:23:12 RacconQ cloudflared[42331]: 2026-06-23T04:23:12Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:23:12 RacconQ cloudflared[42331]: 2026-06-23T04:23:12Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:23:13 RacconQ cloudflared[42331]: 2026-06-23T04:23:13Z INF Registered tunnel connection connIndex=0 connection=d58635dc-02ed-4fc6-be94-87e8f63c98e9 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 14:23:13 RacconQ cloudflared[42331]: 2026-06-23T04:23:13Z INF Registered tunnel connection connIndex=3 connection=be6c83f8-bdc9-42e7-bbae-822704809a21 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 14:23:13 RacconQ cloudflared[42331]: 2026-06-23T04:23:13Z INF Registered tunnel connection connIndex=1 connection=3f596afd-c84d-43fd-b785-c016da0f377d event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 14:26:05 RacconQ cloudflared[42331]: 2026-06-23T04:26:05Z INF Lost connection with the edge connIndex=3
+Jun 23 14:26:05 RacconQ cloudflared[42331]: 2026-06-23T04:26:05Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:26:05 RacconQ cloudflared[42331]: 2026-06-23T04:26:05Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:26:05 RacconQ cloudflared[42331]: 2026-06-23T04:26:05Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:26:06 RacconQ cloudflared[42331]: 2026-06-23T04:26:06Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 14:26:18 RacconQ cloudflared[42331]: 2026-06-23T04:26:18Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:26:18 RacconQ cloudflared[42331]: 2026-06-23T04:26:18Z INF Registered tunnel connection connIndex=3 connection=5bdbd1d7-1418-46bf-b03a-51d739c90e3b event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 14:32:58 RacconQ cloudflared[42331]: 2026-06-23T04:32:58Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:32:58 RacconQ cloudflared[42331]: 2026-06-23T04:32:58Z WRN Serve tunnel error error="Error shutting down control stream: context canceled" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:32:58 RacconQ cloudflared[42331]: 2026-06-23T04:32:58Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:32:59 RacconQ cloudflared[42331]: 2026-06-23T04:32:59Z WRN Connection terminated error="Error shutting down control stream: context canceled" connIndex=2
+Jun 23 14:33:11 RacconQ cloudflared[42331]: 2026-06-23T04:33:11Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:33:12 RacconQ cloudflared[42331]: 2026-06-23T04:33:12Z INF Registered tunnel connection connIndex=2 connection=52cd7170-cc77-4f0d-b80d-2e26f51cbebf event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 14:40:24 RacconQ cloudflared[42331]: 2026-06-23T04:40:24Z INF Lost connection with the edge connIndex=0
+Jun 23 14:40:24 RacconQ cloudflared[42331]: 2026-06-23T04:40:24Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:40:24 RacconQ cloudflared[42331]: 2026-06-23T04:40:24Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:40:24 RacconQ cloudflared[42331]: 2026-06-23T04:40:24Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:40:24 RacconQ cloudflared[42331]: 2026-06-23T04:40:24Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 14:40:29 RacconQ cloudflared[42331]: 2026-06-23T04:40:29Z INF Lost connection with the edge connIndex=1
+Jun 23 14:40:29 RacconQ cloudflared[42331]: 2026-06-23T04:40:29Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:40:29 RacconQ cloudflared[42331]: 2026-06-23T04:40:29Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:40:29 RacconQ cloudflared[42331]: 2026-06-23T04:40:29Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 14:40:29 RacconQ cloudflared[42331]: 2026-06-23T04:40:29Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 14:40:42 RacconQ cloudflared[42331]: 2026-06-23T04:40:42Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:40:42 RacconQ cloudflared[42331]: 2026-06-23T04:40:42Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:40:43 RacconQ cloudflared[42331]: 2026-06-23T04:40:43Z INF Registered tunnel connection connIndex=0 connection=30a2c2cb-efee-40e4-9431-ff9088cfc868 event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 14:40:43 RacconQ cloudflared[42331]: 2026-06-23T04:40:43Z INF Registered tunnel connection connIndex=1 connection=e019ace5-d655-4181-9684-f10acbb120b1 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 14:43:34 RacconQ cloudflared[42331]: 2026-06-23T04:43:34Z WRN Serve tunnel error error="Error shutting down control stream: client disconnected" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:43:34 RacconQ cloudflared[42331]: 2026-06-23T04:43:34Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:43:34 RacconQ cloudflared[42331]: 2026-06-23T04:43:34Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 14:43:35 RacconQ cloudflared[42331]: 2026-06-23T04:43:35Z WRN Connection terminated error="Error shutting down control stream: client disconnected" connIndex=3
+Jun 23 14:43:48 RacconQ cloudflared[42331]: 2026-06-23T04:43:48Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 14:43:49 RacconQ cloudflared[42331]: 2026-06-23T04:43:49Z INF Registered tunnel connection connIndex=3 connection=96f3b37b-b2f6-466e-b361-cfacdebcc59d event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 14:50:24 RacconQ cloudflared[42331]: 2026-06-23T04:50:24Z WRN Serve tunnel error error="Error shutting down control stream: client disconnected" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:50:24 RacconQ cloudflared[42331]: 2026-06-23T04:50:24Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 14:50:24 RacconQ cloudflared[42331]: 2026-06-23T04:50:24Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:50:24 RacconQ cloudflared[42331]: 2026-06-23T04:50:24Z WRN Connection terminated error="Error shutting down control stream: client disconnected" connIndex=2
+Jun 23 14:50:25 RacconQ cloudflared[42331]: 2026-06-23T04:50:25Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 14:50:26 RacconQ cloudflared[42331]: 2026-06-23T04:50:26Z INF Registered tunnel connection connIndex=2 connection=31b3ac75-b9cd-4d40-91fb-5564966acf02 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 14:57:48 RacconQ cloudflared[42331]: 2026-06-23T04:57:48Z INF Lost connection with the edge connIndex=0
+Jun 23 14:57:48 RacconQ cloudflared[42331]: 2026-06-23T04:57:48Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:57:48 RacconQ cloudflared[42331]: 2026-06-23T04:57:48Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:57:48 RacconQ cloudflared[42331]: 2026-06-23T04:57:48Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:57:49 RacconQ cloudflared[42331]: 2026-06-23T04:57:49Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 14:57:53 RacconQ cloudflared[42331]: 2026-06-23T04:57:53Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 14:57:53 RacconQ cloudflared[42331]: 2026-06-23T04:57:53Z WRN Serve tunnel error error="Error shutting down control stream: context canceled" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:57:53 RacconQ cloudflared[42331]: 2026-06-23T04:57:53Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:57:54 RacconQ cloudflared[42331]: 2026-06-23T04:57:54Z WRN Connection terminated error="Error shutting down control stream: context canceled" connIndex=1
+Jun 23 14:58:08 RacconQ cloudflared[42331]: 2026-06-23T04:58:08Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 14:58:08 RacconQ cloudflared[42331]: 2026-06-23T04:58:08Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 14:58:09 RacconQ cloudflared[42331]: 2026-06-23T04:58:09Z INF Registered tunnel connection connIndex=0 connection=ce684bed-68b2-4ac9-b3d3-07c315985a78 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 14:58:09 RacconQ cloudflared[42331]: 2026-06-23T04:58:09Z INF Registered tunnel connection connIndex=1 connection=91cde85a-53e8-4aaa-9bc3-1c93ccd0a885 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 15:00:50 RacconQ cloudflared[42331]: 2026-06-23T05:00:50Z INF Lost connection with the edge connIndex=0
+Jun 23 15:00:50 RacconQ cloudflared[42331]: 2026-06-23T05:00:50Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:00:50 RacconQ cloudflared[42331]: 2026-06-23T05:00:50Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:00:50 RacconQ cloudflared[42331]: 2026-06-23T05:00:50Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:00:51 RacconQ cloudflared[42331]: 2026-06-23T05:00:51Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 15:00:53 RacconQ cloudflared[42331]: 2026-06-23T05:00:53Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:00:53 RacconQ cloudflared[42331]: 2026-06-23T05:00:53Z INF Registered tunnel connection connIndex=0 connection=6d4aa310-759f-4a03-a9ff-8723d4c2dfab event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 15:00:58 RacconQ cloudflared[42331]: 2026-06-23T05:00:58Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:00:58 RacconQ cloudflared[42331]: 2026-06-23T05:00:58Z WRN Serve tunnel error error="Error shutting down control stream: client disconnected" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:00:58 RacconQ cloudflared[42331]: 2026-06-23T05:00:58Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:00:58 RacconQ cloudflared[42331]: 2026-06-23T05:00:58Z INF Lost connection with the edge connIndex=1
+Jun 23 15:00:58 RacconQ cloudflared[42331]: 2026-06-23T05:00:58Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:00:58 RacconQ cloudflared[42331]: 2026-06-23T05:00:58Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:00:58 RacconQ cloudflared[42331]: 2026-06-23T05:00:58Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:00:59 RacconQ cloudflared[42331]: 2026-06-23T05:00:59Z WRN Connection terminated error="Error shutting down control stream: client disconnected" connIndex=3
+Jun 23 15:00:59 RacconQ cloudflared[42331]: 2026-06-23T05:00:59Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 15:01:22 RacconQ cloudflared[42331]: 2026-06-23T05:01:22Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:01:22 RacconQ cloudflared[42331]: 2026-06-23T05:01:22Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:01:23 RacconQ cloudflared[42331]: 2026-06-23T05:01:23Z INF Registered tunnel connection connIndex=3 connection=46c7a815-66e4-4ff8-9198-42cbafcc4ac9 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 15:01:23 RacconQ cloudflared[42331]: 2026-06-23T05:01:23Z INF Registered tunnel connection connIndex=1 connection=b63ebeec-7b0f-4759-84ac-39289b8f2c57 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 15:04:13 RacconQ cloudflared[42331]: 2026-06-23T05:04:13Z INF Lost connection with the edge connIndex=1
+Jun 23 15:04:13 RacconQ cloudflared[42331]: 2026-06-23T05:04:13Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:04:13 RacconQ cloudflared[42331]: 2026-06-23T05:04:13Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:04:13 RacconQ cloudflared[42331]: 2026-06-23T05:04:13Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:04:14 RacconQ cloudflared[42331]: 2026-06-23T05:04:14Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 15:04:28 RacconQ cloudflared[42331]: 2026-06-23T05:04:28Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:04:29 RacconQ cloudflared[42331]: 2026-06-23T05:04:29Z INF Registered tunnel connection connIndex=1 connection=bfb14051-0154-4c68-bd02-7eeb96720889 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 15:07:37 RacconQ cloudflared[42331]: 2026-06-23T05:07:37Z INF Lost connection with the edge connIndex=2
+Jun 23 15:07:37 RacconQ cloudflared[42331]: 2026-06-23T05:07:37Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:07:37 RacconQ cloudflared[42331]: 2026-06-23T05:07:37Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:07:37 RacconQ cloudflared[42331]: 2026-06-23T05:07:37Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:07:38 RacconQ cloudflared[42331]: 2026-06-23T05:07:38Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 15:07:42 RacconQ cloudflared[42331]: 2026-06-23T05:07:42Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:07:43 RacconQ cloudflared[42331]: 2026-06-23T05:07:43Z INF Registered tunnel connection connIndex=2 connection=4944d6d4-b881-4075-b6eb-dfcd80f969a7 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 15:10:32 RacconQ cloudflared[42331]: 2026-06-23T05:10:32Z INF Lost connection with the edge connIndex=2
+Jun 23 15:10:32 RacconQ cloudflared[42331]: 2026-06-23T05:10:32Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:10:32 RacconQ cloudflared[42331]: 2026-06-23T05:10:32Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:10:32 RacconQ cloudflared[42331]: 2026-06-23T05:10:32Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:10:33 RacconQ cloudflared[42331]: 2026-06-23T05:10:33Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 15:10:36 RacconQ cloudflared[42331]: 2026-06-23T05:10:36Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:10:36 RacconQ cloudflared[42331]: 2026-06-23T05:10:36Z INF Registered tunnel connection connIndex=2 connection=b177d091-58fc-4650-8261-1c134fad85aa event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 15:17:56 RacconQ cloudflared[42331]: 2026-06-23T05:17:56Z INF Lost connection with the edge connIndex=0
+Jun 23 15:17:56 RacconQ cloudflared[42331]: 2026-06-23T05:17:56Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:17:56 RacconQ cloudflared[42331]: 2026-06-23T05:17:56Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:17:56 RacconQ cloudflared[42331]: 2026-06-23T05:17:56Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:17:56 RacconQ cloudflared[42331]: 2026-06-23T05:17:56Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 15:18:07 RacconQ cloudflared[42331]: 2026-06-23T05:18:07Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:18:07 RacconQ cloudflared[42331]: 2026-06-23T05:18:07Z INF Registered tunnel connection connIndex=0 connection=99302a4e-34ed-400d-b5e9-fff2ea71ea34 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 15:18:30 RacconQ cloudflared[42331]: 2026-06-23T05:18:30Z INF Lost connection with the edge connIndex=3
+Jun 23 15:18:30 RacconQ cloudflared[42331]: 2026-06-23T05:18:30Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:18:30 RacconQ cloudflared[42331]: 2026-06-23T05:18:30Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:18:30 RacconQ cloudflared[42331]: 2026-06-23T05:18:30Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:18:31 RacconQ cloudflared[42331]: 2026-06-23T05:18:31Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 15:18:52 RacconQ cloudflared[42331]: 2026-06-23T05:18:52Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:18:52 RacconQ cloudflared[42331]: 2026-06-23T05:18:52Z INF Registered tunnel connection connIndex=3 connection=8a63d7f1-116b-4358-bb0e-8ec34516e986 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 15:21:35 RacconQ cloudflared[42331]: 2026-06-23T05:21:35Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:21:35 RacconQ cloudflared[42331]: 2026-06-23T05:21:35Z WRN Serve tunnel error error="Error shutting down control stream: context canceled" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:21:35 RacconQ cloudflared[42331]: 2026-06-23T05:21:35Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:21:37 RacconQ cloudflared[42331]: 2026-06-23T05:21:37Z WRN Connection terminated error="Error shutting down control stream: context canceled" connIndex=1
+Jun 23 15:21:42 RacconQ cloudflared[42331]: 2026-06-23T05:21:42Z INF Lost connection with the edge connIndex=3
+Jun 23 15:21:42 RacconQ cloudflared[42331]: 2026-06-23T05:21:42Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:21:42 RacconQ cloudflared[42331]: 2026-06-23T05:21:42Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:21:42 RacconQ cloudflared[42331]: 2026-06-23T05:21:42Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:21:43 RacconQ cloudflared[42331]: 2026-06-23T05:21:43Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 15:21:48 RacconQ cloudflared[42331]: 2026-06-23T05:21:48Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:21:48 RacconQ cloudflared[42331]: 2026-06-23T05:21:48Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:21:49 RacconQ cloudflared[42331]: 2026-06-23T05:21:49Z INF Registered tunnel connection connIndex=3 connection=646ea62b-f2d5-4d2d-ae78-2adc1e1640d7 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 15:21:49 RacconQ cloudflared[42331]: 2026-06-23T05:21:49Z INF Registered tunnel connection connIndex=1 connection=ece6aff2-bca3-463d-891a-14d3bf5d7b9d event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 15:24:34 RacconQ cloudflared[42331]: 2026-06-23T05:24:34Z INF Lost connection with the edge connIndex=3
+Jun 23 15:24:34 RacconQ cloudflared[42331]: 2026-06-23T05:24:34Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:24:34 RacconQ cloudflared[42331]: 2026-06-23T05:24:34Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:24:34 RacconQ cloudflared[42331]: 2026-06-23T05:24:34Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:24:35 RacconQ cloudflared[42331]: 2026-06-23T05:24:35Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 15:24:35 RacconQ cloudflared[42331]: 2026-06-23T05:24:35Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:24:36 RacconQ cloudflared[42331]: 2026-06-23T05:24:36Z INF Registered tunnel connection connIndex=3 connection=797ddac5-ed20-4716-8356-72e0dcc08d36 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 15:27:43 RacconQ cloudflared[42331]: 2026-06-23T05:27:43Z INF Lost connection with the edge connIndex=2
+Jun 23 15:27:43 RacconQ cloudflared[42331]: 2026-06-23T05:27:43Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:27:43 RacconQ cloudflared[42331]: 2026-06-23T05:27:43Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:27:43 RacconQ cloudflared[42331]: 2026-06-23T05:27:43Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:27:43 RacconQ cloudflared[42331]: 2026-06-23T05:27:43Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 15:27:45 RacconQ cloudflared[42331]: 2026-06-23T05:27:45Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:27:46 RacconQ cloudflared[42331]: 2026-06-23T05:27:46Z INF Registered tunnel connection connIndex=2 connection=dea3bf64-1966-4635-ad1a-b7ba966cb71f event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 15:30:36 RacconQ cloudflared[42331]: 2026-06-23T05:30:36Z INF Lost connection with the edge connIndex=2
+Jun 23 15:30:36 RacconQ cloudflared[42331]: 2026-06-23T05:30:36Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:30:36 RacconQ cloudflared[42331]: 2026-06-23T05:30:36Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:30:36 RacconQ cloudflared[42331]: 2026-06-23T05:30:36Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:30:37 RacconQ cloudflared[42331]: 2026-06-23T05:30:37Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 15:30:45 RacconQ cloudflared[42331]: 2026-06-23T05:30:45Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:30:46 RacconQ cloudflared[42331]: 2026-06-23T05:30:46Z INF Registered tunnel connection connIndex=2 connection=6c16a5f2-958c-4aeb-bb03-597bae559039 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 15:35:11 RacconQ cloudflared[42331]: 2026-06-23T05:35:11Z INF Lost connection with the edge connIndex=0
+Jun 23 15:35:11 RacconQ cloudflared[42331]: 2026-06-23T05:35:11Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:35:11 RacconQ cloudflared[42331]: 2026-06-23T05:35:11Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:35:11 RacconQ cloudflared[42331]: 2026-06-23T05:35:11Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:35:12 RacconQ cloudflared[42331]: 2026-06-23T05:35:12Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 15:35:27 RacconQ cloudflared[42331]: 2026-06-23T05:35:27Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:35:28 RacconQ cloudflared[42331]: 2026-06-23T05:35:28Z INF Registered tunnel connection connIndex=0 connection=87adb4e1-64a7-4cac-b939-25253ecde8b6 event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 15:38:55 RacconQ cloudflared[42331]: 2026-06-23T05:38:55Z INF Lost connection with the edge connIndex=1
+Jun 23 15:38:55 RacconQ cloudflared[42331]: 2026-06-23T05:38:55Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:38:55 RacconQ cloudflared[42331]: 2026-06-23T05:38:55Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:38:55 RacconQ cloudflared[42331]: 2026-06-23T05:38:55Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:38:56 RacconQ cloudflared[42331]: 2026-06-23T05:38:56Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 15:39:03 RacconQ cloudflared[42331]: 2026-06-23T05:39:03Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:39:04 RacconQ cloudflared[42331]: 2026-06-23T05:39:04Z INF Registered tunnel connection connIndex=1 connection=32582822-f19c-4d0b-b5ff-c8774503bfbb event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 15:41:39 RacconQ cloudflared[42331]: 2026-06-23T05:41:39Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:41:39 RacconQ cloudflared[42331]: 2026-06-23T05:41:39Z WRN Serve tunnel error error="Error shutting down control stream: client disconnected" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:41:39 RacconQ cloudflared[42331]: 2026-06-23T05:41:39Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:41:40 RacconQ cloudflared[42331]: 2026-06-23T05:41:40Z WRN Connection terminated error="Error shutting down control stream: client disconnected" connIndex=3
+Jun 23 15:41:55 RacconQ cloudflared[42331]: 2026-06-23T05:41:55Z INF Lost connection with the edge connIndex=1
+Jun 23 15:41:55 RacconQ cloudflared[42331]: 2026-06-23T05:41:55Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:41:55 RacconQ cloudflared[42331]: 2026-06-23T05:41:55Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:41:55 RacconQ cloudflared[42331]: 2026-06-23T05:41:55Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:41:55 RacconQ cloudflared[42331]: 2026-06-23T05:41:55Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:41:55 RacconQ cloudflared[42331]: 2026-06-23T05:41:55Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 15:41:56 RacconQ cloudflared[42331]: 2026-06-23T05:41:56Z INF Registered tunnel connection connIndex=3 connection=3af6d615-c826-45e5-88a5-493581a3c329 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 15:42:23 RacconQ cloudflared[42331]: 2026-06-23T05:42:23Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:42:24 RacconQ cloudflared[42331]: 2026-06-23T05:42:24Z INF Registered tunnel connection connIndex=1 connection=8b04bed2-64e2-4c7d-a7af-9d29a0abe639 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 15:44:46 RacconQ cloudflared[42331]: 2026-06-23T05:44:46Z INF Lost connection with the edge connIndex=3
+Jun 23 15:44:46 RacconQ cloudflared[42331]: 2026-06-23T05:44:46Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:44:46 RacconQ cloudflared[42331]: 2026-06-23T05:44:46Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:44:46 RacconQ cloudflared[42331]: 2026-06-23T05:44:46Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:44:47 RacconQ cloudflared[42331]: 2026-06-23T05:44:47Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 15:45:04 RacconQ cloudflared[42331]: 2026-06-23T05:45:04Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 15:45:05 RacconQ cloudflared[42331]: 2026-06-23T05:45:05Z INF Registered tunnel connection connIndex=3 connection=f04a7047-d3b5-4f71-89f1-af1ca3fc60a5 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 15:45:14 RacconQ cloudflared[42331]: 2026-06-23T05:45:14Z INF Lost connection with the edge connIndex=1
+Jun 23 15:45:14 RacconQ cloudflared[42331]: 2026-06-23T05:45:14Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:45:14 RacconQ cloudflared[42331]: 2026-06-23T05:45:14Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:45:14 RacconQ cloudflared[42331]: 2026-06-23T05:45:14Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:45:15 RacconQ cloudflared[42331]: 2026-06-23T05:45:15Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 15:45:25 RacconQ cloudflared[42331]: 2026-06-23T05:45:25Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 15:45:25 RacconQ cloudflared[42331]: 2026-06-23T05:45:25Z INF Registered tunnel connection connIndex=1 connection=8b778545-2983-4d43-b324-d5db24b38e6a event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 15:47:52 RacconQ cloudflared[42331]: 2026-06-23T05:47:52Z INF Lost connection with the edge connIndex=2
+Jun 23 15:47:52 RacconQ cloudflared[42331]: 2026-06-23T05:47:52Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:47:52 RacconQ cloudflared[42331]: 2026-06-23T05:47:52Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:47:52 RacconQ cloudflared[42331]: 2026-06-23T05:47:52Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:47:53 RacconQ cloudflared[42331]: 2026-06-23T05:47:53Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 15:47:54 RacconQ cloudflared[42331]: 2026-06-23T05:47:54Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:47:55 RacconQ cloudflared[42331]: 2026-06-23T05:47:55Z INF Registered tunnel connection connIndex=2 connection=e7869b81-e114-40ae-8d65-b444eb6f7b04 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 15:50:44 RacconQ cloudflared[42331]: 2026-06-23T05:50:44Z INF Lost connection with the edge connIndex=2
+Jun 23 15:50:44 RacconQ cloudflared[42331]: 2026-06-23T05:50:44Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:50:44 RacconQ cloudflared[42331]: 2026-06-23T05:50:44Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:50:44 RacconQ cloudflared[42331]: 2026-06-23T05:50:44Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:50:44 RacconQ cloudflared[42331]: 2026-06-23T05:50:44Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 15:50:53 RacconQ cloudflared[42331]: 2026-06-23T05:50:53Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 15:50:54 RacconQ cloudflared[42331]: 2026-06-23T05:50:54Z INF Registered tunnel connection connIndex=2 connection=ba3e7efa-c481-4b78-b032-b22f0ab45b6f event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 15:52:30 RacconQ cloudflared[42331]: 2026-06-23T05:52:30Z INF Lost connection with the edge connIndex=0
+Jun 23 15:52:30 RacconQ cloudflared[42331]: 2026-06-23T05:52:30Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 15:52:30 RacconQ cloudflared[42331]: 2026-06-23T05:52:30Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:52:30 RacconQ cloudflared[42331]: 2026-06-23T05:52:30Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:52:31 RacconQ cloudflared[42331]: 2026-06-23T05:52:31Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 15:52:37 RacconQ cloudflared[42331]: 2026-06-23T05:52:37Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:52:37 RacconQ cloudflared[42331]: 2026-06-23T05:52:37Z INF Registered tunnel connection connIndex=0 connection=295e4cc0-d35d-440e-81e9-ae36b87c47ca event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 15:55:18 RacconQ cloudflared[42331]: 2026-06-23T05:55:18Z INF Lost connection with the edge connIndex=0
+Jun 23 15:55:18 RacconQ cloudflared[42331]: 2026-06-23T05:55:18Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:55:18 RacconQ cloudflared[42331]: 2026-06-23T05:55:18Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:55:18 RacconQ cloudflared[42331]: 2026-06-23T05:55:18Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:55:19 RacconQ cloudflared[42331]: 2026-06-23T05:55:19Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 15:55:29 RacconQ cloudflared[42331]: 2026-06-23T05:55:29Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:55:30 RacconQ cloudflared[42331]: 2026-06-23T05:55:30Z INF Registered tunnel connection connIndex=0 connection=602a9189-898b-4720-bb41-8e0d1fce1833 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 15:58:11 RacconQ cloudflared[42331]: 2026-06-23T05:58:11Z INF Lost connection with the edge connIndex=0
+Jun 23 15:58:11 RacconQ cloudflared[42331]: 2026-06-23T05:58:11Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:58:11 RacconQ cloudflared[42331]: 2026-06-23T05:58:11Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 15:58:11 RacconQ cloudflared[42331]: 2026-06-23T05:58:11Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:58:12 RacconQ cloudflared[42331]: 2026-06-23T05:58:12Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 15:58:25 RacconQ cloudflared[42331]: 2026-06-23T05:58:25Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 15:58:26 RacconQ cloudflared[42331]: 2026-06-23T05:58:26Z INF Registered tunnel connection connIndex=0 connection=9056e350-382a-43c2-89d5-a55febd53b83 event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 16:02:11 RacconQ cloudflared[42331]: 2026-06-23T06:02:11Z INF Lost connection with the edge connIndex=3
+Jun 23 16:02:11 RacconQ cloudflared[42331]: 2026-06-23T06:02:11Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:02:11 RacconQ cloudflared[42331]: 2026-06-23T06:02:11Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:02:11 RacconQ cloudflared[42331]: 2026-06-23T06:02:11Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:02:11 RacconQ cloudflared[42331]: 2026-06-23T06:02:11Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 16:02:30 RacconQ cloudflared[42331]: 2026-06-23T06:02:30Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:02:31 RacconQ cloudflared[42331]: 2026-06-23T06:02:31Z INF Registered tunnel connection connIndex=3 connection=edb3726f-7fbe-4a3b-9219-6bb6884acf85 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 16:02:32 RacconQ cloudflared[42331]: 2026-06-23T06:02:32Z INF Lost connection with the edge connIndex=1
+Jun 23 16:02:32 RacconQ cloudflared[42331]: 2026-06-23T06:02:32Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:02:32 RacconQ cloudflared[42331]: 2026-06-23T06:02:32Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:02:32 RacconQ cloudflared[42331]: 2026-06-23T06:02:32Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:02:33 RacconQ cloudflared[42331]: 2026-06-23T06:02:33Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 16:02:33 RacconQ cloudflared[42331]: 2026-06-23T06:02:33Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:02:34 RacconQ cloudflared[42331]: 2026-06-23T06:02:34Z INF Registered tunnel connection connIndex=1 connection=c1b1ea5a-289c-4102-85cd-60b20bb3ff13 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 16:05:21 RacconQ cloudflared[42331]: 2026-06-23T06:05:21Z INF Lost connection with the edge connIndex=3
+Jun 23 16:05:21 RacconQ cloudflared[42331]: 2026-06-23T06:05:21Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:05:21 RacconQ cloudflared[42331]: 2026-06-23T06:05:21Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:05:21 RacconQ cloudflared[42331]: 2026-06-23T06:05:21Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:05:21 RacconQ cloudflared[42331]: 2026-06-23T06:05:21Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 16:05:23 RacconQ cloudflared[42331]: 2026-06-23T06:05:23Z INF Lost connection with the edge connIndex=1
+Jun 23 16:05:23 RacconQ cloudflared[42331]: 2026-06-23T06:05:23Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:05:23 RacconQ cloudflared[42331]: 2026-06-23T06:05:23Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:05:23 RacconQ cloudflared[42331]: 2026-06-23T06:05:23Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:05:24 RacconQ cloudflared[42331]: 2026-06-23T06:05:24Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 16:05:24 RacconQ cloudflared[42331]: 2026-06-23T06:05:24Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:05:24 RacconQ cloudflared[42331]: 2026-06-23T06:05:24Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:05:25 RacconQ cloudflared[42331]: 2026-06-23T06:05:25Z INF Registered tunnel connection connIndex=3 connection=7e94804a-eda9-41e0-a223-faf59c59d983 event=0 ip=198.41.200.193 location=dme06 protocol=http2
+Jun 23 16:05:25 RacconQ cloudflared[42331]: 2026-06-23T06:05:25Z INF Registered tunnel connection connIndex=1 connection=ae022a88-1cb4-466a-b9bb-bb858ed37e7c event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 16:08:04 RacconQ cloudflared[42331]: 2026-06-23T06:08:04Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:08:04 RacconQ cloudflared[42331]: 2026-06-23T06:08:04Z WRN Serve tunnel error error="Error shutting down control stream: context canceled" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:08:04 RacconQ cloudflared[42331]: 2026-06-23T06:08:04Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:08:05 RacconQ cloudflared[42331]: 2026-06-23T06:08:05Z WRN Connection terminated error="Error shutting down control stream: context canceled" connIndex=2
+Jun 23 16:08:15 RacconQ cloudflared[42331]: 2026-06-23T06:08:15Z INF Lost connection with the edge connIndex=3
+Jun 23 16:08:15 RacconQ cloudflared[42331]: 2026-06-23T06:08:15Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:08:15 RacconQ cloudflared[42331]: 2026-06-23T06:08:15Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:08:15 RacconQ cloudflared[42331]: 2026-06-23T06:08:15Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:08:15 RacconQ cloudflared[42331]: 2026-06-23T06:08:15Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 16:08:21 RacconQ cloudflared[42331]: 2026-06-23T06:08:21Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:08:21 RacconQ cloudflared[42331]: 2026-06-23T06:08:21Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:08:22 RacconQ cloudflared[42331]: 2026-06-23T06:08:22Z INF Registered tunnel connection connIndex=3 connection=8510415a-3fd1-4836-867b-ed01cf720870 event=0 ip=198.41.200.193 location=dme01 protocol=http2
+Jun 23 16:08:22 RacconQ cloudflared[42331]: 2026-06-23T06:08:22Z INF Registered tunnel connection connIndex=2 connection=4e5ababa-1408-4fc2-8fda-e1628c21d48b event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z INF Lost connection with the edge connIndex=2
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z INF Lost connection with the edge connIndex=3
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:11:11 RacconQ cloudflared[42331]: 2026-06-23T06:11:11Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:11:12 RacconQ cloudflared[42331]: 2026-06-23T06:11:12Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 16:11:13 RacconQ cloudflared[42331]: 2026-06-23T06:11:13Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 16:11:24 RacconQ cloudflared[42331]: 2026-06-23T06:11:24Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:11:24 RacconQ cloudflared[42331]: 2026-06-23T06:11:24Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:11:25 RacconQ cloudflared[42331]: 2026-06-23T06:11:25Z INF Registered tunnel connection connIndex=2 connection=884b20dd-0cd1-4812-9cb9-a74b91f30af9 event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 16:11:38 RacconQ cloudflared[42331]: 2026-06-23T06:11:38Z WRN Unable to establish connection with Cloudflare edge error="DialContext error: dial tcp 198.41.200.193:7844: i/o timeout" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:11:38 RacconQ cloudflared[42331]: 2026-06-23T06:11:38Z WRN Serve tunnel error error="DialContext error: dial tcp 198.41.200.193:7844: i/o timeout" connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:11:38 RacconQ cloudflared[42331]: 2026-06-23T06:11:38Z INF Retrying connection in up to 4s connIndex=3 event=0 ip=198.41.200.193
+Jun 23 16:11:39 RacconQ cloudflared[42331]: 2026-06-23T06:11:39Z WRN Connection terminated error="DialContext error: dial tcp 198.41.200.193:7844: i/o timeout" connIndex=3
+Jun 23 16:12:09 RacconQ cloudflared[42331]: 2026-06-23T06:12:09Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.73
+Jun 23 16:12:10 RacconQ cloudflared[42331]: 2026-06-23T06:12:10Z INF Registered tunnel connection connIndex=3 connection=11e8ce64-8836-46c0-a321-1a0a341ebbab event=0 ip=198.41.200.73 location=dme01 protocol=http2
+Jun 23 16:15:25 RacconQ cloudflared[42331]: 2026-06-23T06:15:25Z INF Lost connection with the edge connIndex=0
+Jun 23 16:15:25 RacconQ cloudflared[42331]: 2026-06-23T06:15:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:15:25 RacconQ cloudflared[42331]: 2026-06-23T06:15:25Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:15:25 RacconQ cloudflared[42331]: 2026-06-23T06:15:25Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:15:26 RacconQ cloudflared[42331]: 2026-06-23T06:15:26Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 16:15:38 RacconQ cloudflared[42331]: 2026-06-23T06:15:38Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:15:39 RacconQ cloudflared[42331]: 2026-06-23T06:15:39Z INF Registered tunnel connection connIndex=0 connection=91003111-3394-4652-8397-88a7eabd5ad3 event=0 ip=198.41.200.23 location=dme06 protocol=http2
+Jun 23 16:22:31 RacconQ cloudflared[42331]: 2026-06-23T06:22:31Z INF Lost connection with the edge connIndex=1
+Jun 23 16:22:31 RacconQ cloudflared[42331]: 2026-06-23T06:22:31Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:22:31 RacconQ cloudflared[42331]: 2026-06-23T06:22:31Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:22:31 RacconQ cloudflared[42331]: 2026-06-23T06:22:31Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:22:32 RacconQ cloudflared[42331]: 2026-06-23T06:22:32Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 16:22:33 RacconQ cloudflared[42331]: 2026-06-23T06:22:33Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:22:34 RacconQ cloudflared[42331]: 2026-06-23T06:22:34Z INF Registered tunnel connection connIndex=1 connection=ee1d95a2-d7ed-4109-9e00-077e9aec6e67 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 16:25:25 RacconQ cloudflared[42331]: 2026-06-23T06:25:25Z INF Lost connection with the edge connIndex=1
+Jun 23 16:25:25 RacconQ cloudflared[42331]: 2026-06-23T06:25:25Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:25:25 RacconQ cloudflared[42331]: 2026-06-23T06:25:25Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:25:25 RacconQ cloudflared[42331]: 2026-06-23T06:25:25Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:25:25 RacconQ cloudflared[42331]: 2026-06-23T06:25:25Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 16:25:27 RacconQ cloudflared[42331]: 2026-06-23T06:25:27Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:25:28 RacconQ cloudflared[42331]: 2026-06-23T06:25:28Z INF Registered tunnel connection connIndex=1 connection=9883d7f3-8d41-4ec3-959a-98ac8523e875 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 16:28:19 RacconQ cloudflared[42331]: 2026-06-23T06:28:19Z INF Lost connection with the edge connIndex=1
+Jun 23 16:28:19 RacconQ cloudflared[42331]: 2026-06-23T06:28:19Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:28:19 RacconQ cloudflared[42331]: 2026-06-23T06:28:19Z WRN Serve tunnel error error="connection with edge closed" connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:28:19 RacconQ cloudflared[42331]: 2026-06-23T06:28:19Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:28:20 RacconQ cloudflared[42331]: 2026-06-23T06:28:20Z WRN Connection terminated error="connection with edge closed" connIndex=1
+Jun 23 16:28:23 RacconQ cloudflared[42331]: 2026-06-23T06:28:23Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=1 event=0 ip=198.41.192.47
+Jun 23 16:28:24 RacconQ cloudflared[42331]: 2026-06-23T06:28:24Z INF Registered tunnel connection connIndex=1 connection=af8515b9-1e85-41f7-931b-a58590b6e0b7 event=0 ip=198.41.192.47 location=dme05 protocol=http2
+Jun 23 16:28:36 RacconQ cloudflared[42331]: 2026-06-23T06:28:36Z INF Lost connection with the edge connIndex=2
+Jun 23 16:28:36 RacconQ cloudflared[42331]: 2026-06-23T06:28:36Z WRN Serve tunnel error error="connection with edge closed" connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:28:36 RacconQ cloudflared[42331]: 2026-06-23T06:28:36Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:28:36 RacconQ cloudflared[42331]: 2026-06-23T06:28:36Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:28:37 RacconQ cloudflared[42331]: 2026-06-23T06:28:37Z WRN Connection terminated error="connection with edge closed" connIndex=2
+Jun 23 16:28:56 RacconQ cloudflared[42331]: 2026-06-23T06:28:56Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=2 event=0 ip=198.41.192.57
+Jun 23 16:28:57 RacconQ cloudflared[42331]: 2026-06-23T06:28:57Z INF Registered tunnel connection connIndex=2 connection=82cfc1b2-e6c3-4e26-a803-0c1bf42d34ef event=0 ip=198.41.192.57 location=dme05 protocol=http2
+Jun 23 16:29:16 RacconQ cloudflared[42331]: 2026-06-23T06:29:16Z INF Lost connection with the edge connIndex=3
+Jun 23 16:29:16 RacconQ cloudflared[42331]: 2026-06-23T06:29:16Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.73
+Jun 23 16:29:16 RacconQ cloudflared[42331]: 2026-06-23T06:29:16Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.73
+Jun 23 16:29:16 RacconQ cloudflared[42331]: 2026-06-23T06:29:16Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:29:16 RacconQ cloudflared[42331]: 2026-06-23T06:29:16Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 16:29:54 RacconQ cloudflared[42331]: 2026-06-23T06:29:54Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.73
+Jun 23 16:29:55 RacconQ cloudflared[42331]: 2026-06-23T06:29:55Z INF Registered tunnel connection connIndex=3 connection=83b70406-3c6c-40fa-bd08-5dc63a7384d3 event=0 ip=198.41.200.73 location=dme01 protocol=http2
+Jun 23 16:32:45 RacconQ cloudflared[42331]: 2026-06-23T06:32:45Z INF Lost connection with the edge connIndex=3
+Jun 23 16:32:45 RacconQ cloudflared[42331]: 2026-06-23T06:32:45Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.200.73
+Jun 23 16:32:45 RacconQ cloudflared[42331]: 2026-06-23T06:32:45Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.73
+Jun 23 16:32:45 RacconQ cloudflared[42331]: 2026-06-23T06:32:45Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:32:46 RacconQ cloudflared[42331]: 2026-06-23T06:32:46Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 23 16:32:46 RacconQ cloudflared[42331]: 2026-06-23T06:32:46Z INF Lost connection with the edge connIndex=0
+Jun 23 16:32:46 RacconQ cloudflared[42331]: 2026-06-23T06:32:46Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:32:46 RacconQ cloudflared[42331]: 2026-06-23T06:32:46Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:32:46 RacconQ cloudflared[42331]: 2026-06-23T06:32:46Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:32:47 RacconQ cloudflared[42331]: 2026-06-23T06:32:47Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 16:33:05 RacconQ cloudflared[42331]: 2026-06-23T06:33:05Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.200.73
+Jun 23 16:33:05 RacconQ cloudflared[42331]: 2026-06-23T06:33:05Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:33:06 RacconQ cloudflared[42331]: 2026-06-23T06:33:06Z INF Registered tunnel connection connIndex=3 connection=92aaf4cb-222b-4d27-a90e-caab1cdc4b90 event=0 ip=198.41.200.73 location=dme01 protocol=http2
+Jun 23 16:33:06 RacconQ cloudflared[42331]: 2026-06-23T06:33:06Z INF Registered tunnel connection connIndex=0 connection=3258fb67-e28b-4fce-ae83-673842c34f8f event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 16:35:46 RacconQ cloudflared[42331]: 2026-06-23T06:35:46Z INF Lost connection with the edge connIndex=0
+Jun 23 16:35:46 RacconQ cloudflared[42331]: 2026-06-23T06:35:46Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:35:46 RacconQ cloudflared[42331]: 2026-06-23T06:35:46Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:35:46 RacconQ cloudflared[42331]: 2026-06-23T06:35:46Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 23 16:35:47 RacconQ cloudflared[42331]: 2026-06-23T06:35:47Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 16:36:04 RacconQ cloudflared[42331]: 2026-06-23T06:36:04Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:36:04 RacconQ cloudflared[42331]: 2026-06-23T06:36:04Z INF Registered tunnel connection connIndex=0 connection=ffdbb62a-ee58-4865-a6b6-7d5c2caea678 event=0 ip=198.41.200.23 location=dme01 protocol=http2
+Jun 23 16:38:45 RacconQ cloudflared[42331]: 2026-06-23T06:38:45Z INF Lost connection with the edge connIndex=0
+Jun 23 16:38:45 RacconQ cloudflared[42331]: 2026-06-23T06:38:45Z ERR failed to serve incoming request error="Error shutting down control stream: context canceled"
+Jun 23 16:38:45 RacconQ cloudflared[42331]: 2026-06-23T06:38:45Z WRN Serve tunnel error error="connection with edge closed" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:38:45 RacconQ cloudflared[42331]: 2026-06-23T06:38:45Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:38:47 RacconQ cloudflared[42331]: 2026-06-23T06:38:47Z WRN Connection terminated error="connection with edge closed" connIndex=0
+Jun 23 16:39:04 RacconQ cloudflared[42331]: 2026-06-23T06:39:04Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:39:18 RacconQ cloudflared[42331]: 2026-06-23T06:39:18Z WRN Unable to establish connection with Cloudflare edge error="DialContext error: dial tcp 198.41.200.23:7844: i/o timeout" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:39:18 RacconQ cloudflared[42331]: 2026-06-23T06:39:18Z WRN Serve tunnel error error="DialContext error: dial tcp 198.41.200.23:7844: i/o timeout" connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:39:18 RacconQ cloudflared[42331]: 2026-06-23T06:39:18Z INF Retrying connection in up to 4s connIndex=0 event=0 ip=198.41.200.23
+Jun 23 16:39:21 RacconQ cloudflared[42331]: 2026-06-23T06:39:21Z WRN Connection terminated error="DialContext error: dial tcp 198.41.200.23:7844: i/o timeout" connIndex=0
+Jun 23 16:39:56 RacconQ cloudflared[42331]: 2026-06-23T06:39:56Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=0 event=0 ip=198.41.200.113
+Jun 23 16:39:57 RacconQ cloudflared[42331]: 2026-06-23T06:39:57Z INF Registered tunnel connection connIndex=0 connection=067fe759-9945-4e02-a56f-792091361c0b event=0 ip=198.41.200.113 location=dme01 protocol=http2
