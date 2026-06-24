@@ -1,0 +1,29 @@
+root@RacconQ:~/vvsu-tourism# docker compose ps
+NAME                 IMAGE                COMMAND                  SERVICE   CREATED        STATUS                   PORTS
+vvsu-tourism-api-1   vvsu-tourism-api     "entrypoint.sh"          api       13 hours ago   Up 3 minutes             0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+vvsu-tourism-db-1    postgres:16-alpine   "docker-entrypoint.s…"   db        13 hours ago   Up 3 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+vvsu-tourism-web-1   vvsu-tourism-web     "/docker-entrypoint.…"   web       13 hours ago   Up 3 minutes             0.0.0.0:8888->80/tcp, [::]:8888->80/tcp
+root@RacconQ:~/vvsu-tourism# ps aux | grep cloudflared
+root         145  0.0  0.1 1295452 43324 ?       Ssl  11:05   0:00 /usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run
+root        2310  0.0  0.0   4092  2028 pts/0    S+   11:09   0:00 grep --color=auto cloudflared
+root@RacconQ:~/vvsu-tourism# sudo systemctl status cloudflared
+● cloudflared.service - cloudflared
+     Loaded: loaded (/etc/systemd/system/cloudflared.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-06-24 11:05:44 +10; 4min 16s ago
+   Main PID: 145 (cloudflared)
+      Tasks: 13 (limit: 28414)
+     Memory: 64.6M ()
+     CGroup: /system.slice/cloudflared.service
+             └─145 /usr/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run
+
+Jun 24 11:05:48 RacconQ cloudflared[145]: 2026-06-24T01:05:48Z INF precheck component="TCP Connectivity" details="HTTP/2 connection successful" run_id=46a4feec-aaa5-4020-8619-d210be820631 st>
+Jun 24 11:05:48 RacconQ cloudflared[145]: 2026-06-24T01:05:48Z INF precheck component="Cloudflare API" details="API is reachable" run_id=46a4feec-aaa5-4020-8619-d210be820631 status=pass targ>
+Jun 24 11:05:48 RacconQ cloudflared[145]: 2026-06-24T01:05:48Z INF precheck complete hard_fail=false run_id=46a4feec-aaa5-4020-8619-d210be820631 suggested_protocol=http2
+Jun 24 11:08:38 RacconQ cloudflared[145]: 2026-06-24T01:08:38Z INF Lost connection with the edge connIndex=3
+Jun 24 11:08:38 RacconQ cloudflared[145]: 2026-06-24T01:08:38Z WRN Serve tunnel error error="connection with edge closed" connIndex=3 event=0 ip=198.41.192.27
+Jun 24 11:08:38 RacconQ cloudflared[145]: 2026-06-24T01:08:38Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.192.27
+Jun 24 11:08:38 RacconQ cloudflared[145]: 2026-06-24T01:08:38Z ERR failed to serve incoming request error="Error shutting down control stream: client disconnected"
+Jun 24 11:08:40 RacconQ cloudflared[145]: 2026-06-24T01:08:40Z WRN Connection terminated error="connection with edge closed" connIndex=3
+Jun 24 11:08:48 RacconQ cloudflared[145]: 2026-06-24T01:08:48Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveID(65074) CurveP256] connIndex=3 event=0 ip=198.41.192.27
+Jun 24 11:08:49 RacconQ cloudflared[145]: 2026-06-24T01:08:49Z INF Registered tunnel connection connIndex=3 connection=3722844b-9c65-45bf-833e-f88699006852 event=0 ip=198.41.192.27 location=>
+lines 1-19/19 (END)
