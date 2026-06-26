@@ -402,7 +402,7 @@ export default function Home() {
                 <Link href="/dashboard">Начать экспедицию <ArrowRight className="ml-2 h-5 w-5" /></Link>
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8 h-14 text-lg border-white/20 bg-white/5 text-white backdrop-blur hover:bg-white/10" asChild>
-                <Link href="/courses">Изучить курсы</Link>
+                <Link href="/admission">Узнать о поступлении</Link>
               </Button>
             </div>
           </motion.div>

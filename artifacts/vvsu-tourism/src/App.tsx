@@ -47,7 +47,6 @@ function Router() {
         <Route path="/admin"><Redirect to="/cabinet" /></Route>
 
         {/* Personal cabinet — explicit routes first, then catch-all */}
-        <Route path="/cabinet/courses/:id" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
         <Route path="/cabinet/tasks/quiz/:id" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
         <Route path="/cabinet/messages/:userId" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
         <Route path="/cabinet/:rest*" component={() => <RequireAuth><Cabinet /></RequireAuth>} />
@@ -55,8 +54,6 @@ function Router() {
 
         {/* Legacy redirects */}
         <Route path="/dashboard"><Redirect to="/cabinet" /></Route>
-        <Route path="/courses/:id" component={({ params }) => <Redirect to={`/cabinet/courses/${params.id}`} />} />
-        <Route path="/courses"><Redirect to="/cabinet/courses" /></Route>
         <Route path="/tasks"><Redirect to="/cabinet/tasks" /></Route>
         <Route path="/quizzes"><Redirect to="/cabinet/tasks" /></Route>
         <Route path="/quests"><Redirect to="/cabinet/tasks" /></Route>

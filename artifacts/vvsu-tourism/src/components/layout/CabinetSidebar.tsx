@@ -1,13 +1,12 @@
 import { Link, useLocation, useSearch } from "wouter";
 import { motion } from "framer-motion";
-import { LayoutDashboard, BookOpen, Swords, Users, Settings, MessageSquare, UserCheck } from "lucide-react";
+import { LayoutDashboard, Swords, Users, Settings, MessageSquare, UserCheck } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useListConversations, useListFriendRequests } from "@workspace/api-client-react";
 
 const sidebarItems = [
   { href: "/cabinet",           label: "Обзор",      icon: LayoutDashboard },
-  { href: "/cabinet/courses",   label: "Курсы",      icon: BookOpen },
   { href: "/cabinet/tasks",     label: "Задания",    icon: Swords },
   { href: "/cabinet/community", label: "Сообщество", icon: Users },
   { href: "/cabinet/friends",   label: "Друзья",     icon: UserCheck },
