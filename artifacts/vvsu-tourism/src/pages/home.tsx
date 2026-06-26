@@ -322,60 +322,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Why Us ────────────────────────────────────────────── */}
-      <section className="py-24 overflow-hidden relative" style={{ background: "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)/0.3) 50%, hsl(var(--background)) 100%)" }}>
-        {/* Decorative bg circles */}
-        <div className="absolute -left-40 top-20 w-80 h-80 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(3,63,126,0.07) 0%, transparent 70%)" }} />
-        <div className="absolute -right-40 bottom-20 w-80 h-80 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(235,113,36,0.07) 0%, transparent 70%)" }} />
-
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
-              <Star className="h-4 w-4 text-accent" /> Почему ВВГУ
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Ваш курс к<br />
-              <span className="text-accent">успешной карьере</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Мы сочетаем академическое образование, живую практику и уникальную среду Владивостока.
-            </p>
-          </motion.div>
-
-          <div className="space-y-20">
-            {whyUs.map(({ Illustration, title, desc, accent, stat, statLabel }, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: "easeOut" }}
-                className={`flex flex-col ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-12`}>
-                {/* Illustration */}
-                <div className="w-full md:w-80 shrink-0">
-                  <div className="relative">
-                    {/* Glow bg */}
-                    <div className="absolute inset-0 rounded-3xl" style={{ background: `radial-gradient(circle, ${accent}18 0%, transparent 70%)` }} />
-                    <div className="relative h-64 w-full flex items-center justify-center p-8">
-                      <Illustration />
-                    </div>
-                  </div>
-                </div>
-                {/* Text */}
-                <div className="flex-1 text-center md:text-left">
-                  <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-                    <div className="inline-flex items-center gap-2 mb-4">
-                      <span className="text-4xl font-bold" style={{ color: accent }}>{stat}</span>
-                      <span className="text-muted-foreground text-sm">{statLabel}</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{title}</h3>
-                    <p className="text-muted-foreground leading-relaxed text-lg max-w-lg">{desc}</p>
-                    <div className="mt-6 h-1 w-16 rounded-full" style={{ background: accent }} />
-                  </motion.div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Student Life Preview ───────────────────────────────── */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 max-w-6xl">
@@ -411,57 +357,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Careers ───────────────────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
-              <Briefcase className="h-4 w-4 text-accent" /> Карьера выпускников
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Кем вы можете<br />
-              <span className="text-accent">стать после ВВГУ</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Наши выпускники работают по всему Азиатско-Тихоокеанскому региону — от отелей Владивостока до туроператоров Японии и Кореи.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { icon: <Plane className="h-7 w-7" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽" },
-              { icon: <Building2 className="h-7 w-7" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽" },
-              { icon: <Globe className="h-7 w-7" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽" },
-              { icon: <Camera className="h-7 w-7" />, title: "Специалист по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽" },
-              { icon: <UtensilsCrossed className="h-7 w-7" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽" },
-              { icon: <Ship className="h-7 w-7" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽" },
-            ].map((job, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -4 }}>
-                <div className="rounded-2xl border border-border/60 bg-card p-5 h-full flex flex-col gap-3 hover:shadow-lg transition-shadow group">
-                  <div className="flex items-start justify-between">
-                    <div className="h-12 w-12 rounded-xl flex items-center justify-center text-white shrink-0"
-                      style={{ background: `linear-gradient(135deg, ${job.color}cc, ${job.color})` }}>
-                      {job.icon}
-                    </div>
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">{job.salary}</span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground mb-1">{job.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{job.desc}</p>
-                  </div>
-                  <div className="mt-auto pt-2">
-                    <div className="h-0.5 w-8 rounded-full transition-all group-hover:w-16" style={{ background: job.color }} />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Flagship programs ──────────────────────────────────── */}
       <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #0a1a2e 0%, #0d2340 50%, #0a1a2e 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, rgba(3,63,126,0.25) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(235,113,36,0.12) 0%, transparent 40%)" }} />
@@ -483,7 +378,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0 }} whileHover={{ y: -6 }}>
               <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-[#033F7E]/60 transition-all hover:shadow-xl hover:shadow-[#033F7E]/20">
                 <div className="relative h-52 overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Туризм" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/prog-tourism.png" alt="Туризм" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(3,63,126,0.9) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
                     <div className="h-9 w-9 rounded-xl bg-[#033F7E] flex items-center justify-center"><Globe className="h-5 w-5 text-white" /></div>
@@ -516,7 +411,7 @@ export default function Home() {
                   <div className="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-accent/40">⭐ Флагманская</div>
                 </div>
                 <div className="relative h-52 overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=800&q=80" alt="Дизайн" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/prog-design.png" alt="Дизайн" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(20,10,5,0.92) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
                     <div className="h-9 w-9 rounded-xl bg-accent flex items-center justify-center"><Palette className="h-5 w-5 text-white" /></div>
@@ -544,7 +439,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} whileHover={{ y: -6 }}>
               <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-[#EB7124]/40 transition-all hover:shadow-xl hover:shadow-[#EB7124]/15">
                 <div className="relative h-52 overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Гостиничное дело" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src="/prog-hotel.png" alt="Гостиничное дело" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(20,10,0,0.9) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
                     <div className="h-9 w-9 rounded-xl bg-[#EB7124] flex items-center justify-center"><Building2 className="h-5 w-5 text-white" /></div>
@@ -622,18 +517,18 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid grid-cols-2 gap-3">
               <div className="space-y-3">
                 <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-56 shadow-lg">
-                  <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" alt="Абитуриенты ВВГУ" className="w-full h-full object-cover" />
+                  <img src="/students-1.png" alt="Абитуриенты ВВГУ" className="w-full h-full object-cover" />
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-40 shadow-lg">
-                  <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="Студенты ВВГУ" className="w-full h-full object-cover" />
+                  <img src="/students-2.png" alt="Студенты ВВГУ" className="w-full h-full object-cover" />
                 </motion.div>
               </div>
               <div className="space-y-3 mt-8">
                 <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-40 shadow-lg">
-                  <img src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?auto=format&fit=crop&w=600&q=80" alt="Кампус ВВГУ" className="w-full h-full object-cover" />
+                  <img src="/students-3.png" alt="Кампус ВВГУ" className="w-full h-full object-cover" />
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-56 shadow-lg">
-                  <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Учёба в ВВГУ" className="w-full h-full object-cover" />
+                  <img src="/students-4.png" alt="Учёба в ВВГУ" className="w-full h-full object-cover" />
                 </motion.div>
               </div>
             </motion.div>
@@ -651,6 +546,57 @@ export default function Home() {
                 <div className="rounded-2xl border border-border/60 bg-card p-5 text-center hover:shadow-md transition-shadow">
                   <div className="text-3xl font-black mb-1" style={{ color: s.color }}>{s.num}</div>
                   <div className="text-sm text-muted-foreground font-medium">{s.label}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Careers ───────────────────────────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
+              <Briefcase className="h-4 w-4 text-accent" /> Карьера выпускников
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Кем вы можете<br />
+              <span className="text-accent">стать после ВВГУ</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+              Наши выпускники работают по всему Азиатско-Тихоокеанскому региону — от отелей Владивостока до туроператоров Японии и Кореи.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { icon: <Plane className="h-7 w-7" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽" },
+              { icon: <Building2 className="h-7 w-7" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽" },
+              { icon: <Globe className="h-7 w-7" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽" },
+              { icon: <Camera className="h-7 w-7" />, title: "Специалист по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽" },
+              { icon: <UtensilsCrossed className="h-7 w-7" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽" },
+              { icon: <Ship className="h-7 w-7" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽" },
+            ].map((job, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                whileHover={{ y: -4 }}>
+                <div className="rounded-2xl border border-border/60 bg-card p-5 h-full flex flex-col gap-3 hover:shadow-lg transition-shadow group">
+                  <div className="flex items-start justify-between">
+                    <div className="h-12 w-12 rounded-xl flex items-center justify-center text-white shrink-0"
+                      style={{ background: `linear-gradient(135deg, ${job.color}cc, ${job.color})` }}>
+                      {job.icon}
+                    </div>
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">{job.salary}</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-foreground mb-1">{job.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{job.desc}</p>
+                  </div>
+                  <div className="mt-auto pt-2">
+                    <div className="h-0.5 w-8 rounded-full transition-all group-hover:w-16" style={{ background: job.color }} />
+                  </div>
                 </div>
               </motion.div>
             ))}

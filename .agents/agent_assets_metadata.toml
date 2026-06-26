@@ -24,6 +24,48 @@ uri = "file://artifacts/vvsu-tourism/public/images/vladivostok-map-bg.png"
 type = "image"
 title = "Stylized Vladivostok map illustration"
 
+[[generated]]
+id = "-WR44iCsOTfyzrZmC32a8"
+uri = "file://artifacts/vvsu-tourism/public/prog-tourism.png"
+type = "image"
+title = "tourism-vladivostok"
+
+[[generated]]
+id = "BbITZpFB44j5FGDrs8f-0"
+uri = "file://artifacts/vvsu-tourism/public/prog-design.png"
+type = "image"
+title = "design-students-studio"
+
+[[generated]]
+id = "aJy-oVCQzHbxCkuPCkOag"
+uri = "file://artifacts/vvsu-tourism/public/prog-hotel.png"
+type = "image"
+title = "luxury-hotel-lobby"
+
+[[generated]]
+id = "5FHZ00JBGY6U0f8hYFkfK"
+uri = "file://artifacts/vvsu-tourism/public/students-1.png"
+type = "image"
+title = "happy-students-campus"
+
+[[generated]]
+id = "1gP8nN3FYlYQ_gi0lftwl"
+uri = "file://artifacts/vvsu-tourism/public/students-2.png"
+type = "image"
+title = "students-studying-library"
+
+[[generated]]
+id = "7tt771k2GOCdbzNgsWNMx"
+uri = "file://artifacts/vvsu-tourism/public/students-3.png"
+type = "image"
+title = "graduation-ceremony"
+
+[[generated]]
+id = "H699D-uS283tIYe-VgKR_"
+uri = "file://artifacts/vvsu-tourism/public/students-4.png"
+type = "image"
+title = "students-field-trip"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"
