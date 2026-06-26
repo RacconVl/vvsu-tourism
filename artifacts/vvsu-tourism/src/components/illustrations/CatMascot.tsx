@@ -7,7 +7,7 @@ export function CatMascot() {
       style={{ width: "clamp(100px, 22vw, 300px)", height: "auto" }}
     >
       <svg
-        viewBox="0 0 200 310"
+        viewBox="0 0 200 340"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full"
         overflow="visible"
@@ -65,46 +65,63 @@ export function CatMascot() {
             opacity="0.6"
           />
 
+          {/* ── LEGS ── */}
+          {/* Left leg — upper thigh */}
+          <motion.g
+            style={{ transformOrigin: "78px 292px" }}
+            animate={{ rotate: [6, -6, 6] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <rect x="68" y="290" width="20" height="36" rx="10" fill="url(#cm-body)" />
+            {/* Left foot */}
+            <ellipse cx="78" cy="330" rx="16" ry="9" fill="#E04E00" />
+            <ellipse cx="83" cy="328" rx="7" ry="5" fill="#FF6A00" opacity="0.7" />
+          </motion.g>
+          {/* Right leg — opposite phase */}
+          <motion.g
+            style={{ transformOrigin: "118px 292px" }}
+            animate={{ rotate: [-6, 6, -6] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <rect x="108" y="290" width="20" height="36" rx="10" fill="url(#cm-body)" />
+            {/* Right foot */}
+            <ellipse cx="118" cy="330" rx="16" ry="9" fill="#E04E00" />
+            <ellipse cx="113" cy="328" rx="7" ry="5" fill="#FF6A00" opacity="0.7" />
+          </motion.g>
+
           {/* ── BODY ── */}
           <ellipse cx="98" cy="238" rx="60" ry="62" fill="url(#cm-body)" />
           <ellipse cx="98" cy="248" rx="36" ry="42" fill="url(#cm-belly)" opacity="0.85" />
 
-          {/* ── LEFT ARM (resting down) ── */}
-          <ellipse
-            cx="44"
-            cy="230"
-            rx="15"
-            ry="30"
-            fill="url(#cm-body)"
-            transform="rotate(-12,44,230)"
-          />
-          {/* Left paw */}
-          <ellipse cx="38" cy="258" rx="13" ry="10" fill="url(#cm-fur)" />
-          <ellipse cx="31" cy="253" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
-          <ellipse cx="38" cy="251" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
-          <ellipse cx="45" cy="253" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
-
-          {/* ── RIGHT ARM (waving) — pivot at shoulder ── */}
+          {/* ── LEFT ARM — gentle idle swing, pivot at shoulder ── */}
           <motion.g
-            style={{ transformOrigin: "152px 210px" }}
-            animate={{ rotate: [-18, 22, -10, 26, -18] }}
+            style={{ transformOrigin: "52px 213px" }}
+            animate={{ rotate: [8, -8, 8] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+          >
+            {/* Upper arm */}
+            <rect x="36" y="213" width="18" height="34" rx="9" fill="url(#cm-body)" transform="rotate(-10,45,213)" />
+            {/* Left paw */}
+            <ellipse cx="38" cy="252" rx="13" ry="10" fill="url(#cm-fur)" transform="rotate(-10,38,252)" />
+            <ellipse cx="31" cy="248" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
+            <ellipse cx="38" cy="245" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
+            <ellipse cx="45" cy="248" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
+          </motion.g>
+
+          {/* ── RIGHT ARM — waving up, pivot at shoulder ── */}
+          <motion.g
+            style={{ transformOrigin: "148px 213px" }}
+            animate={{ rotate: [-20, 25, -12, 28, -20] }}
             transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut", times: [0, 0.3, 0.5, 0.75, 1] }}
           >
             {/* Upper arm */}
-            <ellipse
-              cx="158"
-              cy="188"
-              rx="14"
-              ry="30"
-              fill="url(#cm-body)"
-              transform="rotate(18,158,188)"
-            />
-            {/* Paw */}
-            <ellipse cx="170" cy="162" rx="14" ry="11" fill="url(#cm-fur)" />
+            <rect x="138" y="213" width="18" height="34" rx="9" fill="url(#cm-body)" transform="rotate(10,148,213)" />
+            {/* Right paw */}
+            <ellipse cx="162" cy="210" rx="14" ry="11" fill="url(#cm-fur)" />
             {/* Toes */}
-            <ellipse cx="162" cy="154" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
-            <ellipse cx="171" cy="152" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
-            <ellipse cx="180" cy="156" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
+            <ellipse cx="154" cy="203" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
+            <ellipse cx="163" cy="200" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
+            <ellipse cx="172" cy="204" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
           </motion.g>
 
           {/* ── EARS (behind beret) ── */}
@@ -122,9 +139,7 @@ export function CatMascot() {
           <path d="M80 120 Q99 115 118 120" stroke="#C04000" strokeWidth="1.6" fill="none" opacity="0.4" />
 
           {/* ── BERET ── */}
-          {/* Brim */}
           <ellipse cx="99" cy="92" rx="76" ry="19" fill="#5B2D8E" opacity="0.9" />
-          {/* Colorful stripes on brim */}
           <clipPath id="cm-brim-clip">
             <ellipse cx="99" cy="92" rx="76" ry="19" />
           </clipPath>
@@ -155,8 +170,6 @@ export function CatMascot() {
             <rect x="131" y="55" width="14" height="54" fill="#E74C3C" opacity="0.5" />
           </g>
           <ellipse cx="99" cy="82" rx="54" ry="27" fill="transparent" stroke="#4A2070" strokeWidth="1.5" />
-
-          {/* Dome shine */}
           <ellipse cx="83" cy="70" rx="14" ry="6" fill="white" opacity="0.12" transform="rotate(-20,83,70)" />
 
           {/* Pompom */}
@@ -171,22 +184,17 @@ export function CatMascot() {
           </motion.g>
 
           {/* ── GLASSES ── */}
-          {/* Left lens — big wide oval */}
           <ellipse cx="74" cy="150" rx="27" ry="23" fill="url(#cm-lens-l)" />
           <ellipse cx="74" cy="150" rx="27" ry="23" fill="none" stroke="#1E2D3D" strokeWidth="3.2" />
-          {/* Right lens */}
           <ellipse cx="126" cy="150" rx="27" ry="23" fill="url(#cm-lens-r)" />
           <ellipse cx="126" cy="150" rx="27" ry="23" fill="none" stroke="#1E2D3D" strokeWidth="3.2" />
-          {/* Bridge */}
           <path d="M101 150 Q99 147 97 150" stroke="#1E2D3D" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          {/* Arms */}
           <line x1="47" y1="149" x2="36" y2="144" stroke="#1E2D3D" strokeWidth="2.5" strokeLinecap="round" />
           <line x1="153" y1="149" x2="164" y2="144" stroke="#1E2D3D" strokeWidth="2.5" strokeLinecap="round" />
-          {/* Lens shine */}
           <ellipse cx="64" cy="140" rx="7" ry="5" fill="white" opacity="0.28" transform="rotate(-25,64,140)" />
           <ellipse cx="116" cy="140" rx="7" ry="5" fill="white" opacity="0.28" transform="rotate(-25,116,140)" />
 
-          {/* ── EYES (behind glasses) ── */}
+          {/* ── EYES ── */}
           <motion.g
             animate={{ scaleY: [1, 1, 0.08, 1, 1] }}
             transition={{ duration: 3.5, repeat: Infinity, times: [0, 0.82, 0.87, 0.92, 1], ease: "easeInOut" }}
@@ -210,16 +218,14 @@ export function CatMascot() {
           <ellipse cx="99" cy="167" rx="5.5" ry="4" fill="#E88FA5" />
 
           {/* ── WHISKERS ── */}
-          {/* Left */}
           <line x1="50" y1="168" x2="86" y2="170" stroke="#9B7A5A" strokeWidth="1.3" opacity="0.65" />
           <line x1="48" y1="175" x2="85" y2="174" stroke="#9B7A5A" strokeWidth="1.3" opacity="0.65" />
           <line x1="50" y1="182" x2="86" y2="178" stroke="#9B7A5A" strokeWidth="1.3" opacity="0.65" />
-          {/* Right */}
           <line x1="148" y1="168" x2="112" y2="170" stroke="#9B7A5A" strokeWidth="1.3" opacity="0.65" />
           <line x1="150" y1="175" x2="113" y2="174" stroke="#9B7A5A" strokeWidth="1.3" opacity="0.65" />
           <line x1="148" y1="182" x2="112" y2="178" stroke="#9B7A5A" strokeWidth="1.3" opacity="0.65" />
 
-          {/* ── MOUTH (smile) ── */}
+          {/* ── MOUTH ── */}
           <path d="M89 175 Q99 186 109 175" stroke="#7A4A2A" strokeWidth="2.2" fill="none" strokeLinecap="round" />
 
           {/* ── CHEEK BLUSH ── */}
