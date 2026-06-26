@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Compass, Map as MapIcon, ArrowRight, Shield, Anchor, Waves, Star, Users, Trophy, BookOpen, GraduationCap, Zap, Globe, Briefcase, Building2, Plane, UtensilsCrossed, Camera, Ship } from "lucide-react";
+import { Compass, Map as MapIcon, ArrowRight, Shield, Anchor, Waves, Star, Users, Trophy, BookOpen, GraduationCap, Zap, Globe, Briefcase, Building2, Plane, UtensilsCrossed, Camera, Ship, Palette, CheckCircle2, Sparkles, ExternalLink, Heart, Medal, Lightbulb } from "lucide-react";
 
 /* ── SVG Illustrations ──────────────────────────────────────── */
 
@@ -455,6 +455,202 @@ export default function Home() {
                   <div className="mt-auto pt-2">
                     <div className="h-0.5 w-8 rounded-full transition-all group-hover:w-16" style={{ background: job.color }} />
                   </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Flagship programs ──────────────────────────────────── */}
+      <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #0a1a2e 0%, #0d2340 50%, #0a1a2e 100%)" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, rgba(3,63,126,0.25) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(235,113,36,0.12) 0%, transparent 40%)" }} />
+        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-sm mb-5">
+              <Sparkles className="h-4 w-4" /> Флагманские программы
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+              Выбери своё<br /><span className="text-accent">направление</span>
+            </h2>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">
+              Институт туризма и креативных индустрий — это три ведущих направления, открывающих двери в профессии будущего
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            {/* Tourism */}
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0 }} whileHover={{ y: -6 }}>
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-[#033F7E]/60 transition-all hover:shadow-xl hover:shadow-[#033F7E]/20">
+                <div className="relative h-52 overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Туризм" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(3,63,126,0.9) 100%)" }} />
+                  <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                    <div className="h-9 w-9 rounded-xl bg-[#033F7E] flex items-center justify-center"><Globe className="h-5 w-5 text-white" /></div>
+                    <span className="text-white font-bold text-lg">Туризм</span>
+                  </div>
+                  <div className="absolute top-3 right-3 bg-white/15 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full border border-white/20">Бакалавриат · Магистратура</div>
+                </div>
+                <div className="p-5 flex flex-col gap-4 flex-1">
+                  <p className="text-white/70 text-sm leading-relaxed">Организация международных туров, экотуризм, круизный туризм в АТР. Практика с первого курса на объектах Приморья.</p>
+                  <div className="space-y-2">
+                    {["25 бюджетных мест", "Двойной диплом с Кореей", "Практика в отелях 5★"].map(f => (
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-[#033F7E] shrink-0" />{f}</div>
+                    ))}
+                  </div>
+                  <div className="mt-auto">
+                    <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-[#5b9cf6] hover:text-white transition-colors font-medium">
+                      Подробнее о программе <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Design — highlighted */}
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} whileHover={{ y: -6 }}>
+              <div className="rounded-2xl overflow-hidden border border-accent/40 h-full flex flex-col group hover:border-accent/70 transition-all hover:shadow-xl hover:shadow-accent/25 relative">
+                <div className="absolute -top-px left-6 right-6 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent" />
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10">
+                  <div className="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-accent/40">⭐ Флагманская</div>
+                </div>
+                <div className="relative h-52 overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=800&q=80" alt="Дизайн" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(20,10,5,0.92) 100%)" }} />
+                  <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                    <div className="h-9 w-9 rounded-xl bg-accent flex items-center justify-center"><Palette className="h-5 w-5 text-white" /></div>
+                    <span className="text-white font-bold text-lg">Дизайн</span>
+                  </div>
+                </div>
+                <div className="p-5 flex flex-col gap-4 flex-1" style={{ background: "linear-gradient(160deg, #1a0e06 0%, #0d1a2e 100%)" }}>
+                  <p className="text-white/70 text-sm leading-relaxed">Графический дизайн и дизайн среды. Реальные проекты с туристическими брендами, айдентика, UX/UI, дизайн туристических объектов Приморья.</p>
+                  <div className="space-y-2">
+                    {["Студия оборудована Mac Pro", "Партнёрство с агентствами VL", "Диплом = портфолио"].map(f => (
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0" />{f}</div>
+                    ))}
+                  </div>
+                  <div className="mt-auto">
+                    <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-white transition-colors font-semibold">
+                      Подробнее о программе <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Hotel Management */}
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} whileHover={{ y: -6 }}>
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-[#EB7124]/40 transition-all hover:shadow-xl hover:shadow-[#EB7124]/15">
+                <div className="relative h-52 overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Гостиничное дело" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(20,10,0,0.9) 100%)" }} />
+                  <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                    <div className="h-9 w-9 rounded-xl bg-[#EB7124] flex items-center justify-center"><Building2 className="h-5 w-5 text-white" /></div>
+                    <span className="text-white font-bold text-lg">Гостиничное дело</span>
+                  </div>
+                  <div className="absolute top-3 right-3 bg-white/15 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full border border-white/20">Бакалавриат</div>
+                </div>
+                <div className="p-5 flex flex-col gap-4 flex-1">
+                  <p className="text-white/70 text-sm leading-relaxed">Управление отелями и гостиничным сервисом международного уровня. Стажировки в 5★ отелях Владивостока, Сочи и Кореи.</p>
+                  <div className="space-y-2">
+                    {["20 бюджетных мест", "Стажировки в Hyatt, Marriott", "100% трудоустройство"].map(f => (
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-[#EB7124] shrink-0" />{f}</div>
+                    ))}
+                  </div>
+                  <div className="mt-auto">
+                    <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm text-[#fb923c] hover:text-white transition-colors font-medium">
+                      Подробнее о программе <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center">
+            <Button asChild className="bg-accent hover:bg-accent/90 text-white rounded-full px-8 py-3 shadow-lg shadow-accent/30">
+              <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer">
+                Все флагманские программы ВВГУ <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Why choose us + student photos ─────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+            {/* Left: reasons */}
+            <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-6">
+                <Heart className="h-4 w-4 text-accent" /> Почему выбирают нас
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                Институт,<br />который <span className="text-accent">меняет жизнь</span>
+              </h2>
+              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+                Мы не просто обучаем — мы погружаем в реальную индустрию с первого дня. Каждый студент получает наставника-практика и доступ к живым проектам.
+              </p>
+              <div className="space-y-4">
+                {[
+                  { icon: <Medal className="h-5 w-5" />, title: "Аккредитованные программы", desc: "Дипломы признаются работодателями России, Кореи, Японии и Китая", color: "#033F7E" },
+                  { icon: <Lightbulb className="h-5 w-5" />, title: "Проектное обучение", desc: "Реальные кейсы от туристических компаний Приморья с первого семестра", color: "#EB7124" },
+                  { icon: <Globe className="h-5 w-5" />, title: "Международная среда", desc: "Студенческий обмен с 12 университетами АТР, летние школы за рубежом", color: "#7c3aed" },
+                  { icon: <Users className="h-5 w-5" />, title: "Сообщество выпускников", desc: "3 000+ выпускников работают в ведущих компаниях туристической отрасли", color: "#0891b2" },
+                ].map((r, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                    <div className="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-card hover:shadow-md transition-shadow">
+                      <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
+                        style={{ background: `linear-gradient(135deg, ${r.color}cc, ${r.color})` }}>
+                        {r.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-0.5">{r.title}</h4>
+                        <p className="text-sm text-muted-foreground">{r.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right: photo mosaic */}
+            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid grid-cols-2 gap-3">
+              <div className="space-y-3">
+                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-56 shadow-lg">
+                  <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" alt="Абитуриенты ВВГУ" className="w-full h-full object-cover" />
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-40 shadow-lg">
+                  <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="Студенты ВВГУ" className="w-full h-full object-cover" />
+                </motion.div>
+              </div>
+              <div className="space-y-3 mt-8">
+                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-40 shadow-lg">
+                  <img src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?auto=format&fit=crop&w=600&q=80" alt="Кампус ВВГУ" className="w-full h-full object-cover" />
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-56 shadow-lg">
+                  <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Учёба в ВВГУ" className="w-full h-full object-cover" />
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Stats strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { num: "70+", label: "Лет институту", color: "#033F7E" },
+              { num: "3 000+", label: "Выпускников в индустрии", color: "#EB7124" },
+              { num: "12", label: "Стран-партнёров", color: "#7c3aed" },
+              { num: "95%", label: "Трудоустройство", color: "#16a34a" },
+            ].map((s, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                <div className="rounded-2xl border border-border/60 bg-card p-5 text-center hover:shadow-md transition-shadow">
+                  <div className="text-3xl font-black mb-1" style={{ color: s.color }}>{s.num}</div>
+                  <div className="text-sm text-muted-foreground font-medium">{s.label}</div>
                 </div>
               </motion.div>
             ))}
