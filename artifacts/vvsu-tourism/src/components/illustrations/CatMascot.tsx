@@ -4,7 +4,7 @@ export function CatMascot() {
   return (
     <div
       className="absolute top-0 right-0 pointer-events-none select-none z-10 overflow-visible"
-      style={{ width: "clamp(130px, 15vw, 210px)", height: "auto" }}
+      style={{ width: "clamp(200px, 22vw, 300px)", height: "auto" }}
     >
       <svg
         viewBox="0 0 200 310"
@@ -14,16 +14,16 @@ export function CatMascot() {
       >
         <defs>
           <linearGradient id="cm-fur" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#FFCB8E" />
-            <stop offset="100%" stopColor="#F0A050" />
+            <stop offset="0%" stopColor="#FF9A2E" />
+            <stop offset="100%" stopColor="#FF6A00" />
           </linearGradient>
           <linearGradient id="cm-belly" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#FFECD0" />
-            <stop offset="100%" stopColor="#FFD9A8" />
+            <stop offset="0%" stopColor="#FFE0B8" />
+            <stop offset="100%" stopColor="#FFC880" />
           </linearGradient>
           <linearGradient id="cm-body" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#F0A050" />
-            <stop offset="100%" stopColor="#D8883A" />
+            <stop offset="0%" stopColor="#FF6A00" />
+            <stop offset="100%" stopColor="#E04E00" />
           </linearGradient>
           <linearGradient id="cm-lens-l" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#A8D8FF" stopOpacity="0.55" />
@@ -51,14 +51,14 @@ export function CatMascot() {
           {/* ── TAIL ── */}
           <path
             d="M150 285 Q188 268 186 232 Q184 208 165 212"
-            stroke="#D8883A"
+            stroke="#E04E00"
             strokeWidth="16"
             fill="none"
             strokeLinecap="round"
           />
           <path
             d="M150 285 Q188 268 186 232 Q184 208 165 212"
-            stroke="#FFCB8E"
+            stroke="#FF9A2E"
             strokeWidth="7"
             fill="none"
             strokeLinecap="round"
@@ -80,9 +80,9 @@ export function CatMascot() {
           />
           {/* Left paw */}
           <ellipse cx="38" cy="258" rx="13" ry="10" fill="url(#cm-fur)" />
-          <ellipse cx="31" cy="253" rx="5" ry="4" fill="#FFCB8E" opacity="0.8" />
-          <ellipse cx="38" cy="251" rx="5" ry="4" fill="#FFCB8E" opacity="0.8" />
-          <ellipse cx="45" cy="253" rx="5" ry="4" fill="#FFCB8E" opacity="0.8" />
+          <ellipse cx="31" cy="253" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
+          <ellipse cx="38" cy="251" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
+          <ellipse cx="45" cy="253" rx="5" ry="4" fill="#FF9A2E" opacity="0.8" />
 
           {/* ── RIGHT ARM (waving) — pivot at shoulder ── */}
           <motion.g
@@ -102,9 +102,9 @@ export function CatMascot() {
             {/* Paw */}
             <ellipse cx="170" cy="162" rx="14" ry="11" fill="url(#cm-fur)" />
             {/* Toes */}
-            <ellipse cx="162" cy="154" rx="5" ry="4" fill="#FFCB8E" opacity="0.85" />
-            <ellipse cx="171" cy="152" rx="5" ry="4" fill="#FFCB8E" opacity="0.85" />
-            <ellipse cx="180" cy="156" rx="5" ry="4" fill="#FFCB8E" opacity="0.85" />
+            <ellipse cx="162" cy="154" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
+            <ellipse cx="171" cy="152" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
+            <ellipse cx="180" cy="156" rx="5" ry="4" fill="#FF9A2E" opacity="0.85" />
           </motion.g>
 
           {/* ── EARS (behind beret) ── */}
@@ -118,8 +118,8 @@ export function CatMascot() {
           <circle cx="99" cy="142" r="70" fill="url(#cm-fur)" />
 
           {/* Forehead tabby stripes */}
-          <path d="M82 112 Q99 108 116 112" stroke="#D8883A" strokeWidth="2.2" fill="none" opacity="0.45" />
-          <path d="M80 120 Q99 115 118 120" stroke="#D8883A" strokeWidth="1.6" fill="none" opacity="0.35" />
+          <path d="M82 112 Q99 108 116 112" stroke="#C04000" strokeWidth="2.2" fill="none" opacity="0.5" />
+          <path d="M80 120 Q99 115 118 120" stroke="#C04000" strokeWidth="1.6" fill="none" opacity="0.4" />
 
           {/* ── BERET ── */}
           {/* Brim */}

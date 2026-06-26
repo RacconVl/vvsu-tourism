@@ -16,6 +16,7 @@ import Leaderboard from "@/pages/leaderboard";
 import PublicProfile from "@/pages/public-profile";
 import AdmissionPage from "@/pages/admission";
 import NotFound from "@/pages/not-found";
+import Community from "@/pages/community";
 
 // Initialize JWT token getter from localStorage on app startup
 setAuthTokenGetter(() => localStorage.getItem("vvsu_auth_token"));
@@ -58,7 +59,7 @@ function Router() {
         <Route path="/quizzes"><Redirect to="/cabinet/tasks" /></Route>
         <Route path="/quests"><Redirect to="/cabinet/tasks" /></Route>
         <Route path="/quiz/:id" component={({ params }) => <Redirect to={`/cabinet/tasks/quiz/${params.id}`} />} />
-        <Route path="/community"><Redirect to="/cabinet/community" /></Route>
+        <Route path="/community" component={Community} />
         <Route path="/profile"><Redirect to="/cabinet/profile" /></Route>
 
         <Route component={NotFound} />
