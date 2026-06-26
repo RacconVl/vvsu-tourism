@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { DigitalDesignIllustration, EnvironmentDesignIllustration } from "@/components/illustrations/DesignIllustrations";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -296,7 +297,9 @@ export default function AdmissionPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   {/* Цифровой дизайн */}
-                  <div className="rounded-2xl bg-white dark:bg-card border border-[#6366f1]/20 p-5 flex flex-col gap-4">
+                  <div className="rounded-2xl bg-white dark:bg-card border border-[#6366f1]/20 overflow-hidden flex flex-col">
+                    <DigitalDesignIllustration />
+                    <div className="p-5 flex flex-col gap-4">
                     <div className="flex items-center gap-3">
                       <div className="h-11 w-11 rounded-xl bg-[#6366f1] flex items-center justify-center text-white shrink-0">
                         <Monitor className="h-5 w-5" />
@@ -335,10 +338,13 @@ export default function AdmissionPage() {
                       <Zap className="h-3.5 w-3.5 text-[#6366f1]" />
                       Выпускники работают в стартапах, турагентствах и digital-агентствах по всей России и АТР
                     </div>
+                    </div>
                   </div>
 
                   {/* Дизайн среды */}
-                  <div className="rounded-2xl bg-white dark:bg-card border border-[#0d9488]/20 p-5 flex flex-col gap-4">
+                  <div className="rounded-2xl bg-white dark:bg-card border border-[#0d9488]/20 overflow-hidden flex flex-col">
+                    <EnvironmentDesignIllustration />
+                    <div className="p-5 flex flex-col gap-4">
                     <div className="flex items-center gap-3">
                       <div className="h-11 w-11 rounded-xl bg-[#0d9488] flex items-center justify-center text-white shrink-0">
                         <TreePine className="h-5 w-5" />
@@ -376,6 +382,7 @@ export default function AdmissionPage() {
                     <div className="mt-auto pt-1 text-xs text-muted-foreground flex items-center gap-1.5">
                       <Zap className="h-3.5 w-3.5 text-[#0d9488]" />
                       Выпускники работают с девелоперами, отельными сетями и туристическими объектами Приморья
+                    </div>
                     </div>
                   </div>
                 </div>
