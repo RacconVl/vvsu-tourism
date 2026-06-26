@@ -9,6 +9,7 @@ import {
   ChevronRight, CheckCircle2, Clock, Calendar, ArrowRight,
   Anchor, Waves, Star, Users, BookOpen, Award, Home, Wifi,
   Utensils, ShieldCheck, Play, ExternalLink,
+  Palette, Sparkles, Lightbulb, Monitor, TreePine, Zap,
 } from "lucide-react";
 
 const programs = [
@@ -41,7 +42,7 @@ const programs = [
     duration: "4 года",
     form: "Очная",
     places: { budget: 15, paid: 20 },
-    profiles: ["Графический дизайн", "Дизайн среды"],
+    profiles: ["Цифровой дизайн", "Дизайн среды"],
     color: "#172E46",
     img: "/prog-design.png",
   },
@@ -217,6 +218,7 @@ export default function AdmissionPage() {
 
           {/* ── Направления ─────────────────────────────── */}
           {activeTab === "programs" && (
+            <div className="space-y-8">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {programs.map((p, i) => (
                 <motion.div key={p.code} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
@@ -275,6 +277,126 @@ export default function AdmissionPage() {
                 </motion.div>
               ))}
             </motion.div>
+
+            {/* ── Дизайн: два направления ─────────────────── */}
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8">
+              <div className="rounded-2xl border border-[#172E46]/20 bg-gradient-to-br from-[#172E46]/5 to-[#6366f1]/5 p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-9 w-9 rounded-xl bg-[#172E46] flex items-center justify-center text-white shrink-0">
+                    <Palette className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">54.03.01 · Бакалавриат · 4 года</p>
+                    <h3 className="text-xl font-bold text-foreground">Дизайн — выбери свой путь</h3>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mb-8 max-w-2xl">
+                  В ВВГУ дизайн — это не просто «рисовать красиво». Это профессия, которая меняет то, как люди взаимодействуют с миром: цифровым или физическим. У нас два профиля с разной специализацией — выбери тот, что ближе тебе.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  {/* Цифровой дизайн */}
+                  <div className="rounded-2xl bg-white dark:bg-card border border-[#6366f1]/20 p-5 flex flex-col gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="h-11 w-11 rounded-xl bg-[#6366f1] flex items-center justify-center text-white shrink-0">
+                        <Monitor className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-[#6366f1] font-semibold uppercase tracking-wide">Профиль 1</p>
+                        <h4 className="font-bold text-foreground text-base">Цифровой дизайн</h4>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Ты создаёшь интерфейсы, приложения и визуальный контент, которыми пользуются миллионы. UX/UI, motion-графика, веб-дизайн, брендинг в digital — всё это востребованные навыки на рынке АТР, где туризм и IT неразделимы.
+                    </p>
+                    <div>
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Чему научишься:</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {["UX / UI", "Figma & Prototyping", "Motion-графика", "Веб-дизайн", "SMM-визуал", "Брендинг", "3D-визуализация"].map(s => (
+                          <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-[#6366f1]/10 text-[#6366f1] font-medium">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-[#6366f1]/5 p-3.5">
+                      <p className="text-xs font-semibold text-[#6366f1] mb-2 flex items-center gap-1.5"><Sparkles className="h-3.5 w-3.5" /> Идеально, если ты:</p>
+                      <ul className="space-y-1.5">
+                        {[
+                          "Проводишь часы в телефоне и замечаешь, когда интерфейс «сломан»",
+                          "Хочешь работать удалённо или в международных командах",
+                          "Видишь будущее в технологиях, но хочешь оставаться в творчестве",
+                        ].map(t => (
+                          <li key={t} className="flex items-start gap-2 text-xs text-foreground">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-[#6366f1] shrink-0 mt-0.5" /> {t}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="mt-auto pt-1 text-xs text-muted-foreground flex items-center gap-1.5">
+                      <Zap className="h-3.5 w-3.5 text-[#6366f1]" />
+                      Выпускники работают в стартапах, турагентствах и digital-агентствах по всей России и АТР
+                    </div>
+                  </div>
+
+                  {/* Дизайн среды */}
+                  <div className="rounded-2xl bg-white dark:bg-card border border-[#0d9488]/20 p-5 flex flex-col gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="h-11 w-11 rounded-xl bg-[#0d9488] flex items-center justify-center text-white shrink-0">
+                        <TreePine className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-[#0d9488] font-semibold uppercase tracking-wide">Профиль 2</p>
+                        <h4 className="font-bold text-foreground text-base">Дизайн среды</h4>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Ты проектируешь пространства, которые люди запоминают: лобби отелей, музейные экспозиции, туристические маршруты и городские объекты. Владивосток — идеальный полигон: здесь строят новые гостиницы, музеи и набережные прямо сейчас.
+                    </p>
+                    <div>
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Чему научишься:</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {["Интерьерный дизайн", "Архитектурная графика", "3ds Max / ArchiCAD", "Экспозиционный дизайн", "Ландшафт", "Эргономика", "Туристическая навигация"].map(s => (
+                          <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-[#0d9488]/10 text-[#0d9488] font-medium">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="rounded-xl bg-[#0d9488]/5 p-3.5">
+                      <p className="text-xs font-semibold text-[#0d9488] mb-2 flex items-center gap-1.5"><Lightbulb className="h-3.5 w-3.5" /> Идеально, если ты:</p>
+                      <ul className="space-y-1.5">
+                        {[
+                          "Входишь в кафе и сразу оцениваешь интерьер, свет и атмосферу",
+                          "Хочешь создавать места, которые попадают в Instagram-подборки",
+                          "Мечтаешь спроектировать арт-отель или туристический кластер",
+                        ].map(t => (
+                          <li key={t} className="flex items-start gap-2 text-xs text-foreground">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-[#0d9488] shrink-0 mt-0.5" /> {t}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="mt-auto pt-1 text-xs text-muted-foreground flex items-center gap-1.5">
+                      <Zap className="h-3.5 w-3.5 text-[#0d9488]" />
+                      Выпускники работают с девелоперами, отельными сетями и туристическими объектами Приморья
+                    </div>
+                  </div>
+                </div>
+
+                {/* Общие преимущества */}
+                <div className="mt-6 rounded-xl bg-[#172E46]/5 border border-[#172E46]/10 p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                  {[
+                    { icon: <Award className="h-4 w-4" />, label: "Лицензированная программа", sub: "государственный диплом" },
+                    { icon: <Users className="h-4 w-4" />, label: "Практики отрасли", sub: "преподаватели-действующие специалисты" },
+                    { icon: <Star className="h-4 w-4" />, label: "Творческое испытание", sub: "портфолио вместо ЕГЭ по рисованию" },
+                  ].map(({ icon, label, sub }) => (
+                    <div key={label} className="flex flex-col items-center gap-1">
+                      <span className="text-[#172E46] dark:text-[#6b8cbf]">{icon}</span>
+                      <p className="text-xs font-semibold text-foreground">{label}</p>
+                      <p className="text-xs text-muted-foreground">{sub}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+            </div>
           )}
 
           {/* ── Этапы поступления ───────────────────────── */}
