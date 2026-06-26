@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import {
-  Compass, Map as MapIcon, Library, Trophy, GraduationCap,
+  Map as MapIcon, Trophy, GraduationCap,
   Sun, Moon, Menu, X, LogIn, LogOut, UserPlus, LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,6 @@ import { NotificationBell } from "@/components/notifications/NotificationBell";
 const publicNavItems = [
   { href: "/admission",   label: "Поступление", icon: GraduationCap },
   { href: "/map",         label: "Карта",       icon: MapIcon },
-  { href: "/library",     label: "Библиотека",  icon: Library },
   { href: "/leaderboard", label: "Рейтинг",     icon: Trophy },
 ];
 
@@ -49,9 +48,14 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-primary text-primary-foreground shadow-md">
       <div className="container flex h-16 max-w-screen-2xl items-center px-4 mx-auto gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight shrink-0 mr-4">
-          <Compass className="h-6 w-6 text-accent" />
-          <span className="hidden sm:inline">ВВГУ</span>
+        <Link href="/" className="flex items-center gap-3 shrink-0 mr-4">
+          <img src="/vvsu-logo.svg" className="h-9 w-auto" alt="ВВГУ" />
+          <div className="hidden md:flex flex-col leading-tight">
+            <span className="text-[10px] font-semibold text-white/60 uppercase tracking-widest">ВВГУ</span>
+            <span className="text-[11px] font-bold text-white uppercase leading-tight max-w-[200px]">
+              Институт туризма и<br/>креативных индустрий
+            </span>
+          </div>
         </Link>
 
         {/* Desktop public nav */}
@@ -62,14 +66,14 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                   active
                     ? "bg-white/15 text-accent font-semibold"
                     : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
                 }`}
                 data-testid={`nav-${item.href.replace("/", "")}`}
               >
-                <item.icon className="h-4 w-4" />
+                <item.icon className="h-5 w-5" />
                 {item.label}
               </Link>
             );
@@ -135,24 +139,22 @@ export function Navbar() {
               </DropdownMenu>
             </>
           ) : (
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-2">
               <Link href="/login">
                 <Button
                   variant="ghost"
-                  size="sm"
-                  className="text-primary-foreground hover:bg-white/10 rounded-full"
+                  className="text-primary-foreground hover:bg-white/10 rounded-full px-5 py-2.5 text-sm font-medium"
                   data-testid="button-nav-login"
                 >
-                  <LogIn className="h-4 w-4 mr-1" /> Войти
+                  <LogIn className="h-4 w-4 mr-1.5" /> Войти
                 </Button>
               </Link>
               <Link href="/register">
                 <Button
-                  size="sm"
-                  className="bg-accent hover:bg-accent/90 text-white rounded-full"
+                  className="bg-accent hover:bg-accent/90 text-white rounded-full px-5 py-2.5 text-sm font-medium"
                   data-testid="button-nav-register"
                 >
-                  <UserPlus className="h-4 w-4 mr-1" /> Регистрация
+                  <UserPlus className="h-4 w-4 mr-1.5" /> Регистрация
                 </Button>
               </Link>
             </div>
