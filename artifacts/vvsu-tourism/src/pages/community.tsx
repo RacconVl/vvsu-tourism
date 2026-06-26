@@ -181,7 +181,7 @@ export default function Community() {
   const createPost = useCreateCommunityPost();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<"forum" | "gallery">("forum");
+  const [activeTab, setActiveTab] = useState<"forum" | "gallery">("forum"); // kept for compat
   const [showDialog, setShowDialog] = useState(false);
   const [form, setForm] = useState({ title: "", content: "", category: "Маркетинг" });
   const [reactions, setReactions] = useState<ReactionsState>(loadReactions);
@@ -258,32 +258,23 @@ export default function Community() {
           <p className="text-muted-foreground mt-2">Делитесь опытом, обсуждайте проекты и вдохновляйтесь работами коллег</p>
         </motion.div>
 
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex gap-2">
-            <Button variant={activeTab === "forum" ? "default" : "outline"} onClick={() => setActiveTab("forum")} className="rounded-full">
-              <MessageCircle className="h-4 w-4 mr-2" /> Форум
+        <div className="flex items-center justify-end mb-6">
+          {user ? (
+            <Button onClick={() => setShowDialog(true)} className="rounded-full" data-testid="button-create-post">
+              <PlusCircle className="h-4 w-4 mr-2" /> Новый пост
             </Button>
-            <Button variant={activeTab === "gallery" ? "default" : "outline"} onClick={() => setActiveTab("gallery")} className="rounded-full">
-              <Image className="h-4 w-4 mr-2" /> Галерея работ
-            </Button>
-          </div>
-          {activeTab === "forum" && (
-            user ? (
-              <Button onClick={() => setShowDialog(true)} className="rounded-full" data-testid="button-create-post">
-                <PlusCircle className="h-4 w-4 mr-2" /> Новый пост
+          ) : (
+            <Link href="/login">
+              <Button variant="outline" className="rounded-full" data-testid="button-login-to-post">
+                <PlusCircle className="h-4 w-4 mr-2" /> Войти, чтобы публиковать
               </Button>
-            ) : (
-              <Link href="/login">
-                <Button variant="outline" className="rounded-full" data-testid="button-login-to-post">
-                  <PlusCircle className="h-4 w-4 mr-2" /> Войти, чтобы публиковать
-                </Button>
-              </Link>
-            )
+            </Link>
           )}
         </div>
 
-        {activeTab === "forum" && (
-          <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
+          {/* Left: posts */}
+          <div className="lg:col-span-3 space-y-4">
             {/* Pinned posts from ITKI / mc.vvsu.ru */}
             {[
               {
@@ -445,43 +436,48 @@ export default function Community() {
               })
             }
           </div>
-        )}
 
-        {activeTab === "gallery" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {galleryLoading ? [1,2,3,4,5,6].map(i => <Skeleton key={i} className="h-72 w-full rounded-2xl" />) :
-              gallery?.map((work, i) => (
-                <motion.div
-                  key={work.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07 }}
-                  whileHover={{ y: -4 }}
-                  data-testid={`card-gallery-${work.id}`}
-                >
-                  <Card className="overflow-hidden rounded-2xl border-border/60 hover:shadow-xl transition-shadow">
-                    <div className="h-48 overflow-hidden">
-                      <img src={work.imageUrl || undefined} alt={work.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                    </div>
-                    <CardContent className="p-4">
-                      <Badge className={`${galleryCategories[work.category]?.color ?? "bg-muted text-muted-foreground"} text-xs border-0 mb-2`}>
-                        {galleryCategories[work.category]?.label ?? work.category}
-                      </Badge>
-                      <h3 className="font-bold text-sm text-foreground mb-1">{work.title}</h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{work.description}</p>
-                      <div className="flex items-center justify-between mt-3">
-                        <span className="text-xs text-muted-foreground">{work.authorName}</span>
-                        <span className="flex items-center gap-1 text-xs text-rose-500">
-                          <Heart className="h-3.5 w-3.5" /> {work.likes}
-                        </span>
+          {/* Right: gallery */}
+          <div className="lg:col-span-2 space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Image className="h-4 w-4 text-accent" />
+              <span className="text-sm font-semibold text-foreground">Галерея работ</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+              {galleryLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-56 w-full rounded-2xl" />) :
+                gallery?.map((work, i) => (
+                  <motion.div
+                    key={work.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    whileHover={{ y: -3 }}
+                    data-testid={`card-gallery-${work.id}`}
+                  >
+                    <Card className="overflow-hidden rounded-2xl border-border/60 hover:shadow-xl transition-shadow">
+                      <div className="h-40 overflow-hidden">
+                        <img src={work.imageUrl || undefined} alt={work.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))
-            }
+                      <CardContent className="p-3">
+                        <Badge className={`${galleryCategories[work.category]?.color ?? "bg-muted text-muted-foreground"} text-xs border-0 mb-1`}>
+                          {galleryCategories[work.category]?.label ?? work.category}
+                        </Badge>
+                        <h3 className="font-bold text-sm text-foreground mb-0.5">{work.title}</h3>
+                        <p className="text-xs text-muted-foreground line-clamp-1">{work.description}</p>
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="text-xs text-muted-foreground">{work.authorName}</span>
+                          <span className="flex items-center gap-1 text-xs text-rose-500">
+                            <Heart className="h-3.5 w-3.5" /> {work.likes}
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))
+              }
+            </div>
           </div>
-        )}
+        </div>
       </div>
       </div>
 
