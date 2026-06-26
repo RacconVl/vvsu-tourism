@@ -172,7 +172,7 @@ export default function AdmissionPage() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 mb-8">
               <div className="flex items-center gap-2"><Users className="h-4 w-4 text-accent" /> Бюджетные и платные места</div>
-              <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> Приём до 20 июля 2026</div>
+              <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> Приём до 30 августа 2026</div>
               <div className="flex items-center gap-2"><Star className="h-4 w-4 text-accent" /> Очная и заочная формы</div>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
