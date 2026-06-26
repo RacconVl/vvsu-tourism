@@ -387,18 +387,10 @@ export default function Home() {
         </div>
         <div className="relative z-20 container mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="max-w-4xl mx-auto">
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/8 backdrop-blur text-white/70 text-sm mb-8">
-              <Waves className="h-4 w-4 text-accent" />
-              ВВГУ · Институт туризма и креативных индустрий
-            </motion.div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-10 leading-tight">
               Морское путешествие <br />
               <span className="text-accent drop-shadow-[0_0_32px_rgba(235,113,36,0.5)]">к знаниям</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/70 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-              Станьте профессионалом туризма. Исследуйте Владивосток, выполняйте квесты и стройте карьеру в индустрии гостеприимства.
-            </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" className="bg-accent hover:bg-accent/90 text-white border-none rounded-full px-8 h-14 text-lg shadow-[0_0_32px_rgba(235,113,36,0.35)]" asChild>
                 <Link href="/dashboard">Начать экспедицию <ArrowRight className="ml-2 h-5 w-5" /></Link>
