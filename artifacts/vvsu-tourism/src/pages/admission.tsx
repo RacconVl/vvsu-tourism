@@ -358,7 +358,28 @@ export default function AdmissionPage() {
 
           {/* ── Вступительные испытания ─────────────────── */}
           {activeTab === "exams" && (
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl space-y-5">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl space-y-6">
+
+              {/* Что такое вступительные */}
+              <Card className="rounded-2xl overflow-hidden border-border/60">
+                <div className="h-1" style={{ background: "linear-gradient(90deg, #033F7E, #EB7124)" }} />
+                <CardContent className="p-6">
+                  <h2 className="font-bold text-lg text-foreground mb-3 flex items-center gap-2">
+                    <BookOpen className="h-5 w-5 text-accent" /> Что такое вступительные испытания?
+                  </h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                    Вступительные испытания — это дополнительные экзамены, которые проводит университет помимо результатов ЕГЭ.
+                    Они позволяют оценить специальные навыки абитуриента, необходимые для конкретной специальности.
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Для большинства направлений (Туризм, Гостиничное дело) достаточно результатов ЕГЭ.
+                    Для направления <strong className="text-foreground">«Дизайн»</strong> (54.03.01) обязательно
+                    прохождение творческого испытания — независимо от баллов ЕГЭ.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Список направлений */}
               <div className="grid grid-cols-1 gap-4">
                 {exams.map((e, i) => (
                   <motion.div key={e.direction} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
@@ -384,8 +405,68 @@ export default function AdmissionPage() {
                   </motion.div>
                 ))}
               </div>
-              <Card className="rounded-2xl overflow-hidden border-border/60">
+
+              {/* Творческое испытание для Дизайна */}
+              <Card className="rounded-2xl overflow-hidden border-[#EB7124]/30">
                 <div className="h-1 bg-accent" />
+                <CardContent className="p-6 space-y-5">
+                  <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
+                    <Award className="h-5 w-5 text-accent" /> Творческое испытание — Дизайн (54.03.01)
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Творческое испытание проводится для всех профилей направления «Дизайн», в том числе
+                    для <strong className="text-foreground">Дизайна цифровой среды</strong> и
+                    <strong className="text-foreground"> Цифрового дизайна</strong>.
+                    Испытание оценивает художественные способности, пространственное мышление и базовые навыки композиции.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {[
+                      { title: "Рисунок", desc: "Академический рисунок геометрических тел или натюрморта карандашом. Оценивается конструктивное построение, светотень, пропорции.", color: "#033F7E" },
+                      { title: "Живопись / Графика", desc: "Цветовое или тональное решение композиции. Для Цифрового дизайна — допускается чёрно-белая графика.", color: "#7c3aed" },
+                      { title: "Композиция", desc: "Создание декоративной или пространственной композиции на заданную тему. Оценивается оригинальность, ритм, баланс.", color: "#EB7124" },
+                      { title: "Творческое задание", desc: "Эскиз айдентики, иллюстрации или дизайн-концепции. Для цифровых профилей: может включать макет интерфейса.", color: "#16a34a" },
+                    ].map((item, i) => (
+                      <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.07 }}>
+                        <div className="rounded-xl border border-border/50 bg-muted/20 p-4 h-full">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="h-2 w-2 rounded-full" style={{ background: item.color }} />
+                            <span className="font-semibold text-sm text-foreground">{item.title}</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className="rounded-xl bg-muted/30 p-4 space-y-2">
+                    <p className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-accent" /> Как проходит испытание
+                    </p>
+                    <ul className="space-y-1.5 text-sm text-muted-foreground">
+                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 text-accent mt-0.5 shrink-0" />Продолжительность: 3–4 часа в аудитории университета</li>
+                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 text-accent mt-0.5 shrink-0" />Формат: задание выдаётся на месте, все материалы приносит абитуриент</li>
+                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 text-accent mt-0.5 shrink-0" />Что брать: карандаши (ТМ, Т, М), акварель или гуашь, бумагу А3</li>
+                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 text-accent mt-0.5 shrink-0" />Портфолио принимается как дополнение, но не заменяет испытание</li>
+                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 text-accent mt-0.5 shrink-0" />Максимальный балл: 100. Проходной порог: 40 баллов</li>
+                    </ul>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-4 rounded-xl border border-accent/20 bg-accent/5">
+                    <CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                    <div className="text-sm text-muted-foreground">
+                      <span className="font-semibold text-foreground">Цифровые профили</span> — для поступающих на
+                      «Дизайн цифровой среды» и «Цифровой дизайн» допускается использование
+                      распечатанного цифрового портфолио (PDF, не более 10 работ) как дополнение к основному заданию.
+                      На самом испытании работа выполняется вручную.
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Минимальные баллы ЕГЭ */}
+              <Card className="rounded-2xl overflow-hidden border-border/60">
+                <div className="h-1 bg-primary" />
                 <CardContent className="p-5">
                   <p className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <Clock className="h-4 w-4 text-accent" /> Минимальные баллы ЕГЭ

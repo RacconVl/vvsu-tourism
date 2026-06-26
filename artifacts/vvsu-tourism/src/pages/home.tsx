@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -173,6 +174,138 @@ function ShipIllustration() {
   );
 }
 
+/* ── Stickman 94% → 100% animation ─────────────────────────── */
+function StickmanStat() {
+  const [phase, setPhase] = useState<"run"|"erase"|"spray"|"leave">("run");
+  const [oldOp, setOldOp] = useState(1);
+  const [newOp, setNewOp] = useState(0);
+  const [stickX, setStickX] = useState(-55);
+  const [stickDur, setStickDur] = useState(2.0);
+  const [resetKey, setResetKey] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    const sleep = (ms: number) => new Promise<void>(res => setTimeout(res, ms));
+    async function run() {
+      while (!cancelled) {
+        setResetKey(k => k + 1);
+        setStickDur(2.0);
+        setOldOp(1);
+        setNewOp(0);
+        setStickX(-55);
+        await sleep(80);
+        if (cancelled) break;
+        setPhase("run");
+        setStickX(38);
+        await sleep(2300);
+        if (cancelled) break;
+        setPhase("erase");
+        setOldOp(0);
+        await sleep(1300);
+        if (cancelled) break;
+        setPhase("spray");
+        setNewOp(1);
+        await sleep(2200);
+        if (cancelled) break;
+        setPhase("leave");
+        setStickDur(1.6);
+        setStickX(160);
+        await sleep(1900);
+        if (cancelled) break;
+        await sleep(600);
+      }
+    }
+    run();
+    return () => { cancelled = true; };
+  }, []);
+
+  const isMoving = phase === "run" || phase === "leave";
+
+  return (
+    <div className="flex flex-col items-center text-center gap-2">
+      <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white mb-1"
+        style={{ background: "linear-gradient(135deg, #033F7E, #172E46)" }}>
+        <Trophy className="h-5 w-5" />
+      </div>
+      <div style={{ width: 140, height: 60, position: "relative" }}>
+        <svg viewBox="-55 0 200 56" style={{ width: "100%", height: "100%", overflow: "visible" }}>
+          <motion.text x={97} y={40} textAnchor="middle" fontSize="22" fontWeight="900"
+            style={{ fill: "hsl(var(--foreground))" }}
+            animate={{ opacity: oldOp }} transition={{ duration: 0.7 }}>94%</motion.text>
+          <motion.text x={97} y={40} textAnchor="middle" fontSize="22" fontWeight="900"
+            fill="#EB7124"
+            animate={{ opacity: newOp }} transition={{ duration: 0.8 }}>100%</motion.text>
+
+          {phase === "spray" && [0,1,2,3,4,5].map(i => (
+            <motion.circle key={i} cx={52 + i * 7} cy={26} r={1.5} fill="#EB7124"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: [0, 0.9, 0], y: [0, -(4 + i * 1.5)] }}
+              transition={{ duration: 0.45, repeat: Infinity, delay: i * 0.07 }} />
+          ))}
+
+          <motion.g key={resetKey} initial={{ x: -55 }} animate={{ x: stickX }}
+            transition={{ duration: stickDur, ease: "easeInOut" }}>
+            <circle cx={0} cy={7} r={5} stroke="#033F7E" strokeWidth={1.8} fill="none" />
+            <line x1={0} y1={12} x2={0} y2={27} stroke="#033F7E" strokeWidth={1.8} />
+
+            {phase === "erase" ? (
+              <motion.g style={{ transformOrigin: "0px 17px" }}
+                animate={{ rotate: [-18, 18] }}
+                transition={{ duration: 0.25, repeat: Infinity, repeatType: "reverse" }}>
+                <line x1={0} y1={17} x2={14} y2={17} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+                <rect x={10} y={14} width={7} height={4} rx={1} fill="#aaa" />
+              </motion.g>
+            ) : phase === "spray" ? (
+              <g>
+                <line x1={0} y1={17} x2={14} y2={11} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+                <rect x={12} y={8} width={8} height={5} rx={1.5} fill="#EB7124" />
+                <circle cx={21} cy={10} r={1.3} fill="#c0392b" />
+              </g>
+            ) : (
+              <motion.g style={{ transformOrigin: "0px 17px" }}
+                animate={{ rotate: [35, -35] }}
+                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
+                <line x1={0} y1={17} x2={4} y2={28} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+              </motion.g>
+            )}
+
+            {isMoving ? (
+              <motion.g style={{ transformOrigin: "0px 17px" }}
+                animate={{ rotate: [-35, 35] }}
+                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
+                <line x1={0} y1={17} x2={-4} y2={28} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+              </motion.g>
+            ) : (
+              <line x1={0} y1={17} x2={-8} y2={22} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+            )}
+
+            {isMoving ? (
+              <motion.g style={{ transformOrigin: "0px 27px" }}
+                animate={{ rotate: [-32, 28] }}
+                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
+                <line x1={0} y1={27} x2={-2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+              </motion.g>
+            ) : (
+              <line x1={0} y1={27} x2={-5} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+            )}
+
+            {isMoving ? (
+              <motion.g style={{ transformOrigin: "0px 27px" }}
+                animate={{ rotate: [28, -32] }}
+                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
+                <line x1={0} y1={27} x2={2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+              </motion.g>
+            ) : (
+              <line x1={0} y1={27} x2={5} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+            )}
+          </motion.g>
+        </svg>
+      </div>
+      <span className="text-sm text-muted-foreground">трудоустройство</span>
+    </div>
+  );
+}
+
 /* ── Why Us data ─────────────────────────────────────────────── */
 const whyUs = [
   {
@@ -283,77 +416,21 @@ export default function Home() {
             {stats.map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 className="flex flex-col items-center text-center gap-2">
-                <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white mb-1"
-                  style={{ background: "linear-gradient(135deg, #033F7E, #172E46)" }}>
-                  {s.icon}
-                </div>
-                <span className="text-3xl font-bold text-foreground">{s.value}</span>
-                <span className="text-sm text-muted-foreground">{s.label}</span>
+                {i === 2 ? (
+                  <StickmanStat />
+                ) : (
+                  <>
+                    <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white mb-1"
+                      style={{ background: "linear-gradient(135deg, #033F7E, #172E46)" }}>
+                      {s.icon}
+                    </div>
+                    <span className="text-3xl font-bold text-foreground">{s.value}</span>
+                    <span className="text-sm text-muted-foreground">{s.label}</span>
+                  </>
+                )}
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── Features ──────────────────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.h2 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-3xl font-bold text-center text-foreground mb-16">
-            Платформа нового поколения
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: <Compass className="h-9 w-9" />, color: "#033F7E", title: "Интерактивные квесты", desc: "Практические задания на реальных локациях Владивостока. Решайте бизнес-кейсы и получайте опыт." },
-              { icon: <MapIcon className="h-9 w-9" />, color: "#EB7124", title: "Изучение региона", desc: "Погрузитесь в историю, культуру и географию Приморского края через нашу интерактивную карту." },
-              { icon: <Shield className="h-9 w-9" />, color: "#172E46", title: "Профессиональные роли", desc: "Развивайтесь как экскурсовод, маркетолог, дизайнер или туроператор. Каждая роль уникальна." },
-            ].map((f, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }}
-                className="flex flex-col items-center text-center space-y-4 group">
-                <div className="h-20 w-20 rounded-2xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-105"
-                  style={{ background: `linear-gradient(135deg, ${f.color}cc, ${f.color})` }}>
-                  {f.icon}
-                </div>
-                <h3 className="text-xl font-bold text-foreground">{f.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Student Life Preview ───────────────────────────────── */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-3">Жизнь в кампусе</h2>
-            <p className="text-muted-foreground">Современная инфраструктура в центре Владивостока</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: <ShipIllustration />, title: "Кампус у моря", desc: "Учебные корпуса в нескольких минутах от набережной бухты Золотой Рог.", color: "#033F7E" },
-              { icon: <BookOpen className="h-16 w-16 text-white" />, title: "Библиотека и лаборатории", desc: "Современные учебные пространства, медиатека и специализированные туристические лаборатории.", color: "#EB7124" },
-              { icon: <Users className="h-16 w-16 text-white" />, title: "Общежития", desc: "Комфортное проживание в 5 минутах от университета. Все условия для учёбы и отдыха.", color: "#172E46" },
-            ].map((c, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <div className="rounded-2xl overflow-hidden border border-border/60 group hover:shadow-lg transition-shadow h-full">
-                  <div className="h-44 flex items-center justify-center relative"
-                    style={{ background: `linear-gradient(135deg, ${c.color}dd, ${c.color}99)` }}>
-                    <div className="h-32 w-32 opacity-80">{c.icon}</div>
-                  </div>
-                  <div className="p-5 bg-card">
-                    <h3 className="font-bold text-foreground mb-2">{c.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{c.desc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mt-10">
-            <Button variant="outline" className="rounded-full px-8" asChild>
-              <Link href="/admission">Узнать о поступлении <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-          </motion.div>
         </div>
       </section>
 
