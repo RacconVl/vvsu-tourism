@@ -654,6 +654,9 @@ export default function Home() {
               { icon: <Camera className="h-7 w-7" />, title: "Специалист по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽", img: "/career-marketing.png" },
               { icon: <UtensilsCrossed className="h-7 w-7" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽", img: "/career-events.png" },
               { icon: <Ship className="h-7 w-7" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽", img: "/career-cruise.png" },
+              { icon: <Palette className="h-7 w-7" />, title: "Графический дизайнер / арт-директор", desc: "Фирменный стиль туристических брендов, полиграфия, визуальная идентичность дестинаций.", color: "#db2777", salary: "от 70 000 ₽", img: "/career-designer-graphic.png" },
+              { icon: <Sparkles className="h-7 w-7" />, title: "Дизайнер цифровых медиа", desc: "UX/UI туристических приложений и сайтов, motion-графика, веб-дизайн для АТР-рынка.", color: "#6366f1", salary: "от 75 000 ₽", img: "/career-designer-digital.png" },
+              { icon: <Lightbulb className="h-7 w-7" />, title: "Дизайнер интерьера и пространств", desc: "Концепции отелей, ресторанов и туристических объектов — от лобби до смотровых площадок.", color: "#0d9488", salary: "от 65 000 ₽", img: "/career-designer-interior.png" },
             ].map((job, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}

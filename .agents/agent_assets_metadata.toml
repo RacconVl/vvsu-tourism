@@ -210,6 +210,24 @@ uri = "file://artifacts/vvsu-tourism/public/career-cruise.png"
 type = "image"
 title = "cruise tourism Vladivostok"
 
+[[generated]]
+id = "qyzVTshHUN8cRVvKxqJ_g"
+uri = "file://artifacts/vvsu-tourism/public/career-designer-graphic.png"
+type = "image"
+title = "graphic designer art director career"
+
+[[generated]]
+id = "V5nkBh7-pCG06PSvxVM9Q"
+uri = "file://artifacts/vvsu-tourism/public/career-designer-digital.png"
+type = "image"
+title = "digital UX designer career"
+
+[[generated]]
+id = "4_6MYhQIwxJbmeYF413He"
+uri = "file://artifacts/vvsu-tourism/public/career-designer-interior.png"
+type = "image"
+title = "interior designer hotel spaces career"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"
