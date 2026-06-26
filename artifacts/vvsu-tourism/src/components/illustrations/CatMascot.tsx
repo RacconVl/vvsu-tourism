@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 export function CatMascot() {
   return (
     <div
-      className="absolute top-0 right-0 pointer-events-none select-none z-10 overflow-visible hidden sm:block"
-      style={{ width: "clamp(140px, 18vw, 300px)", height: "auto" }}
+      className="absolute top-0 right-0 pointer-events-none select-none z-10 overflow-visible"
+      style={{ width: "clamp(100px, 22vw, 300px)", height: "auto" }}
     >
       <svg
         viewBox="0 0 200 310"
