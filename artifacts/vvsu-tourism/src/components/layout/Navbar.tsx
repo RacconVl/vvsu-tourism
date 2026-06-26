@@ -140,22 +140,22 @@ export function Navbar() {
               </DropdownMenu>
             </>
           ) : (
-            <div className="hidden md:flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Link href="/login">
                 <Button
                   variant="ghost"
-                  className="text-primary-foreground hover:bg-white/10 rounded-full px-5 py-2.5 text-sm font-medium"
+                  className="text-primary-foreground hover:bg-white/10 rounded-full px-3 md:px-5 py-2.5 text-sm font-medium"
                   data-testid="button-nav-login"
                 >
-                  <LogIn className="h-4 w-4 mr-1.5" /> Войти
+                  <LogIn className="h-4 w-4 md:mr-1.5" /> <span className="hidden md:inline">Войти</span>
                 </Button>
               </Link>
               <Link href="/register">
                 <Button
-                  className="bg-accent hover:bg-accent/90 text-white rounded-full px-5 py-2.5 text-sm font-medium"
+                  className="bg-accent hover:bg-accent/90 text-white rounded-full px-3 md:px-5 py-2.5 text-sm font-medium"
                   data-testid="button-nav-register"
                 >
-                  <UserPlus className="h-4 w-4 mr-1.5" /> Регистрация
+                  <UserPlus className="h-4 w-4 md:mr-1.5" /> <span className="hidden md:inline">Регистрация</span>
                 </Button>
               </Link>
             </div>
