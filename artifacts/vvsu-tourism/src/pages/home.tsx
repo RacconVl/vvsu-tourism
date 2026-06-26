@@ -282,7 +282,7 @@ function StickmanStat() {
 
             {isMoving ? (
               <motion.g style={{ transformOrigin: "0px 27px" }}
-                animate={{ rotate: [-32, 28] }}
+                animate={{ rotate: [28, -32] }}
                 transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
                 <line x1={0} y1={27} x2={-2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
               </motion.g>
@@ -292,7 +292,7 @@ function StickmanStat() {
 
             {isMoving ? (
               <motion.g style={{ transformOrigin: "0px 27px" }}
-                animate={{ rotate: [28, -32] }}
+                animate={{ rotate: [-32, 28] }}
                 transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
                 <line x1={0} y1={27} x2={2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
               </motion.g>
