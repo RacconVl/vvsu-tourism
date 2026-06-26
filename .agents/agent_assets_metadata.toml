@@ -263,3 +263,9 @@ id = "ndRghMJR4PUE_sNMKPKMh"
 uri = "file://vvsu-dist.tar.gz"
 type = "unspecified"
 title = "vvsu-dist.tar.gz — готовая сборка фронтенда"
+
+[[outputs]]
+id = "flM_k4j3LLXAb3sN_QoeW"
+uri = "file://vvsu-frontend-update.tar.gz"
+type = "unspecified"
+title = "vvsu-frontend-update.tar.gz — JS + CSS + HTML (276 КБ)"
