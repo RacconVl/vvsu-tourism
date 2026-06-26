@@ -49,7 +49,7 @@ export function Navbar() {
       <div className="container flex h-16 max-w-screen-2xl items-center px-4 mx-auto gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 shrink-0 mr-4">
-          <img src="/vvsu-logo.svg" className="h-9 w-auto" alt="ВВГУ" />
+          <img src="/vvsu-logo-real.png" className="h-8 w-auto brightness-0 invert" alt="ВВГУ" />
           <div className="hidden md:flex flex-col leading-tight">
             <span className="text-[10px] font-semibold text-white/60 uppercase tracking-widest">ВВГУ</span>
             <span className="text-[11px] font-bold text-white uppercase leading-tight max-w-[200px]">
