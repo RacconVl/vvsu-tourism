@@ -284,44 +284,80 @@ export default function Community() {
 
         {activeTab === "forum" && (
           <div className="space-y-4">
-            {/* Pinned volunteer news */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <Card className="rounded-2xl border-2 border-accent/30 bg-accent/5 hover:shadow-lg transition-shadow">
-                <CardContent className="p-5">
-                  <div className="flex items-start gap-4">
-                    <div className="shrink-0 w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
-                      <HandHeart className="h-5 w-5 text-accent" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <Badge className="bg-accent text-accent-foreground border-0 text-xs">📌 Новость ВВГУ</Badge>
-                        <Badge variant="outline" className="text-xs">Волонтёрство</Badge>
-                      </div>
-                      <h3 className="font-bold text-foreground text-base mb-2">
-                        Студенты ВВГУ познакомились с работой добровольцев «ЛизаАлерт» в Приморье
-                      </h3>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Центр волонтёров ВВГУ — первый в Приморье с 1998 года. Наши студенты участвовали в подготовке
-                        добровольцев для Олимпийских игр в Сочи, чемпионата мира по водным видам спорта, Восточного
-                        экономического форума. Ежегодно Центр задействован в более чем 300 событиях — от городского
-                        до международного уровня. Волонтёры ВВГУ — первые лица добровольчества в Приморье.
-                      </p>
-                      <div className="flex items-center justify-between flex-wrap gap-2">
-                        <span className="text-xs text-muted-foreground">vvsu.ru/mc · Центр молодёжных коммуникаций</span>
-                        <a
-                          href="https://www.vvsu.ru/mc/volunteering/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-xs font-medium text-accent hover:underline"
-                        >
-                          Подробнее <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </div>
-                    </div>
+            {/* Pinned posts from ITKI / mc.vvsu.ru */}
+            {[
+              {
+                img: "/post-mascot.png",
+                badge: "🏆 Конкурс",
+                badgeClass: "bg-accent text-accent-foreground border-0",
+                tag: "Творчество",
+                title: "Конкурс на создание маскота ИТКИ — подай заявку до 30 июля!",
+                body: "Институт туризма и креативных индустрий объявляет открытый конкурс на создание официального маскота кафедры! Нарисуй персонажа, который будет олицетворять дух путешествий, творчества и Владивостока. Победитель получит диплом, мерч ИТКИ и 10 000 рублей. Работы принимаются в любом формате: скетч, цифровая иллюстрация, 3D.",
+                source: "Кафедра ИТКИ · ВВГУ",
+                link: "https://www.vvsu.ru/miost/",
+                pinIcon: "📌",
+                delay: 0,
+              },
+              {
+                img: "/post-volunteer.png",
+                badge: "📌 Новость ВВГУ",
+                badgeClass: "bg-primary/80 text-white border-0",
+                tag: "Волонтёрство",
+                title: "«Чистые игры на ВЭФ 2024» — ВВГУ снова в числе лидеров",
+                body: "Центр волонтёров ВВГУ — единственный на Дальнем Востоке, готовивший добровольцев для Олимпийских игр 2014 в Сочи. С 2021 года координирует международный проект «Чистые игры в Приморье». В акции на ВЭФ 2024 участвовали около 80 человек — студенты ВВГУ и представители бизнеса. Ежегодно Центр задействован в более 300 событиях.",
+                source: "mc.vvsu.ru · Центр волонтёров",
+                link: "https://www.vvsu.ru/mc/",
+                pinIcon: "📌",
+                delay: 0.06,
+              },
+              {
+                img: "/post-excursion.png",
+                badge: "📌 Стажировки",
+                badgeClass: "bg-teal-600 text-white border-0",
+                tag: "Практика",
+                title: "Туроператор «ВГУЭС-ТРЭВЕЛ» — производственные экскурсии для студентов ИТКИ",
+                body: "40% преподавателей ИТКИ — практики отрасли: замминистра туризма Приморского края, директор нацпарка «Земля Леопарда», директор учебного центра «Билетур». Туроператор ВГУЭС-ТРЭВЕЛ организует для студентов образовательные стажировки с участием в конференциях и конкурсах по всей России и миру.",
+                source: "vvsu.ru/miost · ИТКИ",
+                link: "https://www.vvsu.ru/miost/",
+                pinIcon: "📌",
+                delay: 0.12,
+              },
+              {
+                img: "/post-festival.png",
+                badge: "🎯 Хакатон",
+                badgeClass: "bg-purple-600 text-white border-0",
+                tag: "Креативные индустрии",
+                title: "Creative Generation 2025 — федеральный хакатон для студентов ИТКИ",
+                body: "Стартовал федеральный контент-хакатон «Creative Generation» в сфере креативных индустрий. Бесплатное обучение нейросетям и работа на реальных задачах. Сроки: 1 октября — 19 декабря 2025. Участники получат сертификаты и возможность попасть в лучшие креативные агентства страны. Подавай заявку от кафедры ИТКИ!",
+                source: "mc.vvsu.ru · Творческие объединения",
+                link: "https://www.vvsu.ru/mc/",
+                pinIcon: "📌",
+                delay: 0.18,
+              },
+            ].map((post, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: post.delay }}>
+                <Card className="rounded-2xl border-2 border-accent/20 hover:shadow-lg transition-shadow overflow-hidden">
+                  <div className="h-48 overflow-hidden">
+                    <img src={post.img} alt={post.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                  <CardContent className="p-5">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <Badge className={`text-xs ${post.badgeClass}`}>{post.badge}</Badge>
+                      <Badge variant="outline" className="text-xs">{post.tag}</Badge>
+                    </div>
+                    <h3 className="font-bold text-foreground text-base mb-2">{post.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-3 line-clamp-3">{post.body}</p>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <span className="text-xs text-muted-foreground">{post.source}</span>
+                      <a href={post.link} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-xs font-medium text-accent hover:underline">
+                        Подробнее <ExternalLink className="h-3 w-3" />
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
 
             {/* Forum posts */}
             {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-36 w-full rounded-2xl" />) :

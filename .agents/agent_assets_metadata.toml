@@ -126,6 +126,30 @@ uri = "file://artifacts/vvsu-tourism/public/community-6.png"
 type = "image"
 title = "students talent show performance"
 
+[[generated]]
+id = "zcnHpqTg9JRQfcUP__IMx"
+uri = "file://artifacts/vvsu-tourism/public/post-mascot.png"
+type = "image"
+title = "students mascot design competition"
+
+[[generated]]
+id = "w-YIfdIzOsXvGpTySXn4a"
+uri = "file://artifacts/vvsu-tourism/public/post-volunteer.png"
+type = "image"
+title = "student volunteers Vladivostok"
+
+[[generated]]
+id = "djo3wev06OU2bEhRtxP6H"
+uri = "file://artifacts/vvsu-tourism/public/post-excursion.png"
+type = "image"
+title = "tourism students city excursion"
+
+[[generated]]
+id = "Ozh1pVw3frXKRdRNNbxG6"
+uri = "file://artifacts/vvsu-tourism/public/post-festival.png"
+type = "image"
+title = "university creative festival exhibition"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"
