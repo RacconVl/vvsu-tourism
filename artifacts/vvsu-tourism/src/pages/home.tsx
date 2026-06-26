@@ -183,6 +183,8 @@ function StickmanStat() {
   const [stickX, setStickX] = useState(-55);
   const [stickDur, setStickDur] = useState(2.0);
   const [resetKey, setResetKey] = useState(0);
+  // Single walk-cycle value 0→1 (triangle wave) that drives ALL limbs
+  const [walkT, setWalkT] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -222,6 +224,31 @@ function StickmanStat() {
 
   const isMoving = phase === "run" || phase === "leave";
 
+  // Single RAF loop — all limbs driven by one shared angle
+  useEffect(() => {
+    if (!isMoving) { setWalkT(0); return; }
+    const period = 380; // ms per half-stride
+    let startTime = 0;
+    let rafId: number;
+    const tick = (now: number) => {
+      if (!startTime) startTime = now;
+      const elapsed = (now - startTime) % (period * 2);
+      // triangle wave: 0→1 then 1→0
+      setWalkT(elapsed < period ? elapsed / period : 2 - elapsed / period);
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [isMoving]);
+
+  // Natural cross-pattern walk:
+  //   right arm + left leg in phase  (both forward at walkT=0)
+  //   left arm  + right leg in phase (both backward at walkT=0)
+  const rArmDeg = -35 + walkT * 70;   // -35° (forward) → +35° (backward)
+  const lArmDeg =  35 - walkT * 70;   // +35° (backward) → -35° (forward)
+  const lLegDeg = -32 + walkT * 60;   // -32° (forward) → +28° (backward)  ← synced with rArm
+  const rLegDeg =  28 - walkT * 60;   // +28° (backward) → -32° (forward)  ← synced with lArm
+
   return (
     <div className="flex flex-col items-center text-center gap-2">
       <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white mb-1"
@@ -249,6 +276,7 @@ function StickmanStat() {
             <circle cx={0} cy={7} r={5} stroke="#033F7E" strokeWidth={1.8} fill="none" />
             <line x1={0} y1={12} x2={0} y2={27} stroke="#033F7E" strokeWidth={1.8} />
 
+            {/* RIGHT arm */}
             {phase === "erase" ? (
               <motion.g style={{ transformOrigin: "0px 17px" }}
                 animate={{ rotate: [-18, 18] }}
@@ -263,42 +291,29 @@ function StickmanStat() {
                 <circle cx={21} cy={10} r={1.3} fill="#c0392b" />
               </g>
             ) : (
-              <motion.g style={{ transformOrigin: "0px 17px" }}
-                animate={{ rotate: [35, -35] }}
-                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
+              <g transform={`rotate(${isMoving ? rArmDeg : 0}, 0, 17)`}>
                 <line x1={0} y1={17} x2={4} y2={28} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
-              </motion.g>
+              </g>
             )}
 
+            {/* LEFT arm */}
             {isMoving ? (
-              <motion.g style={{ transformOrigin: "0px 17px" }}
-                animate={{ rotate: [-35, 35] }}
-                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
+              <g transform={`rotate(${lArmDeg}, 0, 17)`}>
                 <line x1={0} y1={17} x2={-4} y2={28} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
-              </motion.g>
+              </g>
             ) : (
               <line x1={0} y1={17} x2={-8} y2={22} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
             )}
 
-            {isMoving ? (
-              <motion.g style={{ transformOrigin: "0px 27px" }}
-                animate={{ rotate: [28, -32] }}
-                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
-                <line x1={0} y1={27} x2={-2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
-              </motion.g>
-            ) : (
-              <line x1={0} y1={27} x2={-5} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
-            )}
+            {/* LEFT leg — synced with right arm */}
+            <g transform={`rotate(${isMoving ? lLegDeg : 0}, 0, 27)`}>
+              <line x1={0} y1={27} x2={-2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+            </g>
 
-            {isMoving ? (
-              <motion.g style={{ transformOrigin: "0px 27px" }}
-                animate={{ rotate: [-32, 28] }}
-                transition={{ duration: 0.38, repeat: Infinity, repeatType: "reverse" }}>
-                <line x1={0} y1={27} x2={2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
-              </motion.g>
-            ) : (
-              <line x1={0} y1={27} x2={5} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
-            )}
+            {/* RIGHT leg — synced with left arm */}
+            <g transform={`rotate(${isMoving ? rLegDeg : 0}, 0, 27)`}>
+              <line x1={0} y1={27} x2={2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+            </g>
           </motion.g>
         </svg>
       </div>
