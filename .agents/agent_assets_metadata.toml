@@ -66,6 +66,30 @@ uri = "file://artifacts/vvsu-tourism/public/students-4.png"
 type = "image"
 title = "students-field-trip"
 
+[[generated]]
+id = "OOFSiDF4BIE6jY87qpTP9"
+uri = "file://artifacts/vvsu-tourism/public/exam-drawing.png"
+type = "image"
+title = "academic pencil drawing exam"
+
+[[generated]]
+id = "qHb2ZL6zOAfhJiwmSTP3G"
+uri = "file://artifacts/vvsu-tourism/public/exam-painting.png"
+type = "image"
+title = "watercolor painting graphic art"
+
+[[generated]]
+id = "Z6AlpwEA2XbVABKH23T9c"
+uri = "file://artifacts/vvsu-tourism/public/exam-composition.png"
+type = "image"
+title = "decorative geometric composition"
+
+[[generated]]
+id = "-BNOfWZDF4r96Zo7fqiMI"
+uri = "file://artifacts/vvsu-tourism/public/exam-creative.png"
+type = "image"
+title = "creative design identity sketch"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"

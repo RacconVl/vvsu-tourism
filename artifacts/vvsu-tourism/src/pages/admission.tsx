@@ -422,18 +422,23 @@ export default function AdmissionPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {[
-                      { title: "Рисунок", desc: "Академический рисунок геометрических тел или натюрморта карандашом. Оценивается конструктивное построение, светотень, пропорции.", color: "#033F7E" },
-                      { title: "Живопись / Графика", desc: "Цветовое или тональное решение композиции. Для Цифрового дизайна — допускается чёрно-белая графика.", color: "#7c3aed" },
-                      { title: "Композиция", desc: "Создание декоративной или пространственной композиции на заданную тему. Оценивается оригинальность, ритм, баланс.", color: "#EB7124" },
-                      { title: "Творческое задание", desc: "Эскиз айдентики, иллюстрации или дизайн-концепции. Для цифровых профилей: может включать макет интерфейса.", color: "#16a34a" },
+                      { title: "Рисунок", desc: "Академический рисунок геометрических тел или натюрморта карандашом. Оценивается конструктивное построение, светотень, пропорции.", color: "#033F7E", img: "/exam-drawing.png" },
+                      { title: "Живопись / Графика", desc: "Цветовое или тональное решение композиции. Для Цифрового дизайна — допускается чёрно-белая графика.", color: "#7c3aed", img: "/exam-painting.png" },
+                      { title: "Композиция", desc: "Создание декоративной или пространственной композиции на заданную тему. Оценивается оригинальность, ритм, баланс.", color: "#EB7124", img: "/exam-composition.png" },
+                      { title: "Творческое задание", desc: "Эскиз айдентики, иллюстрации или дизайн-концепции. Для цифровых профилей: может включать макет интерфейса.", color: "#16a34a", img: "/exam-creative.png" },
                     ].map((item, i) => (
                       <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.07 }}>
-                        <div className="rounded-xl border border-border/50 bg-muted/20 p-4 h-full">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="h-2 w-2 rounded-full" style={{ background: item.color }} />
-                            <span className="font-semibold text-sm text-foreground">{item.title}</span>
+                        <div className="rounded-xl border border-border/50 bg-muted/20 overflow-hidden h-full">
+                          <div className="h-36 overflow-hidden">
+                            <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
                           </div>
-                          <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                          <div className="p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <div className="h-2 w-2 rounded-full" style={{ background: item.color }} />
+                              <span className="font-semibold text-sm text-foreground">{item.title}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                          </div>
                         </div>
                       </motion.div>
                     ))}
