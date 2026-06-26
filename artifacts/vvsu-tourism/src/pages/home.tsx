@@ -648,31 +648,36 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
-              { icon: <Plane className="h-7 w-7" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽" },
-              { icon: <Building2 className="h-7 w-7" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽" },
-              { icon: <Globe className="h-7 w-7" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽" },
-              { icon: <Camera className="h-7 w-7" />, title: "Специалист по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽" },
-              { icon: <UtensilsCrossed className="h-7 w-7" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽" },
-              { icon: <Ship className="h-7 w-7" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽" },
+              { icon: <Plane className="h-7 w-7" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽", img: "/career-touroperator.png" },
+              { icon: <Building2 className="h-7 w-7" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽", img: "/career-hotel.png" },
+              { icon: <Globe className="h-7 w-7" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽", img: "/career-guide.png" },
+              { icon: <Camera className="h-7 w-7" />, title: "Специалист по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽", img: "/career-marketing.png" },
+              { icon: <UtensilsCrossed className="h-7 w-7" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽", img: "/career-events.png" },
+              { icon: <Ship className="h-7 w-7" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽", img: "/career-cruise.png" },
             ].map((job, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -4 }}>
-                <div className="rounded-2xl border border-border/60 bg-card p-5 h-full flex flex-col gap-3 hover:shadow-lg transition-shadow group">
-                  <div className="flex items-start justify-between">
-                    <div className="h-12 w-12 rounded-xl flex items-center justify-center text-white shrink-0"
-                      style={{ background: `linear-gradient(135deg, ${job.color}cc, ${job.color})` }}>
-                      {job.icon}
+                <div className="rounded-2xl border border-border/60 bg-card h-full flex flex-col hover:shadow-lg transition-shadow group overflow-hidden">
+                  <div className="h-40 overflow-hidden">
+                    <img src={job.img} alt={job.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <div className="p-5 flex flex-col gap-3 flex-1">
+                    <div className="flex items-start justify-between">
+                      <div className="h-12 w-12 rounded-xl flex items-center justify-center text-white shrink-0"
+                        style={{ background: `linear-gradient(135deg, ${job.color}cc, ${job.color})` }}>
+                        {job.icon}
+                      </div>
+                      <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">{job.salary}</span>
                     </div>
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">{job.salary}</span>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground mb-1">{job.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{job.desc}</p>
-                  </div>
-                  <div className="mt-auto pt-2">
-                    <div className="h-0.5 w-8 rounded-full transition-all group-hover:w-16" style={{ background: job.color }} />
+                    <div>
+                      <h3 className="font-bold text-foreground mb-1">{job.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{job.desc}</p>
+                    </div>
+                    <div className="mt-auto pt-2">
+                      <div className="h-0.5 w-8 rounded-full transition-all group-hover:w-16" style={{ background: job.color }} />
+                    </div>
                   </div>
                 </div>
               </motion.div>

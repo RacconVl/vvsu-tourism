@@ -174,6 +174,42 @@ uri = "file://artifacts/vvsu-tourism/public/post-cat-design.png"
 type = "image"
 title = "graphic design creative workspace"
 
+[[generated]]
+id = "8tosXW5hvUvXNNe_k61Ex"
+uri = "file://artifacts/vvsu-tourism/public/career-touroperator.png"
+type = "image"
+title = "tour operator career"
+
+[[generated]]
+id = "MxD3Cs4SRwtt1dtWOwOEH"
+uri = "file://artifacts/vvsu-tourism/public/career-hotel.png"
+type = "image"
+title = "hotel manager career"
+
+[[generated]]
+id = "ey39RKKQW1Z8vM7AKP_q-"
+uri = "file://artifacts/vvsu-tourism/public/career-guide.png"
+type = "image"
+title = "excursion guide Vladivostok"
+
+[[generated]]
+id = "FaoxvmqQCVqkfAU4u5ugr"
+uri = "file://artifacts/vvsu-tourism/public/career-marketing.png"
+type = "image"
+title = "tourism marketing specialist"
+
+[[generated]]
+id = "UfaPrdMiaygWQIWBurLbw"
+uri = "file://artifacts/vvsu-tourism/public/career-events.png"
+type = "image"
+title = "MICE events organizer"
+
+[[generated]]
+id = "XlgqsfbrrE_ca7fif8ctN"
+uri = "file://artifacts/vvsu-tourism/public/career-cruise.png"
+type = "image"
+title = "cruise tourism Vladivostok"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"
