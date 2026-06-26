@@ -90,6 +90,42 @@ uri = "file://artifacts/vvsu-tourism/public/exam-creative.png"
 type = "image"
 title = "creative design identity sketch"
 
+[[generated]]
+id = "XF6cYsK6xswV1yhoVoqsq"
+uri = "file://artifacts/vvsu-tourism/public/community-1.png"
+type = "image"
+title = "students laughing campus"
+
+[[generated]]
+id = "ZFFzPMGMT5g8wl_2_JoKl"
+uri = "file://artifacts/vvsu-tourism/public/community-2.png"
+type = "image"
+title = "students creative workshop"
+
+[[generated]]
+id = "N2Q_DvdxQq2WngQ9VXtZ1"
+uri = "file://artifacts/vvsu-tourism/public/community-3.png"
+type = "image"
+title = "students outdoor festival"
+
+[[generated]]
+id = "mhPVB5pVeQWI-z337KniX"
+uri = "file://artifacts/vvsu-tourism/public/community-4.png"
+type = "image"
+title = "students university cafe"
+
+[[generated]]
+id = "ENLLl4PicFgAC8spcim9U"
+uri = "file://artifacts/vvsu-tourism/public/community-5.png"
+type = "image"
+title = "students field trip sea"
+
+[[generated]]
+id = "F8V_-rAjA7Mydj5F_5vOA"
+uri = "file://artifacts/vvsu-tourism/public/community-6.png"
+type = "image"
+title = "students talent show performance"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"

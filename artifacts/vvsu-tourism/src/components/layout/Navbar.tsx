@@ -18,7 +18,7 @@ import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 const publicNavItems = [
   { href: "/admission",        label: "Поступление", icon: GraduationCap },
-  { href: "/cabinet/community", label: "Сообщество",  icon: Users },
+  { href: "/cabinet/community", label: "Молодёжка",   icon: Users },
   { href: "/map",              label: "Карта",        icon: MapIcon },
   { href: "/leaderboard",      label: "Рейтинг",      icon: Trophy },
 ];

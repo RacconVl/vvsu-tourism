@@ -232,7 +232,19 @@ export default function Community() {
         <Link href="/cabinet" className="flex items-center gap-2 text-sm font-semibold text-foreground shrink-0">
           <ArrowLeft className="h-5 w-5" /> Обзор
         </Link>
-        <span className="text-muted-foreground text-sm">Сообщество</span>
+        <span className="text-muted-foreground text-sm">Молодёжка</span>
+      </div>
+
+      {/* Photo strip */}
+      <div className="w-full overflow-hidden">
+        <div className="grid grid-cols-3 md:grid-cols-6 h-48 md:h-64">
+          {["/community-1.png","/community-2.png","/community-3.png","/community-4.png","/community-5.png","/community-6.png"].map((src, i) => (
+            <motion.div key={i} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.06 }} className="overflow-hidden relative">
+              <img src={src} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+              <div className="absolute inset-0 bg-primary/20 hover:bg-transparent transition-colors duration-300" />
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       <div className="py-10 px-4">
@@ -240,9 +252,9 @@ export default function Community() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <Users className="h-6 w-6 text-accent" />
-            <span className="text-muted-foreground uppercase tracking-widest text-xs">Сообщество</span>
+            <span className="text-muted-foreground uppercase tracking-widest text-xs">Студенческая жизнь</span>
           </div>
-          <h1 className="text-4xl font-bold text-foreground">Студенческое сообщество</h1>
+          <h1 className="text-4xl font-bold text-foreground">Молодёжка</h1>
           <p className="text-muted-foreground mt-2">Делитесь опытом, обсуждайте проекты и вдохновляйтесь работами коллег</p>
         </motion.div>
 
