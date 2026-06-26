@@ -257,3 +257,9 @@ id = "Pd9G5ydU_0Al3vYCRfirB"
 uri = "file://vvsu-tourism.tar.gz"
 type = "unspecified"
 title = "vvsu-tourism.tar.gz — обновление с seed.sql и update.sh"
+
+[[outputs]]
+id = "ndRghMJR4PUE_sNMKPKMh"
+uri = "file://vvsu-dist.tar.gz"
+type = "unspecified"
+title = "vvsu-dist.tar.gz — готовая сборка фронтенда"
