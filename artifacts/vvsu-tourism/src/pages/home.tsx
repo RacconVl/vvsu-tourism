@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { CatMascot } from "@/components/illustrations/CatMascot";
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -361,6 +362,7 @@ export default function Home() {
         <div className="absolute right-[8%] top-[12%] opacity-[0.06] pointer-events-none">
           <Anchor className="h-72 w-72 text-white" style={{ transform: "rotate(15deg)" }} />
         </div>
+        <CatMascot />
         {[
           { top: "18%", left: "12%", size: 3, delay: 0 },
           { top: "32%", left: "7%", size: 2, delay: 0.8 },
