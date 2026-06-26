@@ -150,6 +150,30 @@ uri = "file://artifacts/vvsu-tourism/public/post-festival.png"
 type = "image"
 title = "university creative festival exhibition"
 
+[[generated]]
+id = "PN4QtjHUZDQbtoGD4gWt1"
+uri = "file://artifacts/vvsu-tourism/public/post-cat-marketing.png"
+type = "image"
+title = "tourism social media marketing"
+
+[[generated]]
+id = "yAB4zBYi-EkdVhEWUcCW5"
+uri = "file://artifacts/vvsu-tourism/public/post-cat-operations.png"
+type = "image"
+title = "tour budget operations planning"
+
+[[generated]]
+id = "Yu41WIL7g_qy5JuwUWTsh"
+uri = "file://artifacts/vvsu-tourism/public/post-cat-photo.png"
+type = "image"
+title = "Vladivostok photography locations"
+
+[[generated]]
+id = "_R6b81OuiMV3xQxyxFmIH"
+uri = "file://artifacts/vvsu-tourism/public/post-cat-design.png"
+type = "image"
+title = "graphic design creative workspace"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"

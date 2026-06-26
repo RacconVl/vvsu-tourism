@@ -27,6 +27,13 @@ const roleLabels: Record<string, string> = {
   guide: "Экскурсовод", marketer: "Маркетолог", designer: "Дизайнер", operator: "Туроператор"
 };
 
+const categoryImages: Record<string, string> = {
+  "Маркетинг": "/post-cat-marketing.png",
+  "Операционная деятельность": "/post-cat-operations.png",
+  "Фотография": "/post-cat-photo.png",
+  "Дизайн": "/post-cat-design.png",
+};
+
 const categoryIcons: Record<string, React.ReactNode> = {
   "Фотография": <Image className="h-4 w-4" />,
   "Маркетинг": <Megaphone className="h-4 w-4" />,
@@ -365,7 +372,12 @@ export default function Community() {
                     transition={{ delay: i * 0.06 }}
                     data-testid={`card-post-${post.id}`}
                   >
-                    <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow">
+                    <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow overflow-hidden">
+                      {categoryImages[post.category] && (
+                        <div className="h-36 overflow-hidden">
+                          <img src={categoryImages[post.category]} alt={post.category} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                        </div>
+                      )}
                       <CardContent className="p-5">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-2">
