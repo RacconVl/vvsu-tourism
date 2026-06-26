@@ -34,13 +34,13 @@ title = "tourism-vladivostok"
 id = "BbITZpFB44j5FGDrs8f-0"
 uri = "file://artifacts/vvsu-tourism/public/prog-design.png"
 type = "image"
-title = "design-students-studio"
+title = "design bachelor program"
 
 [[generated]]
 id = "aJy-oVCQzHbxCkuPCkOag"
 uri = "file://artifacts/vvsu-tourism/public/prog-hotel.png"
 type = "image"
-title = "luxury-hotel-lobby"
+title = "hotel management program"
 
 [[generated]]
 id = "5FHZ00JBGY6U0f8hYFkfK"
@@ -227,6 +227,18 @@ id = "4_6MYhQIwxJbmeYF413He"
 uri = "file://artifacts/vvsu-tourism/public/career-designer-interior.png"
 type = "image"
 title = "interior designer hotel spaces career"
+
+[[generated]]
+id = "dVG5eajZLQgCQuzNuFRvf"
+uri = "file://artifacts/vvsu-tourism/public/prog-tourism-bachelor.png"
+type = "image"
+title = "tourism bachelor program"
+
+[[generated]]
+id = "W-BJM-AWB2_9X2MML1LzB"
+uri = "file://artifacts/vvsu-tourism/public/prog-tourism-master.png"
+type = "image"
+title = "tourism master program"
 
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"

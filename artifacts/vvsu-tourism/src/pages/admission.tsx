@@ -21,6 +21,7 @@ const programs = [
     places: { budget: 25, paid: 30 },
     profiles: ["Технология и организация туроператорской деятельности", "Технология и организация туристских услуг"],
     color: "#033F7E",
+    img: "/prog-tourism-bachelor.png",
   },
   {
     code: "43.03.03",
@@ -31,6 +32,7 @@ const programs = [
     places: { budget: 20, paid: 25 },
     profiles: ["Гостиничная деятельность", "Управление отелем"],
     color: "#EB7124",
+    img: "/prog-hotel.png",
   },
   {
     code: "54.03.01",
@@ -41,6 +43,7 @@ const programs = [
     places: { budget: 15, paid: 20 },
     profiles: ["Графический дизайн", "Дизайн среды"],
     color: "#172E46",
+    img: "/prog-design.png",
   },
   {
     code: "43.04.02",
@@ -51,6 +54,7 @@ const programs = [
     places: { budget: 10, paid: 15 },
     profiles: ["Менеджмент в туризме", "Международный туризм"],
     color: "#7c3aed",
+    img: "/prog-tourism-master.png",
   },
 ];
 
@@ -216,15 +220,19 @@ export default function AdmissionPage() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {programs.map((p, i) => (
                 <motion.div key={p.code} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
-                  <Card className="rounded-2xl border-border/60 overflow-hidden hover:shadow-md transition-shadow h-full">
-                    <div className="h-1.5" style={{ background: p.color }} />
+                  <Card className="rounded-2xl border-border/60 overflow-hidden hover:shadow-md transition-shadow h-full group">
+                    <div className="h-40 overflow-hidden relative">
+                      <img src={p.img} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, transparent 40%, ${p.color}cc)` }} />
+                      <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                        <span className="text-xs font-mono text-white/80">{p.code}</span>
+                        <Badge className="text-xs rounded-full text-white border-white/30 bg-white/10 backdrop-blur-sm">{p.degree}</Badge>
+                      </div>
+                    </div>
+                    <div className="h-1" style={{ background: p.color }} />
                     <CardContent className="p-5">
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs text-muted-foreground font-mono">{p.code}</span>
-                            <Badge variant="outline" className="text-xs rounded-full">{p.degree}</Badge>
-                          </div>
                           <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
                         </div>
                         <div
