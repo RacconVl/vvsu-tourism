@@ -1,0 +1,41 @@
+Most used commands:
+  update - Retrieve new lists of packages
+  upgrade - Perform an upgrade
+  install - Install new packages (pkg is libc6 not libc6.deb)
+  reinstall - Reinstall packages (pkg is libc6 not libc6.deb)
+  remove - Remove packages
+  purge - Remove packages and config files
+  autoremove - Remove automatically all unused packages
+  dist-upgrade - Distribution upgrade, see apt-get(8)
+  dselect-upgrade - Follow dselect selections
+  build-dep - Configure build-dependencies for source packages
+  satisfy - Satisfy dependency strings
+  clean - Erase downloaded archive files
+  autoclean - Erase old downloaded archive files
+  check - Verify that there are no broken dependencies
+  source - Download source archives
+  download - Download the binary package into the current directory
+  changelog - Download and display the changelog for the given package
+
+See apt-get(8) for more information about the available commands.
+Configuration options and syntax is detailed in apt.conf(5).
+Information about how to configure sources can be found in sources.list(5).
+Package and version choices can be expressed via apt_preferences(5).
+Security details are available in apt-secure(8).
+                                        This APT has Super Cow Powers.
+root@RacconQ:~# git clone https://github.com/RacconVL/vvsu-tourism/git /opt/vvsu-tourism && cd /opt/vvsu-tourism && pnpm instal
+Cloning into '/opt/vvsu-tourism'...
+remote: Not Found
+fatal: repository 'https://github.com/RacconVL/vvsu-tourism/git/' not found
+root@RacconQ:~# sudo -u postgres psql -c "CREATE USER vvsuapp WITH PASSWORD 'StrongPass123';" && sudo -u postgres psql -c "CREATE DATABASE vvsu_tourism OWNER vvsuapp;" && DATABASE_URL="postgresql://vvsuapp:StrongPass123!@localhost:5432/vvsu_tourism" pnpm --filter @workspace/db run push
+-bash: !@localhost: event not found
+root@RacconQ:~# cd /opt/vvsu-tourism && PORT=3000 BASE_PATH=/ pnpm --filter @workspace/vvsu-tourism run build && NODE_ENV=production pnpm --filter @workspace/api-server run build
+-bash: cd: /opt/vvsu-tourism: No such file or directory
+root@RacconQ:~# SEKRET-$(openss rand -hex 32) && echo $SEKRET
+Command 'openss' not found, did you mean:
+  command 'opensm' from deb opensm (3.3.23-2)
+  command 'openssn' from deb openssn (1.4-4)
+  command 'openssl' from deb openssl (3.0.13-0ubuntu3.11)
+Try: apt install <deb name>
+SEKRET-: command not found
+root@RacconQ:~#
