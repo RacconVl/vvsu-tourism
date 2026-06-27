@@ -40,6 +40,21 @@ const pointCoordinates: Record<string, [number, number]> = {
   "Русский мост": [43.0535, 131.8869],
 };
 
+const pointPhotos: Record<string, string> = {
+  "Золотой мост": "/map-photos/russky-bridge.jpg",
+  "Морской вокзал": "/map-photos/sea-station.jpg",
+  "Остров Русский": "/map-photos/russky-island.jpg",
+  "Дальневосточный морской заповедник": "/map-photos/marine-reserve.jpg",
+  "Приморский музей им. Арсеньева": "/map-photos/arsenyev-museum.jpg",
+  "Мыс Тобизина": "/map-photos/tobizina.jpg",
+  "Набережная Спортивной гавани": "/map-photos/sports-harbor.jpg",
+  "Маяк Эгершельда": "/map-photos/egersheld.jpg",
+  "ДВФУ Кампус": "/map-photos/fefu-campus.jpg",
+  "Покровский собор": "/map-photos/pokrovsky.jpg",
+  "Видовая площадка Орлиное гнездо": "/map-photos/eagle-nest.jpg",
+  "Русский мост": "/map-photos/russky-bridge.jpg",
+};
+
 export default function MapPage() {
   const { data: points, isLoading: pointsLoading } = useListMapPoints();
   const { data: routes, isLoading: routesLoading } = useListMapRoutes();
@@ -223,30 +238,71 @@ export default function MapPage() {
               <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
                 {pointsLoading
                   ? Array.from({ length: 6 }).map((_, i) => (
-                      <Skeleton key={i} className="h-16 rounded-xl" />
+                      <Skeleton key={i} className="h-20 rounded-xl" />
                     ))
-                  : enrichedPoints.map(p => (
-                      <Card
-                        key={p.id}
-                        className={`rounded-xl border-border/60 cursor-pointer transition-all hover-elevate ${
-                          selectedId === p.id ? "ring-2 ring-accent" : ""
-                        }`}
-                        onClick={() => handlePointClick(p)}
-                      >
-                        <div className="p-3 flex items-center gap-3">
-                          <span
-                            className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white shrink-0"
-                            style={{ background: p.catConfig.color }}
+                  : enrichedPoints.map(p => {
+                      const photo = pointPhotos[p.name];
+                      const isSelected = selectedId === p.id;
+                      return (
+                        <motion.div
+                          key={p.id}
+                          layout
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                        >
+                          <Card
+                            className={`rounded-xl border-border/60 cursor-pointer transition-all hover-elevate overflow-hidden ${
+                              isSelected ? "ring-2 ring-accent shadow-lg" : ""
+                            }`}
+                            onClick={() => handlePointClick(p)}
                           >
-                            {p.catConfig.icon}
-                          </span>
-                          <div className="flex-1 min-w-0">
-                            <div className="font-semibold text-sm truncate">{p.name}</div>
-                            <div className="text-xs text-muted-foreground">{p.catConfig.label}</div>
-                          </div>
-                        </div>
-                      </Card>
-                    ))}
+                            {/* Photo strip — show only when selected */}
+                            {isSelected && photo && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 140, opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                              >
+                                <img
+                                  src={photo}
+                                  alt={p.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              </motion.div>
+                            )}
+                            <div className="p-3 flex items-center gap-3">
+                              {/* Thumbnail when not selected */}
+                              {!isSelected && photo ? (
+                                <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0">
+                                  <img src={photo} alt={p.name} className="w-full h-full object-cover" />
+                                </div>
+                              ) : (
+                                <span
+                                  className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white shrink-0"
+                                  style={{ background: p.catConfig.color }}
+                                >
+                                  {p.catConfig.icon}
+                                </span>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <div className="font-semibold text-sm truncate">{p.name}</div>
+                                <div className="text-xs text-muted-foreground">{p.catConfig.label}</div>
+                              </div>
+                              {isSelected && (
+                                <span
+                                  className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white shrink-0"
+                                  style={{ background: p.catConfig.color }}
+                                >
+                                  {p.catConfig.icon}
+                                </span>
+                              )}
+                            </div>
+                          </Card>
+                        </motion.div>
+                      );
+                    })}
               </div>
             )}
 
