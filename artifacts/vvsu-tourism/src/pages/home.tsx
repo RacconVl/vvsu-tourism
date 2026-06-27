@@ -3,7 +3,7 @@ import { CatMascot } from "@/components/illustrations/CatMascot";
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Compass, Map as MapIcon, ArrowRight, Shield, Anchor, Waves, Star, Users, Trophy, BookOpen, GraduationCap, Zap, Globe, Briefcase, Building2, Plane, UtensilsCrossed, Camera, Ship, Palette, CheckCircle2, Sparkles, ExternalLink, Heart, Medal, Lightbulb } from "lucide-react";
+import { Compass, Map as MapIcon, ArrowRight, Shield, Anchor, Waves, Star, Users, Trophy, BookOpen, GraduationCap, Zap, Globe, Briefcase, Building2, Plane, UtensilsCrossed, Camera, Ship, Palette, CheckCircle2, Sparkles, ExternalLink, Heart, Medal, Lightbulb, Award, Cpu, Printer, MonitorSmartphone, FlaskConical, Handshake, TrendingUp, BadgeCheck } from "lucide-react";
 
 /* ── SVG Illustrations ──────────────────────────────────────── */
 
@@ -171,6 +171,155 @@ function ShipIllustration() {
           animate={{ scaleX: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
           style={{ transformOrigin: "100px 38px" }} />
       </motion.g>
+    </svg>
+  );
+}
+
+/* ── Tech Illustrations ─────────────────────────────────────── */
+function Printer3DIllustration() {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
+      <rect x="20" y="75" width="80" height="32" rx="6" fill="#033F7E" opacity="0.18" />
+      <rect x="28" y="78" width="64" height="26" rx="4" fill="#033F7E" opacity="0.35" />
+      <rect x="32" y="55" width="56" height="8" rx="3" fill="#172E46" opacity="0.7" />
+      <rect x="32" y="20" width="4" height="65" rx="2" fill="#033F7E" opacity="0.5" />
+      <rect x="84" y="20" width="4" height="65" rx="2" fill="#033F7E" opacity="0.5" />
+      <rect x="28" y="16" width="64" height="8" rx="3" fill="#033F7E" opacity="0.8" />
+      <motion.g animate={{ x: [-14, 14, -14] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
+        <rect x="46" y="46" width="28" height="10" rx="3" fill="#5b9cf6" opacity="0.9" />
+        <rect x="56" y="56" width="8" height="6" rx="1" fill="#033F7E" />
+        <motion.rect x="59" y="62" width="2" height="6" rx="1" fill="#EB7124"
+          animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} />
+      </motion.g>
+      {[0, 1, 2, 3].map(i => (
+        <motion.rect key={i} x={40 + i * 2} y={70 - i * 3} width={40 - i * 4} height={3} rx={1}
+          fill="#EB7124" opacity={0.55 + i * 0.1}
+          initial={{ scaleX: 0, originX: 0.5 }} animate={{ scaleX: 1 }}
+          transition={{ delay: i * 0.5, duration: 0.4, repeat: Infinity, repeatDelay: 2.5 }} />
+      ))}
+      <circle cx="60" cy="60" r="44" fill="#033F7E" opacity="0.05" />
+    </svg>
+  );
+}
+
+function LabIllustration() {
+  const lines = [
+    { y: 37, w: 44, fill: "#5b9cf6" },
+    { y: 43, w: 58, fill: "#EB7124" },
+    { y: 49, w: 30, fill: "#5b9cf6" },
+    { y: 55, w: 58, fill: "#EB7124" },
+    { y: 61, w: 44, fill: "#5b9cf6" },
+    { y: 67, w: 30, fill: "#EB7124" },
+  ];
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
+      <rect x="18" y="25" width="84" height="58" rx="6" fill="#033F7E" opacity="0.2" />
+      <rect x="22" y="29" width="76" height="50" rx="4" fill="#0a1a2e" opacity="0.85" />
+      {lines.map((l, i) => (
+        <motion.rect key={i} x={30} y={l.y} width={l.w} height={3} rx={1.5}
+          fill={l.fill} opacity={0.7}
+          animate={{ opacity: [0.4, 0.9, 0.4] }}
+          transition={{ duration: 1.8 + i * 0.25, delay: i * 0.18, repeat: Infinity, ease: "easeInOut" }} />
+      ))}
+      <motion.rect x="78" y="55" width="2" height="14" rx="1" fill="#5b9cf6"
+        animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.8, repeat: Infinity }} />
+      <rect x="38" y="83" width="44" height="5" rx="2" fill="#033F7E" opacity="0.5" />
+      <rect x="28" y="88" width="64" height="3" rx="1.5" fill="#033F7E" opacity="0.35" />
+      <rect x="40" y="91" width="40" height="12" rx="3" fill="#172E46" opacity="0.6" />
+      <circle cx="60" cy="60" r="44" fill="#5b9cf6" opacity="0.04" />
+    </svg>
+  );
+}
+
+function VRIllustration() {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
+      <motion.g animate={{ rotate: [-3, 3, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "60px 60px" }}>
+        <rect x="18" y="44" width="84" height="38" rx="18" fill="#033F7E" opacity="0.85" />
+        <rect x="22" y="48" width="76" height="30" rx="14" fill="#172E46" opacity="0.9" />
+        <circle cx="44" cy="63" r="11" fill="#0a1a2e" opacity="0.95" />
+        <circle cx="76" cy="63" r="11" fill="#0a1a2e" opacity="0.95" />
+        <motion.circle cx="44" cy="63" r="7" fill="#5b9cf6" opacity="0.5"
+          animate={{ fill: ["#5b9cf6","#EB7124","#7c3aed","#5b9cf6"] }}
+          transition={{ duration: 3, repeat: Infinity }} />
+        <motion.circle cx="76" cy="63" r="7" fill="#EB7124" opacity="0.5"
+          animate={{ fill: ["#EB7124","#7c3aed","#5b9cf6","#EB7124"] }}
+          transition={{ duration: 3, repeat: Infinity }} />
+        <rect x="52" y="56" width="16" height="14" rx="3" fill="#033F7E" opacity="0.6" />
+      </motion.g>
+      <rect x="46" y="82" width="28" height="4" rx="2" fill="#033F7E" opacity="0.4" />
+      <circle cx="60" cy="60" r="44" fill="#7c3aed" opacity="0.04" />
+    </svg>
+  );
+}
+
+function GrantIllustration() {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
+      <motion.g style={{ transformOrigin: "60px 55px" }}
+        animate={{ rotate: [-4, 4, -4] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
+        <rect x="32" y="28" width="56" height="72" rx="6" fill="#033F7E" opacity="0.2" />
+        <rect x="36" y="32" width="48" height="64" rx="4" fill="#0a1a2e" opacity="0.7" />
+        {[0,1,2,3,4].map(i => (
+          <rect key={i} x="44" y={42 + i * 9} width={32 - (i % 2) * 10} height={3} rx={1.5}
+            fill="#5b9cf6" opacity={0.5 - i * 0.05} />
+        ))}
+        <rect x="40" y="38" width="40" height="4" rx="2" fill="#EB7124" opacity="0.7" />
+      </motion.g>
+      <motion.circle cx="72" cy="38" r="16" fill="#EB7124" opacity="0.92"
+        animate={{ scale: [1, 1.08, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}>
+      </motion.circle>
+      <motion.text x="72" y="44" textAnchor="middle" fontSize="16" fill="white" fontWeight="900"
+        animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2.5, repeat: Infinity }}>₽</motion.text>
+      {[[52,22],[88,28],[82,52],[58,18],[92,42]].map(([cx,cy],i) => (
+        <motion.circle key={i} cx={cx} cy={cy} r={2} fill="#EB7124"
+          animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
+          transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity }} />
+      ))}
+    </svg>
+  );
+}
+
+function MacStudioIllustration() {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
+      <rect x="20" y="22" width="80" height="60" rx="5" fill="#033F7E" opacity="0.18" />
+      <rect x="24" y="26" width="72" height="52" rx="3" fill="#0a1a2e" opacity="0.9" />
+      <motion.rect x="30" y="32" width="60" height="40" rx="2" fill="#0d2444" opacity="0.8"
+        animate={{ opacity: [0.8, 0.95, 0.8] }} transition={{ duration: 3, repeat: Infinity }} />
+      {([["#5b9cf6",38,42,44],["#EB7124",38,50,28],["#7c3aed",38,58,36],["#16a34a",38,66,20]] as [string,number,number,number][]).map(([c,x,y,w],i) => (
+        <motion.rect key={i} x={x} y={y} width={w} height={4} rx={2} fill={c}
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2.5, delay: i*0.4, repeat: Infinity }} />
+      ))}
+      <motion.rect x="82" y="50" width="2" height="18" rx="1" fill="white" opacity={0.9}
+        animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.6, repeat: Infinity }} />
+      <rect x="50" y="78" width="20" height="4" rx="2" fill="#033F7E" opacity="0.5" />
+      <rect x="30" y="82" width="60" height="3" rx="1.5" fill="#033F7E" opacity="0.3" />
+      <rect x="10" y="85" width="100" height="8" rx="4" fill="#172E46" opacity="0.5" />
+    </svg>
+  );
+}
+
+function CareerCenterIllustration() {
+  return (
+    <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
+      <motion.g animate={{ y: [-3, 3, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
+        <rect x="30" y="35" width="60" height="60" rx="8" fill="#033F7E" opacity="0.2" />
+        <rect x="34" y="39" width="52" height="52" rx="6" fill="#0a1a2e" opacity="0.8" />
+        <rect x="40" y="45" width="40" height="6" rx="3" fill="#EB7124" opacity="0.8" />
+        {[0,1,2,3].map(i => (
+          <rect key={i} x="40" y={57 + i*8} width={40 - i*5} height={4} rx={2} fill="#5b9cf6" opacity={0.6 - i*0.1} />
+        ))}
+        <rect x="34" y="78" width="52" height="13" rx="6" fill="#033F7E" opacity="0.4" />
+        <rect x="44" y="82" width="32" height="5" rx="2" fill="#EB7124" opacity="0.7" />
+      </motion.g>
+      <motion.circle cx="82" cy="38" r="14" fill="#16a34a" opacity="0.9"
+        animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity }}>
+      </motion.circle>
+      <motion.path d="M76 38 L80 42 L88 34" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+        animate={{ pathLength: [0, 1, 1, 0] }} transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 0.5 }} />
     </svg>
   );
 }
@@ -443,6 +592,136 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Tech Infrastructure ───────────────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
+              <Cpu className="h-4 w-4 text-accent" /> Инфраструктура
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+              Передовые технологии<br /><span className="text-accent">для вашего обучения</span>
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+              В ВВГУ созданы все условия для учёбы и творчества — современное оборудование, лаборатории и инструменты, которыми пользуются профессионалы индустрии.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {[
+              {
+                Illus: Printer3DIllustration,
+                title: "3D-принтеры и прототипирование",
+                desc: "Современные FDM и SLA 3D-принтеры для создания макетов, сувенирной продукции и дизайн-проектов. Студенты печатают прототипы с первого курса.",
+                tags: ["Creality K1 Max", "Bambu Lab X1", "Фотополимерная печать"],
+                color: "#033F7E",
+              },
+              {
+                Illus: LabIllustration,
+                title: "Компьютерные классы и IT-лаборатории",
+                desc: "Оборудованные компьютерные классы с высокопроизводительными ПК, скоростным интернетом и лицензионным ПО для работы с любыми проектами.",
+                tags: ["60+ рабочих мест", "Windows + Linux", "Adobe CC, AutoCAD"],
+                color: "#EB7124",
+              },
+              {
+                Illus: MacStudioIllustration,
+                title: "Mac Studio для дизайнеров",
+                desc: "Специализированная студия для дизайнеров, оснащённая Apple Mac Studio и профессиональными мониторами. Работайте в среде, как в ведущих агентствах.",
+                tags: ["Apple Mac Studio", "Wacom Cintiq", "Профмониторы 4K"],
+                color: "#db2777",
+              },
+              {
+                Illus: VRIllustration,
+                title: "VR / AR оборудование",
+                desc: "Шлемы виртуальной реальности для проектирования туристических маршрутов, виртуальных экскурсий и иммерсивных презентаций — технологии будущего уже сегодня.",
+                tags: ["Meta Quest Pro", "HTC Vive", "360° контент"],
+                color: "#7c3aed",
+              },
+              {
+                Illus: LabIllustration,
+                title: "Медиастудия и фотолаборатория",
+                desc: "Профессиональная фото- и видеостудия с постоянным освещением, хромакеем и монтажными станциями. Снимайте и монтируйте контент на уровне медиаагентств.",
+                tags: ["Canon EOS R5", "DJI Drone", "Adobe Premiere"],
+                color: "#0891b2",
+              },
+              {
+                Illus: Printer3DIllustration,
+                title: "Лаборатория туристических технологий",
+                desc: "Специализированная лаборатория с системами бронирования, GDS-платформами и профессиональным ПО для управления туристическими маршрутами и отелями.",
+                tags: ["Amadeus GDS", "TourWriter", "Travelport"],
+                color: "#16a34a",
+              },
+            ].map(({ Illus, title, desc, tags, color }, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} whileHover={{ y: -4 }}>
+                <div className="rounded-2xl border border-border/60 bg-card h-full flex flex-col hover:shadow-lg transition-shadow p-5 gap-4">
+                  <div className="h-28 w-28 mx-auto">
+                    <Illus />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-foreground text-base mb-2">{title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">{desc}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {tags.map(t => (
+                        <span key={t} className="text-xs px-2 py-0.5 rounded-full border font-medium"
+                          style={{ borderColor: `${color}55`, color, background: `${color}11` }}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Grants strip */}
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <div className="rounded-3xl overflow-hidden relative" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 60%, #0a2d5c 100%)" }}>
+              <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+              <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-10 flex items-center justify-end pr-8">
+                <GrantIllustration />
+              </div>
+              <div className="relative z-10 p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/20 border border-accent/30 text-accent text-sm mb-5">
+                    <Award className="h-4 w-4" /> Гранты и стипендии
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                    Студенты ВВГУ<br /><span className="text-accent">выигрывают гранты</span>
+                  </h3>
+                  <p className="text-white/70 text-base leading-relaxed mb-6">
+                    Наши студенты регулярно получают гранты Росмолодёжи, президентские стипендии и гранты на реализацию проектов в сфере туризма и креативных индустрий. ВВГУ помогает оформить заявку и подготовить проект.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <a href="https://fadm.gov.ru" target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-white text-sm font-semibold hover:bg-accent/80 transition-colors shadow-lg shadow-accent/30">
+                      Гранты Росмолодёжи <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                    <a href="https://grants.culture.ru" target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-white/20 transition-colors">
+                      Культурные гранты <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { num: "500 000 ₽", label: "Максимальный грант для студента", color: "#EB7124" },
+                    { num: "12+", label: "Победителей грантов за 2024 год", color: "#5b9cf6" },
+                    { num: "3 млн ₽", label: "Суммарно выиграли студенты в 2024", color: "#16a34a" },
+                    { num: "100%", label: "Поддержка в оформлении заявки", color: "#a78bfa" },
+                  ].map((s, i) => (
+                    <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                      <div className="rounded-xl bg-white/8 border border-white/12 p-4 text-center">
+                        <div className="text-2xl font-black mb-1" style={{ color: s.color }}>{s.num}</div>
+                        <div className="text-xs text-white/60 leading-snug">{s.label}</div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── Flagship programs ──────────────────────────────────── */}
       <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #0a1a2e 0%, #0d2340 50%, #0a1a2e 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, rgba(3,63,126,0.25) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(235,113,36,0.12) 0%, transparent 40%)" }} />
@@ -550,6 +829,52 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
+
+          {/* Master's Design highlight */}
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
+            <div className="rounded-2xl border border-accent/30 overflow-hidden relative" style={{ background: "linear-gradient(135deg, #1a0e06 0%, #0d1a2e 100%)" }}>
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent" />
+              <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-center">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="h-10 w-10 rounded-xl bg-accent flex items-center justify-center shrink-0">
+                      <GraduationCap className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30 mr-2">Магистратура</span>
+                      <span className="text-xs text-white/50">2 года обучения · Очная форма</span>
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">Магистратура по дизайну — <span className="text-accent">следующий уровень</span></h3>
+                  <p className="text-white/65 text-sm leading-relaxed mb-4 max-w-2xl">
+                    Программа магистратуры ВВГУ по направлению «Дизайн» — для тех, кто хочет выйти на уровень арт-директора и исследователя. Углублённая теория, авторские проекты, участие в международных выставках и работа с брендами АТР. Можно поступить после бакалавриата любого вуза.
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {[
+                      { icon: <BadgeCheck className="h-4 w-4" />, text: "Бюджетные места" },
+                      { icon: <Globe className="h-4 w-4" />, text: "Международные проекты" },
+                      { icon: <Users className="h-4 w-4" />, text: "Наставник — практик" },
+                      { icon: <Award className="h-4 w-4" />, text: "Грантовая поддержка" },
+                    ].map((f, i) => (
+                      <div key={i} className="flex items-center gap-2 text-xs text-white/60">
+                        <span className="text-accent">{f.icon}</span>{f.text}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 shrink-0">
+                  <a href="https://www.vvsu.ru/admission/mag/" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-white text-sm font-bold hover:bg-accent/80 transition-colors shadow-lg shadow-accent/30 whitespace-nowrap">
+                    Подать документы <ExternalLink className="h-4 w-4" />
+                  </a>
+                  <a href="https://www.vvsu.ru/admission/mag/" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white text-sm hover:bg-white/10 transition-colors whitespace-nowrap">
+                    Программы магистратуры <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center">
             <Button asChild className="bg-accent hover:bg-accent/90 text-white rounded-full px-8 py-3 shadow-lg shadow-accent/30">
@@ -694,6 +1019,96 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Career Center ─────────────────────────────────────── */}
+      <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #0a1a2e 0%, #0d2340 50%, #0a1a2e 100%)" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 80% 30%, rgba(22,163,74,0.12) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(3,63,126,0.2) 0%, transparent 40%)" }} />
+        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#16a34a]/40 bg-[#16a34a]/10 text-[#4ade80] text-sm mb-6">
+                <Briefcase className="h-4 w-4" /> Центр карьеры ВВГУ
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
+                Центр карьеры —<br /><span className="text-[#4ade80]">ваш старт в профессию</span>
+              </h2>
+              <p className="text-white/70 text-lg leading-relaxed mb-8">
+                Центр карьеры ВВГУ (<a href="https://cpo.vvsu.ru" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">cpo.vvsu.ru</a>) — служба, которая помогает студентам и выпускникам найти работу, пройти практику и построить карьеру в индустрии. Работодатели приходят к вам сами.
+              </p>
+              <div className="space-y-4 mb-8">
+                {[
+                  { icon: <Handshake className="h-5 w-5" />, title: "База вакансий и работодателей", desc: "Доступ к актуальным вакансиям от партнёров ВВГУ — отелей, туроператоров, дизайн-студий и IT-компаний Приморья", color: "#16a34a" },
+                  { icon: <TrendingUp className="h-5 w-5" />, title: "Карьерные недели и ярмарки", desc: "Регулярные встречи с работодателями, ярмарки вакансий и интеграционные карьерные недели прямо в кампусе ВВГУ", color: "#EB7124" },
+                  { icon: <FlaskConical className="h-5 w-5" />, title: "Места практик", desc: "Банк актуальных мест для учебной и производственной практики в ведущих компаниях. Подача заявления онлайн", color: "#5b9cf6" },
+                  { icon: <BadgeCheck className="h-5 w-5" />, title: "Практико-интегрированное обучение", desc: "Работайте в реальных проектах компаний уже во время учёбы — зарабатывайте опыт и получайте доход", color: "#a78bfa" },
+                ].map((item, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                    <div className="flex items-start gap-4 p-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/8 transition-colors">
+                      <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
+                        style={{ background: `linear-gradient(135deg, ${item.color}99, ${item.color})` }}>
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white mb-0.5 text-sm">{item.title}</h4>
+                        <p className="text-white/55 text-sm leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              <a href="https://cpo.vvsu.ru" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#16a34a] text-white text-sm font-bold hover:bg-[#15803d] transition-colors shadow-lg shadow-[#16a34a]/30">
+                Перейти в Центр карьеры <ExternalLink className="h-4 w-4" />
+              </a>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                {[
+                  { num: "94%", label: "Трудоустройство выпускников", color: "#16a34a" },
+                  { num: "200+", label: "Партнёров-работодателей", color: "#EB7124" },
+                  { num: "500+", label: "Вакансий для студентов", color: "#5b9cf6" },
+                  { num: "12", label: "Карьерных мероприятий в год", color: "#a78bfa" },
+                ].map((s, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center hover:bg-white/8 transition-colors">
+                      <div className="text-3xl font-black mb-1.5" style={{ color: s.color }}>{s.num}</div>
+                      <div className="text-xs text-white/55 leading-snug">{s.label}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="rounded-2xl border border-[#16a34a]/30 bg-[#16a34a]/8 p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-12 w-12 shrink-0">
+                    <CareerCenterIllustration />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white text-base">Свежие события</div>
+                    <div className="text-xs text-white/50">Центр карьеры ВВГУ · 2025–2026</div>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { date: "17.06.2026", title: "Выпускники встретились с работодателями транспортной отрасли", type: "Встреча с работодателями" },
+                    { date: "16.02.2026", title: "Встреча со специалистами Центра занятости населения Приморья", type: "Открытая лекция" },
+                    { date: "02.12.2025", title: "Интеграционные карьерные недели завершились в ВВГУ", type: "Карьерная неделя" },
+                  ].map((ev, i) => (
+                    <div key={i} className="flex items-start gap-3 py-2 border-b border-white/8 last:border-0">
+                      <div className="text-xs text-white/40 shrink-0 mt-0.5 w-20">{ev.date}</div>
+                      <div>
+                        <div className="text-xs font-medium text-white/80 leading-snug mb-0.5">{ev.title}</div>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-[#16a34a]/20 text-[#4ade80]">{ev.type}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
