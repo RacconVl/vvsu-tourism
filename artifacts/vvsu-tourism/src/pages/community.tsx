@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   useListCommunityPosts,
-  useListGalleryWorks,
   useCreateCommunityPost,
   getListCommunityPostsQueryKey,
   useListPostComments,
@@ -21,7 +20,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { Users, Heart, MessageCircle, Image, PlusCircle, Palette, Route, Megaphone, ArrowLeft, ExternalLink, HandHeart, Send, ChevronDown, ChevronUp } from "lucide-react";
+import { Users, MessageCircle, PlusCircle, Palette, Route, Megaphone, ArrowLeft, ExternalLink, Send, ChevronDown, ChevronUp, GraduationCap, Briefcase, Award } from "lucide-react";
+
 
 const roleLabels: Record<string, string> = {
   guide: "Экскурсовод", marketer: "Маркетолог", designer: "Дизайнер", operator: "Туроператор"
@@ -35,18 +35,12 @@ const categoryImages: Record<string, string> = {
 };
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  "Фотография": <Image className="h-4 w-4" />,
+  "Фотография": <MessageCircle className="h-4 w-4" />,
   "Маркетинг": <Megaphone className="h-4 w-4" />,
   "Операционная деятельность": <Route className="h-4 w-4" />,
   "Дизайн": <Palette className="h-4 w-4" />,
 };
 
-const galleryCategories: Record<string, { label: string; color: string }> = {
-  design: { label: "Дизайн", color: "bg-rose-100 text-rose-700" },
-  marketing: { label: "Маркетинг", color: "bg-purple-100 text-purple-700" },
-  route: { label: "Маршрут", color: "bg-teal-100 text-teal-700" },
-  concept: { label: "Концепция", color: "bg-blue-100 text-blue-700" },
-};
 
 const REACTION_EMOJIS = ["❤️", "👍", "🔥", "🤔"] as const;
 type Emoji = typeof REACTION_EMOJIS[number];
@@ -184,11 +178,9 @@ function PostCommentsSection({ postId, onRepliesChange }: { postId: number; onRe
 export default function Community() {
   const { user } = useAuth();
   const { data: posts, isLoading: postsLoading } = useListCommunityPosts();
-  const { data: gallery, isLoading: galleryLoading } = useListGalleryWorks();
   const createPost = useCreateCommunityPost();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<"forum" | "gallery">("forum"); // kept for compat
   const [showDialog, setShowDialog] = useState(false);
   const [form, setForm] = useState({ title: "", content: "", category: "Маркетинг" });
   const [reactions, setReactions] = useState<ReactionsState>(loadReactions);
@@ -279,9 +271,7 @@ export default function Community() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
-          {/* Left: posts */}
-          <div className="lg:col-span-3 space-y-4">
+        <div className="space-y-4">
             {/* Pinned posts from ITKI / mc.vvsu.ru */}
             {[
               {
@@ -356,6 +346,124 @@ export default function Community() {
                 </Card>
               </motion.div>
             ))}
+
+            {/* Alumni designer posts */}
+            <div className="mt-2 mb-1">
+              <div className="flex items-center gap-2 mb-4">
+                <GraduationCap className="h-4 w-4 text-accent" />
+                <span className="text-sm font-bold text-foreground">Выпускники — дизайнеры ВВГУ</span>
+                <span className="text-xs text-muted-foreground ml-1">Истории успеха</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[
+                  {
+                    name: "Анна Серова",
+                    year: "Выпуск 2022",
+                    role: "Art Director · Branding Studio VL",
+                    avatar: "А",
+                    color: "#db2777",
+                    tags: ["Графический дизайн", "Брендинг"],
+                    text: "После ВВГУ я сразу попала в одну из крупнейших дизайн-студий Владивостока. Портфолио с реальных проектов кафедры открыло все двери — работодатель увидел не просто дипломную работу, а готовый коммерческий продукт.",
+                    achievement: "5 наград Red Dot 2024",
+                    link: "https://www.vvsu.ru/about/flagship-educational-programs/",
+                  },
+                  {
+                    name: "Кирилл Ли",
+                    year: "Выпуск 2021",
+                    role: "UX/UI Lead · Tinkoff Bank Владивосток",
+                    avatar: "К",
+                    color: "#EB7124",
+                    tags: ["UX/UI", "Digital"],
+                    text: "Практика в студии дизайна ИТКИ дала мне понимание реального продуктового цикла. Сейчас я руковожу командой из 8 дизайнеров в банке — навыки проектного мышления с кафедры использую каждый день.",
+                    achievement: "Product Designer года 2023",
+                    link: "https://www.vvsu.ru/about/flagship-educational-programs/",
+                  },
+                  {
+                    name: "Мария Чен",
+                    year: "Выпуск 2023",
+                    role: "Freelance · Motion Designer / Шанхай",
+                    avatar: "М",
+                    color: "#7c3aed",
+                    tags: ["Motion", "3D", "АТР"],
+                    text: "Знание азиатских рынков, которое мы получали на кафедре, помогло мне найти клиентов в Китае и Корее. Сегодня 80% моих заказчиков — компании АТР. ВВГУ дал уникальный международный контекст.",
+                    achievement: "3 млн ₽ / год фриланс",
+                    link: "https://www.vvsu.ru/about/flagship-educational-programs/",
+                  },
+                  {
+                    name: "Дмитрий Волков",
+                    year: "Выпуск 2020",
+                    role: "Creative Director · Туристическое агентство «Восток»",
+                    avatar: "Д",
+                    color: "#0891b2",
+                    tags: ["Айдентика", "Туризм"],
+                    text: "Сочетание дизайна и туристической специфики — моя суперсила. Я разрабатываю айдентику для туристических брендов Приморья. Именно такой синергии учили на ИТКИ — и это работает.",
+                    achievement: "30+ брендов в портфолио",
+                    link: "https://www.vvsu.ru/about/flagship-educational-programs/",
+                  },
+                  {
+                    name: "Соня Пак",
+                    year: "Выпуск 2022",
+                    role: "Interior Designer · Hyatt Regency Vladivostok",
+                    avatar: "С",
+                    color: "#16a34a",
+                    tags: ["Интерьер", "Гостиничный дизайн"],
+                    text: "Дизайн среды — это направление, которое расцветает во Владивостоке. Я участвовала в реновации трёх номерных фондов отеля. Практика с первого курса и связи кафедры с индустрией — это не просто слова.",
+                    achievement: "Проекты в 4 отелях 5★",
+                    link: "https://www.vvsu.ru/about/flagship-educational-programs/",
+                  },
+                  {
+                    name: "Иван Морозов",
+                    year: "Магистратура 2024",
+                    role: "Brand Researcher · Яндекс Маркет",
+                    avatar: "И",
+                    color: "#b45309",
+                    tags: ["Исследования", "Магистратура"],
+                    text: "Магистратура по дизайну дала мне методологию UX-исследований на уровне, который ценят крупные IT-компании. Сейчас я изучаю поведение пользователей для одного из крупнейших маркетплейсов страны.",
+                    achievement: "ВВГУ → Яндекс за 3 месяца",
+                    link: "https://www.vvsu.ru/admission/mag/",
+                  },
+                ].map((alum, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }} whileHover={{ y: -3 }}>
+                    <Card className="rounded-2xl border-border/60 hover:shadow-lg transition-shadow h-full flex flex-col overflow-hidden">
+                      <div className="p-4 pb-0 flex items-start gap-3">
+                        <div className="h-11 w-11 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0"
+                          style={{ background: `linear-gradient(135deg, ${alum.color}99, ${alum.color})` }}>
+                          {alum.avatar}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-bold text-foreground text-sm">{alum.name}</div>
+                          <div className="text-xs text-muted-foreground">{alum.year}</div>
+                          <div className="text-xs text-muted-foreground leading-snug mt-0.5">{alum.role}</div>
+                        </div>
+                      </div>
+                      <CardContent className="p-4 flex flex-col gap-3 flex-1">
+                        <div className="flex gap-1 flex-wrap">
+                          {alum.tags.map(t => (
+                            <span key={t} className="text-xs px-2 py-0.5 rounded-full border font-medium"
+                              style={{ borderColor: `${alum.color}44`, color: alum.color, background: `${alum.color}11` }}>{t}</span>
+                          ))}
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed flex-1">«{alum.text}»</p>
+                        <div className="flex items-center justify-between pt-2 border-t border-border/40">
+                          <div className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: alum.color }}>
+                            <Award className="h-3.5 w-3.5" />{alum.achievement}
+                          </div>
+                          <a href={alum.link} target="_blank" rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                            <ExternalLink className="h-3 w-3" /> Подробнее
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 mt-6 mb-2">
+              <Briefcase className="h-4 w-4 text-accent" />
+              <span className="text-sm font-bold text-foreground">Форум сообщества</span>
+            </div>
 
             {/* Forum posts */}
             {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-36 w-full rounded-2xl" />) :
@@ -447,48 +555,6 @@ export default function Community() {
                 );
               })
             }
-          </div>
-
-          {/* Right: gallery */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Image className="h-4 w-4 text-accent" />
-              <span className="text-sm font-semibold text-foreground">Галерея работ</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-              {galleryLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-56 w-full rounded-2xl" />) :
-                gallery?.map((work, i) => (
-                  <motion.div
-                    key={work.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.07 }}
-                    whileHover={{ y: -3 }}
-                    data-testid={`card-gallery-${work.id}`}
-                  >
-                    <Card className="overflow-hidden rounded-2xl border-border/60 hover:shadow-xl transition-shadow">
-                      <div className="h-40 overflow-hidden">
-                        <img src={work.imageUrl || undefined} alt={work.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                      </div>
-                      <CardContent className="p-3">
-                        <Badge className={`${galleryCategories[work.category]?.color ?? "bg-muted text-muted-foreground"} text-xs border-0 mb-1`}>
-                          {galleryCategories[work.category]?.label ?? work.category}
-                        </Badge>
-                        <h3 className="font-bold text-sm text-foreground mb-0.5">{work.title}</h3>
-                        <p className="text-xs text-muted-foreground line-clamp-1">{work.description}</p>
-                        <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs text-muted-foreground">{work.authorName}</span>
-                          <span className="flex items-center gap-1 text-xs text-rose-500">
-                            <Heart className="h-3.5 w-3.5" /> {work.likes}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))
-              }
-            </div>
-          </div>
         </div>
       </div>
       </div>

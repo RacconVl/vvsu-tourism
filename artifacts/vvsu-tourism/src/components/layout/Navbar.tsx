@@ -47,27 +47,27 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-primary text-primary-foreground shadow-md">
-      <div className="container flex h-16 max-w-screen-2xl items-center px-4 mx-auto gap-4">
+      <div className="container flex h-20 max-w-screen-2xl items-center px-6 mx-auto gap-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 mr-4">
-          <img src="/vvsu-logo-real.png" className="h-8 w-auto brightness-0 invert" alt="ВВГУ" />
+        <Link href="/" className="flex items-center gap-4 shrink-0 mr-6">
+          <img src="/vvsu-logo-real.png" className="h-11 w-auto brightness-0 invert" alt="ВВГУ" />
           <div className="hidden md:flex flex-col leading-tight">
-            <span className="text-[10px] font-semibold text-white/60 uppercase tracking-widest">ВВГУ</span>
-            <span className="text-[11px] font-bold text-white uppercase leading-tight max-w-[200px]">
+            <span className="text-[11px] font-semibold text-white/60 uppercase tracking-widest">ВВГУ</span>
+            <span className="text-[13px] font-bold text-white uppercase leading-tight max-w-[220px]">
               Институт туризма и<br/>креативных индустрий
             </span>
           </div>
         </Link>
 
         {/* Desktop public nav */}
-        <nav className="hidden lg:flex items-center gap-1 flex-1">
+        <nav className="hidden lg:flex items-center gap-2 flex-1">
           {publicNavItems.map((item) => {
             const active = location.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all ${
                   active
                     ? "bg-white/15 text-accent font-semibold"
                     : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
