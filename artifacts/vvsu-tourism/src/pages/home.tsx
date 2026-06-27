@@ -945,22 +945,6 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Stats strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { num: "70+", label: "Лет институту", color: "#033F7E" },
-              { num: "3 000+", label: "Выпускников в индустрии", color: "#EB7124" },
-              { num: "12", label: "Стран-партнёров", color: "#7c3aed" },
-              { num: "95%", label: "Трудоустройство", color: "#16a34a" },
-            ].map((s, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <div className="rounded-2xl border border-border/60 bg-card p-5 text-center hover:shadow-md transition-shadow">
-                  <div className="text-3xl font-black mb-1" style={{ color: s.color }}>{s.num}</div>
-                  <div className="text-sm text-muted-foreground font-medium">{s.label}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
