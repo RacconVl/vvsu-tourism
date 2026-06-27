@@ -240,6 +240,54 @@ uri = "file://artifacts/vvsu-tourism/public/prog-tourism-master.png"
 type = "image"
 title = "tourism master program"
 
+[[generated]]
+id = "t6LcIdopZcwkgVZdYYD82"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Pdbb8rR4Q5JyCptyWAQbj"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "gDFbZ8RhCieIQtUKbmt78"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "PaONz5L2CmSRaS4vUktOY"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-4.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Lpn36sdrDbIohsTCI59z3"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-5.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "SdhPg1-JJeitkXuDDX4Gx"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-6.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "HvRYCajTYHON-j2OH1TGO"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-7.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "lyIlAPEnmKmGCWcV0RhGJ"
+uri = "file://artifacts/vvsu-tourism/public/avatars/student-8.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"
