@@ -239,7 +239,7 @@ export default function Community() {
         <div className="grid grid-cols-3 md:grid-cols-6 h-48 md:h-64">
           {["/community-1.png","/community-2.png","/community-3.png","/community-4.png","/community-5.png","/community-6.png"].map((src, i) => (
             <motion.div key={i} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.06 }} className="overflow-hidden relative">
-              <img src={src} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+              <img src={src} alt="" className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 bg-primary/20 hover:bg-transparent transition-colors duration-300" />
             </motion.div>
           ))}

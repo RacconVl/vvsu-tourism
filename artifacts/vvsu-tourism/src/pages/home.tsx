@@ -910,10 +910,15 @@ export default function Home() {
                 ].map((r, i) => (
                   <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                     <div className="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-card hover:shadow-md transition-shadow">
-                      <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
-                        style={{ background: `linear-gradient(135deg, ${r.color}cc, ${r.color})` }}>
+                      <motion.div
+                        className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
+                        style={{ background: `linear-gradient(135deg, ${r.color}cc, ${r.color})` }}
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{ duration: 2.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}
+                        whileHover={{ scale: 1.18, rotate: [0, -8, 8, 0] }}
+                      >
                         {r.icon}
-                      </div>
+                      </motion.div>
                       <div>
                         <h4 className="font-bold text-foreground mb-0.5">{r.title}</h4>
                         <p className="text-sm text-muted-foreground">{r.desc}</p>

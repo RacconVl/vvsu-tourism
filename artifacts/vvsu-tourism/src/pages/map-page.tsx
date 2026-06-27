@@ -6,7 +6,16 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Map as MapIcon, BookOpen, Mountain, Building2, TreePine, Utensils, Scroll, Route, Clock } from "lucide-react";
+import { Map as MapIcon, BookOpen, Mountain, Building2, TreePine, Utensils, Scroll, Route, Clock, Anchor, Compass, Ship, Waves, Fish, Wind } from "lucide-react";
+
+const floatingIcons = [
+  { Icon: Anchor, x: "8%",  y: "20%", delay: 0,    dur: 4.0, size: 28, color: "#033F7E" },
+  { Icon: Ship,   x: "88%", y: "15%", delay: 0.6,  dur: 5.2, size: 32, color: "#EB7124" },
+  { Icon: Compass,x: "5%",  y: "70%", delay: 1.2,  dur: 3.8, size: 24, color: "#7c3aed" },
+  { Icon: Waves,  x: "92%", y: "65%", delay: 0.3,  dur: 6.0, size: 26, color: "#0891b2" },
+  { Icon: Fish,   x: "50%", y: "8%",  delay: 1.8,  dur: 4.4, size: 22, color: "#16a34a" },
+  { Icon: Wind,   x: "75%", y: "80%", delay: 0.9,  dur: 5.6, size: 20, color: "#d97706" },
+];
 
 const categoryConfig: Record<string, { color: string; label: string; icon: React.ReactNode }> = {
   landmark: { color: "#2563eb", label: "Достопримечательность", icon: <Building2 className="h-4 w-4" /> },
@@ -77,15 +86,46 @@ export default function MapPage() {
   return (
     <div className="min-h-screen bg-background py-6 px-4">
       <div className="max-w-7xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <MapIcon className="h-6 w-6 text-accent" />
-            <span className="text-muted-foreground uppercase tracking-widest text-xs">Навигация</span>
+        {/* Animated hero banner */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
+          className="relative mb-8 rounded-2xl overflow-hidden"
+          style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 60%, #0891b2 100%)", minHeight: 140 }}
+        >
+          {/* Floating icons */}
+          {floatingIcons.map(({ Icon, x, y, delay, dur, size, color }, idx) => (
+            <motion.div
+              key={idx}
+              className="absolute pointer-events-none"
+              style={{ left: x, top: y }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 0.25, scale: 1, y: [0, -10, 0] }}
+              transition={{ opacity: { delay, duration: 0.6 }, scale: { delay, duration: 0.5 }, y: { delay, duration: dur, repeat: Infinity, ease: "easeInOut" } }}
+            >
+              <Icon style={{ width: size, height: size, color }} />
+            </motion.div>
+          ))}
+
+          {/* Content */}
+          <div className="relative z-10 px-8 py-8 flex items-center gap-5">
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="shrink-0"
+            >
+              <Compass className="h-12 w-12 text-white/80" />
+            </motion.div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <MapIcon className="h-4 w-4 text-white/60" />
+                <span className="text-white/60 uppercase tracking-widest text-xs">Навигация</span>
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-white">Карта Владивостока</h1>
+              <p className="text-white/70 mt-1 text-sm">
+                Интерактивная карта Приморского края на Яндекс.Картах
+              </p>
+            </div>
           </div>
-          <h1 className="text-4xl font-bold text-foreground">Карта Владивостока</h1>
-          <p className="text-muted-foreground mt-1">
-            Интерактивная карта Приморского края на Яндекс.Картах
-          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
