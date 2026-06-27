@@ -50,4 +50,15 @@ app.use("/api/uploads", express.static(uploadsDir, { maxAge: "1d" }));
 
 app.use("/api", router);
 
+// In production: serve the built frontend from STATIC_DIR
+if (process.env.NODE_ENV === "production") {
+  const staticDir = process.env.STATIC_DIR ?? path.join(process.cwd(), "public");
+  if (fs.existsSync(staticDir)) {
+    app.use(express.static(staticDir, { maxAge: "7d", index: "index.html" }));
+    app.get("*", (_req, res) => {
+      res.sendFile(path.join(staticDir, "index.html"));
+    });
+  }
+}
+
 export default app;
