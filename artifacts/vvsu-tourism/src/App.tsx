@@ -17,6 +17,10 @@ import PublicProfile from "@/pages/public-profile";
 import AdmissionPage from "@/pages/admission";
 import NotFound from "@/pages/not-found";
 import Community from "@/pages/community";
+import OpenDayPage from "@/pages/open-day";
+import AlumniPage from "@/pages/alumni";
+import SpecialtyTestPage from "@/pages/specialty-test";
+import FaqPage from "@/pages/faq";
 
 // Initialize JWT token getter from localStorage on app startup
 setAuthTokenGetter(() => localStorage.getItem("vvsu_auth_token"));
@@ -37,6 +41,10 @@ function Router() {
         {/* Public */}
         <Route path="/" component={Home} />
         <Route path="/admission" component={AdmissionPage} />
+        <Route path="/open-day" component={OpenDayPage} />
+        <Route path="/alumni" component={AlumniPage} />
+        <Route path="/specialty-test" component={SpecialtyTestPage} />
+        <Route path="/faq" component={FaqPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/map" component={MapPage} />

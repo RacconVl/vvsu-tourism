@@ -288,6 +288,60 @@ uri = "file://artifacts/vvsu-tourism/public/avatars/student-8.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "FuNKV4QCiwJRr1v0rhPQ1"
+uri = "file://artifacts/vvsu-tourism/public/avatars/alumni-1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "8xR3Rp9gOLOvC7gJog1WA"
+uri = "file://artifacts/vvsu-tourism/public/avatars/alumni-2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Q7CwWUxovqevxiw-N-yDS"
+uri = "file://artifacts/vvsu-tourism/public/avatars/alumni-3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "WaPrOMuNs5JmiQ6kqZ96h"
+uri = "file://artifacts/vvsu-tourism/public/avatars/alumni-4.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "f7cY2DChBdtG5w4xsCX65"
+uri = "file://artifacts/vvsu-tourism/public/avatars/alumni-5.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "N6mX7TtWsAhLkOJHU8Ph-"
+uri = "file://artifacts/vvsu-tourism/public/avatars/alumni-6.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "E93qfcE2jG5ruCx3ESIxf"
+uri = "file://artifacts/vvsu-tourism/public/student-life-1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "8oGlnxLgwHIyYL1eseNKb"
+uri = "file://artifacts/vvsu-tourism/public/student-life-2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "Ib4WBv8qhBRFQvIjKAlXD"
+uri = "file://artifacts/vvsu-tourism/public/student-life-3.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "X4bGMY3qMGlHwKMwnDon9"
 uri = "file://vvsu-tourism.zip"

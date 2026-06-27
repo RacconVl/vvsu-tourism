@@ -1102,6 +1102,76 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Жизнь студента ─────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-background">
+        <div className="container mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Heart className="h-5 w-5 text-accent" />
+              <span className="text-muted-foreground uppercase tracking-widest text-xs">Студенческая жизнь</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">Жизнь в ВВГУ — это не только учёба</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Путешествия, квесты по Владивостоку, нетворкинг с индустрией и настоящие друзья из разных стран АТР</p>
+          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            {[
+              { img: "/student-life-1.png", title: "Командная работа над реальными проектами", desc: "Студенты разрабатывают маршруты для настоящих туроператоров Приморья ещё с первого курса", tag: "Практика" },
+              { img: "/student-life-2.png", title: "Кампус с видом на Японское море", desc: "Учись там, где вдохновляет сама природа. Терраса ВВГУ стала любимым местом для встреч", tag: "Кампус" },
+              { img: "/student-life-3.png", title: "Публичные защиты и конференции", desc: "Каждый семестр студенты представляют проекты перед представителями отрасли и получают реальную обратную связь", tag: "Карьера" },
+            ].map((item, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }} whileHover={{ y: -4 }} className="rounded-2xl overflow-hidden border border-border/60 bg-card hover:shadow-xl transition-shadow group">
+                <div className="relative h-52 overflow-hidden">
+                  <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute top-3 left-3">
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-accent text-white">{item.tag}</span>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-bold text-foreground text-base mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          {/* Student quotes row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+            {[
+              { text: "В ВВГУ я познакомилась с корейскими студентами, и сейчас мы вместе разрабатываем тур-проект для рынка Азии.", name: "Даша, 3 курс", avatar: "/avatars/student-1.png" },
+              { text: "Квест по Золотому Рогу — лучшее задание в моей жизни. Это не просто учёба, это настоящее приключение.", name: "Артём, 2 курс", avatar: "/avatars/student-2.png" },
+              { text: "Мастер-класс от шеф-повара ресторана «Zuma» был частью нашей программы. Такого нет ни в одном другом вузе!", name: "Юна, магистратура", avatar: "/avatars/student-3.png" },
+            ].map((q, i) => (
+              <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                <div className="rounded-2xl bg-muted/40 border border-border/60 p-5 h-full">
+                  <p className="text-sm text-muted-foreground italic leading-relaxed mb-4">«{q.text}»</p>
+                  <div className="flex items-center gap-3">
+                    <img src={q.avatar} alt={q.name} className="h-9 w-9 rounded-full object-cover" />
+                    <span className="text-sm font-semibold text-foreground">{q.name}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          {/* Quick links for applicants */}
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-border/60 bg-card p-6">
+            <p className="text-center text-sm font-semibold text-foreground mb-4">Узнайте больше об институте</p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Button asChild variant="outline" className="rounded-full text-sm">
+                <Link href="/open-day">📅 День открытых дверей</Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full text-sm">
+                <Link href="/specialty-test">🎯 Какая специальность тебе подходит?</Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full text-sm">
+                <Link href="/alumni">💼 Карьера выпускников</Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full text-sm">
+                <Link href="/faq">💬 FAQ для абитуриентов</Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── CTA strip ──────────────────────────────────────────── */}
       <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
