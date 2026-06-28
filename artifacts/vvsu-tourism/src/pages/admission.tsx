@@ -397,45 +397,33 @@ export default function AdmissionPage() {
           {/* ── Этапы поступления ───────────────────────── */}
           {activeTab === "steps" && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
-              <div className="relative">
-                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border" />
-                <div className="space-y-6">
-                  {steps.map((s, i) => (
-                    <motion.div key={s.num} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}
-                      className="flex gap-5 pl-2 items-start"
-                    >
-                      <div className="relative z-10 h-12 w-12 rounded-full flex items-center justify-center text-white shrink-0 shadow-sm font-black text-sm"
-                        style={{ background: i === 0 ? "#EB7124" : "#0057B8" }}>
-                        {String(s.num).padStart(2, "0")}
+              <div style={{ border: "2px solid #0A0A0A" }}>
+                {steps.map((s, i) => (
+                  <motion.div key={s.num} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}
+                    style={{ display: "flex", borderBottom: i < steps.length - 1 ? "2px solid #0A0A0A" : "none" }}>
+                    <div style={{ width: 72, flexShrink: 0, background: i === 0 ? "#EB7124" : "#0057B8", display: "flex", alignItems: "center", justifyContent: "center", padding: "22px 0" }}>
+                      <span style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>{String(s.num).padStart(2, "0")}</span>
+                    </div>
+                    <div style={{ flex: 1, padding: "18px 24px", borderLeft: "2px solid #0A0A0A" }}>
+                      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 6 }}>
+                        <h3 style={{ fontSize: 15, fontWeight: 900, color: "var(--color-foreground)" }}>Шаг {s.num}: {s.title}</h3>
+                        <span style={{ background: "#EB7124", color: "#fff", fontSize: 10, fontWeight: 900, padding: "4px 10px", flexShrink: 0, letterSpacing: 0.5 }}>до {s.deadline}</span>
                       </div>
-                      <Card className="flex-1 rounded-2xl border-border/60">
-                        <CardContent className="p-4">
-                          <div className="flex items-start justify-between gap-3 mb-1">
-                            <h3 className="font-bold text-foreground">Шаг {s.num}: {s.title}</h3>
-                            <span className="text-xs font-semibold px-2.5 py-1 rounded-full text-white shrink-0"
-                              style={{ background: "#EB7124" }}>
-                              до {s.deadline}
-                            </span>
-                          </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
+                      <p style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.5 }}>{s.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              <div style={{ border: "2px solid #0A0A0A", borderTop: "none", display: "flex", alignItems: "flex-start", gap: 16, padding: "18px 24px" }}>
+                <div style={{ width: 28, height: 28, background: "#C6FF00", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 14, fontWeight: 900, color: "#0A0A0A" }}>✓</div>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 900, color: "var(--color-foreground)", marginBottom: 4 }}>Подача через Госуслуги</p>
+                  <p style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.5 }}>
+                    Абитуриенты могут подать заявление дистанционно через портал Госуслуги или на сайте ВВГУ,
+                    не приезжая лично в университет.
+                  </p>
                 </div>
               </div>
-              <Card className="rounded-2xl border-dashed border-accent/30 mt-8">
-                <CardContent className="p-5 flex items-start gap-4">
-                  <CheckCircle2 className="h-6 w-6 text-accent shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-semibold text-foreground mb-1">Подача через Госуслуги</p>
-                    <p className="text-sm text-muted-foreground">
-                      Абитуриенты могут подать заявление дистанционно через портал Госуслуги или на сайте ВВГУ,
-                      не приезжая лично в университет.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
             </motion.div>
           )}
 
@@ -486,47 +474,43 @@ export default function AdmissionPage() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl space-y-6">
 
               {/* Что такое вступительные */}
-              <Card className="rounded-2xl overflow-hidden border-border/60">
-                <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
-                <CardContent className="p-6">
-                  <h2 className="font-bold text-lg text-foreground mb-3 flex items-center gap-2">
-                    <span className="text-accent font-black">◆</span> Что такое вступительные испытания?
-                  </h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+              <div style={{ border: "2px solid #0A0A0A" }}>
+                <div style={{ background: "#0057B8", padding: "18px 24px 16px" }}>
+                  <h2 style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>Что такое вступительные испытания?</h2>
+                </div>
+                <div style={{ padding: "18px 24px 20px" }}>
+                  <p style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.6, marginBottom: 10 }}>
                     Вступительные испытания — это дополнительные экзамены, которые проводит университет помимо результатов ЕГЭ.
                     Они позволяют оценить специальные навыки абитуриента, необходимые для конкретной специальности.
                   </p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.6 }}>
                     Для большинства направлений (Туризм, Гостиничное дело) достаточно результатов ЕГЭ.
-                    Для направления <strong className="text-foreground">«Дизайн»</strong> (54.03.01) обязательно
+                    Для направления <strong style={{ color: "var(--color-foreground)" }}>«Дизайн»</strong> (54.03.01) обязательно
                     прохождение творческого испытания — независимо от баллов ЕГЭ.
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
               {/* Список направлений */}
-              <div className="grid grid-cols-1 gap-4">
+              <div style={{ border: "2px solid #0A0A0A" }}>
                 {exams.map((e, i) => (
-                  <motion.div key={e.direction} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
-                    <Card className="rounded-2xl border-border/60">
-                      <CardContent className="p-5 flex items-start gap-5">
-                        <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center shrink-0 text-sm font-bold">
-                          {i + 1}
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-bold text-foreground mb-2">{e.direction}</p>
-                          <div className="flex flex-wrap gap-2">
-                            {e.subjects.map((s, j) => (
-                              <span key={j} className="text-xs px-3 py-1 rounded-full font-medium"
-                                style={{ background: j === 0 ? "rgba(3,63,126,0.12)" : j === 1 ? "rgba(235,113,36,0.12)" : "rgba(23,46,70,0.1)",
-                                         color: j === 0 ? "#0057B8" : j === 1 ? "#EB7124" : "#0057B8" }}>
-                                {s}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                  <motion.div key={e.direction} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
+                    style={{ display: "flex", borderBottom: i < exams.length - 1 ? "2px solid #0A0A0A" : "none" }}>
+                    <div style={{ width: 56, flexShrink: 0, background: i === 2 ? "#EB7124" : "#0057B8", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <span style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>{i + 1}</span>
+                    </div>
+                    <div style={{ flex: 1, padding: "14px 20px", borderLeft: "2px solid #0A0A0A" }}>
+                      <p style={{ fontSize: 14, fontWeight: 900, color: "var(--color-foreground)", marginBottom: 8 }}>{e.direction}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 6 }}>
+                        {e.subjects.map((s, j) => (
+                          <span key={j} style={{
+                            fontSize: 11, fontWeight: 700, padding: "3px 10px",
+                            border: `2px solid ${j === 0 ? "#0057B8" : j === 1 ? "#EB7124" : "#0A0A0A"}`,
+                            color: j === 0 ? "#0057B8" : j === 1 ? "#EB7124" : "var(--color-foreground)",
+                          }}>{s}</span>
+                        ))}
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </div>

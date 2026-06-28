@@ -405,41 +405,40 @@ export default function DesignProgramsPage() {
 
         {/* ── BLOCK 5: Почему выбирают + лабораторная база ──── */}
         <motion.section id="advantages" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-              <Badge variant="outline" className="mb-4 text-xs">Ценность</Badge>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+            <div style={{ borderRight: "2px solid #0A0A0A", padding: "28px 28px 24px" }}>
               <div style={{ position: "relative" }}>
                 <GhostSectionNum num="03" color="var(--color-foreground)" />
-                <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 24, position: "relative", zIndex: 1 }}>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 20, position: "relative", zIndex: 1 }}>
                   <div style={{ width: 4, background: "#C6FF00", flexShrink: 0, marginTop: 4, height: 34 }} />
                   <h2 className="text-2xl font-bold text-foreground">Почему выбирают кафедру</h2>
                 </div>
               </div>
-              <div className="space-y-4">
+              <div style={{ border: "2px solid #0A0A0A" }}>
                 {whyItems.map((item, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                    className="flex items-start gap-3">
-                    <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0 text-[9px] font-black">
-                      {item.mark}
-                    </div>
+                  <motion.div key={i} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                    style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "12px 16px", borderBottom: i < whyItems.length - 1 ? "2px solid #0A0A0A" : "none" }}>
+                    <div style={{ width: 36, height: 36, background: "#C6FF00", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 900, flexShrink: 0, color: "#0A0A0A", letterSpacing: 1 }}>{item.mark}</div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
+                      <p style={{ fontSize: 13, fontWeight: 800, color: "var(--color-foreground)", marginBottom: 2 }}>{item.title}</p>
+                      <p style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{item.desc}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
             </div>
-            <div id="labs">
-              <Badge variant="outline" className="mb-4 text-xs">Учебно-лабораторная база</Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-6">Пространства и инструменты</h2>
-              <div className="grid grid-cols-2 gap-3">
+            <div id="labs" style={{ padding: "28px 28px 24px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 20 }}>
+                <div style={{ width: 4, background: "#0057B8", flexShrink: 0, marginTop: 4, height: 34 }} />
+                <h2 className="text-2xl font-bold text-foreground">Пространства и инструменты</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
                 {labs.map((lab, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                    className="bg-muted/40 border border-border/50 rounded-xl p-3 hover:bg-muted/60 transition-colors">
-                    <div className="text-2xl mb-2">{lab.icon}</div>
-                    <p className="text-sm font-semibold text-foreground">{lab.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{lab.desc}</p>
+                  <motion.div key={i} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+                    style={{ padding: "16px 14px", borderRight: i % 2 === 0 ? "2px solid #0A0A0A" : "none", borderBottom: i < 4 ? "2px solid #0A0A0A" : "none" }}>
+                    <div style={{ fontSize: 22, marginBottom: 8 }}>{lab.icon}</div>
+                    <p style={{ fontSize: 13, fontWeight: 800, color: "var(--color-foreground)", marginBottom: 3 }}>{lab.title}</p>
+                    <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", lineHeight: 1.4 }}>{lab.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -461,18 +460,18 @@ export default function DesignProgramsPage() {
               <p className="text-muted-foreground text-sm mt-1">Студент собирает проектный путь, а не просто изучает дисциплины</p>
             </div>
           </div>
-          <div className="relative">
-            <div className="absolute top-8 left-[7%] right-[7%] h-0.5 bg-gradient-to-r from-accent via-[#7c3aed] to-[#16a34a] hidden md:block" />
-            <div className="grid grid-cols-4 md:grid-cols-7 gap-3 relative z-10">
-              {processSteps.map((step, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }} className="text-center">
-                  <div className="w-16 h-16 rounded-2xl border-2 border-accent/30 bg-accent/5 flex items-center justify-center mx-auto mb-2 hover:border-accent hover:bg-accent/10 transition-colors">
-                    <span className="text-xs font-black text-accent">{step.num}</span>
-                  </div>
-                  <p className="text-xs font-bold text-foreground">{step.label}</p>
-                </motion.div>
-              ))}
-            </div>
+          <div className="grid grid-cols-4 md:grid-cols-7 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+            {processSteps.map((step, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                style={{ borderRight: i < processSteps.length - 1 ? "2px solid #0A0A0A" : "none", textAlign: "center" as const }}>
+                <div style={{ background: i === 0 ? "#FF007F" : i === processSteps.length - 1 ? "#C6FF00" : undefined, padding: "14px 4px 10px", borderBottom: "2px solid #0A0A0A" }}>
+                  <span style={{ fontSize: 18, fontWeight: 900, color: i === 0 ? "#fff" : i === processSteps.length - 1 ? "#0A0A0A" : "var(--color-foreground)" }}>{step.num}</span>
+                </div>
+                <div style={{ padding: "10px 4px 12px" }}>
+                  <p style={{ fontSize: 10, fontWeight: 800, color: "var(--color-foreground)", lineHeight: 1.3 }}>{step.label}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.section>
 
@@ -744,74 +743,89 @@ export default function DesignProgramsPage() {
 
         {/* ── BLOCK 13: Творческие испытания ────────────────── */}
         <motion.section id="creative-test" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-            <div>
-              <Badge variant="outline" className="mb-4 text-xs">Творческое испытание</Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-4">Что такое творческое испытание?</h2>
-              <div className="bg-accent/5 border border-accent/20 rounded-2xl p-5 mb-5">
-                <p className="text-sm leading-relaxed text-foreground">
-                  <strong>Творческое испытание — это не проверка «врождённого таланта»</strong>, а способ оценить
-                  базовое композиционное мышление, пространственное восприятие и желание создавать.
-                  Можно прийти без художественного образования.
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+            <div style={{ borderRight: "2px solid #0A0A0A" }}>
+              <div style={{ background: "#EB7124", padding: "20px 28px 18px" }}>
+                <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: 3, color: "rgba(255,255,255,0.6)", textTransform: "uppercase" as const, marginBottom: 6 }}>Творческое испытание</div>
+                <h2 style={{ fontSize: 20, fontWeight: 900, color: "#fff", lineHeight: 1.2 }}>Что такое творческое испытание?</h2>
               </div>
-              <div className="space-y-3">
-                {[
-                  { icon: "🎯", t: "Что оценивается", d: "Композиционное мышление, пространственное восприятие, рисунок с натуры" },
-                  { icon: "📐", t: "Формат и материалы", d: "Карандаш, бумага А3; 3 часа; бытовая постановка или геометрические тела" },
-                  { icon: "📋", t: "Критерии", d: "Пропорции, светотень, композиция листа, передача характера формы" },
-                  { icon: "✏️", t: "Примеры заданий", d: "Натюрморт из 2–3 предметов, эскиз интерьерного пространства, шрифтовая композиция" },
-                  { icon: "🎓", t: "Консультации", d: "Кафедра проводит бесплатные консультации для абитуриентов перед испытанием" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <span className="text-lg">{item.icon}</span>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">{item.t}</p>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{item.d}</p>
+              <div style={{ padding: "20px 28px 24px" }}>
+                <div style={{ border: "2px solid #0A0A0A", padding: "14px 16px", marginBottom: 16, background: "rgba(235,113,36,0.06)" }}>
+                  <p style={{ fontSize: 13, lineHeight: 1.6, color: "var(--color-foreground)" }}>
+                    <strong>Творческое испытание — это не проверка «врождённого таланта»</strong>, а способ оценить
+                    базовое композиционное мышление, пространственное восприятие и желание создавать.
+                    Можно прийти без художественного образования.
+                  </p>
+                </div>
+                <div style={{ border: "2px solid #0A0A0A" }}>
+                  {[
+                    { num: "01", t: "Что оценивается", d: "Композиционное мышление, пространственное восприятие, рисунок с натуры" },
+                    { num: "02", t: "Формат и материалы", d: "Карандаш, бумага А3; 3 часа; бытовая постановка или геометрические тела" },
+                    { num: "03", t: "Критерии", d: "Пропорции, светотень, композиция листа, передача характера формы" },
+                    { num: "04", t: "Примеры заданий", d: "Натюрморт из 2–3 предметов, эскиз интерьерного пространства, шрифтовая композиция" },
+                    { num: "05", t: "Консультации", d: "Кафедра проводит бесплатные консультации для абитуриентов перед испытанием" },
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: "flex", gap: 14, padding: "12px 16px", borderBottom: i < 4 ? "2px solid #0A0A0A" : "none" }}>
+                      <div style={{ fontSize: 12, fontWeight: 900, color: "#EB7124", flexShrink: 0, width: 24 }}>{item.num}</div>
+                      <div>
+                        <p style={{ fontSize: 13, fontWeight: 800, color: "var(--color-foreground)", marginBottom: 2 }}>{item.t}</p>
+                        <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", lineHeight: 1.4 }}>{item.d}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <button onClick={() => scrollTo("contacts")} style={{ marginTop: 16, background: "#EB7124", border: "none", color: "#fff", fontSize: 12, fontWeight: 900, padding: "12px 24px", cursor: "pointer", letterSpacing: 1, textTransform: "uppercase" as const }}>
+                  Записаться на консультацию →
+                </button>
               </div>
-              <Button onClick={() => scrollTo("contacts")} className="mt-6 rounded-full bg-accent hover:bg-accent/90 text-white" type="button">
-                Записаться на консультацию <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
             {/* For parents */}
             <div id="parents">
-              <Badge variant="outline" className="mb-4 text-xs">Для родителей</Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-4">Прикладные навыки и понятная ценность</h2>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                Это не просто творческое образование — это профессиональный маршрут с конкретным результатом.
-                Обучение даёт <strong>диплом, навыки, реальные проекты и профессиональные контакты</strong>.
-              </p>
-              <div className="space-y-2.5 mb-6">
-                {[
-                  "Цифровые инструменты: Figma, Blender, AutoCAD, AI",
-                  "Проектная работа с реальными заказчиками",
-                  "Карьерные маршруты с первого курса",
-                  "Востребованные компетенции на рынке АТР",
-                  "Диплом государственного образца",
-                  "Профессиональные контакты и наставники",
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="text-accent font-bold shrink-0">→</span>
-                    {item}
-                  </div>
-                ))}
+              <div style={{ background: "#0057B8", padding: "20px 28px 18px" }}>
+                <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: 3, color: "rgba(255,255,255,0.6)", textTransform: "uppercase" as const, marginBottom: 6 }}>Для родителей</div>
+                <h2 style={{ fontSize: 20, fontWeight: 900, color: "#fff", lineHeight: 1.2 }}>Прикладные навыки и понятная ценность</h2>
               </div>
-              <h3 className="font-bold text-foreground mb-3">Кем можно стать:</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  ["🏛️","Дизайнер среды"],["🛋️","Интерьерный дизайнер"],
-                  ["🎨","Графический дизайнер"],["📱","UX/UI-дизайнер"],
-                  ["✨","Motion / 3D-дизайнер"],["👗","Дизайнер костюма"],
-                  ["🏗️","Архитектор"],["🌿","Ландшафтный дизайнер"],
-                ].map(([emoji, role], i) => (
-                  <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/30 border border-border/40 text-xs">
-                    <span>{emoji}</span>
-                    <span className="font-medium text-foreground">{role}</span>
+              <div style={{ padding: "20px 28px 24px" }}>
+                <p style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.6, marginBottom: 16 }}>
+                  Это не просто творческое образование — это профессиональный маршрут с конкретным результатом.
+                  Обучение даёт <strong style={{ color: "var(--color-foreground)" }}>диплом, навыки, реальные проекты и профессиональные контакты</strong>.
+                </p>
+                <div style={{ border: "2px solid #0A0A0A", marginBottom: 16 }}>
+                  {[
+                    "Цифровые инструменты: Figma, Blender, AutoCAD, AI",
+                    "Проектная работа с реальными заказчиками",
+                    "Карьерные маршруты с первого курса",
+                    "Востребованные компетенции на рынке АТР",
+                    "Диплом государственного образца",
+                    "Профессиональные контакты и наставники",
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: "flex", gap: 10, padding: "10px 16px", borderBottom: i < 5 ? "2px solid #0A0A0A" : "none" }}>
+                      <span style={{ color: "#0057B8", fontWeight: 900, fontSize: 12, flexShrink: 0 }}>→</span>
+                      <span style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ borderTop: "2px solid #0A0A0A", paddingTop: 14 }}>
+                  <p style={{ fontSize: 10, fontWeight: 900, letterSpacing: 3, textTransform: "uppercase" as const, color: "var(--color-muted-foreground)", marginBottom: 10 }}>Кем можно стать:</p>
+                  <div className="grid grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+                    {[
+                      "Дизайнер среды","Интерьерный дизайнер",
+                      "Графический дизайнер","UX/UI-дизайнер",
+                      "Motion / 3D-дизайнер","Дизайнер костюма",
+                      "Архитектор","Ландшафтный дизайнер",
+                    ].map((role, i) => (
+                      <div key={i} style={{
+                        padding: "9px 12px",
+                        borderRight: i % 2 === 0 ? "2px solid #0A0A0A" : "none",
+                        borderBottom: i < 6 ? "2px solid #0A0A0A" : "none",
+                        fontSize: 11, fontWeight: 700,
+                        color: "var(--color-foreground)",
+                      }}>
+                        {role}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
             </div>
           </div>
