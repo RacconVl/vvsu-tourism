@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import {
   Map as MapIcon, Trophy, GraduationCap, Users,
-  Sun, Moon, Menu, X, LogIn, LogOut, UserPlus, LayoutDashboard,
+  Sun, Moon, Menu, X, LogIn, LogOut, UserPlus, LayoutDashboard, Palette,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
@@ -17,10 +17,11 @@ import {
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 const publicNavItems = [
-  { href: "/admission",        label: "Поступление", icon: GraduationCap },
-  { href: "/community",         label: "Молодёжка",   icon: Users },
-  { href: "/map",              label: "Карта",        icon: MapIcon },
-  { href: "/leaderboard",      label: "Рейтинг",      icon: Trophy },
+  { href: "/admission",  label: "Поступление", icon: GraduationCap },
+  { href: "/design",     label: "Дизайн & арт", icon: Palette },
+  { href: "/community",  label: "Молодёжка",   icon: Users },
+  { href: "/map",        label: "Карта",        icon: MapIcon },
+  { href: "/leaderboard",label: "Рейтинг",      icon: Trophy },
 ];
 
 export function Navbar() {
