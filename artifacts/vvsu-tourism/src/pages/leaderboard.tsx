@@ -274,7 +274,7 @@ export default function Leaderboard() {
             })}
           </div>
           {/* AccentCard stat strip */}
-          <div className="grid grid-cols-3 gap-0 mt-4" style={{ border: "2px solid #0A0A0A" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 mt-4" style={{ border: "2px solid #0A0A0A" }}>
             <AccentCard text="+300" sub="макс. XP за квест" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
             <AccentCard text="6" sub="активных квестов" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
             <AccentCard text="★" sub="выполни и обменяй" bg="#0A0A0A" textColor="#FF007F" />

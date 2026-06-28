@@ -505,7 +505,7 @@ export default function DesignProgramsPage() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {filteredProjects.map((p, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                 style={{ borderRight: "2px solid #0A0A0A", borderBottom: "2px solid #0A0A0A", cursor: "pointer", overflow: "hidden" }}
@@ -642,7 +642,7 @@ export default function DesignProgramsPage() {
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A", borderTop: "none" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A", borderTop: "none" }}>
             {[
               { mark: "ПРК", label: "Дизайнеры-практики", desc: "Действующие специалисты отрасли", bg: "#C6FF00", fg: "#0A0A0A" },
               { mark: "ЭКС", label: "Эксперты индустрии", desc: "Консультации и экспертные сессии", bg: "#0A0A0A", fg: "#C6FF00" },
