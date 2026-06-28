@@ -124,10 +124,9 @@ export function Navbar() {
                     color: location.startsWith("/cabinet") ? textActive : textColor,
                     borderRadius: 0,
                   }}
-                  className="hidden lg:flex"
                 >
                   <LayoutDashboard className="h-4 w-4" />
-                  Кабинет
+                  <span className="hidden lg:inline">Кабинет</span>
                 </Button>
               </Link>
               <NotificationBell />
