@@ -1,59 +1,83 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { GeoCircle, GhostText, DotGrid } from "@/components/GraphicAccents";
 import { motion } from "framer-motion";
-import { YMaps, Map, Placemark, Polyline } from "react-yandex-maps";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { useListMapPoints, useListMapRoutes } from "@workspace/api-client-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
-const floatingMarks = [
-  { char: "⚓", x: "8%",  y: "20%", delay: 0,    dur: 4.0, size: 22, color: "#0057B8" },
-  { char: "⛵", x: "88%", y: "15%", delay: 0.6,  dur: 5.2, size: 26, color: "#EB7124" },
-  { char: "✦",  x: "5%",  y: "70%", delay: 1.2,  dur: 3.8, size: 18, color: "#7c3aed" },
-  { char: "〜",  x: "92%", y: "65%", delay: 0.3,  dur: 6.0, size: 20, color: "#0891b2" },
-  { char: "✦",  x: "50%", y: "8%",  delay: 1.8,  dur: 4.4, size: 16, color: "#16a34a" },
-  { char: "✦",  x: "75%", y: "80%", delay: 0.9,  dur: 5.6, size: 14, color: "#d97706" },
-];
+// Fix leaflet default icon paths broken by bundlers
+delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 const categoryConfig: Record<string, { color: string; label: string; mark: string }> = {
-  landmark: { color: "#2563eb", label: "Достопримечательность", mark: "ДОС" },
-  nature:   { color: "#16a34a", label: "Природа",               mark: "ПРИ" },
-  museum:   { color: "#9333ea", label: "Музей",                 mark: "МУЗ" },
-  hotel:    { color: "#d97706", label: "Отель",                 mark: "ОТЕ" },
-  restaurant:{ color: "#e11d48", label: "Ресторан",             mark: "РЕС" },
+  landmark:   { color: "#2563eb", label: "Достопримечательность", mark: "ДОС" },
+  nature:     { color: "#16a34a", label: "Природа",               mark: "ПРИ" },
+  museum:     { color: "#9333ea", label: "Музей",                 mark: "МУЗ" },
+  hotel:      { color: "#d97706", label: "Отель",                 mark: "ОТЕ" },
+  restaurant: { color: "#e11d48", label: "Ресторан",              mark: "РЕС" },
 };
 
 const pointCoordinates: Record<string, [number, number]> = {
-  "Золотой мост": [43.1126, 131.8869],
-  "Морской вокзал": [43.1112, 131.8854],
-  "Остров Русский": [43.0214, 131.9043],
-  "Дальневосточный морской заповедник": [42.6175, 131.1422],
-  "Приморский музей им. Арсеньева": [43.1167, 131.8847],
-  "Мыс Тобизина": [42.9745, 131.9952],
-  "Набережная Спортивной гавани": [43.1163, 131.8765],
-  "Маяк Эгершельда": [43.0710, 131.8418],
-  "ДВФУ Кампус": [43.0247, 131.8911],
-  "Покровский собор": [43.1217, 131.8929],
-  "Видовая площадка Орлиное гнездо": [43.1175, 131.8841],
-  "Русский мост": [43.0535, 131.8869],
+  "Золотой мост":                        [43.1126, 131.8869],
+  "Морской вокзал":                      [43.1112, 131.8854],
+  "Остров Русский":                      [43.0214, 131.9043],
+  "Дальневосточный морской заповедник":  [42.6175, 131.1422],
+  "Приморский музей им. Арсеньева":      [43.1167, 131.8847],
+  "Мыс Тобизина":                        [42.9745, 131.9952],
+  "Набережная Спортивной гавани":        [43.1163, 131.8765],
+  "Маяк Эгершельда":                    [43.0710, 131.8418],
+  "ДВФУ Кампус":                         [43.0247, 131.8911],
+  "Покровский собор":                    [43.1217, 131.8929],
+  "Видовая площадка Орлиное гнездо":     [43.1175, 131.8841],
+  "Русский мост":                        [43.0535, 131.8869],
 };
 
 const pointPhotos: Record<string, string> = {
-  "Золотой мост": "/map-photos/russky-bridge.jpg",
-  "Морской вокзал": "/map-photos/sea-station.jpg",
-  "Остров Русский": "/map-photos/russky-island.jpg",
-  "Дальневосточный морской заповедник": "/map-photos/marine-reserve.jpg",
-  "Приморский музей им. Арсеньева": "/map-photos/arsenyev-museum.jpg",
-  "Мыс Тобизина": "/map-photos/tobizina.jpg",
-  "Набережная Спортивной гавани": "/map-photos/sports-harbor.jpg",
-  "Маяк Эгершельда": "/map-photos/egersheld.jpg",
-  "ДВФУ Кампус": "/map-photos/fefu-campus.jpg",
-  "Покровский собор": "/map-photos/pokrovsky.jpg",
-  "Видовая площадка Орлиное гнездо": "/map-photos/eagle-nest.jpg",
-  "Русский мост": "/map-photos/russky-bridge.jpg",
+  "Золотой мост":                        "/map-photos/russky-bridge.jpg",
+  "Морской вокзал":                      "/map-photos/sea-station.jpg",
+  "Остров Русский":                      "/map-photos/russky-island.jpg",
+  "Дальневосточный морской заповедник":  "/map-photos/marine-reserve.jpg",
+  "Приморский музей им. Арсеньева":      "/map-photos/arsenyev-museum.jpg",
+  "Мыс Тобизина":                        "/map-photos/tobizina.jpg",
+  "Набережная Спортивной гавани":        "/map-photos/sports-harbor.jpg",
+  "Маяк Эгершельда":                    "/map-photos/egersheld.jpg",
+  "ДВФУ Кампус":                         "/map-photos/fefu-campus.jpg",
+  "Покровский собор":                    "/map-photos/pokrovsky.jpg",
+  "Видовая площадка Орлиное гнездо":     "/map-photos/eagle-nest.jpg",
+  "Русский мост":                        "/map-photos/russky-bridge.jpg",
 };
+
+function makeColorIcon(color: string) {
+  return L.divIcon({
+    className: "",
+    html: `<div style="
+      width:28px;height:28px;border-radius:50% 50% 50% 0;
+      background:${color};border:3px solid #fff;
+      box-shadow:0 2px 6px rgba(0,0,0,0.35);
+      transform:rotate(-45deg);
+    "></div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -30],
+  });
+}
+
+function FlyToPoint({ coords }: { coords: [number, number] | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (coords) map.flyTo(coords, 14, { duration: 0.8 });
+  }, [coords, map]);
+  return null;
+}
 
 export default function MapPage() {
   const { data: points, isLoading: pointsLoading } = useListMapPoints();
@@ -61,7 +85,7 @@ export default function MapPage() {
   const [activeTab, setActiveTab] = useState<"points" | "routes">("points");
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [activeRouteId, setActiveRouteId] = useState<number | null>(null);
-  const [mapInstance, setMapInstance] = useState<{ setCenter: (c: number[], z: number, opts?: object) => void } | null>(null);
+  const [flyTo, setFlyTo] = useState<[number, number] | null>(null);
 
   const difficultyLabel: Record<string, string> = {
     easy: "Лёгкий", medium: "Средний", hard: "Сложный",
@@ -71,10 +95,7 @@ export default function MapPage() {
     if (!points) return [];
     return points.map(p => {
       const cat = categoryConfig[p.category] ?? categoryConfig.landmark;
-      const coords = pointCoordinates[p.name] ?? [
-        Number((p as { latitude?: number | string }).latitude ?? 43.115),
-        Number((p as { longitude?: number | string }).longitude ?? 131.886),
-      ];
+      const coords = pointCoordinates[p.name] ?? [43.115, 131.886] as [number, number];
       return { ...p, coords: coords as [number, number], catConfig: cat };
     });
   }, [points]);
@@ -84,18 +105,13 @@ export default function MapPage() {
     if (!activeRoute || !points) return [];
     const ids = (activeRoute as { pointIds?: (number | string)[] }).pointIds ?? [];
     return ids
-      .map(id => {
-        const p = enrichedPoints.find(pt => pt.id === Number(id));
-        return p?.coords;
-      })
+      .map(id => enrichedPoints.find(pt => pt.id === Number(id))?.coords)
       .filter((c): c is [number, number] => Array.isArray(c));
   }, [activeRoute, points, enrichedPoints]);
 
   function handlePointClick(p: { id: number; coords: [number, number] }) {
     setSelectedId(p.id);
-    if (mapInstance) {
-      mapInstance.setCenter(p.coords, 14, { duration: 800 });
-    }
+    setFlyTo(p.coords);
   }
 
   return (
@@ -104,7 +120,6 @@ export default function MapPage() {
         {/* Editorial hero banner */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
           className="mb-8" style={{ background: "#0A0A0A", border: "3px solid #0A0A0A" }}>
-          {/* Label strip */}
           <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 16, padding: "12px clamp(16px, 4vw, 32px)", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
@@ -113,7 +128,6 @@ export default function MapPage() {
             <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
             <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ Владивосток</span>
           </div>
-          {/* Marquee */}
           <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
             <div style={{ display: "flex", animation: "marquee-reverse 30s linear infinite", width: "max-content", padding: "10px 0" }}>
               {Array.from({ length: 4 }).flatMap((_, ri) =>
@@ -123,9 +137,7 @@ export default function MapPage() {
               )}
             </div>
           </div>
-          {/* Content row */}
           <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "20px clamp(16px, 4vw, 32px)", position: "relative", overflow: "hidden" }}>
-            {/* Graphic accents */}
             <GhostText text="КАРТА" size={160} color="#C6FF00" opacity={0.06} bottom={-30} right={20} />
             <GeoCircle size={240} color="#0057B8" opacity={0.1} shape="full" top={-120} right={-40} animate />
             <GeoCircle size={90} color="#C6FF00" opacity={0.2} shape="quarter-bl" bottom={-1} right={80} />
@@ -145,72 +157,62 @@ export default function MapPage() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Yandex Map */}
+          {/* Leaflet Map */}
           <div className="lg:col-span-2">
             <div className="overflow-hidden" style={{ border: "3px solid var(--border)" }}>
-              <div className="relative" style={{ height: "640px" }}>
+              <div style={{ height: "560px" }}>
                 {pointsLoading ? (
-                  <Skeleton className="absolute inset-0" />
+                  <Skeleton className="w-full h-full" />
                 ) : (
-                  <YMaps query={{ lang: "ru_RU", load: "package.full", apikey: import.meta.env.VITE_YANDEX_MAPS_KEY }}>
-                    <Map
-                      state={{ center: [43.0815, 131.87], zoom: 11 }}
-                      width="100%"
-                      height="640px"
-                      instanceRef={(ref: unknown) => {
-                        if (ref) setMapInstance(ref as typeof mapInstance);
-                      }}
-                      options={{ suppressMapOpenBlock: true }}
-                    >
-                      {enrichedPoints.map(p => (
-                        <Placemark
-                          key={p.id}
-                          geometry={p.coords}
-                          properties={{
-                            balloonContentHeader: p.name,
-                            balloonContentBody: [
-                              `<div style="min-width:200px">`,
-                              `<div style="font-size:12px;color:#666;margin-bottom:6px">${p.catConfig.label}</div>`,
-                              p.description
-                                ? `<p style="font-size:12px;color:#333;margin-bottom:8px">${p.description}</p>`
-                                : "",
-                              p.legend
-                                ? `<div style="background:#fffbeb;border-left:3px solid #f59e0b;padding:8px;border-radius:4px">
-                                     <div style="font-size:11px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">📜 Легенда</div>
-                                     <p style="font-size:11px;color:#78350f;font-style:italic;margin:0">${p.legend}</p>
-                                   </div>`
-                                : "",
-                              `</div>`,
-                            ].join(""),
-                            hintContent: p.name,
-                          }}
-                          options={{
-                            preset: "islands#blueCircleDotIcon",
-                            iconColor: p.catConfig.color,
-                            balloonPanelMaxMapArea: 0,
-                          }}
-                          onClick={() => handlePointClick(p)}
-                        />
-                      ))}
+                  <MapContainer
+                    center={[43.0815, 131.87]}
+                    zoom={11}
+                    style={{ width: "100%", height: "100%" }}
+                    scrollWheelZoom
+                  >
+                    <TileLayer
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <FlyToPoint coords={flyTo} />
 
-                      {routeCoords.length > 1 && (
-                        <Polyline
-                          geometry={routeCoords}
-                          options={{
-                            strokeColor: "#EB7124",
-                            strokeWidth: 5,
-                            strokeOpacity: 0.85,
-                            strokeStyle: "dash",
-                          }}
-                        />
-                      )}
-                    </Map>
-                  </YMaps>
+                    {enrichedPoints.map(p => (
+                      <Marker
+                        key={p.id}
+                        position={p.coords}
+                        icon={makeColorIcon(p.catConfig.color)}
+                        eventHandlers={{ click: () => handlePointClick(p) }}
+                      >
+                        <Popup>
+                          <div style={{ minWidth: 200 }}>
+                            <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{p.name}</div>
+                            <div style={{ fontSize: 12, color: "#666", marginBottom: 6 }}>{p.catConfig.label}</div>
+                            {p.description && (
+                              <p style={{ fontSize: 12, color: "#333", marginBottom: 8 }}>{p.description}</p>
+                            )}
+                            {p.legend && (
+                              <div style={{ background: "#fffbeb", borderLeft: "3px solid #f59e0b", padding: "8px", borderRadius: 4 }}>
+                                <div style={{ fontSize: 11, fontWeight: 600, color: "#92400e", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4 }}>📜 Легенда</div>
+                                <p style={{ fontSize: 11, color: "#78350f", fontStyle: "italic", margin: 0 }}>{p.legend}</p>
+                              </div>
+                            )}
+                          </div>
+                        </Popup>
+                      </Marker>
+                    ))}
+
+                    {routeCoords.length > 1 && (
+                      <Polyline
+                        positions={routeCoords}
+                        pathOptions={{ color: "#EB7124", weight: 5, opacity: 0.85, dashArray: "10 6" }}
+                      />
+                    )}
+                  </MapContainer>
                 )}
               </div>
             </div>
             <p className="text-xs text-muted-foreground mt-2 px-1">
-              © Яндекс.Карты. Используйте колесо мыши для масштабирования, перетаскивание для перемещения.
+              © OpenStreetMap. Колесо мыши — масштаб, перетаскивание — перемещение.
             </p>
           </div>
 
@@ -236,7 +238,7 @@ export default function MapPage() {
             </div>
 
             {activeTab === "points" && (
-              <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+              <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
                 {pointsLoading
                   ? Array.from({ length: 6 }).map((_, i) => (
                       <Skeleton key={i} className="h-20 rounded-xl" />
@@ -257,7 +259,6 @@ export default function MapPage() {
                             }`}
                             onClick={() => handlePointClick(p)}
                           >
-                            {/* Photo strip — show only when selected */}
                             {isSelected && photo && (
                               <motion.div
                                 initial={{ height: 0, opacity: 0 }}
@@ -266,15 +267,10 @@ export default function MapPage() {
                                 transition={{ duration: 0.3 }}
                                 className="overflow-hidden"
                               >
-                                <img
-                                  src={photo}
-                                  alt={p.name}
-                                  className="w-full h-full object-cover"
-                                />
+                                <img src={photo} alt={p.name} className="w-full h-full object-cover" />
                               </motion.div>
                             )}
                             <div className="p-3 flex items-center gap-3">
-                              {/* Thumbnail when not selected */}
                               {!isSelected && photo ? (
                                 <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0">
                                   <img src={photo} alt={p.name} className="w-full h-full object-cover" />
@@ -308,7 +304,7 @@ export default function MapPage() {
             )}
 
             {activeTab === "routes" && (
-              <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+              <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                 {routesLoading
                   ? Array.from({ length: 3 }).map((_, i) => (
                       <Skeleton key={i} className="h-32 rounded-xl" />
@@ -338,12 +334,9 @@ export default function MapPage() {
               </div>
             )}
 
-            {/* Legend */}
             {activeTab === "points" && (
               <Card className="rounded-xl border-border/60 p-3">
-                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                  Легенда
-                </div>
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Легенда</div>
                 <div className="space-y-1.5">
                   {Object.entries(categoryConfig).map(([key, cfg]) => (
                     <div key={key} className="flex items-center gap-2">
