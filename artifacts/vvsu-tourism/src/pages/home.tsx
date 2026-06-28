@@ -3,7 +3,7 @@ import { CatMascot } from "@/components/illustrations/CatMascot";
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Compass, Map as MapIcon, ArrowRight, Shield, Anchor, Waves, Star, Users, Trophy, BookOpen, GraduationCap, Zap, Globe, Briefcase, Building2, Plane, UtensilsCrossed, Camera, Ship, Palette, CheckCircle2, Sparkles, ExternalLink, Heart, Medal, Lightbulb, Award, Cpu, Printer, MonitorSmartphone, FlaskConical, Handshake, TrendingUp, BadgeCheck } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 /* ── SVG Illustrations ──────────────────────────────────────── */
 
@@ -400,9 +400,8 @@ function StickmanStat() {
 
   return (
     <div className="flex flex-col items-center text-center gap-2">
-      <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white mb-1"
-        style={{ background: "linear-gradient(135deg, #0057B8, #0057B8)" }}>
-        <Trophy className="h-5 w-5" />
+      <div style={{ width: 40, height: 40, background: "#0057B8", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 20, color: "#fff", marginBottom: 4 }}>
+        ◆
       </div>
       <div style={{ width: 140, height: 60, position: "relative" }}>
         <svg viewBox="-55 0 200 56" style={{ width: "100%", height: "100%", overflow: "visible" }}>
@@ -508,10 +507,10 @@ const whyUs = [
 ];
 
 const stats = [
-  { value: "30+", label: "лет опыта", icon: <GraduationCap className="h-5 w-5" /> },
-  { value: "2 500+", label: "студентов", icon: <Users className="h-5 w-5" /> },
-  { value: "94%", label: "трудоустройство", icon: <Trophy className="h-5 w-5" /> },
-  { value: "40+", label: "партнёров", icon: <Globe className="h-5 w-5" /> },
+  { value: "30+", label: "лет опыта" },
+  { value: "2 500+", label: "студентов" },
+  { value: "94%", label: "трудоустройство" },
+  { value: "40+", label: "партнёров" },
 ];
 
 export default function Home() {
@@ -759,7 +758,7 @@ export default function Home() {
                 {/* Left: text */}
                 <div style={{ padding: "52px 48px", borderRight: "3px solid rgba(255,255,255,0.1)" }}>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FF007F", color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", padding: "6px 14px", marginBottom: 28 }}>
-                    <Award style={{ width: 14, height: 14 }} /> Гранты
+                    ◆ Гранты
                   </div>
                   <h3 style={{ fontSize: "clamp(28px,3vw,44px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.03em", color: "#fff", marginBottom: 20 }}>
                     Студенты ВВГУ<br /><span style={{ color: "#C6FF00" }}>выигрывают гранты</span>
@@ -814,8 +813,9 @@ export default function Home() {
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, rgba(255,0,127,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(198,255,0,0.05) 0%, transparent 40%)" }} />
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-sm mb-5">
-              <Sparkles className="h-4 w-4" /> Флагманские программы
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+              <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+              <span style={{ fontWeight: 900, fontSize: 11, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Флагманские программы</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
               Выбери своё<br /><span className="text-accent">направление</span>
@@ -833,7 +833,7 @@ export default function Home() {
                   <img src="/prog-tourism.png" alt="Туризм" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(3,63,126,0.9) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <div className="h-9 w-9 rounded-xl bg-[#0057B8] flex items-center justify-center"><Globe className="h-5 w-5 text-white" /></div>
+                    <div style={{ width: 32, height: 32, background: "#0057B8", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 10, color: "#fff", letterSpacing: 1 }}>ТУР</div>
                     <span className="text-white font-bold text-lg">Туризм</span>
                   </div>
                   <div className="absolute top-3 right-3 bg-white/15 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full border border-white/20">Бакалавриат · Магистратура</div>
@@ -842,7 +842,7 @@ export default function Home() {
                   <p className="text-white/70 text-sm leading-relaxed">Организация международных туров, экотуризм, круизный туризм в АТР. Практика с первого курса на объектах Приморья.</p>
                   <div className="space-y-2">
                     {["25 бюджетных мест", "Двойной диплом с Кореей", "Практика в отелях 5★"].map(f => (
-                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-[#0057B8] shrink-0" />{f}</div>
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><span style={{ color: "#0057B8", fontWeight: 900, fontSize: 13, flexShrink: 0 }}>→</span>{f}</div>
                     ))}
                   </div>
                   <div className="mt-auto">
@@ -866,7 +866,7 @@ export default function Home() {
                   <img src="/prog-design.png" alt="Дизайн" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(20,10,5,0.92) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <div className="h-9 w-9 rounded-xl bg-accent flex items-center justify-center"><Palette className="h-5 w-5 text-white" /></div>
+                    <div style={{ width: 32, height: 32, background: "#FF007F", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 10, color: "#fff", letterSpacing: 1 }}>АРТ</div>
                     <span className="text-white font-bold text-lg">Дизайн</span>
                   </div>
                 </div>
@@ -874,7 +874,7 @@ export default function Home() {
                   <p className="text-white/70 text-sm leading-relaxed">Графический дизайн и дизайн среды. Реальные проекты с туристическими брендами, айдентика, UX/UI, дизайн туристических объектов Приморья.</p>
                   <div className="space-y-2">
                     {["Студия оборудована Mac Pro", "Партнёрство с агентствами VL", "Диплом = портфолио"].map(f => (
-                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0" />{f}</div>
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><span style={{ color: "#FF007F", fontWeight: 900, fontSize: 13, flexShrink: 0 }}>→</span>{f}</div>
                     ))}
                   </div>
                   <div className="mt-auto flex items-center gap-3">
@@ -894,7 +894,7 @@ export default function Home() {
                   <img src="/prog-hotel.png" alt="Гостиничное дело" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(20,10,0,0.9) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <div className="h-9 w-9 rounded-xl bg-accent flex items-center justify-center"><Building2 className="h-5 w-5 text-white" /></div>
+                    <div style={{ width: 32, height: 32, background: "#EB7124", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 10, color: "#fff", letterSpacing: 1 }}>ОТЕ</div>
                     <span className="text-white font-bold text-lg">Гостиничное дело</span>
                   </div>
                   <div className="absolute top-3 right-3 bg-white/15 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full border border-white/20">Бакалавриат</div>
@@ -903,7 +903,7 @@ export default function Home() {
                   <p className="text-white/70 text-sm leading-relaxed">Управление отелями и гостиничным сервисом международного уровня. Стажировки в 5★ отелях Владивостока, Сочи и Кореи.</p>
                   <div className="space-y-2">
                     {["20 бюджетных мест", "Стажировки в Hyatt, Marriott", "100% трудоустройство"].map(f => (
-                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0" />{f}</div>
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><span style={{ color: "#EB7124", fontWeight: 900, fontSize: 13, flexShrink: 0 }}>→</span>{f}</div>
                     ))}
                   </div>
                   <div className="mt-auto">
@@ -924,9 +924,7 @@ export default function Home() {
               <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-center">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-xl bg-accent flex items-center justify-center shrink-0">
-                      <GraduationCap className="h-5 w-5 text-white" />
-                    </div>
+                    <div style={{ width: 40, height: 40, background: "#FF007F", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 11, color: "#fff", letterSpacing: 1, flexShrink: 0 }}>МАГ</div>
                     <div>
                       <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30 mr-2">Магистратура</span>
                       <span className="text-xs text-white/50">2 года обучения · Очная форма</span>
@@ -937,14 +935,9 @@ export default function Home() {
                     Программа магистратуры ВВГУ по направлению «Дизайн» — для тех, кто хочет выйти на уровень арт-директора и исследователя. Углублённая теория, авторские проекты, участие в международных выставках и работа с брендами АТР. Можно поступить после бакалавриата любого вуза.
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {[
-                      { icon: <BadgeCheck className="h-4 w-4" />, text: "Бюджетные места" },
-                      { icon: <Globe className="h-4 w-4" />, text: "Международные проекты" },
-                      { icon: <Users className="h-4 w-4" />, text: "Наставник — практик" },
-                      { icon: <Award className="h-4 w-4" />, text: "Грантовая поддержка" },
-                    ].map((f, i) => (
+                    {["Бюджетные места", "Международные проекты", "Наставник — практик", "Грантовая поддержка"].map((text, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs text-white/60">
-                        <span className="text-accent">{f.icon}</span>{f.text}
+                        <span style={{ color: "#FF007F", fontWeight: 900, fontSize: 13, flexShrink: 0 }}>◆</span>{text}
                       </div>
                     ))}
                   </div>
@@ -979,8 +972,9 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
             {/* Left: reasons */}
             <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-6">
-                <Heart className="h-4 w-4 text-accent" /> Почему выбирают нас
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
+                <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+                <span style={{ fontWeight: 900, fontSize: 11, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Почему выбирают нас</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
                 Институт,<br />который <span className="text-accent">меняет жизнь</span>
@@ -988,27 +982,21 @@ export default function Home() {
               <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
                 Мы не просто обучаем — мы погружаем в реальную индустрию с первого дня. Каждый студент получает наставника-практика и доступ к живым проектам.
               </p>
-              <div className="space-y-4">
+              <div style={{ display: "flex", flexDirection: "column", gap: 0, border: "3px solid #0A0A0A" }}>
                 {[
-                  { icon: <Medal className="h-5 w-5" />, title: "Аккредитованные программы", desc: "Дипломы признаются работодателями России, Кореи, Японии и Китая", color: "#0057B8" },
-                  { icon: <Lightbulb className="h-5 w-5" />, title: "Проектное обучение", desc: "Реальные кейсы от туристических компаний Приморья с первого семестра", color: "#EB7124" },
-                  { icon: <Globe className="h-5 w-5" />, title: "Международная среда", desc: "Студенческий обмен с 12 университетами АТР, летние школы за рубежом", color: "#7c3aed" },
-                  { icon: <Users className="h-5 w-5" />, title: "Сообщество выпускников", desc: "3 000+ выпускников работают в ведущих компаниях туристической отрасли", color: "#0891b2" },
+                  { num: "01", title: "Аккредитованные программы", desc: "Дипломы признаются работодателями России, Кореи, Японии и Китая", color: "#0057B8" },
+                  { num: "02", title: "Проектное обучение", desc: "Реальные кейсы от туристических компаний Приморья с первого семестра", color: "#EB7124" },
+                  { num: "03", title: "Международная среда", desc: "Студенческий обмен с 12 университетами АТР, летние школы за рубежом", color: "#C6FF00" },
+                  { num: "04", title: "Сообщество выпускников", desc: "3 000+ выпускников работают в ведущих компаниях туристической отрасли", color: "#FF007F" },
                 ].map((r, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                    <div className="flex items-start gap-4 p-4 rounded-2xl border border-border/50 bg-card hover:shadow-md transition-shadow">
-                      <motion.div
-                        className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
-                        style={{ background: `linear-gradient(135deg, ${r.color}cc, ${r.color})` }}
-                        animate={{ y: [0, -4, 0] }}
-                        transition={{ duration: 2.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}
-                        whileHover={{ scale: 1.18, rotate: [0, -8, 8, 0] }}
-                      >
-                        {r.icon}
-                      </motion.div>
-                      <div>
-                        <h4 className="font-bold text-foreground mb-0.5">{r.title}</h4>
-                        <p className="text-sm text-muted-foreground">{r.desc}</p>
+                  <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                    <div style={{ display: "flex", alignItems: "stretch", borderBottom: i < 3 ? "3px solid #0A0A0A" : "none" }}>
+                      <div style={{ width: 56, background: r.color, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 13, color: r.color === "#C6FF00" ? "#0A0A0A" : "#fff", letterSpacing: 1, flexShrink: 0, borderRight: "3px solid #0A0A0A" }}>
+                        {r.num}
+                      </div>
+                      <div style={{ padding: "16px 20px" }}>
+                        <h4 style={{ fontWeight: 800, fontSize: 14, color: "var(--color-foreground)", marginBottom: 4 }}>{r.title}</h4>
+                        <p style={{ fontSize: 12, color: "hsl(var(--muted-foreground))", lineHeight: 1.5 }}>{r.desc}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -1105,15 +1093,15 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {[
-              { icon: <Plane className="h-6 w-6" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#0057B8", salary: "от 60 000 ₽", img: "/career-touroperator.png" },
-              { icon: <Building2 className="h-6 w-6" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽", img: "/career-hotel.png" },
-              { icon: <Globe className="h-6 w-6" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽", img: "/career-guide.png" },
-              { icon: <Camera className="h-6 w-6" />, title: "Спец. по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽", img: "/career-marketing.png" },
-              { icon: <UtensilsCrossed className="h-6 w-6" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽", img: "/career-events.png" },
-              { icon: <Ship className="h-6 w-6" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽", img: "/career-cruise.png" },
-              { icon: <Palette className="h-6 w-6" />, title: "Графический дизайнер", desc: "Фирменный стиль туристических брендов, полиграфия, визуальная идентичность дестинаций.", color: "#db2777", salary: "от 70 000 ₽", img: "/career-designer-graphic.png" },
-              { icon: <Sparkles className="h-6 w-6" />, title: "Дизайнер цифровых медиа", desc: "UX/UI туристических приложений и сайтов, motion-графика, веб-дизайн для АТР-рынка.", color: "#6366f1", salary: "от 75 000 ₽", img: "/career-designer-digital.png" },
-              { icon: <Lightbulb className="h-6 w-6" />, title: "Дизайнер интерьера", desc: "Концепции отелей, ресторанов и туристических объектов — от лобби до смотровых площадок.", color: "#0d9488", salary: "от 65 000 ₽", img: "/career-designer-interior.png" },
+              { abbr: "ТО", title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#0057B8", salary: "от 60 000 ₽", img: "/career-touroperator.png" },
+              { abbr: "ОТ", title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽", img: "/career-hotel.png" },
+              { abbr: "ГИД", title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽", img: "/career-guide.png" },
+              { abbr: "МКТ", title: "Спец. по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽", img: "/career-marketing.png" },
+              { abbr: "ЕВ", title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽", img: "/career-events.png" },
+              { abbr: "КР", title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽", img: "/career-cruise.png" },
+              { abbr: "ГД", title: "Графический дизайнер", desc: "Фирменный стиль туристических брендов, полиграфия, визуальная идентичность дестинаций.", color: "#db2777", salary: "от 70 000 ₽", img: "/career-designer-graphic.png" },
+              { abbr: "УИ", title: "Дизайнер цифровых медиа", desc: "UX/UI туристических приложений и сайтов, motion-графика, веб-дизайн для АТР-рынка.", color: "#6366f1", salary: "от 75 000 ₽", img: "/career-designer-digital.png" },
+              { abbr: "ДИ", title: "Дизайнер интерьера", desc: "Концепции отелей, ресторанов и туристических объектов — от лобби до смотровых площадок.", color: "#0d9488", salary: "от 65 000 ₽", img: "/career-designer-interior.png" },
             ].map((job, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
@@ -1126,8 +1114,8 @@ export default function Home() {
                     <div style={{ position: "absolute", bottom: 8, right: 8, background: job.color, color: "#fff", fontSize: 11, fontWeight: 800, padding: "4px 10px", letterSpacing: 0.5 }}>{job.salary}</div>
                   </div>
                   <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, color: job.color }}>
-                      {job.icon}
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ background: job.color, color: "#fff", fontWeight: 900, fontSize: 10, letterSpacing: 1, padding: "3px 8px" }}>{job.abbr}</div>
                     </div>
                     <h3 style={{ fontWeight: 800, fontSize: 14, color: "var(--color-foreground)", lineHeight: 1.3 }}>{job.title}</h3>
                     <p style={{ fontSize: 12, color: "hsl(var(--muted-foreground))", lineHeight: 1.6 }}>{job.desc}</p>
@@ -1162,14 +1150,14 @@ export default function Home() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 2, marginBottom: 36 }}>
               {[
-                { icon: <Handshake className="h-5 w-5" />, title: "База вакансий и работодателей", color: "#C6FF00" },
-                { icon: <TrendingUp className="h-5 w-5" />, title: "Карьерные недели и ярмарки", color: "#FF007F" },
-                { icon: <FlaskConical className="h-5 w-5" />, title: "Места практик онлайн", color: "#5b9cf6" },
-                { icon: <BadgeCheck className="h-5 w-5" />, title: "Практико-интегрированное обучение", color: "#a78bfa" },
+                { title: "База вакансий и работодателей", color: "#C6FF00" },
+                { title: "Карьерные недели и ярмарки", color: "#FF007F" },
+                { title: "Места практик онлайн", color: "#5b9cf6" },
+                { title: "Практико-интегрированное обучение", color: "#a78bfa" },
               ].map((item, i) => (
                 <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", borderBottom: "1px solid rgba(255,255,255,0.07)", borderLeft: `3px solid ${item.color}` }}>
-                    <div style={{ color: item.color, flexShrink: 0 }}>{item.icon}</div>
+                    <span style={{ color: item.color, fontWeight: 900, fontSize: 18, flexShrink: 0 }}>→</span>
                     <span style={{ fontWeight: 700, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item.title}</span>
                   </div>
                 </motion.div>

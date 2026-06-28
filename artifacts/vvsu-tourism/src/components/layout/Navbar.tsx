@@ -98,8 +98,7 @@ export function Navbar() {
                   whiteSpace: "nowrap",
                 }}
               >
-                <item.icon style={{ width: 15, height: 15 }} />
-                {item.label}
+                  {item.label}
               </Link>
             );
           })}
