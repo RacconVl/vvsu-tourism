@@ -105,7 +105,7 @@ export default function MapPage() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
           className="mb-8" style={{ background: "#0A0A0A", border: "3px solid #0A0A0A" }}>
           {/* Label strip */}
-          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "16px 32px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 16, padding: "12px clamp(16px, 4vw, 32px)", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
               <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Интерактивная карта</span>
@@ -124,7 +124,7 @@ export default function MapPage() {
             </div>
           </div>
           {/* Content row */}
-          <div style={{ display: "flex", alignItems: "center", gap: 24, padding: "28px 32px", position: "relative", overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "20px clamp(16px, 4vw, 32px)", position: "relative", overflow: "hidden" }}>
             {/* Graphic accents */}
             <GhostText text="КАРТА" size={160} color="#C6FF00" opacity={0.06} bottom={-30} right={20} />
             <GeoCircle size={240} color="#0057B8" opacity={0.1} shape="full" top={-120} right={-40} animate />
@@ -133,8 +133,8 @@ export default function MapPage() {
             <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ flexShrink: 0, position: "relative", zIndex: 1 }}>
               <span style={{ fontSize: 48, color: "#C6FF00", display: "block", lineHeight: 1 }}>⚓</span>
             </motion.div>
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <h1 style={{ fontSize: "clamp(28px,4vw,48px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 8 }}>
+            <div style={{ position: "relative", zIndex: 1, minWidth: 0, flex: 1 }}>
+              <h1 style={{ fontSize: "clamp(22px,5vw,48px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "#fff", marginBottom: 8, wordBreak: "break-word" }}>
                 Карта <span style={{ color: "#C6FF00" }}>Владивостока</span>
               </h1>
               <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, lineHeight: 1.5 }}>
