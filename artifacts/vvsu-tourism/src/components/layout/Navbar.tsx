@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import {
   Map as MapIcon, Trophy, GraduationCap, Users,
-  Sun, Moon, Menu, X, LogIn, LogOut, UserPlus, LayoutDashboard, Palette,
+  Sun, Moon, Menu, X, LogIn, LogOut, UserPlus, LayoutDashboard, Palette, Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
@@ -22,6 +22,14 @@ const publicNavItems = [
   { href: "/community",   label: "Молодёжка",    icon: Users },
   { href: "/map",         label: "Карта",         icon: MapIcon },
   { href: "/leaderboard", label: "Рейтинг",       icon: Trophy },
+];
+
+const bottomNavItems = [
+  { href: "/",            label: "Главная",    icon: Home },
+  { href: "/admission",   label: "Поступление", icon: GraduationCap },
+  { href: "/community",   label: "Молодёжка",  icon: Users },
+  { href: "/map",         label: "Карта",       icon: MapIcon },
+  { href: "/leaderboard", label: "Рейтинг",     icon: Trophy },
 ];
 
 export function Navbar() {
@@ -54,6 +62,7 @@ export function Navbar() {
   const logoText = theme === "dark" ? "#ffffff" : "#0A0A0A";
 
   return (
+    <>
     <header
       className="sticky top-0 z-50 w-full"
       style={{ background: navBg, borderBottom: navBorder }}
@@ -287,5 +296,41 @@ export function Navbar() {
         </div>
       )}
     </header>
+
+    {/* Mobile bottom tab bar */}
+    <nav
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 flex"
+      style={{
+        background: navBg,
+        borderTop: navBorder,
+        paddingBottom: "env(safe-area-inset-bottom)",
+      }}
+    >
+      {bottomNavItems.map((item) => {
+        const active = item.href === "/" ? location === "/" : location.startsWith(item.href);
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5"
+            style={{
+              color: active ? "#FF007F" : textColor,
+              textDecoration: "none",
+              minHeight: 56,
+              borderRight: `1px solid ${dividerColor}`,
+            }}
+          >
+            <item.icon style={{ width: 20, height: 20, strokeWidth: active ? 2.5 : 1.75 }} />
+            <span style={{ fontSize: 9, fontWeight: active ? 800 : 500, letterSpacing: 0.5, textTransform: "uppercase", lineHeight: 1.2 }}>
+              {item.label}
+            </span>
+            {active && (
+              <span style={{ position: "absolute", bottom: 0, width: "100%", height: 2, background: "#FF007F" }} />
+            )}
+          </Link>
+        );
+      })}
+    </nav>
+  </>
   );
 }
