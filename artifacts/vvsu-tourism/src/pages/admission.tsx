@@ -605,123 +605,84 @@ export default function AdmissionPage() {
 
           {/* ── Общежитие ───────────────────────────────── */}
           {activeTab === "dorm" && (
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8 max-w-4xl">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-0 max-w-4xl">
 
-              {/* Hero card with 3D tour */}
-              <Card className="rounded-2xl border-border/60 overflow-hidden">
-                <div className="h-1.5" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
-                <div className="relative flex flex-col md:flex-row">
-                  {/* 3D Tour panel */}
-                  <div className="md:w-1/2 min-h-[280px] flex flex-col items-center justify-center gap-5 p-8 relative overflow-hidden"
-                    style={{ background: "linear-gradient(135deg, #0a1a2e 0%, #0057B8 100%)" }}>
-                    {/* Animated dot grid */}
-                    <div className="absolute inset-0 pointer-events-none opacity-40"
-                      style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-                    {/* Animated building SVG */}
-                    <motion.svg viewBox="0 0 160 120" className="w-44 h-32 relative z-10" fill="none"
-                      initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}>
-                      {/* Building */}
-                      <rect x="20" y="35" width="120" height="80" rx="3" fill="#0057B8" opacity="0.6" />
-                      <rect x="20" y="35" width="120" height="80" rx="3" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                      {/* Roof */}
-                      <polygon points="10,35 80,8 150,35" fill="#0057B8" opacity="0.8" />
-                      {/* Windows grid */}
-                      {([0,1,2,3] as const).flatMap(col => ([0,1,2] as const).map(row => (
-                        <motion.rect key={`${col}-${row}`} x={32 + col * 28} y={48 + row * 22} width="16" height="14" rx="2"
-                          fill="#EB7124"
-                          animate={{ opacity: [0.4, 0.9, 0.4] }}
-                          transition={{ duration: 2.5, repeat: Infinity, delay: (col + row) * 0.3 }} />
-                      )))}
-                      {/* Door */}
-                      <rect x="68" y="90" width="24" height="25" rx="2" fill="#0057B8" opacity="0.9" />
-                      {/* Flag */}
-                      <line x1="80" y1="8" x2="80" y2="0" stroke="white" strokeWidth="1.5" />
-                      <motion.polygon points="80,0 96,-6 80,-12" fill="#EB7124"
-                        animate={{ scaleX: [1, 1.15, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
-                        style={{ transformOrigin: "80px -6px" }} />
-                      {/* Stars */}
-                      {[[15, 15], [145, 18], [10, 60], [152, 55]].map(([x, y], i) => (
-                        <motion.circle key={i} cx={x} cy={y} r="1.5" fill="white"
-                          animate={{ opacity: [0.2, 0.9, 0.2] }} transition={{ duration: 2 + i * 0.5, repeat: Infinity, delay: i * 0.4 }} />
-                      ))}
-                    </motion.svg>
-                    <div className="relative z-10 text-center">
-                      <p className="text-white font-semibold mb-1">3D-тур по кампусу</p>
-                      <p className="text-white/60 text-xs mb-4">Виртуальный осмотр общежития и учебных корпусов</p>
-                      <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" className="rounded-full bg-accent hover:bg-accent/90 text-white gap-2">
-                          <Play className="h-3.5 w-3.5 fill-white" /> Открыть тур
-                          <ExternalLink className="h-3 w-3" />
-                        </Button>
-                      </a>
-                    </div>
+              {/* Hero: 3D tour + stats */}
+              <div style={{ border: "2px solid #0A0A0A", display: "flex", flexDirection: "column" as const }} className="md:flex-row">
+                <div className="md:w-1/2 flex flex-col items-center justify-center gap-5 p-8 relative overflow-hidden"
+                  style={{ background: "#0A0A0A", minHeight: 280 }}>
+                  <div className="absolute inset-0 pointer-events-none"
+                    style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+                  <motion.svg viewBox="0 0 160 120" className="w-44 h-32 relative z-10" fill="none"
+                    initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}>
+                    <rect x="20" y="35" width="120" height="80" rx="0" fill="#0057B8" opacity="0.5" />
+                    <rect x="20" y="35" width="120" height="80" rx="0" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+                    <polygon points="10,35 80,8 150,35" fill="#0057B8" opacity="0.7" />
+                    {([0,1,2,3] as const).flatMap(col => ([0,1,2] as const).map(row => (
+                      <motion.rect key={`${col}-${row}`} x={32 + col * 28} y={48 + row * 22} width="16" height="14" rx="0"
+                        fill="#EB7124"
+                        animate={{ opacity: [0.4, 0.9, 0.4] }}
+                        transition={{ duration: 2.5, repeat: Infinity, delay: (col + row) * 0.3 }} />
+                    )))}
+                    <rect x="68" y="90" width="24" height="25" rx="0" fill="#0057B8" opacity="0.9" />
+                    <line x1="80" y1="8" x2="80" y2="0" stroke="white" strokeWidth="1.5" />
+                    <motion.polygon points="80,0 96,-6 80,-12" fill="#EB7124"
+                      animate={{ scaleX: [1, 1.15, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
+                      style={{ transformOrigin: "80px -6px" }} />
+                    {[[15,15],[145,18],[10,60],[152,55]].map(([x,y],i) => (
+                      <motion.circle key={i} cx={x} cy={y} r="1.5" fill="white"
+                        animate={{ opacity: [0.2, 0.9, 0.2] }} transition={{ duration: 2 + i * 0.5, repeat: Infinity, delay: i * 0.4 }} />
+                    ))}
+                  </motion.svg>
+                  <div className="relative z-10 text-center">
+                    <p style={{ color: "#fff", fontWeight: 800, marginBottom: 4 }}>3D-тур по кампусу</p>
+                    <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, marginBottom: 16 }}>Виртуальный осмотр общежития и учебных корпусов</p>
+                    <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer">
+                      <button style={{ background: "#EB7124", border: "none", color: "#fff", fontSize: 12, fontWeight: 900, padding: "10px 20px", cursor: "pointer", letterSpacing: 1, textTransform: "uppercase" as const, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                        <Play className="h-3.5 w-3.5 fill-white" /> Открыть тур <ExternalLink className="h-3 w-3" />
+                      </button>
+                    </a>
                   </div>
-                  {/* Info panel */}
-                  <CardContent className="md:w-1/2 p-6 flex flex-col justify-center">
-                    <h2 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
-                      <span className="text-accent font-black">◆</span> Студенческое общежитие ВВГУ
-                    </h2>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                </div>
+                <div className="md:w-1/2 flex flex-col justify-center" style={{ borderLeft: "2px solid #0A0A0A" }}>
+                  <div style={{ background: "#0057B8", padding: "18px 24px 16px" }}>
+                    <h2 style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>Студенческое общежитие ВВГУ</h2>
+                  </div>
+                  <div style={{ padding: "18px 24px 20px" }}>
+                    <p style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.6, marginBottom: 16 }}>
                       Комфортное проживание в 5 минутах ходьбы от главного корпуса. Все иногородние студенты имеют право на место в общежитии при наличии свободных мест.
                     </p>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      {[
-                        ["220", "мест всего"],
-                        ["5 мин", "до корпуса"],
-                        ["24/7", "охрана"],
-                        ["от 2 200 ₽", "в месяц"],
-                      ].map(([v, l]) => (
-                        <div key={l} className="rounded-xl bg-muted/50 p-3 text-center">
-                          <p className="font-bold text-foreground text-lg leading-none">{v}</p>
-                          <p className="text-xs text-muted-foreground mt-1">{l}</p>
+                    <div className="grid grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+                      {[["220","мест всего"],["5 мин","до корпуса"],["24/7","охрана"],["от 2 200 ₽","в месяц"]].map(([v,l],i) => (
+                        <div key={l} style={{ padding: "14px 16px", borderRight: i % 2 === 0 ? "2px solid #0A0A0A" : "none", borderBottom: i < 2 ? "2px solid #0A0A0A" : "none", textAlign: "center" as const }}>
+                          <p style={{ fontSize: 20, fontWeight: 900, color: "var(--color-foreground)", lineHeight: 1 }}>{v}</p>
+                          <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", marginTop: 4 }}>{l}</p>
                         </div>
                       ))}
                     </div>
-                  </CardContent>
-                </div>
-              </Card>
-
-              {/* Room types */}
-              <div>
-                <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
-                  <span className="text-accent font-black">◆</span> Типы комнат
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {dormRooms.map((r, i) => (
-                    <motion.div key={r.type} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
-                      <Card className="rounded-2xl border-border/60 overflow-hidden h-full">
-                        <div className="h-1.5" style={{ background: r.color }} />
-                        <CardContent className="p-5">
-                          <div className="flex items-center justify-between mb-3">
-                            <h4 className="font-bold text-foreground">{r.type}</h4>
-                            <span className="text-sm font-bold" style={{ color: r.color }}>{r.price}</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground leading-relaxed mb-3">{r.desc}</p>
-                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <span className="text-[10px] font-bold">МСТ</span> {r.places} мест
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Amenities */}
-              <div>
-                <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
-                  <span className="text-accent">◆</span> Удобства и инфраструктура
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {dormAmenities.map((a, i) => (
-                    <motion.div key={a.label} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}>
-                      <div className="flex items-start gap-3 p-4 rounded-xl border border-border/50 bg-muted/20 hover:bg-muted/40 transition-colors">
-                        <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
-                          <span className="text-[9px] font-black">{a.mark}</span>
+              {/* Room types */}
+              <div style={{ border: "2px solid #0A0A0A", borderTop: "none" }}>
+                <div style={{ background: "#0A0A0A", padding: "12px 24px" }}>
+                  <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: 3, color: "#C6FF00", textTransform: "uppercase" as const }}>Типы комнат</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+                  {dormRooms.map((r, i) => (
+                    <motion.div key={r.type} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
+                      style={{ borderRight: i < dormRooms.length - 1 ? "2px solid #0A0A0A" : "none", borderTop: "2px solid #0A0A0A" }}>
+                      <div style={{ height: 4, background: r.color }} />
+                      <div style={{ padding: "16px 20px 18px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+                          <h4 style={{ fontSize: 15, fontWeight: 900, color: "var(--color-foreground)" }}>{r.type}</h4>
+                          <span style={{ fontSize: 13, fontWeight: 900, color: r.color }}>{r.price}</span>
                         </div>
-                        <div>
-                          <p className="font-semibold text-sm text-foreground">{a.label}</p>
-                          <p className="text-xs text-muted-foreground mt-0.5">{a.desc}</p>
+                        <p style={{ fontSize: 12, color: "var(--color-muted-foreground)", lineHeight: 1.5, marginBottom: 10 }}>{r.desc}</p>
+                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                          <span style={{ fontSize: 9, fontWeight: 900, color: "var(--color-muted-foreground)", letterSpacing: 1 }}>МСТ</span>
+                          <span style={{ fontSize: 12, color: "var(--color-muted-foreground)" }}>{r.places} мест</span>
                         </div>
                       </div>
                     </motion.div>
@@ -729,65 +690,79 @@ export default function AdmissionPage() {
                 </div>
               </div>
 
+              {/* Amenities */}
+              <div style={{ border: "2px solid #0A0A0A", borderTop: "none" }}>
+                <div style={{ background: "#0A0A0A", padding: "12px 24px" }}>
+                  <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: 3, color: "#C6FF00", textTransform: "uppercase" as const }}>Удобства и инфраструктура</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
+                  {dormAmenities.map((a, i) => (
+                    <motion.div key={a.label} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}
+                      style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "14px 20px", borderTop: "2px solid #0A0A0A", borderRight: i % 2 === 0 ? "2px solid #0A0A0A" : "none" }}>
+                      <div style={{ width: 36, height: 36, background: "#0057B8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 900, color: "#fff", flexShrink: 0, letterSpacing: 1 }}>{a.mark}</div>
+                      <div>
+                        <p style={{ fontSize: 13, fontWeight: 800, color: "var(--color-foreground)", marginBottom: 2 }}>{a.label}</p>
+                        <p style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{a.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
               {/* Rules & Application */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <Card className="rounded-2xl border-border/60">
-                  <CardContent className="p-5">
-                    <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
-                      <span className="text-accent font-black">◆</span> Как получить место
-                    </h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {[
-                        "Подать заявление в деканат до 1 августа",
-                        "Предоставить справку об иногороднем адресе прописки",
-                        "Заключить договор найма жилого помещения",
-                        "Пройти инструктаж по правилам проживания",
-                        "Оплатить первый месяц проживания",
-                      ].map((s, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span className="h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0" style={{ background: "#EB7124" }}>{i + 1}</span>
-                          {s}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-                <Card className="rounded-2xl border-border/60">
-                  <CardContent className="p-5">
-                    <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
-                      <span className="text-accent font-black">◆</span> Правила проживания
-                    </h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {[
-                        "Соблюдение тишины с 23:00 до 07:00",
-                        "Запрет курения в здании",
-                        "Гости допускаются до 22:00",
-                        "Еженедельные санитарные дни (суббота)",
-                        "Обязательное страхование имущества",
-                      ].map((r, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" /> {r}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A", borderTop: "none" }}>
+                <div style={{ borderRight: "2px solid #0A0A0A" }}>
+                  <div style={{ background: "#EB7124", padding: "14px 20px" }}>
+                    <h4 style={{ fontSize: 13, fontWeight: 900, color: "#fff", textTransform: "uppercase" as const, letterSpacing: 1 }}>Как получить место</h4>
+                  </div>
+                  <div style={{ padding: "16px 20px 18px" }}>
+                    {[
+                      "Подать заявление в деканат до 1 августа",
+                      "Предоставить справку об иногороднем адресе прописки",
+                      "Заключить договор найма жилого помещения",
+                      "Пройти инструктаж по правилам проживания",
+                      "Оплатить первый месяц проживания",
+                    ].map((s, i) => (
+                      <div key={i} style={{ display: "flex", gap: 12, marginBottom: i < 4 ? 10 : 0, alignItems: "flex-start" }}>
+                        <div style={{ width: 22, height: 22, background: "#EB7124", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 900, color: "#fff", flexShrink: 0 }}>{i + 1}</div>
+                        <span style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.4 }}>{s}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ background: "#0057B8", padding: "14px 20px" }}>
+                    <h4 style={{ fontSize: 13, fontWeight: 900, color: "#fff", textTransform: "uppercase" as const, letterSpacing: 1 }}>Правила проживания</h4>
+                  </div>
+                  <div style={{ padding: "16px 20px 18px" }}>
+                    {[
+                      "Соблюдение тишины с 23:00 до 07:00",
+                      "Запрет курения в здании",
+                      "Гости допускаются до 22:00",
+                      "Еженедельные санитарные дни (суббота)",
+                      "Обязательное страхование имущества",
+                    ].map((r, i) => (
+                      <div key={i} style={{ display: "flex", gap: 12, marginBottom: i < 4 ? 10 : 0, alignItems: "flex-start" }}>
+                        <div style={{ width: 22, height: 22, background: "#C6FF00", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 900, color: "#0A0A0A", flexShrink: 0 }}>✓</div>
+                        <span style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.4 }}>{r}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Link to full life page */}
-              <Card className="rounded-2xl border-dashed border-accent/30 bg-accent/5">
-                <CardContent className="p-5 flex items-center justify-between gap-4">
-                  <div>
-                    <p className="font-semibold text-foreground">Жизнь в ВВГУ</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">Полная информация о студенческой жизни, досуге и инфраструктуре кампуса</p>
-                  </div>
-                  <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer" className="shrink-0">
-                    <Button variant="outline" className="rounded-full gap-2">
-                      vvsu.ru/life <ExternalLink className="h-3.5 w-3.5" />
-                    </Button>
-                  </a>
-                </CardContent>
-              </Card>
+              <div style={{ border: "2px solid #0A0A0A", borderTop: "none", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "18px 24px" }}>
+                <div>
+                  <p style={{ fontSize: 15, fontWeight: 900, color: "var(--color-foreground)", marginBottom: 4 }}>Жизнь в ВВГУ</p>
+                  <p style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>Полная информация о студенческой жизни, досуге и инфраструктуре кампуса</p>
+                </div>
+                <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer" className="shrink-0">
+                  <button style={{ background: "transparent", border: "2px solid #0A0A0A", color: "var(--color-foreground)", fontSize: 12, fontWeight: 900, padding: "10px 18px", cursor: "pointer", letterSpacing: 1, display: "inline-flex", alignItems: "center", gap: 8 }}>
+                    vvsu.ru/life <ExternalLink className="h-3.5 w-3.5" />
+                  </button>
+                </a>
+              </div>
             </motion.div>
           )}
 

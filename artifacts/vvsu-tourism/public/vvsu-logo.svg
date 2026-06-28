@@ -4,5 +4,5 @@
   <polygon points="26,44 26,16 38,6 38,44" fill="#EB7124" opacity="0.7"/>
   <polygon points="26,44 32,22 38,6 38,44" fill="rgba(255,255,255,0.1)"/>
   <rect x="44" y="8" width="1.5" height="32" fill="rgba(255,255,255,0.25)" rx="1"/>
-  <text x="52" y="35" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="26" fill="white" letter-spacing="2">ВВГУ</text>
+  <text x="52" y="35" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="26" fill="#FF007F" letter-spacing="2">ВВГУ</text>
 </svg>
