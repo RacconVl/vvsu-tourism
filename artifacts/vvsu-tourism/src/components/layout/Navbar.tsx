@@ -58,7 +58,7 @@ export function Navbar() {
       className="sticky top-0 z-50 w-full"
       style={{ background: navBg, borderBottom: navBorder }}
     >
-      <div className="flex h-[68px] max-w-screen-2xl items-center px-8 mx-auto gap-0">
+      <div className="flex h-[68px] max-w-screen-2xl items-center px-4 md:px-8 mx-auto gap-0">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-4 shrink-0 mr-8" style={{ textDecoration: "none" }}>

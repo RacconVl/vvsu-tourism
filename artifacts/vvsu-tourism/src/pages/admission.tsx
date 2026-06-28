@@ -121,7 +121,7 @@ export default function AdmissionPage() {
       {/* Hero */}
       <section style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
         {/* Label strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "18px 48px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+        <div className="px-4 md:px-12" style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 16, paddingTop: 18, paddingBottom: 18, borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#FF007F" }} />
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Поступление</span>
@@ -140,9 +140,9 @@ export default function AdmissionPage() {
           </div>
         </div>
         {/* Hero content */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 0, minHeight: 340, alignItems: "stretch" }}>
+        <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr auto", gap: 0, alignItems: "stretch" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            style={{ padding: "56px 48px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", overflow: "hidden" }}>
+            style={{ padding: "clamp(28px,4vw,56px) clamp(20px,4vw,48px)", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", overflow: "hidden" }}>
             {/* Graphic accents */}
             <GhostText text="2026" size={180} color="#FF007F" opacity={0.07} bottom={-20} right={40} />
             <GeoCircle size={320} color="#FF007F" opacity={0.07} shape="full" bottom={-160} left={-80} animate />
@@ -166,15 +166,16 @@ export default function AdmissionPage() {
             </div>
           </motion.div>
           {/* Right: stat cells */}
-          <div style={{ display: "grid", gridTemplateRows: "1fr 1fr 1fr", minWidth: 200 }}>
+          <div className="grid grid-cols-3 lg:grid-cols-1 border-t-[3px] border-[rgba(255,255,255,0.08)] lg:border-t-0">
             {[
               { num: "25", sub: "бюджетных мест", bg: "#FF007F", text: "#fff" },
-              { num: "30.08", sub: "дата окончания приёма", bg: "#C6FF00", text: "#0A0A0A" },
+              { num: "30.08", sub: "конец приёма", bg: "#C6FF00", text: "#0A0A0A" },
               { num: "4", sub: "направления", bg: "#0057B8", text: "#fff" },
             ].map((s, i) => (
-              <div key={i} style={{ background: s.bg, padding: "24px 28px", borderBottom: i < 2 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                <div style={{ fontSize: 40, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
-                <div style={{ fontSize: 11, color: s.text, opacity: 0.65, fontWeight: 600, marginTop: 4, letterSpacing: 0.5, textTransform: "uppercase" }}>{s.sub}</div>
+              <div key={i} className={i < 2 ? "border-r-[3px] lg:border-r-0 lg:border-b-[3px] border-[rgba(255,255,255,0.08)]" : ""}
+                style={{ background: s.bg, padding: "clamp(14px,2vw,24px) clamp(12px,2vw,28px)", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <div style={{ fontSize: "clamp(22px,4vw,40px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
+                <div style={{ fontSize: 10, color: s.text, opacity: 0.65, fontWeight: 600, marginTop: 4, letterSpacing: 0.5, textTransform: "uppercase" }}>{s.sub}</div>
               </div>
             ))}
           </div>
@@ -183,8 +184,8 @@ export default function AdmissionPage() {
 
       {/* Sticky tab bar */}
       <div className="sticky top-[80px] z-40 bg-background/95 backdrop-blur-sm border-b border-border/40 shadow-sm">
-        <div className="max-w-5xl mx-auto px-4 py-3">
-          <div className="flex flex-wrap gap-0 w-fit" style={{ border: "2px solid var(--border)" }}>
+        <div className="max-w-5xl mx-auto px-4 py-3 overflow-x-auto">
+          <div className="flex gap-0 w-max md:w-fit" style={{ border: "2px solid var(--border)" }}>
             {tabs.map((t, i) => (
               <button
                 key={t.key}

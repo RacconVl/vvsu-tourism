@@ -257,8 +257,8 @@ export default function Community() {
           </div>
         </div>
         {/* Hero title + photo strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", alignItems: "stretch" }}>
-          <div style={{ padding: "36px 40px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 280, position: "relative", overflow: "hidden" }}>
+        <div className="flex flex-col md:grid" style={{ gridTemplateColumns: "auto 1fr", alignItems: "stretch" }}>
+          <div style={{ padding: "clamp(24px,3vw,36px) clamp(20px,3vw,40px)", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
             {/* Graphic accents */}
             <GhostText text="МЛ" size={220} color="#fff" opacity={0.04} bottom={-60} right={-30} />
             <GeoCircle size={200} color="#FF007F" opacity={0.12} shape="full" top={-100} right={-80} animate />

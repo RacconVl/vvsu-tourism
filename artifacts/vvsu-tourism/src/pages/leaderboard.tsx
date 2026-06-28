@@ -82,7 +82,7 @@ export default function Leaderboard() {
       {/* ── Hero ───────────────────────────────────────────── */}
       <div style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
         {/* Label strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "18px 48px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+        <div className="px-4 md:px-12" style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 16, paddingTop: 18, paddingBottom: 18, borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Рейтинг</span>
@@ -101,9 +101,9 @@ export default function Leaderboard() {
           </div>
         </div>
         {/* Hero content */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", minHeight: 260, alignItems: "stretch" }}>
+        <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr auto", alignItems: "stretch" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            style={{ padding: "48px 48px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+            style={{ padding: "clamp(28px,4vw,48px) clamp(20px,4vw,48px)", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
             {/* Geometric decorations */}
             <GhostText text="ИТКИ" size={200} color="#fff" opacity={0.04} bottom={-40} right={-20} />
             <GeoCircle size={280} color="#C6FF00" opacity={0.08} shape="full" bottom={-140} right={-60} animate />
@@ -123,14 +123,15 @@ export default function Leaderboard() {
             </div>
           </motion.div>
           {/* Right: stat cells */}
-          <div style={{ display: "grid", gridTemplateRows: "1fr 1fr 1fr", minWidth: 200 }}>
+          <div className="grid grid-cols-3 lg:grid-cols-1 border-t-[3px] border-[rgba(255,255,255,0.07)] lg:border-t-0">
             {[
               { num: "10", sub: "участников", bg: "#C6FF00", text: "#0A0A0A" },
-              { num: "XP", sub: "за каждый квест", bg: "#FF007F", text: "#fff" },
-              { num: "01", sub: "место доступно", bg: "#0057B8", text: "#fff" },
+              { num: "XP", sub: "за квест", bg: "#FF007F", text: "#fff" },
+              { num: "01", sub: "место", bg: "#0057B8", text: "#fff" },
             ].map((s, i) => (
-              <div key={i} style={{ background: s.bg, padding: "20px 28px", borderBottom: i < 2 ? "3px solid rgba(0,0,0,0.1)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                <div style={{ fontSize: 36, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
+              <div key={i} className={i < 2 ? "border-r-[3px] lg:border-r-0 lg:border-b-[3px] border-[rgba(0,0,0,0.1)]" : ""}
+                style={{ background: s.bg, padding: "clamp(14px,2vw,20px) clamp(12px,2vw,28px)", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <div style={{ fontSize: "clamp(24px,4vw,36px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
                 <div style={{ fontSize: 10, color: s.text, opacity: 0.65, fontWeight: 700, marginTop: 4, letterSpacing: 1, textTransform: "uppercase" }}>{s.sub}</div>
               </div>
             ))}

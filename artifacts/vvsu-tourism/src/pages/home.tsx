@@ -519,14 +519,14 @@ export default function Home() {
     <div className="flex flex-col w-full">
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section
-        className="w-full"
-        style={{ display: "grid", gridTemplateColumns: "3fr 2fr", minHeight: "88vh", borderBottom: "4px solid #0A0A0A" }}
+        className="w-full flex flex-col lg:grid lg:min-h-[88vh]"
+        style={{ gridTemplateColumns: "3fr 2fr", borderBottom: "4px solid #0A0A0A" }}
       >
         {/* LEFT: editorial big type */}
         <motion.div
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }}
-          className="flex flex-col justify-center items-center"
-          style={{ background: "var(--color-background)", padding: "80px 60px", borderRight: "4px solid #0A0A0A", gap: 32, textAlign: "center", position: "relative", overflow: "hidden" }}
+          className="flex flex-col justify-center items-center lg:border-r-[4px] border-[#0A0A0A]"
+          style={{ background: "var(--color-background)", padding: "clamp(40px,6vw,80px) clamp(20px,5vw,60px)", gap: 32, textAlign: "center", position: "relative", overflow: "hidden" }}
         >
           {/* Graphic accents */}
           <GhostText text="ВВГУ" size={220} color="var(--color-foreground)" opacity={0.04} bottom={-30} right={-20} />
@@ -578,17 +578,18 @@ export default function Home() {
         </motion.div>
 
         {/* RIGHT: geometric stat blocks — 3 cells */}
-        <div style={{ display: "grid", gridTemplateRows: "1fr 1fr 1fr" }}>
+        <div className="grid grid-cols-3 lg:grid-cols-1 border-t-[4px] lg:border-t-0 border-[#0A0A0A]">
           {/* Cell 1: navy + lime circle — Студентов */}
           <motion.div
             initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
-            style={{ background: "#0057B8", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
+            className="border-r-[4px] lg:border-r-0 lg:border-b-[4px] border-[#0A0A0A]"
+            style={{ background: "#0057B8", position: "relative", overflow: "hidden" }}
           >
             <div style={{ position: "absolute", bottom: -50, left: -50, width: 200, height: 200, borderRadius: "50%", background: "#C6FF00" }} />
-            <div style={{ position: "relative", padding: "28px 36px", zIndex: 1 }}>
+            <div style={{ position: "relative", padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", zIndex: 1 }}>
               <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Студентов</div>
-              <div style={{ color: "#fff", fontSize: "clamp(36px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 8 }}>
-                более <span style={{ color: "#C6FF00" }}>2 500</span>
+              <div style={{ color: "#fff", fontSize: "clamp(22px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>
+                <span className="hidden lg:inline">более </span><span style={{ color: "#C6FF00" }}>2 500</span>
               </div>
             </div>
           </motion.div>
@@ -596,12 +597,13 @@ export default function Home() {
           {/* Cell 2: hot pink — Трудоустройство */}
           <motion.div
             initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.25 }}
-            style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
+            className="border-r-[4px] lg:border-r-0 lg:border-b-[4px] border-[#0A0A0A]"
+            style={{ background: "#FF007F", position: "relative", overflow: "hidden" }}
           >
             <div style={{ position: "absolute", top: -30, right: -30, width: 130, height: 130, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
-            <div style={{ padding: "28px 36px", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Трудоустройство</div>
-              <div style={{ color: "#fff", fontSize: "clamp(40px,3.8vw,62px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 8 }}>94%</div>
+            <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
+              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Занятость</div>
+              <div style={{ color: "#fff", fontSize: "clamp(26px,3.8vw,62px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>94%</div>
             </div>
           </motion.div>
 
@@ -611,10 +613,10 @@ export default function Home() {
             style={{ background: "#C6FF00", position: "relative", overflow: "hidden" }}
           >
             <div style={{ position: "absolute", bottom: -20, right: -20, width: 100, height: 100, borderRadius: "50%", background: "rgba(0,0,0,0.06)" }} />
-            <div style={{ padding: "28px 36px", position: "relative", zIndex: 1 }}>
+            <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
               <div style={{ color: "rgba(0,0,0,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Место</div>
-              <div style={{ color: "#0A0A0A", fontSize: "clamp(36px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 8 }}>ТОП-5</div>
-              <div style={{ color: "rgba(0,0,0,0.5)", fontSize: 12, fontWeight: 700, marginTop: 4 }}>ДФО</div>
+              <div style={{ color: "#0A0A0A", fontSize: "clamp(24px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>ТОП-5</div>
+              <div style={{ color: "rgba(0,0,0,0.5)", fontSize: 12, fontWeight: 700, marginTop: 2 }}>ДФО</div>
             </div>
           </motion.div>
         </div>
@@ -635,7 +637,7 @@ export default function Home() {
       {/* ── Tech Infrastructure ───────────────────────────────── */}
       <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
         {/* Section label strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#C6FF00" }} />
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Передовые технологии</span>
@@ -735,9 +737,9 @@ export default function Home() {
           {/* Grants strip */}
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div style={{ border: "3px solid #0A0A0A", background: "#0A0A0A", overflow: "hidden", position: "relative" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+              <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 0 }}>
                 {/* Left: text */}
-                <div style={{ padding: "52px 48px", borderRight: "3px solid rgba(255,255,255,0.1)" }}>
+                <div className="lg:border-r-[3px] border-[rgba(255,255,255,0.1)]" style={{ padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)" }}>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FF007F", color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", padding: "6px 14px", marginBottom: 28 }}>
                     ◆ Гранты
                   </div>
@@ -759,7 +761,7 @@ export default function Home() {
                   </div>
                 </div>
                 {/* Right: stat cells */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr" }}>
+                <div className="grid grid-cols-2 grid-rows-2">
                   {[
                     { num: "500K₽", label: "Максимальный грант", bg: "#FF007F", text: "#fff" },
                     { num: "12+", label: "Победителей в 2024", bg: "#C6FF00", text: "#0A0A0A" },
@@ -990,7 +992,7 @@ export default function Home() {
 
             {/* Right: reference-style mosaic grid */}
             <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: 0, border: "3px solid #0A0A0A", height: 480 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: 0, border: "3px solid #0A0A0A", minHeight: 320 }}>
                 {/* Cell 1: pink bg + B&W circle photo */}
                 <div style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
                   <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -1033,12 +1035,12 @@ export default function Home() {
       {/* ── Oversized text statement ────────────────────────────── */}
       <section style={{ background: "#FF007F", overflow: "hidden", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A", padding: "40px 0", position: "relative" }}>
         <div style={{ position: "absolute", top: "50%", left: "40%", transform: "translate(-50%,-50%)", width: 500, height: 500, borderRadius: "50%", background: "rgba(0,0,0,0.08)", pointerEvents: "none" }} />
-        <div style={{ whiteSpace: "nowrap", lineHeight: 0.85 }}>
-          <div style={{ fontSize: "clamp(80px,12vw,160px)", fontWeight: 900, letterSpacing: "-0.05em", color: "#fff", paddingLeft: 48, opacity: 0.95 }}>
+        <div style={{ lineHeight: 0.85 }}>
+          <div style={{ fontSize: "clamp(48px,12vw,160px)", fontWeight: 900, letterSpacing: "-0.05em", color: "#fff", paddingLeft: "clamp(16px,4vw,48px)", opacity: 0.95, whiteSpace: "nowrap" }}>
             СОЗДАВАЙ.
           </div>
-          <div style={{ fontSize: "clamp(80px,12vw,160px)", fontWeight: 900, letterSpacing: "-0.05em", paddingLeft: 120, marginTop: 4 }}>
-            <span style={{ WebkitTextStroke: "3px #fff", color: "transparent" }}>ИССЛЕДУЙ.</span>
+          <div style={{ fontSize: "clamp(48px,12vw,160px)", fontWeight: 900, letterSpacing: "-0.05em", paddingLeft: "clamp(32px,9vw,120px)", marginTop: 4, whiteSpace: "nowrap" }}>
+            <span style={{ WebkitTextStroke: "clamp(2px,0.3vw,3px) #fff", color: "transparent" }}>ИССЛЕДУЙ.</span>
           </div>
         </div>
       </section>
@@ -1057,7 +1059,7 @@ export default function Home() {
       {/* ── Careers ───────────────────────────────────────────── */}
       <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
         {/* Section label strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid #0A0A0A", background: "#fff" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid #0A0A0A", background: "#fff" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#FF007F" }} />
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#0A0A0A" }}>Кем вы станете после ВВГУ</span>
@@ -1114,7 +1116,7 @@ export default function Home() {
       {/* ── Career Center ─────────────────────────────────────── */}
       <section style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
         {/* Section label strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Центр карьеры</span>
@@ -1122,10 +1124,11 @@ export default function Home() {
           <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
           <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ cpo.vvsu.ru</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 600 }}>
+        <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 1fr" }}>
           {/* Left: text content */}
           <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            style={{ padding: "52px 48px", borderRight: "3px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", gap: 0 }}>
+            className="lg:border-r-[3px] border-[rgba(255,255,255,0.08)]"
+            style={{ padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)", display: "flex", flexDirection: "column", gap: 0 }}>
             <h2 style={{ fontSize: "clamp(32px,3.5vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "#fff", marginBottom: 20 }}>
               Центр карьеры —<br /><span style={{ color: "#C6FF00" }}>ваш старт в профессию</span>
             </h2>
@@ -1205,7 +1208,7 @@ export default function Home() {
       {/* ── Жизнь студента ─────────────────────────────────────── */}
       <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
         {/* Section label strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#FF007F" }} />
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#fff" }}>Жизнь в ВВГУ</span>
@@ -1224,7 +1227,7 @@ export default function Home() {
           </motion.div>
 
           {/* Photo cards — sharp editorial grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", border: "2px solid #0A0A0A", marginBottom: 2 }}>
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{ border: "2px solid #0A0A0A", marginBottom: 2 }}>
             {[
               { img: "/student-life-1.png", title: "Командная работа над реальными проектами", desc: "Маршруты для настоящих туроператоров с 1-го курса", tag: "Практика", tagBg: "#FF007F" },
               { img: "/student-life-2.png", title: "Кампус с видом на Японское море", desc: "Учись там, где вдохновляет сама природа", tag: "Кампус", tagBg: "#C6FF00", tagText: "#0A0A0A" },
@@ -1246,7 +1249,7 @@ export default function Home() {
           </div>
 
           {/* Quote strip */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", border: "2px solid #0A0A0A", borderTop: "none", marginBottom: 32 }}>
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{ border: "2px solid #0A0A0A", borderTop: "none", marginBottom: 32 }}>
             {[
               { text: "В ВВГУ я познакомилась с корейскими студентами, и сейчас мы вместе разрабатываем тур-проект для рынка Азии.", name: "Даша, 3 курс", avatar: "/avatars/student-1.png", bg: "#0A0A0A", textC: "#fff" },
               { text: "Квест по Золотому Рогу — лучшее задание в моей жизни. Это не просто учёба, это настоящее приключение.", name: "Артём, 2 курс", avatar: "/avatars/student-2.png", bg: "#C6FF00", textC: "#0A0A0A" },
@@ -1292,9 +1295,10 @@ export default function Home() {
             )}
           </div>
         </div>
-        <div className="container mx-auto px-4" style={{ padding: "64px 48px" }}>
+        <div className="container mx-auto px-4 py-16">
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 48 }}>
+            className="flex flex-col lg:grid gap-8 lg:gap-12 items-start lg:items-center"
+            style={{ gridTemplateColumns: "1fr auto" }}>
             <div>
               <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginBottom: 16 }}>Начните прямо сейчас</div>
               <h2 style={{ fontSize: "clamp(40px,5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 0 }}>
