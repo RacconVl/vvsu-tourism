@@ -124,7 +124,7 @@ export function Navbar() {
                     color: location.startsWith("/cabinet") ? textActive : textColor,
                     borderRadius: 0,
                   }}
-                  className="hidden md:flex"
+                  className="hidden lg:flex"
                 >
                   <LayoutDashboard className="h-4 w-4" />
                   Кабинет
@@ -145,7 +145,7 @@ export function Navbar() {
                         {user.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="hidden md:inline text-sm">{user.name.split(" ")[0]}</span>
+                    <span className="hidden lg:inline text-sm">{user.name.split(" ")[0]}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
