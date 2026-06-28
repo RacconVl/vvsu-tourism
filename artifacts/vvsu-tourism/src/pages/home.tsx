@@ -533,7 +533,7 @@ export default function Home() {
               fontWeight: 800, fontSize: 11, letterSpacing: 3, textTransform: "uppercase",
               padding: "6px 16px", marginBottom: 36
             }}>
-              Владивосток · 2024
+              Владивосток · 2026
             </div>
             <h1 style={{
               fontSize: "clamp(52px, 6.5vw, 92px)", fontWeight: 900, lineHeight: 0.93,
@@ -570,41 +570,44 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* RIGHT: geometric stat blocks */}
-        <div style={{ display: "grid", gridTemplateRows: "1fr 1fr" }}>
-          {/* Top: navy + lime circle */}
+        {/* RIGHT: geometric stat blocks — 3 cells */}
+        <div style={{ display: "grid", gridTemplateRows: "1fr 1fr 1fr" }}>
+          {/* Cell 1: navy + lime circle — Студентов */}
           <motion.div
             initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
             style={{ background: "#0057B8", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
           >
-            <div style={{
-              position: "absolute", bottom: -70, left: -70,
-              width: 260, height: 260, borderRadius: "50%", background: "#C6FF00"
-            }} />
-            <div style={{ position: "relative", padding: "44px 40px", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>
-                Студентов
-              </div>
-              <div style={{ color: "#fff", fontSize: "clamp(60px,5vw,84px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", marginTop: 10 }}>
-                850<span style={{ color: "#C6FF00" }}>+</span>
+            <div style={{ position: "absolute", bottom: -50, left: -50, width: 200, height: 200, borderRadius: "50%", background: "#C6FF00" }} />
+            <div style={{ position: "relative", padding: "28px 36px", zIndex: 1 }}>
+              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Студентов</div>
+              <div style={{ color: "#fff", fontSize: "clamp(36px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 8 }}>
+                более <span style={{ color: "#C6FF00" }}>2 500</span>
               </div>
             </div>
           </motion.div>
 
-          {/* Bottom: hot pink */}
+          {/* Cell 2: hot pink — Трудоустройство */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.28 }}
-            style={{ background: "#FF007F", position: "relative", overflow: "hidden" }}
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.25 }}
+            style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
           >
-            <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
-            <div style={{ position: "absolute", bottom: 24, right: 24, width: 64, height: 64, borderRadius: "50%", background: "rgba(255,255,255,0.15)" }} />
-            <div style={{ padding: "44px 40px", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>
-                Трудоустройство
-              </div>
-              <div style={{ color: "#fff", fontSize: "clamp(60px,5vw,84px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", marginTop: 10 }}>
-                94%
-              </div>
+            <div style={{ position: "absolute", top: -30, right: -30, width: 130, height: 130, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
+            <div style={{ padding: "28px 36px", position: "relative", zIndex: 1 }}>
+              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Трудоустройство</div>
+              <div style={{ color: "#fff", fontSize: "clamp(40px,3.8vw,62px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 8 }}>94%</div>
+            </div>
+          </motion.div>
+
+          {/* Cell 3: lime — Место в ДФО */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.35 }}
+            style={{ background: "#C6FF00", position: "relative", overflow: "hidden" }}
+          >
+            <div style={{ position: "absolute", bottom: -20, right: -20, width: 100, height: 100, borderRadius: "50%", background: "rgba(0,0,0,0.06)" }} />
+            <div style={{ padding: "28px 36px", position: "relative", zIndex: 1 }}>
+              <div style={{ color: "rgba(0,0,0,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Место</div>
+              <div style={{ color: "#0A0A0A", fontSize: "clamp(36px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 8 }}>ТОП-5</div>
+              <div style={{ color: "rgba(0,0,0,0.5)", fontSize: 12, fontWeight: 700, marginTop: 4 }}>ДФО</div>
             </div>
           </motion.div>
         </div>
