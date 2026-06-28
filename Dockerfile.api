@@ -19,7 +19,7 @@ COPY scripts/package.json ./scripts/
 # Install — pnpm store is kept in a BuildKit mount cache.
 # The cache persists across builds on this machine: reused ≫ downloaded.
 RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile
+    pnpm install --frozen-lockfile --registry https://registry.npmmirror.com
 
 # Copy source
 COPY lib/ ./lib/
