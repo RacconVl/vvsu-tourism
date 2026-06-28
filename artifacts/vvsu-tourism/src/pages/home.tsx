@@ -790,11 +790,11 @@ export default function Home() {
                       <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0" />{f}</div>
                     ))}
                   </div>
-                  <div className="mt-auto">
-                    <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
+                  <div className="mt-auto flex items-center gap-3">
+                    <Link href="/design"
                       className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-white transition-colors font-semibold">
-                      Подробнее о программе <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
+                      Все направления кафедры <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
                   </div>
                 </div>
               </div>

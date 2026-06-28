@@ -161,13 +161,18 @@ const processSteps = [
 ];
 
 const anchorSections = [
-  { id: "directions", label: "Направления" },
-  { id: "about", label: "О кафедре" },
-  { id: "why", label: "Почему мы" },
-  { id: "projects", label: "Проекты" },
-  { id: "admission", label: "Абитуриенту" },
-  { id: "exam", label: "Испытания" },
-  { id: "contacts", label: "Контакты" },
+  { id: "about",         label: "О кафедре" },
+  { id: "history",       label: "История" },
+  { id: "programs",      label: "Направления" },
+  { id: "advantages",    label: "Преимущества" },
+  { id: "labs",          label: "Лаборатории" },
+  { id: "projects",      label: "Проекты" },
+  { id: "partners",      label: "Практика" },
+  { id: "applicants",    label: "Поступление" },
+  { id: "creative-test", label: "Испытания" },
+  { id: "parents",       label: "Родителям" },
+  { id: "team",          label: "Преподаватели" },
+  { id: "contacts",      label: "Контакты" },
 ];
 
 /* ─── component ─────────────────────────────────────────────── */
@@ -227,13 +232,13 @@ export default function DesignProgramsPage() {
 
             {/* 4 CTA buttons */}
             <div className="flex flex-wrap gap-3 mb-10">
-              <Button onClick={() => scrollTo("directions")} className="bg-accent hover:bg-accent/90 text-white rounded-full px-7 h-11">
+              <Button onClick={() => scrollTo("programs")} className="bg-accent hover:bg-accent/90 text-white rounded-full px-7 h-11">
                 Выбрать направление <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button onClick={() => scrollTo("projects")} variant="outline" className="rounded-full px-7 h-11 border-white/20 bg-white/5 text-white hover:bg-white/10">
                 Проекты студентов
               </Button>
-              <Button onClick={() => scrollTo("admission")} variant="outline" className="rounded-full px-7 h-11 border-white/20 bg-white/5 text-white hover:bg-white/10">
+              <Button onClick={() => scrollTo("applicants")} variant="outline" className="rounded-full px-7 h-11 border-white/20 bg-white/5 text-white hover:bg-white/10">
                 Поступить
               </Button>
               <Button onClick={() => scrollTo("contacts")} variant="outline" className="rounded-full px-7 h-11 border-white/20 bg-white/5 text-white hover:bg-white/10">
@@ -278,7 +283,7 @@ export default function DesignProgramsPage() {
         <motion.section id="about" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div>
-              <Badge variant="outline" className="mb-4 text-xs">О кафедре</Badge>
+              <Badge variant="outline" className="mb-4 text-xs" id="about-badge">О кафедре</Badge>
               <h2 className="text-3xl font-bold text-foreground mb-4">Две кафедры — одна творческая среда</h2>
               <p className="text-muted-foreground leading-relaxed mb-5">
                 Кафедра дизайна и технологий и кафедра архитектуры ВВГУ ИТИКИ — это единое пространство
@@ -302,7 +307,7 @@ export default function DesignProgramsPage() {
               </div>
             </div>
             {/* History timeline */}
-            <div>
+            <div id="history">
               <h3 className="font-bold text-foreground mb-5 text-lg">История кафедры</h3>
               <div className="relative pl-6 border-l-2 border-accent/20 space-y-6">
                 {timeline.map((t, i) => (
@@ -319,7 +324,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 4: Направления подготовки ────────────────── */}
-        <motion.section id="directions" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.section id="programs" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="text-center mb-10">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Palette className="h-5 w-5 text-accent" />
@@ -353,7 +358,7 @@ export default function DesignProgramsPage() {
                           <div className="text-xs font-semibold text-foreground">Вступительное: <span className="font-normal text-muted-foreground">{track.exam}</span></div>
                           <div className="text-xs font-semibold text-foreground">Места: <span className="font-normal text-muted-foreground">{track.places}</span></div>
                         </div>
-                        <Button onClick={() => scrollTo("admission")} size="sm" className="w-full rounded-lg text-xs mt-1" style={{ background: track.color }}>
+                        <Button onClick={() => scrollTo("applicants")} size="sm" className="w-full rounded-lg text-xs mt-1" style={{ background: track.color }}>
                           Подробнее о поступлении
                         </Button>
                       </motion.div>
@@ -371,7 +376,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 5: Почему выбирают + лабораторная база ──── */}
-        <motion.section id="why" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.section id="advantages" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
               <Badge variant="outline" className="mb-4 text-xs">Ценность</Badge>
@@ -391,7 +396,7 @@ export default function DesignProgramsPage() {
                 ))}
               </div>
             </div>
-            <div>
+            <div id="labs">
               <Badge variant="outline" className="mb-4 text-xs">Учебно-лабораторная база</Badge>
               <h2 className="text-2xl font-bold text-foreground mb-6">Пространства и инструменты</h2>
               <div className="grid grid-cols-2 gap-3">
@@ -467,7 +472,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 8: Практика и партнёры ──────────────────── */}
-        <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.section id="partners" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
             <div>
               <Badge variant="outline" className="mb-4 text-xs">Практика и среда</Badge>
@@ -508,7 +513,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 9: Наука и исследования ─────────────────── */}
-        <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.section id="research" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
               <Badge variant="outline" className="mb-4 text-xs">Наука и творческая деятельность</Badge>
@@ -543,7 +548,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 11: Состав кафедры ───────────────────────── */}
-        <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.section id="team" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Users className="h-4 w-4 text-accent" />
@@ -578,7 +583,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 12: Абитуриенту ─────────────────────────── */}
-        <motion.section id="admission" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.section id="applicants" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="text-center mb-10">
             <div className="flex items-center justify-center gap-2 mb-2">
               <GraduationCap className="h-5 w-5 text-accent" />
@@ -601,7 +606,7 @@ export default function DesignProgramsPage() {
                 step: "02", icon: "✏️", title: "Подготовься к испытанию",
                 color: "#EB7124",
                 items: ["Узнай формат творческого испытания", "Изучи критерии оценки", "Запишись на консультацию кафедры"],
-                action: { label: "Об испытаниях", href: "#exam" },
+                action: { label: "Об испытаниях", href: "#creative-test" },
               },
               {
                 step: "03", icon: "📄", title: "Подай документы",
@@ -672,7 +677,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 13: Творческие испытания ────────────────── */}
-        <motion.section id="exam" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.section id="creative-test" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
             <div>
               <Badge variant="outline" className="mb-4 text-xs">Творческое испытание</Badge>
@@ -701,12 +706,12 @@ export default function DesignProgramsPage() {
                   </div>
                 ))}
               </div>
-              <Button onClick={() => scrollTo("contacts")} className="mt-6 rounded-full bg-accent hover:bg-accent/90 text-white">
+              <Button onClick={() => scrollTo("contacts")} className="mt-6 rounded-full bg-accent hover:bg-accent/90 text-white" type="button">
                 Записаться на консультацию <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
             {/* For parents */}
-            <div>
+            <div id="parents">
               <Badge variant="outline" className="mb-4 text-xs">Для родителей</Badge>
               <h2 className="text-2xl font-bold text-foreground mb-4">Прикладные навыки и понятная ценность</h2>
               <p className="text-muted-foreground text-sm leading-relaxed mb-5">
@@ -876,7 +881,7 @@ export default function DesignProgramsPage() {
         </motion.section>
 
         {/* ── BLOCK 17: Финальный CTA ────────────────────────── */}
-        <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+        <motion.section id="final-cta" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
           <div className="rounded-2xl p-12 border border-border/60 relative overflow-hidden"
             style={{ background: "linear-gradient(135deg,#1a0533,#172E46)" }}>
             <div className="absolute inset-0 pointer-events-none"
