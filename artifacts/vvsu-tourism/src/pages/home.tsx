@@ -1302,7 +1302,7 @@ export default function Home() {
             <div>
               <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginBottom: 16 }}>Начните прямо сейчас</div>
               <h2 style={{ fontSize: "clamp(40px,5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 0 }}>
-                Готовы<br />к экспедиции?
+                Готовы к<br />экспедиции?
               </h2>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
