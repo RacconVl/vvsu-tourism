@@ -17,11 +17,11 @@ import {
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 const publicNavItems = [
-  { href: "/admission",  label: "Поступление", icon: GraduationCap },
-  { href: "/design",     label: "Дизайн & арт", icon: Palette },
-  { href: "/community",  label: "Молодёжка",   icon: Users },
-  { href: "/map",        label: "Карта",        icon: MapIcon },
-  { href: "/leaderboard",label: "Рейтинг",      icon: Trophy },
+  { href: "/admission",   label: "Поступление",  icon: GraduationCap },
+  { href: "/design",      label: "Дизайн & арт", icon: Palette },
+  { href: "/community",   label: "Молодёжка",    icon: Users },
+  { href: "/map",         label: "Карта",         icon: MapIcon },
+  { href: "/leaderboard", label: "Рейтинг",       icon: Trophy },
 ];
 
 export function Navbar() {
@@ -46,36 +46,58 @@ export function Navbar() {
     });
   };
 
+  const navBg = theme === "dark" ? "#0A1220" : "#ffffff";
+  const navBorder = theme === "dark" ? "3px solid rgba(255,255,255,0.1)" : "3px solid #0A0A0A";
+  const textColor = theme === "dark" ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.55)";
+  const textActive = "#FF007F";
+  const dividerColor = theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.12)";
+  const logoText = theme === "dark" ? "#ffffff" : "#0A0A0A";
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-primary text-primary-foreground shadow-md">
-      <div className="container flex h-20 max-w-screen-2xl items-center px-6 mx-auto gap-6">
+    <header
+      className="sticky top-0 z-50 w-full"
+      style={{ background: navBg, borderBottom: navBorder }}
+    >
+      <div className="flex h-[68px] max-w-screen-2xl items-center px-8 mx-auto gap-0">
+
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-4 shrink-0 mr-6">
-          <img src="/vvsu-logo-real.png" className="h-11 w-auto brightness-0 invert" alt="ВВГУ" />
-          <div className="hidden md:flex flex-col leading-tight">
-            <span className="text-[11px] font-semibold text-white/60 uppercase tracking-widest">ВВГУ</span>
-            <span className="text-[13px] font-bold text-white uppercase leading-tight max-w-[220px]">
-              Институт туризма и<br/>креативных индустрий
-            </span>
-          </div>
+        <Link href="/" className="flex items-center gap-3 shrink-0 mr-8" style={{ textDecoration: "none" }}>
+          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#FF007F", flexShrink: 0 }} />
+          <span style={{ fontWeight: 900, fontSize: 15, letterSpacing: 3, textTransform: "uppercase", color: logoText, lineHeight: 1 }}>
+            ВВГУ
+          </span>
+          <div style={{ width: 1, height: 22, background: dividerColor }} />
+          <span className="hidden md:block" style={{ fontWeight: 500, fontSize: 11, letterSpacing: 0.5, color: textColor, textTransform: "uppercase", maxWidth: 200, lineHeight: 1.3 }}>
+            Институт туризма и креативных индустрий
+          </span>
         </Link>
 
-        {/* Desktop public nav */}
-        <nav className="hidden lg:flex items-center gap-2 flex-1">
-          {publicNavItems.map((item) => {
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center flex-1">
+          {publicNavItems.map((item, i) => {
             const active = location.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all ${
-                  active
-                    ? "bg-white/15 text-accent font-semibold"
-                    : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
-                }`}
                 data-testid={`nav-${item.href.replace("/", "")}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "0 20px",
+                  height: 68,
+                  fontSize: 13,
+                  fontWeight: active ? 700 : 600,
+                  color: active ? textActive : textColor,
+                  borderLeft: i > 0 ? `1px solid ${dividerColor}` : "none",
+                  borderBottom: active ? `3px solid #FF007F` : "3px solid transparent",
+                  textDecoration: "none",
+                  transition: "color 0.15s, border-color 0.15s",
+                  whiteSpace: "nowrap",
+                }}
               >
-                <item.icon className="h-5 w-5" />
+                <item.icon style={{ width: 15, height: 15 }} />
                 {item.label}
               </Link>
             );
@@ -86,36 +108,37 @@ export function Navbar() {
         <div className="flex items-center gap-1 ml-auto">
           {user ? (
             <>
-              {/* Cabinet shortcut */}
               <Link href="/cabinet">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className={`hidden md:flex items-center gap-1.5 rounded-full text-sm transition-all ${
-                    location.startsWith("/cabinet")
-                      ? "bg-white/15 text-accent font-semibold"
-                      : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
-                  }`}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: location.startsWith("/cabinet") ? textActive : textColor,
+                    borderRadius: 0,
+                  }}
+                  className="hidden md:flex"
                 >
                   <LayoutDashboard className="h-4 w-4" />
                   Кабинет
                 </Button>
               </Link>
-
-              {/* Notification bell */}
               <NotificationBell />
-
-              {/* User menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="rounded-full h-9 px-2 gap-2 text-primary-foreground hover:bg-white/10"
+                    className="rounded-none h-9 px-2 gap-2"
+                    style={{ color: textColor }}
                     data-testid="button-user-menu"
                   >
                     <Avatar className="h-7 w-7">
                       <AvatarImage src={user.avatarUrl || undefined} />
-                      <AvatarFallback className="bg-accent text-white text-xs">
+                      <AvatarFallback className="text-white text-xs" style={{ background: "#FF007F" }}>
                         {user.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}
                       </AvatarFallback>
                     </Avatar>
@@ -141,22 +164,25 @@ export function Navbar() {
               </DropdownMenu>
             </>
           ) : (
-            <div className="flex items-center gap-2">
-              <Link href="/login">
+            <div className="flex items-center">
+              <Link href="/login" style={{ display: "flex" }}>
                 <Button
                   variant="ghost"
-                  className="text-primary-foreground hover:bg-white/10 rounded-full px-3 md:px-5 py-2.5 text-sm font-medium"
+                  style={{ borderRadius: 0, fontWeight: 700, fontSize: 13, color: textColor, padding: "0 20px", height: 44, borderLeft: `1px solid ${dividerColor}` }}
                   data-testid="button-nav-login"
                 >
-                  <LogIn className="h-4 w-4 md:mr-1.5" /> <span className="hidden md:inline">Войти</span>
+                  <LogIn className="h-4 w-4 mr-1.5" />
+                  <span className="hidden md:inline">Войти</span>
                 </Button>
               </Link>
-              <Link href="/register">
+              <Link href="/register" style={{ display: "flex" }}>
                 <Button
-                  className="bg-accent hover:bg-accent/90 text-white rounded-full px-3 md:px-5 py-2.5 text-sm font-medium"
+                  style={{ background: "#FF007F", color: "#ffffff", borderRadius: 0, fontWeight: 800, fontSize: 13, padding: "0 24px", height: 44, letterSpacing: 0.5 }}
+                  className="hover:opacity-90 transition-opacity"
                   data-testid="button-nav-register"
                 >
-                  <UserPlus className="h-4 w-4 md:mr-1.5" /> <span className="hidden md:inline">Регистрация</span>
+                  <UserPlus className="h-4 w-4 mr-1.5" />
+                  <span className="hidden md:inline">Регистрация</span>
                 </Button>
               </Link>
             </div>
@@ -167,7 +193,7 @@ export function Navbar() {
             variant="ghost"
             size="icon"
             onClick={toggle}
-            className="text-primary-foreground/80 hover:text-white hover:bg-white/10 rounded-lg"
+            style={{ borderRadius: 0, color: textColor, marginLeft: 4 }}
             data-testid="button-theme-toggle"
             aria-label="Переключить тему"
           >
@@ -178,7 +204,8 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden text-primary-foreground/80 hover:text-white hover:bg-white/10 rounded-lg"
+            style={{ borderRadius: 0, color: textColor }}
+            className="lg:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-label="Меню"
           >
@@ -189,8 +216,11 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-white/10 bg-primary px-4 pb-4">
-          <nav className="flex flex-col gap-1 pt-3">
+        <div
+          className="lg:hidden"
+          style={{ background: navBg, borderTop: `1px solid ${dividerColor}`, padding: "12px 24px 20px" }}
+        >
+          <nav className="flex flex-col">
             {publicNavItems.map((item) => {
               const active = location.startsWith(item.href);
               return (
@@ -198,13 +228,19 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
-                    active
-                      ? "bg-white/15 text-accent font-semibold"
-                      : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
-                  }`}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "12px 0",
+                    fontSize: 14,
+                    fontWeight: active ? 700 : 500,
+                    color: active ? textActive : textColor,
+                    borderBottom: `1px solid ${dividerColor}`,
+                    textDecoration: "none",
+                  }}
                 >
-                  <item.icon className="h-4 w-4" />
+                  <item.icon style={{ width: 16, height: 16 }} />
                   {item.label}
                 </Link>
               );
@@ -212,32 +248,28 @@ export function Navbar() {
             {user ? (
               <>
                 <Link href="/cabinet" onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
-                    location.startsWith("/cabinet")
-                      ? "bg-white/15 text-accent font-semibold"
-                      : "text-primary-foreground/80 hover:bg-white/10 hover:text-white"
-                  }`}
+                  style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 0", fontSize: 14, fontWeight: 500, color: textColor, borderBottom: `1px solid ${dividerColor}`, textDecoration: "none" }}
                 >
-                  <LayoutDashboard className="h-4 w-4" /> Кабинет
+                  <LayoutDashboard style={{ width: 16, height: 16 }} /> Кабинет
                 </Link>
                 <button
                   onClick={() => { handleLogout(); setMobileOpen(false); }}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-primary-foreground/80 hover:bg-white/10 hover:text-white transition-all w-full text-left"
+                  style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 0", fontSize: 14, fontWeight: 500, color: textColor, background: "none", border: "none", cursor: "pointer", width: "100%", textAlign: "left" }}
                 >
-                  <LogOut className="h-4 w-4" /> Выйти
+                  <LogOut style={{ width: 16, height: 16 }} /> Выйти
                 </button>
               </>
             ) : (
-              <div className="flex gap-2 pt-3 mt-2 border-t border-white/10">
-                <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1">
-                  <Button variant="outline" size="sm" className="w-full rounded-full bg-white/10 border-white/20 text-white">
-                    <LogIn className="h-4 w-4 mr-1" /> Войти
-                  </Button>
+              <div style={{ display: "flex", gap: 12, paddingTop: 16 }}>
+                <Link href="/login" onClick={() => setMobileOpen(false)} style={{ flex: 1 }}>
+                  <button style={{ width: "100%", padding: "10px 0", fontWeight: 700, fontSize: 13, border: `2px solid ${dividerColor}`, background: "transparent", cursor: "pointer", color: textColor }}>
+                    Войти
+                  </button>
                 </Link>
-                <Link href="/register" onClick={() => setMobileOpen(false)} className="flex-1">
-                  <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-white rounded-full">
-                    <UserPlus className="h-4 w-4 mr-1" /> Регистрация
-                  </Button>
+                <Link href="/register" onClick={() => setMobileOpen(false)} style={{ flex: 1 }}>
+                  <button style={{ width: "100%", padding: "10px 0", fontWeight: 800, fontSize: 13, background: "#FF007F", border: "none", color: "#fff", cursor: "pointer" }}>
+                    Регистрация
+                  </button>
                 </Link>
               </div>
             )}

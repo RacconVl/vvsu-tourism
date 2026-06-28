@@ -518,50 +518,94 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full">
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative w-full min-h-[88vh] overflow-hidden flex items-center justify-center"
-        style={{ background: "linear-gradient(160deg, #0a1a2e 0%, #0d2444 30%, #033F7E 70%, #0a2d5c 100%)" }}
+      <section
+        className="w-full"
+        style={{ display: "grid", gridTemplateColumns: "3fr 2fr", minHeight: "88vh", borderBottom: "4px solid #0A0A0A" }}
       >
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-        <div className="absolute right-[8%] top-[12%] opacity-[0.06] pointer-events-none">
-          <Anchor className="h-72 w-72 text-white" style={{ transform: "rotate(15deg)" }} />
-        </div>
-        <CatMascot />
-        {[
-          { top: "18%", left: "12%", size: 3, delay: 0 },
-          { top: "32%", left: "7%", size: 2, delay: 0.8 },
-          { top: "55%", left: "15%", size: 2.5, delay: 0.4 },
-          { top: "22%", right: "22%", size: 2, delay: 1.2 },
-          { top: "68%", right: "10%", size: 3, delay: 0.6 },
-          { top: "78%", left: "30%", size: 2, delay: 1.5 },
-          { top: "12%", left: "45%", size: 1.5, delay: 0.9 },
-          { top: "42%", right: "28%", size: 2.5, delay: 0.3 },
-        ].map((s, i) => (
-          <motion.div key={i} className="absolute rounded-full bg-white pointer-events-none"
-            style={{ top: s.top, left: (s as {left?: string}).left, right: (s as {right?: string}).right, width: s.size, height: s.size }}
-            animate={{ opacity: [0.2, 0.7, 0.2] }}
-            transition={{ duration: 3 + i * 0.4, delay: s.delay, repeat: Infinity, ease: "easeInOut" }} />
-        ))}
-        <div className="absolute bottom-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[200px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, rgba(235,113,36,0.12) 0%, transparent 70%)" }} />
-        <div className="absolute bottom-0 left-0 w-full pointer-events-none">
-          <svg viewBox="0 0 1440 90" preserveAspectRatio="none" className="w-full">
-            <path d="M0,45 C240,90 480,0 720,45 C960,90 1200,10 1440,45 L1440,90 L0,90 Z" fill="hsl(var(--background))" />
-          </svg>
-        </div>
-        <div className="relative z-20 container mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-10 leading-tight">
-              Морское путешествие <br />
-              <span className="text-accent drop-shadow-[0_0_32px_rgba(235,113,36,0.5)]">к знаниям</span>
+        {/* LEFT: editorial big type */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }}
+          className="flex flex-col justify-center"
+          style={{ background: "var(--color-background)", padding: "80px 60px", borderRight: "4px solid #0A0A0A", gap: 32 }}
+        >
+          <div>
+            <div style={{
+              display: "inline-block", background: "#FF007F", color: "#fff",
+              fontWeight: 800, fontSize: 11, letterSpacing: 3, textTransform: "uppercase",
+              padding: "6px 16px", marginBottom: 36
+            }}>
+              Владивосток · 2024
+            </div>
+            <h1 style={{
+              fontSize: "clamp(52px, 6.5vw, 92px)", fontWeight: 900, lineHeight: 0.93,
+              letterSpacing: "-0.04em", margin: 0, color: "var(--color-foreground)"
+            }}>
+              ТВОРИ.<br />
+              <span style={{ color: "#172E46" }}>УЧИСЬ.</span><br />
+              <span style={{
+                WebkitTextStroke: "3px var(--color-foreground)",
+                color: "transparent",
+                display: "block"
+              }}>МЕНЯЙ.</span>
             </h1>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-white border-none rounded-full px-8 h-14 text-lg shadow-[0_0_32px_rgba(235,113,36,0.35)]" asChild>
-                <Link href="/dashboard">Начать экспедицию <ArrowRight className="ml-2 h-5 w-5" /></Link>
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-full px-8 h-14 text-lg border-white/20 bg-white/5 text-white backdrop-blur hover:bg-white/10" asChild>
-                <Link href="/admission">Узнать о поступлении</Link>
-              </Button>
+          </div>
+          <p style={{ color: "hsl(var(--muted-foreground))", fontSize: 16, lineHeight: 1.75, maxWidth: 480, margin: 0 }}>
+            Институт туризма и креативных индустрий ВВГУ — образование для тех,
+            кто создаёт будущее Дальнего Востока и Азиатско-Тихоокеанского региона.
+          </p>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+            <Button asChild size="lg" style={{
+              background: "#172E46", color: "#fff", borderRadius: 0,
+              padding: "0 36px", height: 52, fontWeight: 800, fontSize: 14,
+              letterSpacing: 1, textTransform: "uppercase"
+            }}>
+              <Link href="/dashboard">Начать обучение <ArrowRight className="ml-2 h-5 w-5" /></Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" style={{
+              borderRadius: 0, borderWidth: 2, borderColor: "var(--color-foreground)",
+              padding: "0 28px", height: 52, fontWeight: 700, fontSize: 14,
+              color: "var(--color-foreground)", background: "transparent"
+            }}>
+              <Link href="/admission">Поступление →</Link>
+            </Button>
+          </div>
+        </motion.div>
+
+        {/* RIGHT: geometric stat blocks */}
+        <div style={{ display: "grid", gridTemplateRows: "1fr 1fr" }}>
+          {/* Top: navy + lime circle */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
+            style={{ background: "#172E46", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
+          >
+            <div style={{
+              position: "absolute", bottom: -70, left: -70,
+              width: 260, height: 260, borderRadius: "50%", background: "#C6FF00"
+            }} />
+            <div style={{ position: "relative", padding: "44px 40px", zIndex: 1 }}>
+              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>
+                Студентов
+              </div>
+              <div style={{ color: "#fff", fontSize: "clamp(60px,5vw,84px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", marginTop: 10 }}>
+                850<span style={{ color: "#C6FF00" }}>+</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Bottom: hot pink */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.28 }}
+            style={{ background: "#FF007F", position: "relative", overflow: "hidden" }}
+          >
+            <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
+            <div style={{ position: "absolute", bottom: 24, right: 24, width: 64, height: 64, borderRadius: "50%", background: "rgba(255,255,255,0.15)" }} />
+            <div style={{ padding: "44px 40px", position: "relative", zIndex: 1 }}>
+              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>
+                Трудоустройство
+              </div>
+              <div style={{ color: "#fff", fontSize: "clamp(60px,5vw,84px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", marginTop: 10 }}>
+                94%
+              </div>
             </div>
           </motion.div>
         </div>
