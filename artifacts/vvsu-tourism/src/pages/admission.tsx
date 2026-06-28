@@ -410,10 +410,10 @@ export default function AdmissionPage() {
                     <div style={{ width: 72, flexShrink: 0, background: i === 0 ? "#EB7124" : "#0057B8", display: "flex", alignItems: "center", justifyContent: "center", padding: "22px 0" }}>
                       <span style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>{String(s.num).padStart(2, "0")}</span>
                     </div>
-                    <div style={{ flex: 1, padding: "18px 24px", borderLeft: "2px solid #0A0A0A" }}>
-                      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 6 }}>
-                        <h3 style={{ fontSize: 15, fontWeight: 900, color: "var(--color-foreground)" }}>Шаг {s.num}: {s.title}</h3>
-                        <span style={{ background: "#EB7124", color: "#fff", fontSize: 10, fontWeight: 900, padding: "4px 10px", flexShrink: 0, letterSpacing: 0.5 }}>до {s.deadline}</span>
+                    <div style={{ flex: 1, padding: "18px 24px", borderLeft: "2px solid #0A0A0A", minWidth: 0 }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
+                        <h3 style={{ fontSize: 15, fontWeight: 900, color: "var(--color-foreground)", minWidth: 0 }}>Шаг {s.num}: {s.title}</h3>
+                        <span style={{ background: "#EB7124", color: "#fff", fontSize: 10, fontWeight: 900, padding: "4px 10px", flexShrink: 0, letterSpacing: 0.5, whiteSpace: "nowrap" }}>до {s.deadline}</span>
                       </div>
                       <p style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.5 }}>{s.desc}</p>
                     </div>
