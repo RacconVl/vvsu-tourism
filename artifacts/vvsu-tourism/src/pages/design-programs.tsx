@@ -356,43 +356,48 @@ export default function DesignProgramsPage() {
               <p className="text-muted-foreground mt-2 text-sm">Нажми на карточку, чтобы узнать подробнее о направлении</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {tracks.map((track, i) => (
-              <motion.div key={track.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
-                <Card
-                  onClick={() => setSelectedTrack(selectedTrack === track.id ? null : track.id)}
-                  className={`rounded-2xl border cursor-pointer transition-all hover:shadow-lg ${selectedTrack === track.id ? "border-accent/60 shadow-md" : "border-border/60"}`}>
-                  <div className="h-1.5 rounded-t-2xl" style={{ background: track.color }} />
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-2xl">{track.emoji}</span>
-                      <h3 className="font-bold text-foreground text-sm leading-snug">{track.title}</h3>
-                    </div>
-                    <p className="text-xs text-muted-foreground mb-3">{track.tags}</p>
-                    {selectedTrack === track.id && (
-                      <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="space-y-2 border-t border-border/40 pt-3 mt-1">
-                        {track.creates.map((c, j) => (
-                          <div key={j} className="flex items-start gap-1.5 text-xs text-muted-foreground">
-                            <div className="h-1.5 w-1.5 rounded-full shrink-0 mt-1" style={{ background: track.color }} />
-                            {c}
-                          </div>
-                        ))}
-                        <div className="mt-2 pt-2 border-t border-border/40">
-                          <div className="text-xs font-semibold text-foreground">Вступительное: <span className="font-normal text-muted-foreground">{track.exam}</span></div>
-                          <div className="text-xs font-semibold text-foreground">Места: <span className="font-normal text-muted-foreground">{track.places}</span></div>
+              <motion.div key={track.id} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                onClick={() => setSelectedTrack(selectedTrack === track.id ? null : track.id)}
+                style={{
+                  borderRight: "2px solid #0A0A0A",
+                  borderBottom: "2px solid #0A0A0A",
+                  cursor: "pointer",
+                  background: selectedTrack === track.id ? track.color : undefined,
+                  transition: "background 0.2s",
+                }}>
+                <div style={{ padding: "18px 16px 16px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+                    <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: 3, textTransform: "uppercase" as const, color: selectedTrack === track.id ? "rgba(255,255,255,0.5)" : "var(--color-muted-foreground)" }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div style={{ width: 18, height: 18, background: selectedTrack === track.id ? "rgba(255,255,255,0.2)" : track.color, flexShrink: 0 }} />
+                  </div>
+                  <h3 style={{ fontSize: 13, fontWeight: 900, lineHeight: 1.25, color: selectedTrack === track.id ? "#fff" : "var(--color-foreground)", marginBottom: 5 }}>{track.title}</h3>
+                  <p style={{ fontSize: 11, color: selectedTrack === track.id ? "rgba(255,255,255,0.6)" : "var(--color-muted-foreground)", lineHeight: 1.4 }}>{track.tags}</p>
+                  {selectedTrack === track.id && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid rgba(255,255,255,0.25)" }}>
+                      {track.creates.map((c, j) => (
+                        <div key={j} style={{ display: "flex", gap: 6, marginBottom: 5 }}>
+                          <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, flexShrink: 0, marginTop: 1 }}>→</span>
+                          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.85)", lineHeight: 1.35 }}>{c}</span>
                         </div>
-                        <Button onClick={() => scrollTo("applicants")} size="sm" className="w-full rounded-lg text-xs mt-1" style={{ background: track.color }}>
-                          Подробнее о поступлении
-                        </Button>
-                      </motion.div>
-                    )}
-                    {selectedTrack !== track.id && (
-                      <div className="flex items-center gap-1 text-xs" style={{ color: track.color }}>
-                        <ChevronDown className="h-3 w-3" /> Подробнее
+                      ))}
+                      <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.2)", marginBottom: 10 }}>
+                        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", marginBottom: 3 }}>Вступ.: <strong style={{ color: "#fff" }}>{track.exam}</strong></p>
+                        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.65)" }}>Места: <strong style={{ color: "#fff" }}>{track.places}</strong></p>
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
+                      <button onClick={(e) => { e.stopPropagation(); scrollTo("applicants"); }}
+                        style={{ width: "100%", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.35)", color: "#fff", fontSize: 11, fontWeight: 900, padding: "9px 0", cursor: "pointer", letterSpacing: 1 }}>
+                        О поступлении →
+                      </button>
+                    </motion.div>
+                  )}
+                  {selectedTrack !== track.id && (
+                    <p style={{ marginTop: 8, fontSize: 10, fontWeight: 700, color: track.color }}>→ Подробнее</p>
+                  )}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -473,71 +478,98 @@ export default function DesignProgramsPage() {
 
         {/* ── BLOCK 7: Проекты студентов ─────────────────────── */}
         <motion.section id="projects" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="text-center mb-8">
-            <Badge variant="outline" className="mb-3 text-xs">Главный аргумент поступления</Badge>
-            <h2 className="text-3xl font-bold text-foreground">Проекты студентов</h2>
-            <p className="text-muted-foreground text-sm mt-1">Реальные работы объясняют лучше любых слов, чему здесь учатся</p>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 20 }}>
+            <div style={{ width: 4, background: "#EB7124", flexShrink: 0, marginTop: 4, height: 32 }} />
+            <div>
+              <h2 className="text-3xl font-bold text-foreground">Проекты студентов</h2>
+              <p className="text-muted-foreground text-sm mt-1">Реальные работы объясняют лучше любых слов, чему здесь учатся</p>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2 justify-center mb-6">
-            {projectFilters.map((f) => (
-              <button key={f} onClick={() => setActiveFilter(f)}
-                className={`px-4 py-1.5 rounded-full text-sm transition-all border ${activeFilter === f ? "bg-accent text-white border-accent" : "border-border/60 text-muted-foreground hover:border-accent/50"}`}>
-                {f}
-              </button>
-            ))}
+          <div className="flex justify-center mb-6">
+            <div className="flex flex-wrap" style={{ border: "2px solid #0A0A0A" }}>
+              {projectFilters.map((f, fi) => (
+                <button key={f} onClick={() => setActiveFilter(f)}
+                  style={{
+                    padding: "9px 18px",
+                    fontSize: 11,
+                    fontWeight: 900,
+                    letterSpacing: 1,
+                    border: "none",
+                    borderRight: fi < projectFilters.length - 1 ? "2px solid #0A0A0A" : "none",
+                    background: activeFilter === f ? "#0A0A0A" : "transparent",
+                    color: activeFilter === f ? "#C6FF00" : "var(--color-muted-foreground)",
+                    cursor: "pointer",
+                    textTransform: "uppercase" as const,
+                  }}>
+                  {f}
+                </button>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {filteredProjects.map((p, i) => (
-              <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }}
-                className="group rounded-2xl border border-border/60 bg-muted/20 hover:shadow-lg transition-all overflow-hidden cursor-pointer">
-                <div className="h-32 flex items-center justify-center text-5xl" style={{ background: p.color + "15" }}>
-                  {p.emoji}
+              <motion.div key={i} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
+                style={{ borderRight: "2px solid #0A0A0A", borderBottom: "2px solid #0A0A0A", cursor: "pointer", overflow: "hidden" }}
+                className="group hover:brightness-95 transition-all">
+                <div style={{ height: 110, background: p.color, display: "flex", alignItems: "flex-end", padding: "0 16px 12px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", right: -8, top: "50%", transform: "translateY(-50%)", fontSize: 72, opacity: 0.12, lineHeight: 1 }}>{p.emoji}</div>
+                  <div style={{ position: "absolute", top: 10, right: 14, fontSize: 10, fontWeight: 900, color: "rgba(255,255,255,0.45)", letterSpacing: 2 }}>{String(i + 1).padStart(2, "0")}</div>
+                  <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase" as const, color: "rgba(255,255,255,0.85)", position: "relative", zIndex: 1 }}>{p.track}</span>
                 </div>
-                <div className="p-3">
-                  <div className="text-xs font-medium mb-0.5" style={{ color: p.color }}>{p.track}</div>
-                  <h4 className="text-sm font-bold text-foreground">{p.title}</h4>
-                  <p className="text-xs text-muted-foreground mt-0.5">{p.author}</p>
+                <div style={{ padding: "12px 16px 14px" }}>
+                  <h4 style={{ fontSize: 14, fontWeight: 900, color: "var(--color-foreground)", lineHeight: 1.25, marginBottom: 4 }}>{p.title}</h4>
+                  <p style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{p.author}</p>
                 </div>
               </motion.div>
             ))}
           </div>
-          <p className="text-center text-xs text-muted-foreground mt-6">Галерея пополняется — здесь будут реальные проекты студентов</p>
+          <p style={{ textAlign: "center", fontSize: 11, color: "var(--color-muted-foreground)", marginTop: 16 }}>Галерея пополняется — здесь будут реальные проекты студентов</p>
         </motion.section>
 
         {/* ── BLOCK 8: Практика и партнёры ──────────────────── */}
         <motion.section id="partners" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-            <div>
-              <Badge variant="outline" className="mb-4 text-xs">Практика и среда</Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-4">Жизнь кафедр</h2>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+            <div style={{ borderRight: "2px solid #0A0A0A", padding: "28px 28px 24px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 16 }}>
+                <div style={{ width: 4, background: "#FF007F", flexShrink: 0, marginTop: 4, height: 32 }} />
+                <h2 className="text-2xl font-bold text-foreground">Жизнь кафедр</h2>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                 Выставки, защиты, интенсивы, мастер-классы — постоянная проектная среда, которая формирует
                 опыт публичной презентации и профессиональный круг общения.
               </p>
-              <div className="space-y-3">
+              <div style={{ border: "2px solid #0A0A0A" }}>
                 {[
-                  { icon: "🖼️", t: "Выставки и просмотры", d: "Регулярные показы работ в ВВГУ и на городских площадках" },
-                  { icon: "🏆", t: "Защиты и конкурсы", d: "Экспертные жюри из практиков отрасли" },
-                  { icon: "⚡", t: "Интенсивы и мастер-классы", d: "С приглашёнными дизайнерами, архитекторами, технологами" },
-                  { icon: "🤝", t: "Реальные заказчики", d: "Дипломные проекты и практика в реальных организациях" },
+                  { num: "01", t: "Выставки и просмотры", d: "Регулярные показы работ в ВВГУ и на городских площадках" },
+                  { num: "02", t: "Защиты и конкурсы", d: "Экспертные жюри из практиков отрасли" },
+                  { num: "03", t: "Интенсивы и мастер-классы", d: "С приглашёнными дизайнерами, архитекторами, технологами" },
+                  { num: "04", t: "Реальные заказчики", d: "Дипломные проекты и практика в реальных организациях" },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <span className="text-xl">{item.icon}</span>
+                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "14px 16px", borderBottom: i < 3 ? "2px solid #0A0A0A" : "none" }}>
+                    <div style={{ fontSize: 18, fontWeight: 900, color: "#FF007F", flexShrink: 0, lineHeight: 1, minWidth: 28 }}>{item.num}</div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">{item.t}</p>
-                      <p className="text-xs text-muted-foreground">{item.d}</p>
+                      <p style={{ fontSize: 13, fontWeight: 800, color: "var(--color-foreground)", marginBottom: 2 }}>{item.t}</p>
+                      <p style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{item.d}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div>
-              <h3 className="font-bold text-foreground text-lg mb-5">Партнёры и места практики</h3>
-              <div className="grid grid-cols-2 gap-3">
+            <div style={{ padding: "28px 28px 24px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 20 }}>
+                <div style={{ width: 4, background: "#C6FF00", flexShrink: 0, marginTop: 4, height: 32 }} />
+                <h3 style={{ fontSize: 20, fontWeight: 900, color: "var(--color-foreground)" }}>Партнёры и места практики</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
                 {partners.map((p, i) => (
-                  <div key={i} className="flex items-center gap-2.5 p-3 rounded-xl bg-muted/40 border border-border/50 text-sm">
-                    <span className="text-xl">{p.emoji}</span>
-                    <span className="text-foreground text-xs font-medium">{p.name}</span>
+                  <div key={i} style={{
+                    padding: "14px 16px",
+                    borderRight: i % 2 === 0 ? "2px solid #0A0A0A" : "none",
+                    borderBottom: i < 4 ? "2px solid #0A0A0A" : "none",
+                    display: "flex", alignItems: "center", gap: 10,
+                  }}>
+                    <span style={{ fontSize: 20 }}>{p.emoji}</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "var(--color-foreground)" }}>{p.name}</span>
                   </div>
                 ))}
               </div>
@@ -547,31 +579,42 @@ export default function DesignProgramsPage() {
 
         {/* ── BLOCK 9: Наука и исследования ─────────────────── */}
         <motion.section id="research" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div>
-              <Badge variant="outline" className="mb-4 text-xs">Наука и творческая деятельность</Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-5">Исследовательские направления</h2>
-              <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
+            <div style={{ borderRight: "2px solid #0A0A0A", padding: "28px 28px 24px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 20 }}>
+                <div style={{ width: 4, background: "#0057B8", flexShrink: 0, marginTop: 4, height: 30 }} />
+                <h2 className="text-2xl font-bold text-foreground">Исследовательские направления</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
                 {researchAreas.map((r, i) => (
-                  <div key={i} className="p-3 rounded-xl border border-border/50 bg-muted/20 hover:bg-muted/40 transition-colors">
-                    <div className="text-2xl mb-2">{r.emoji}</div>
-                    <p className="text-sm font-semibold text-foreground">{r.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{r.desc}</p>
+                  <div key={i} style={{
+                    padding: "16px 14px",
+                    borderRight: i % 2 === 0 ? "2px solid #0A0A0A" : "none",
+                    borderBottom: i < 4 ? "2px solid #0A0A0A" : "none",
+                  }}>
+                    <div style={{ fontSize: 11, fontWeight: 900, color: "#0057B8", letterSpacing: 2, textTransform: "uppercase" as const, marginBottom: 6 }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <p style={{ fontSize: 13, fontWeight: 800, color: "var(--color-foreground)", marginBottom: 3 }}>{r.title}</p>
+                    <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", lineHeight: 1.4 }}>{r.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div>
-              {/* BLOCK 10: Достижения */}
-              <Badge variant="outline" className="mb-4 text-xs">Конкурсы и достижения</Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-5">Гордость кафедры</h2>
-              <div className="space-y-3">
+            <div style={{ padding: "28px 28px 24px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 20 }}>
+                <div style={{ width: 4, background: "#C6FF00", flexShrink: 0, marginTop: 4, height: 30 }} />
+                <h2 className="text-2xl font-bold text-foreground">Гордость кафедры</h2>
+              </div>
+              <div style={{ border: "2px solid #0A0A0A" }}>
                 {achievements.map((a, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <span className="text-xl">{a.icon}</span>
+                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "12px 16px", borderBottom: i < achievements.length - 1 ? "2px solid #0A0A0A" : "none" }}>
+                    <div style={{ fontSize: 12, fontWeight: 900, color: "#C6FF00", flexShrink: 0, background: "#0A0A0A", width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
                     <div>
-                      <p className="text-sm font-semibold text-foreground">{a.title}</p>
-                      <p className="text-xs text-muted-foreground">{a.desc}</p>
+                      <p style={{ fontSize: 13, fontWeight: 800, color: "var(--color-foreground)", marginBottom: 2 }}>{a.title}</p>
+                      <p style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{a.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -582,34 +625,34 @@ export default function DesignProgramsPage() {
 
         {/* ── BLOCK 11: Состав кафедры ───────────────────────── */}
         <motion.section id="team" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="text-accent font-black">◆</span>
-              <span className="text-muted-foreground uppercase tracking-widest text-xs">Наставники, практики, эксперты</span>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 20 }}>
+            <div style={{ width: 4, background: "#0057B8", flexShrink: 0, marginTop: 4, height: 32 }} />
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Преподаватели и профессиональная среда</h2>
+              <p className="text-muted-foreground text-sm mt-1">Сильная среда помогает студенту быстрее войти в профессию</p>
             </div>
-            <h2 className="text-2xl font-bold text-foreground">Преподаватели и профессиональная среда</h2>
-            <p className="text-muted-foreground text-sm mt-1">Сильная среда помогает студенту быстрее войти в профессию</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {staff.map((s, i) => (
-              <Card key={i} className="rounded-2xl border-border/60 text-center p-5">
-                <div className="w-14 h-14 rounded-full bg-muted/60 flex items-center justify-center text-2xl mx-auto mb-3">{s.emoji}</div>
-                <p className="text-sm font-bold text-foreground leading-snug">{s.name}</p>
-                <p className="text-xs text-muted-foreground mt-1">{s.role}</p>
-                <p className="text-xs text-accent mt-1">{s.expertise}</p>
-              </Card>
+              <div key={i} style={{ borderRight: i < 3 ? "2px solid #0A0A0A" : "none", padding: "20px 16px 18px" }}>
+                <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: 3, color: "#0057B8", textTransform: "uppercase" as const, marginBottom: 12 }}>{String(i + 1).padStart(2, "0")}</div>
+                <div style={{ width: 44, height: 44, background: "#0057B8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, marginBottom: 12 }}>👤</div>
+                <p style={{ fontSize: 13, fontWeight: 900, color: "var(--color-foreground)", lineHeight: 1.2, marginBottom: 4 }}>{s.name}</p>
+                <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", marginBottom: 4 }}>{s.role}</p>
+                <p style={{ fontSize: 11, color: "#EB7124", fontWeight: 700 }}>{s.expertise}</p>
+              </div>
             ))}
           </div>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A", borderTop: "none" }}>
             {[
-              { mark: "ПРК", label: "Дизайнеры-практики", desc: "Действующие специалисты отрасли" },
-              { mark: "ЭКС", label: "Эксперты индустрии", desc: "Консультации и экспертные сессии" },
-              { mark: "НСТ", label: "Наставники проектов", desc: "Персональное сопровождение" },
+              { mark: "ПРК", label: "Дизайнеры-практики", desc: "Действующие специалисты отрасли", bg: "#C6FF00", fg: "#0A0A0A" },
+              { mark: "ЭКС", label: "Эксперты индустрии", desc: "Консультации и экспертные сессии", bg: "#0A0A0A", fg: "#C6FF00" },
+              { mark: "НСТ", label: "Наставники проектов", desc: "Персональное сопровождение", bg: "#FF007F", fg: "#fff" },
             ].map((item, i) => (
-              <div key={i} className="p-4 rounded-xl bg-muted/30 border border-border/40">
-                <div className="h-8 w-8 mx-auto mb-2 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-[9px] font-black">{item.mark}</div>
-                <p className="text-sm font-bold text-foreground mt-2">{item.label}</p>
-                <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+              <div key={i} style={{ padding: "16px", borderRight: i < 2 ? "2px solid #0A0A0A" : "none" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: item.bg, color: item.fg, fontSize: 9, fontWeight: 900, padding: "4px 8px", marginBottom: 8, letterSpacing: 1 }}>{item.mark}</div>
+                <p style={{ fontSize: 13, fontWeight: 900, color: "var(--color-foreground)", marginBottom: 3 }}>{item.label}</p>
+                <p style={{ fontSize: 11, color: "var(--color-muted-foreground)" }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -617,95 +660,86 @@ export default function DesignProgramsPage() {
 
         {/* ── BLOCK 12: Абитуриенту ─────────────────────────── */}
         <motion.section id="applicants" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="text-accent font-black">◆</span>
-              <span className="text-muted-foreground uppercase tracking-widest text-xs">Как поступить</span>
+          <div style={{ marginBottom: 24, position: "relative" }}>
+            <GhostSectionNum num="05" color="var(--color-foreground)" align="right" />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div className="flex items-center gap-3 mb-2">
+                <div style={{ width: 24, height: 3, background: "#EB7124" }} />
+                <span className="text-muted-foreground uppercase tracking-widest text-xs">Как поступить</span>
+                <div style={{ width: 24, height: 3, background: "#EB7124" }} />
+              </div>
+              <h2 className="text-3xl font-bold text-foreground">Маршрут абитуриента</h2>
+              <p className="text-muted-foreground text-sm mt-1">Выбери → Подготовься → Подай документы</p>
             </div>
-            <h2 className="text-3xl font-bold text-foreground">Маршрут абитуриента</h2>
-            <p className="text-muted-foreground text-sm mt-1">Выбери → Подготовься → Подай документы</p>
           </div>
 
           {/* 3-step applicant path */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {[
               {
-                step: "01", icon: "🗺️", title: "Выбери направление",
+                step: "01", title: "Выбери направление",
                 color: "#0057B8",
                 items: ["Пройди тест на совместимость", "Изучи карточки треков", "Запишись на день открытых дверей"],
                 action: { label: "Пройти тест", href: "/specialty-test" },
               },
               {
-                step: "02", icon: "✏️", title: "Подготовься к испытанию",
+                step: "02", title: "Подготовься к испытанию",
                 color: "#EB7124",
                 items: ["Узнай формат творческого испытания", "Изучи критерии оценки", "Запишись на консультацию кафедры"],
                 action: { label: "Об испытаниях", href: "#creative-test" },
               },
               {
-                step: "03", icon: "📄", title: "Подай документы",
+                step: "03", title: "Подай документы",
                 color: "#16a34a",
                 items: ["Лично, через Госуслуги или по почте", "Срок: до 20 июля (бюджет)", "Срок: до 10 августа (платно)"],
                 action: { label: "Поступление", href: "/admission" },
               },
             ].map((s, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <Card className="rounded-2xl border-border/60 h-full overflow-hidden hover:shadow-md transition-shadow">
-                  <div className="h-1.5" style={{ background: s.color }} />
-                  <CardContent className="p-5 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white text-sm font-black"
-                        style={{ background: s.color }}>
-                        {s.step}
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-bold text-foreground">{s.title}</h3>
-                      </div>
+              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                style={{ borderRight: i < 2 ? "2px solid #0A0A0A" : "none" }}>
+                <div style={{ background: s.color, padding: "24px 24px 20px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", right: -10, bottom: -24, fontSize: 110, fontWeight: 900, color: "rgba(255,255,255,0.1)", lineHeight: 1, userSelect: "none" }}>{s.step}</div>
+                  <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: 4, color: "rgba(255,255,255,0.6)", textTransform: "uppercase" as const, marginBottom: 8 }}>ШАГ {s.step}</div>
+                  <h3 style={{ fontSize: 17, fontWeight: 900, color: "#fff", lineHeight: 1.2, position: "relative", zIndex: 1 }}>{s.title}</h3>
+                </div>
+                <div style={{ padding: "18px 24px 20px" }}>
+                  {s.items.map((item, j) => (
+                    <div key={j} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+                      <span style={{ color: s.color, fontWeight: 900, fontSize: 12, flexShrink: 0, marginTop: 1 }}>→</span>
+                      <span style={{ fontSize: 13, color: "var(--color-muted-foreground)", lineHeight: 1.4 }}>{item}</span>
                     </div>
-                    <div className="space-y-1.5">
-                      {s.items.map((item, j) => (
-                        <div key={j} className="flex items-start gap-2 text-xs text-muted-foreground">
-                          <span className="shrink-0 mt-0.5 font-bold text-xs" style={{ color: s.color }}>→</span>
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                    {s.action.href.startsWith("#") ? (
-                      <Button onClick={() => scrollTo(s.action.href.slice(1))} size="sm" className="w-full rounded-lg text-xs" style={{ background: s.color }}>
-                        {s.action.label} <ArrowRight className="ml-1 h-3 w-3" />
-                      </Button>
-                    ) : (
-                      <Button asChild size="sm" className="w-full rounded-lg text-xs" style={{ background: s.color }}>
-                        <Link href={s.action.href}>{s.action.label} <ArrowRight className="ml-1 h-3 w-3" /></Link>
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
+                  ))}
+                  {s.action.href.startsWith("#") ? (
+                    <button onClick={() => scrollTo(s.action.href.slice(1))} style={{ marginTop: 12, width: "100%", background: s.color, border: "none", color: "#fff", fontSize: 12, fontWeight: 900, padding: "10px 0", cursor: "pointer", letterSpacing: 1, textTransform: "uppercase" as const }}>
+                      {s.action.label} →
+                    </button>
+                  ) : (
+                    <Link href={s.action.href}>
+                      <button style={{ marginTop: 12, width: "100%", background: s.color, border: "none", color: "#fff", fontSize: 12, fontWeight: 900, padding: "10px 0", cursor: "pointer", letterSpacing: 1, textTransform: "uppercase" as const }}>
+                        {s.action.label} →
+                      </button>
+                    </Link>
+                  )}
+                </div>
               </motion.div>
             ))}
           </div>
 
           {/* Quick info table */}
-          <Card className="rounded-2xl border-border/60 bg-muted/20">
-            <CardContent className="p-6">
-              <h3 className="font-bold text-foreground mb-4">Быстрая информация</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { mark: "БАК", label: "Бакалавриат", val: "4 года, очно" },
-                  { mark: "МАГ", label: "Магистратура", val: "2 года, очно / заочно" },
-                  { mark: "ВСТ", label: "Вступительные", val: "Рисунок + Композиция" },
-                  { mark: "БДЖ", label: "Бюджетные места", val: "от 10 до 15 на трек" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center shrink-0 text-[8px] font-black">{item.mark}</div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">{item.label}</p>
-                      <p className="text-sm font-semibold text-foreground">{item.val}</p>
-                    </div>
-                  </div>
-                ))}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-0" style={{ border: "2px solid #0A0A0A", borderTop: "none" }}>
+            {[
+              { mark: "БАК", label: "Бакалавриат", val: "4 года, очно", bg: "#0057B8" },
+              { mark: "МАГ", label: "Магистратура", val: "2 года, очно / заочно", bg: "#FF007F" },
+              { mark: "ВСТ", label: "Вступительные", val: "Рисунок + Композиция", bg: "#C6FF00" },
+              { mark: "БДЖ", label: "Бюджетные места", val: "от 10 до 15 на трек", bg: "#0A0A0A" },
+            ].map((item, i) => (
+              <div key={i} style={{ borderRight: i < 3 ? "2px solid #0A0A0A" : "none", padding: "16px 18px" }}>
+                <div style={{ display: "inline-block", background: item.bg, color: item.bg === "#C6FF00" ? "#0A0A0A" : "#fff", fontSize: 9, fontWeight: 900, padding: "3px 8px", letterSpacing: 1, marginBottom: 8 }}>{item.mark}</div>
+                <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", marginBottom: 3 }}>{item.label}</p>
+                <p style={{ fontSize: 13, fontWeight: 900, color: "var(--color-foreground)" }}>{item.val}</p>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
         </motion.section>
 
         {/* ── BLOCK 13: Творческие испытания ────────────────── */}
