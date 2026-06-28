@@ -1000,19 +1000,19 @@ export default function Home() {
                       <img src="/students-1.png" alt="Студенты" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.1)" }} />
                     </div>
                   </div>
-                  <div style={{ position: "absolute", bottom: 16, left: 16, color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Студенты</div>
+                  <div style={{ position: "absolute", bottom: 12, left: 0, right: 0, textAlign: "center", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Студенты</div>
                 </div>
                 {/* Cell 2: lime bg + bold number */}
                 <div style={{ background: "#C6FF00", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderBottom: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
                   <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "#0A0A0A", opacity: 0.06 }} />
                   <div style={{ fontSize: 80, fontWeight: 900, lineHeight: 1, color: "#0A0A0A", letterSpacing: "-0.04em" }}>12</div>
-                  <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.75)", marginTop: 6 }}>Партнёров АТР</div>
+                  <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.75)", marginTop: 6, textAlign: "center" }}>Партнёров АТР</div>
                 </div>
                 {/* Cell 3: navy bg + bold text */}
-                <div style={{ background: "#0057B8", display: "flex", flexDirection: "column", justifyContent: "center", padding: 28, borderRight: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
+                <div style={{ background: "#0057B8", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20, borderRight: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
                   <div style={{ position: "absolute", bottom: -30, right: -30, width: 100, height: 100, borderRadius: "50%", background: "#C6FF00", opacity: 0.15 }} />
-                  <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10 }}>Девиз</div>
-                  <div style={{ color: "#fff", fontSize: 28, fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+                  <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10, textAlign: "center" }}>Девиз</div>
+                  <div style={{ color: "#fff", fontSize: "clamp(18px,4vw,28px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.02em", textAlign: "center" }}>
                     УЧИСЬ.<br/><span style={{ color: "#C6FF00" }}>СОЗДАВАЙ.</span><br/>МЕНЯЙ.
                   </div>
                 </div>
@@ -1023,7 +1023,7 @@ export default function Home() {
                       <img src="/students-2.png" alt="Кампус" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.15)" }} />
                     </div>
                   </div>
-                  <div style={{ position: "absolute", bottom: 16, right: 16, color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Кампус</div>
+                  <div style={{ position: "absolute", bottom: 12, left: 0, right: 0, textAlign: "center", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Кампус</div>
                 </div>
               </div>
             </motion.div>
