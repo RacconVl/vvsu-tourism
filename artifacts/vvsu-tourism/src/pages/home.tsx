@@ -611,29 +611,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Stats bar ─────────────────────────────────────────── */}
-      <section className="py-12 bg-background border-b border-border/40">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((s, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="flex flex-col items-center text-center gap-2">
-                {i === 2 ? (
-                  <StickmanStat />
-                ) : (
-                  <>
-                    <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white mb-1"
-                      style={{ background: "linear-gradient(135deg, #033F7E, #172E46)" }}>
-                      {s.icon}
-                    </div>
-                    <span className="text-3xl font-bold text-foreground">{s.value}</span>
-                    <span className="text-sm text-muted-foreground">{s.label}</span>
-                  </>
-                )}
-              </motion.div>
-            ))}
-          </div>
+      {/* ── Marquee ticker ──────────────────────────────────────── */}
+      <div style={{ overflow: "hidden", background: "#C6FF00", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        <div style={{ display: "flex", animation: "marquee 22s linear infinite", width: "max-content", padding: "13px 0" }}>
+          {Array.from({ length: 4 }).flatMap((_, ri) =>
+            ["ТВОРИ", "✦", "УЧИСЬ", "✦", "МЕНЯЙ", "✦", "ВЛАДИВОСТОК", "✦", "ВВГУ", "✦", "ТУРИЗМ", "✦", "ДИЗАЙН", "✦", "АРТ", "✦"].map((w, wi) => (
+              <span key={`${ri}-${wi}`} style={{ fontWeight: 900, fontSize: 15, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: "#0A0A0A", flexShrink: 0, fontStyle: w === "✦" ? "normal" : "normal" }}>{w}</span>
+            ))
+          )}
         </div>
+      </div>
+
+      {/* ── Stats bento mosaic ──────────────────────────────────── */}
+      <section style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr 1fr 1.3fr 0.9fr", minHeight: 220, borderBottom: "3px solid #0A0A0A" }}>
+        {/* Black + lime number */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          style={{ background: "#0A0A0A", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "28px 32px", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A" }}>
+          <div style={{ position: "absolute", top: -50, right: -50, width: 180, height: 180, borderRadius: "50%", background: "#FF007F", opacity: 0.18 }} />
+          <div style={{ color: "rgba(255,255,255,0.38)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>Опыт</div>
+          <div style={{ color: "#C6FF00", fontSize: 68, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em" }}>30+</div>
+          <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, fontWeight: 600, marginTop: 4 }}>лет в индустрии</div>
+        </motion.div>
+        {/* Lime + black number */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.08 }}
+          style={{ background: "#C6FF00", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "28px 32px", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A" }}>
+          <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, borderRadius: "50%", background: "#0A0A0A", opacity: 0.07 }} />
+          <div style={{ color: "rgba(0,0,0,0.38)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>Студентов</div>
+          <div style={{ color: "#0A0A0A", fontSize: 68, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em" }}>2.5K</div>
+          <div style={{ color: "rgba(0,0,0,0.45)", fontSize: 12, fontWeight: 600, marginTop: 4 }}>обучается сейчас</div>
+        </motion.div>
+        {/* Navy + white */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.16 }}
+          style={{ background: "#172E46", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "28px 32px", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A" }}>
+          <div style={{ position: "absolute", bottom: -30, left: -30, width: 110, height: 110, borderRadius: "50%", background: "#C6FF00", opacity: 0.14 }} />
+          <div style={{ color: "rgba(255,255,255,0.38)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>Партнёров</div>
+          <div style={{ color: "#fff", fontSize: 68, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em" }}>40+</div>
+          <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, fontWeight: 600, marginTop: 4 }}>компаний АТР</div>
+        </motion.div>
+        {/* Pink + white */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.24 }}
+          style={{ background: "#FF007F", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "28px 32px", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A" }}>
+          <div style={{ position: "absolute", top: -20, right: 16, width: 70, height: 70, borderRadius: "50%", background: "rgba(255,255,255,0.15)" }} />
+          <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>Трудоустройство</div>
+          <div style={{ color: "#fff", fontSize: 68, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em" }}>94%</div>
+          <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 12, fontWeight: 600, marginTop: 4 }}>выпускников</div>
+        </motion.div>
+        {/* White + navy text */}
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.32 }}
+          style={{ background: "#fff", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24, textAlign: "center" }}>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.35)", marginBottom: 8 }}>Место</div>
+          <div style={{ fontSize: 48, fontWeight: 900, lineHeight: 1, color: "#172E46", letterSpacing: "-0.04em" }}>ТОП‑5</div>
+          <div style={{ fontSize: 10, color: "rgba(0,0,0,0.35)", marginTop: 6, fontWeight: 600, letterSpacing: 1 }}>ДФО</div>
+        </motion.div>
       </section>
 
       {/* ── Tech Infrastructure ───────────────────────────────── */}
@@ -767,8 +796,8 @@ export default function Home() {
       </section>
 
       {/* ── Flagship programs ──────────────────────────────────── */}
-      <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #0a1a2e 0%, #0d2340 50%, #0a1a2e 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, rgba(3,63,126,0.25) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(235,113,36,0.12) 0%, transparent 40%)" }} />
+      <section className="py-24 relative overflow-hidden" style={{ background: "#0A0A0A" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, rgba(255,0,127,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(198,255,0,0.05) 0%, transparent 40%)" }} />
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-sm mb-5">
@@ -846,12 +875,12 @@ export default function Home() {
 
             {/* Hotel Management */}
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} whileHover={{ y: -6 }}>
-              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-[#EB7124]/40 transition-all hover:shadow-xl hover:shadow-[#EB7124]/15">
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-accent/40 transition-all hover:shadow-xl hover:shadow-accent/15">
                 <div className="relative h-52 overflow-hidden">
                   <img src="/prog-hotel.png" alt="Гостиничное дело" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(20,10,0,0.9) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <div className="h-9 w-9 rounded-xl bg-[#EB7124] flex items-center justify-center"><Building2 className="h-5 w-5 text-white" /></div>
+                    <div className="h-9 w-9 rounded-xl bg-accent flex items-center justify-center"><Building2 className="h-5 w-5 text-white" /></div>
                     <span className="text-white font-bold text-lg">Гостиничное дело</span>
                   </div>
                   <div className="absolute top-3 right-3 bg-white/15 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full border border-white/20">Бакалавриат</div>
@@ -860,12 +889,12 @@ export default function Home() {
                   <p className="text-white/70 text-sm leading-relaxed">Управление отелями и гостиничным сервисом международного уровня. Стажировки в 5★ отелях Владивостока, Сочи и Кореи.</p>
                   <div className="space-y-2">
                     {["20 бюджетных мест", "Стажировки в Hyatt, Marriott", "100% трудоустройство"].map(f => (
-                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-[#EB7124] shrink-0" />{f}</div>
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-accent shrink-0" />{f}</div>
                     ))}
                   </div>
                   <div className="mt-auto">
                     <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm text-[#fb923c] hover:text-white transition-colors font-medium">
+                      className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-white transition-colors font-medium">
                       Подробнее о программе <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   </div>
@@ -973,27 +1002,58 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Right: photo mosaic */}
-            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid grid-cols-2 gap-3">
-              <div className="space-y-3">
-                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-56 shadow-lg">
-                  <img src="/students-1.png" alt="Абитуриенты ВВГУ" className="w-full h-full object-cover" />
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-40 shadow-lg">
-                  <img src="/students-2.png" alt="Студенты ВВГУ" className="w-full h-full object-cover" />
-                </motion.div>
-              </div>
-              <div className="space-y-3 mt-8">
-                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-40 shadow-lg">
-                  <img src="/students-3.png" alt="Кампус ВВГУ" className="w-full h-full object-cover" />
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.02 }} className="rounded-2xl overflow-hidden h-56 shadow-lg">
-                  <img src="/students-4.png" alt="Учёба в ВВГУ" className="w-full h-full object-cover" />
-                </motion.div>
+            {/* Right: reference-style mosaic grid */}
+            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: 0, border: "3px solid #0A0A0A", height: 480 }}>
+                {/* Cell 1: pink bg + B&W circle photo */}
+                <div style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: 170, height: 170, borderRadius: "50%", overflow: "hidden", border: "4px solid rgba(255,255,255,0.3)" }}>
+                      <img src="/students-1.png" alt="Студенты" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.1)" }} />
+                    </div>
+                  </div>
+                  <div style={{ position: "absolute", bottom: 16, left: 16, color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Студенты</div>
+                </div>
+                {/* Cell 2: lime bg + bold number */}
+                <div style={{ background: "#C6FF00", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderBottom: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "#0A0A0A", opacity: 0.06 }} />
+                  <div style={{ fontSize: 80, fontWeight: 900, lineHeight: 1, color: "#0A0A0A", letterSpacing: "-0.04em" }}>12</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginTop: 6 }}>Партнёров АТР</div>
+                </div>
+                {/* Cell 3: navy bg + bold text */}
+                <div style={{ background: "#172E46", display: "flex", flexDirection: "column", justifyContent: "center", padding: 28, borderRight: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", bottom: -30, right: -30, width: 100, height: 100, borderRadius: "50%", background: "#C6FF00", opacity: 0.15 }} />
+                  <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10 }}>Девиз</div>
+                  <div style={{ color: "#fff", fontSize: 28, fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+                    УЧИСЬ.<br/><span style={{ color: "#C6FF00" }}>СОЗДАВАЙ.</span><br/>МЕНЯЙ.
+                  </div>
+                </div>
+                {/* Cell 4: black bg + B&W circle photo */}
+                <div style={{ background: "#0A0A0A", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: 170, height: 170, borderRadius: "50%", overflow: "hidden", border: "4px solid rgba(255,0,127,0.4)" }}>
+                      <img src="/students-2.png" alt="Кампус" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.15)" }} />
+                    </div>
+                  </div>
+                  <div style={{ position: "absolute", bottom: 16, right: 16, color: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Кампус</div>
+                </div>
               </div>
             </motion.div>
           </div>
 
+        </div>
+      </section>
+
+      {/* ── Oversized text statement ────────────────────────────── */}
+      <section style={{ background: "#FF007F", overflow: "hidden", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A", padding: "40px 0", position: "relative" }}>
+        <div style={{ position: "absolute", top: "50%", left: "40%", transform: "translate(-50%,-50%)", width: 500, height: 500, borderRadius: "50%", background: "rgba(0,0,0,0.08)", pointerEvents: "none" }} />
+        <div style={{ whiteSpace: "nowrap", lineHeight: 0.85 }}>
+          <div style={{ fontSize: "clamp(80px,12vw,160px)", fontWeight: 900, letterSpacing: "-0.05em", color: "#fff", paddingLeft: 48, opacity: 0.95 }}>
+            СОЗДАВАЙ.
+          </div>
+          <div style={{ fontSize: "clamp(80px,12vw,160px)", fontWeight: 900, letterSpacing: "-0.05em", paddingLeft: 120, marginTop: 4 }}>
+            <span style={{ WebkitTextStroke: "3px #fff", color: "transparent" }}>ИССЛЕДУЙ.</span>
+          </div>
         </div>
       </section>
 
