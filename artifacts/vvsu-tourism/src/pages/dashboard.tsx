@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { GeoCircle, GhostText, DotGrid } from "@/components/GraphicAccents";
 import { Link, useSearch } from "wouter";
 import { motion } from "framer-motion";
 import {
@@ -1408,7 +1409,14 @@ export default function Dashboard() {
           <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ ВВГУ · ИТИКИ</span>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 py-8 md:py-10">
+        <div className="relative max-w-7xl mx-auto px-4 py-8 md:py-10" style={{ overflow: "hidden" }}>
+          {/* Graphic accents */}
+          <GhostText text="ВВГУ" size={220} color="#EB7124" opacity={0.05} bottom={-40} right={-10} />
+          <GeoCircle size={350} color="#EB7124" opacity={0.06} shape="full" top={-175} right={-80} animate />
+          <GeoCircle size={100} color="#C6FF00" opacity={0.15} shape="quarter-br" bottom={-1} left={100} />
+          <GeoCircle size={60} color="#0057B8" opacity={0.25} shape="full" bottom={30} left={60} />
+          <DotGrid cols={7} rows={4} color="#fff" opacity={0.08} top={20} right={0} />
+          <div style={{ position: "relative", zIndex: 1 }}>
           {profileLoading ? (
             <div className="flex gap-5 items-center">
               <Skeleton className="h-24 w-24 rounded-full bg-white/10" />
@@ -1505,6 +1513,7 @@ export default function Dashboard() {
               </div>
             </motion.div>
           ) : null}
+          </div>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
@@ -218,8 +219,14 @@ export default function DesignProgramsPage() {
         </div>
         {/* Hero content */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr auto", minHeight: 320, alignItems: "stretch" }}>
-          <div className="max-w-6xl px-12 py-14">
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+          <div className="max-w-6xl px-12 py-14" style={{ position: "relative", overflow: "hidden" }}>
+            {/* Graphic accents */}
+            <GhostText text="ДИЗАЙН" size={160} color="#FF007F" opacity={0.06} bottom={-20} right={-40} />
+            <GeoCircle size={300} color="#FF007F" opacity={0.07} shape="full" top={-150} right={-60} animate />
+            <GeoCircle size={110} color="#C6FF00" opacity={0.18} shape="quarter-bl" bottom={-1} left={-1} />
+            <GeoCircle size={55} color="#0057B8" opacity={0.28} shape="full" top={60} right={220} />
+            <DotGrid cols={5} rows={4} color="#fff" opacity={0.1} top={20} right={80} />
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} style={{ position: "relative", zIndex: 1 }}>
               <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 20 }}>Кафедра дизайна и технологий · Кафедра архитектуры</div>
               <h1 style={{ fontSize: "clamp(40px,5.5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 20 }}>
                 Дизайн,<br />архитектура<br /><span style={{ color: "#FF007F" }}>и технологии</span>

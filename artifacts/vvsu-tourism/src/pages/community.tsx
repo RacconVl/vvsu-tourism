@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
+import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
 import {
   useListCommunityPosts,
   useCreateCommunityPost,
@@ -257,11 +258,16 @@ export default function Community() {
         </div>
         {/* Hero title + photo strip */}
         <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", alignItems: "stretch" }}>
-          <div style={{ padding: "36px 40px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 280 }}>
-            <h1 style={{ fontSize: "clamp(40px,5vw,64px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 12 }}>
+          <div style={{ padding: "36px 40px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 280, position: "relative", overflow: "hidden" }}>
+            {/* Graphic accents */}
+            <GhostText text="МЛ" size={220} color="#fff" opacity={0.04} bottom={-60} right={-30} />
+            <GeoCircle size={200} color="#FF007F" opacity={0.12} shape="full" top={-100} right={-80} animate />
+            <GeoCircle size={80} color="#C6FF00" opacity={0.2} shape="quarter-br" bottom={-1} left={-1} />
+            <DotGrid cols={4} rows={3} color="#FF007F" opacity={0.2} top={20} right={20} />
+            <h1 style={{ fontSize: "clamp(40px,5vw,64px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 12, position: "relative", zIndex: 1 }}>
               Молодёжка
             </h1>
-            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, lineHeight: 1.6 }}>
+            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, lineHeight: 1.6, position: "relative", zIndex: 1 }}>
               Делитесь опытом, обсуждайте<br />проекты и вдохновляйтесь
             </p>
           </div>

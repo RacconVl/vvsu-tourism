@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { GeoCircle, GhostText, DotGrid } from "@/components/GraphicAccents";
 import { CatMascot } from "@/components/illustrations/CatMascot";
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
@@ -525,9 +526,15 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }}
           className="flex flex-col justify-center items-center"
-          style={{ background: "var(--color-background)", padding: "80px 60px", borderRight: "4px solid #0A0A0A", gap: 32, textAlign: "center" }}
+          style={{ background: "var(--color-background)", padding: "80px 60px", borderRight: "4px solid #0A0A0A", gap: 32, textAlign: "center", position: "relative", overflow: "hidden" }}
         >
-          <div>
+          {/* Graphic accents */}
+          <GhostText text="ВВГУ" size={220} color="var(--color-foreground)" opacity={0.04} bottom={-30} right={-20} />
+          <GeoCircle size={260} color="#0057B8" opacity={0.08} shape="full" top={-130} left={-80} animate />
+          <GeoCircle size={100} color="#FF007F" opacity={0.12} shape="quarter-br" bottom={-1} right={-1} />
+          <GeoCircle size={50} color="#C6FF00" opacity={0.25} shape="full" top={80} right={40} />
+          <DotGrid cols={5} rows={4} color="var(--color-foreground)" opacity={0.07} bottom={100} left={30} />
+          <div style={{ position: "relative", zIndex: 1 }}>
             <div style={{
               display: "inline-block", background: "#FF007F", color: "#fff",
               fontWeight: 800, fontSize: 11, letterSpacing: 3, textTransform: "uppercase",
@@ -548,11 +555,11 @@ export default function Home() {
               }}>МЕНЯЙ.</span>
             </h1>
           </div>
-          <p style={{ color: "hsl(var(--muted-foreground))", fontSize: 16, lineHeight: 1.75, maxWidth: 480, margin: 0 }}>
+          <p style={{ color: "hsl(var(--muted-foreground))", fontSize: 16, lineHeight: 1.75, maxWidth: 480, margin: 0, position: "relative", zIndex: 1 }}>
             Институт туризма и креативных индустрий ВВГУ — образование для тех,
             кто создаёт будущее Дальнего Востока и Азиатско-Тихоокеанского региона.
           </p>
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap", position: "relative", zIndex: 1 }}>
             <Button asChild size="lg" style={{
               background: "#0057B8", color: "#fff", borderRadius: 0,
               padding: "0 36px", height: 52, fontWeight: 800, fontSize: 14,

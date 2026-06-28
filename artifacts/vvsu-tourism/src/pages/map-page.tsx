@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { GeoCircle, GhostText, DotGrid } from "@/components/GraphicAccents";
 import { motion } from "framer-motion";
 import { YMaps, Map, Placemark, Polyline } from "react-yandex-maps";
 import { useListMapPoints, useListMapRoutes } from "@workspace/api-client-react";
@@ -123,11 +124,16 @@ export default function MapPage() {
             </div>
           </div>
           {/* Content row */}
-          <div style={{ display: "flex", alignItems: "center", gap: 24, padding: "28px 32px" }}>
-            <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 24, padding: "28px 32px", position: "relative", overflow: "hidden" }}>
+            {/* Graphic accents */}
+            <GhostText text="КАРТА" size={160} color="#C6FF00" opacity={0.06} bottom={-30} right={20} />
+            <GeoCircle size={240} color="#0057B8" opacity={0.1} shape="full" top={-120} right={-40} animate />
+            <GeoCircle size={90} color="#C6FF00" opacity={0.2} shape="quarter-bl" bottom={-1} right={80} />
+            <DotGrid cols={5} rows={3} color="#C6FF00" opacity={0.15} top={16} right={200} />
+            <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ flexShrink: 0, position: "relative", zIndex: 1 }}>
               <span style={{ fontSize: 48, color: "#C6FF00", display: "block", lineHeight: 1 }}>⚓</span>
             </motion.div>
-            <div>
+            <div style={{ position: "relative", zIndex: 1 }}>
               <h1 style={{ fontSize: "clamp(28px,4vw,48px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 8 }}>
                 Карта <span style={{ color: "#C6FF00" }}>Владивостока</span>
               </h1>

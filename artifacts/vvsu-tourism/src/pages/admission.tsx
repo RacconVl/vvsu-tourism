@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
 import { DigitalDesignIllustration, EnvironmentDesignIllustration } from "@/components/illustrations/DesignIllustrations";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -141,8 +142,14 @@ export default function AdmissionPage() {
         {/* Hero content */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 0, minHeight: 340, alignItems: "stretch" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            style={{ padding: "56px 48px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <div>
+            style={{ padding: "56px 48px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "space-between", position: "relative", overflow: "hidden" }}>
+            {/* Graphic accents */}
+            <GhostText text="2026" size={180} color="#FF007F" opacity={0.07} bottom={-20} right={40} />
+            <GeoCircle size={320} color="#FF007F" opacity={0.07} shape="full" bottom={-160} left={-80} animate />
+            <GeoCircle size={100} color="#C6FF00" opacity={0.18} shape="quarter-tr" top={-1} right={-1} />
+            <GeoCircle size={50} color="#0057B8" opacity={0.3} shape="full" top={50} right={120} />
+            <DotGrid cols={6} rows={4} color="#fff" opacity={0.1} bottom={80} right={40} />
+            <div style={{ position: "relative", zIndex: 1 }}>
               <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 20 }}>Институт туризма и креативных индустрий · ВВГУ</div>
               <h1 style={{ fontSize: "clamp(44px,6vw,80px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 20 }}>
                 Поступление<br /><span style={{ color: "#FF007F" }}>2026</span>
@@ -151,7 +158,7 @@ export default function AdmissionPage() {
                 Начните своё путешествие в мир туризма, гостеприимства и творческих индустрий. Мы ждём вас в ВВГУ!
               </p>
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 32 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 32, position: "relative", zIndex: 1 }}>
               <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
                 style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FF007F", color: "#fff", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase" }}>
                 <Play style={{ width: 14, height: 14 }} /> Флагманские программы <ExternalLink style={{ width: 13, height: 13 }} />

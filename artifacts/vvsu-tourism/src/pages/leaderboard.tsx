@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
 
 const roleLabels: Record<string, string> = {
   guide: "Экскурсовод",
@@ -103,18 +104,23 @@ export default function Leaderboard() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr auto", minHeight: 260, alignItems: "stretch" }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
             style={{ padding: "48px 48px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
-            {/* Geometric decoration */}
-            <div style={{ position: "absolute", right: 40, top: 20, width: 80, height: 80, borderRadius: "50%", border: "3px solid rgba(198,255,0,0.15)" }} />
-            <div style={{ position: "absolute", right: 20, bottom: 20, width: 40, height: 40, background: "rgba(255,0,127,0.12)" }} />
-            <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>
-              Институт туризма и креативных индустрий · ВВГУ
+            {/* Geometric decorations */}
+            <GhostText text="ИТКИ" size={200} color="#fff" opacity={0.04} bottom={-40} right={-20} />
+            <GeoCircle size={280} color="#C6FF00" opacity={0.08} shape="full" bottom={-140} right={-60} animate />
+            <GeoCircle size={120} color="#FF007F" opacity={0.15} shape="quarter-tl" top={-1} right={-1} />
+            <DotGrid cols={5} rows={3} color="#C6FF00" opacity={0.18} top={24} right={160} />
+            <GeoCircle size={60} color="#0057B8" opacity={0.25} shape="full" top={32} right={80} />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>
+                Институт туризма и креативных индустрий · ВВГУ
+              </div>
+              <h1 style={{ fontSize: "clamp(40px,5.5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 16 }}>
+                Зал<br /><span style={{ color: "#C6FF00" }}>Славы</span>
+              </h1>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, lineHeight: 1.7, maxWidth: 480 }}>
+                Выполняй квесты, копи XP и обменивай баллы на фирменную атрибутику ВВГУ
+              </p>
             </div>
-            <h1 style={{ fontSize: "clamp(40px,5.5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 16 }}>
-              Зал<br /><span style={{ color: "#C6FF00" }}>Славы</span>
-            </h1>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, lineHeight: 1.7, maxWidth: 480 }}>
-              Выполняй квесты, копи XP и обменивай баллы на фирменную атрибутику ВВГУ
-            </p>
           </motion.div>
           {/* Right: stat cells */}
           <div style={{ display: "grid", gridTemplateRows: "1fr 1fr 1fr", minWidth: 200 }}>
