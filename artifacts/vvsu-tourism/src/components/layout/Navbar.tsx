@@ -208,7 +208,14 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            style={{ borderRadius: 0, color: textColor }}
+            style={{
+              borderRadius: 0,
+              color: theme === "dark" ? "#fff" : "#0A0A0A",
+              border: `2px solid ${theme === "dark" ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.2)"}`,
+              width: 40,
+              height: 40,
+              marginLeft: 6,
+            }}
             className="lg:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-label="Меню"
