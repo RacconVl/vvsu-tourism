@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GeoCircle, GhostText, DotGrid } from "@/components/GraphicAccents";
+import { GeoCircle, GhostText, DotGrid, GhostSectionNum, AccentCard } from "@/components/GraphicAccents";
 import { CatMascot } from "@/components/illustrations/CatMascot";
 import { Link } from "wouter";
 import { motion, useMotionValue, useTransform } from "framer-motion";
@@ -644,13 +644,19 @@ export default function Home() {
           <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>→ ВВГУ</span>
         </div>
         <div className="container mx-auto px-4 max-w-6xl py-20">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
-            <h2 style={{ fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-foreground)", marginBottom: 16 }}>
-              Передовые технологии<br /><span style={{ color: "#FF007F" }}>для вашего обучения</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl text-lg">
-              В ВВГУ созданы все условия для учёбы и творчества — современное оборудование, лаборатории и инструменты профессиональной индустрии.
-            </p>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16" style={{ position: "relative" }}>
+            <GhostSectionNum num="01" color="var(--color-foreground)" />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 16 }}>
+                <div style={{ width: 4, background: "#C6FF00", flexShrink: 0, marginTop: 8, height: 48 }} />
+                <h2 style={{ fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-foreground)" }}>
+                  Передовые технологии<br /><span style={{ color: "#FF007F" }}>для вашего обучения</span>
+                </h2>
+              </div>
+              <p className="text-muted-foreground max-w-2xl text-lg">
+                В ВВГУ созданы все условия для учёбы и творчества — современное оборудование, лаборатории и инструменты профессиональной индустрии.
+              </p>
+            </div>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
@@ -719,6 +725,13 @@ export default function Home() {
             ))}
           </div>
 
+          {/* Accent stat row */}
+          <div className="grid grid-cols-3 gap-0 mb-8" style={{ border: "2px solid #0A0A0A" }}>
+            <AccentCard text="6" sub="лабораторий и студий" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
+            <AccentCard text="VR" sub="иммерсивные технологии" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
+            <AccentCard text="3D" sub="принтеры с первого курса" bg="#FF007F" textColor="#fff" />
+          </div>
+
           {/* Grants strip */}
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div style={{ border: "3px solid #0A0A0A", background: "#0A0A0A", overflow: "hidden", position: "relative" }}>
@@ -780,17 +793,20 @@ export default function Home() {
       <section className="py-24 relative overflow-hidden" style={{ background: "#0A0A0A" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, rgba(255,0,127,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(198,255,0,0.05) 0%, transparent 40%)" }} />
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-              <div style={{ width: 8, height: 8, background: "#FF007F" }} />
-              <span style={{ fontWeight: 900, fontSize: 11, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Флагманские программы</span>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16" style={{ position: "relative" }}>
+            <GhostSectionNum num="02" color="#fff" align="right" />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+                <span style={{ fontWeight: 900, fontSize: 11, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Флагманские программы</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                Выбери своё<br /><span className="text-accent">направление</span>
+              </h2>
+              <p className="text-white/60 max-w-xl mx-auto text-lg">
+                Институт туризма и креативных индустрий — это три ведущих направления, открывающих двери в профессии будущего
+              </p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-              Выбери своё<br /><span className="text-accent">направление</span>
-            </h2>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">
-              Институт туризма и креативных индустрий — это три ведущих направления, открывающих двери в профессии будущего
-            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
-import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
+import { GeoCircle, GhostText, DotGrid, VerticalText, SectionHeader, AccentCard, GhostSectionNum } from "@/components/GraphicAccents";
 
 const roleLabels: Record<string, string> = {
   guide: "Экскурсовод",
@@ -142,10 +142,9 @@ export default function Leaderboard() {
 
         {/* ── Как работает система ───────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-accent font-black">◆</span>
+          <SectionHeader num="01" accent="#C6FF00">
             <h2 className="text-2xl font-bold text-foreground">Как работает система баллов</h2>
-          </div>
+          </SectionHeader>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-0" style={{ border: "3px solid var(--border)" }}>
             {[
               { step: "01", mark: "КВТ", title: "Выбери квест", desc: "Реальные задания по туризму, маркетингу, дизайну и бюджетированию во Владивостоке", color: "#0057B8" },
@@ -187,10 +186,9 @@ export default function Leaderboard() {
 
         {/* ── Магазин имиджки ─────────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-accent font-black">◆</span>
+          <SectionHeader num="02" accent="#FF007F">
             <h2 className="text-2xl font-bold text-foreground">Что можно получить за XP</h2>
-          </div>
+          </SectionHeader>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-0" style={{ border: "3px solid var(--border)" }}>
             {storeItems.map((item, i) => {
               const bg = ["#0057B8","#FF007F","#C6FF00","#0A0A0A","#0057B8","#FF007F"][i];
@@ -224,16 +222,19 @@ export default function Leaderboard() {
 
         {/* ── Примеры квестов ──────────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-accent font-black">◆</span>
-              <h2 className="text-2xl font-bold text-foreground">Примеры квестов из кабинета</h2>
+          <div style={{ position: "relative", marginBottom: 24 }}>
+            <GhostSectionNum num="03" color="var(--color-foreground)" />
+            <div className="flex items-center justify-between flex-wrap gap-3" style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ width: 4, background: "#0057B8", flexShrink: 0, alignSelf: "stretch", minHeight: 28 }} />
+                <h2 className="text-2xl font-bold text-foreground">Примеры квестов из кабинета</h2>
+              </div>
+              <Link href="/quests">
+                <span className="text-sm text-accent hover:underline flex items-center gap-1 cursor-pointer">
+                  Все квесты <ArrowRight className="h-4 w-4" />
+                </span>
+              </Link>
             </div>
-            <Link href="/quests">
-              <span className="text-sm text-accent hover:underline flex items-center gap-1 cursor-pointer">
-                Все квесты <ArrowRight className="h-4 w-4" />
-              </span>
-            </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "3px solid var(--border)" }}>
             {questExamples.map((q, i) => {
@@ -271,14 +272,19 @@ export default function Leaderboard() {
               );
             })}
           </div>
+          {/* AccentCard stat strip */}
+          <div className="grid grid-cols-3 gap-0 mt-4" style={{ border: "2px solid #0A0A0A" }}>
+            <AccentCard text="+300" sub="макс. XP за квест" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
+            <AccentCard text="6" sub="активных квестов" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
+            <AccentCard text="★" sub="выполни и обменяй" bg="#0A0A0A" textColor="#FF007F" />
+          </div>
         </motion.section>
 
         {/* ── Истории успеха ───────────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-accent font-black">◆</span>
+          <SectionHeader num="04" accent="#0057B8">
             <h2 className="text-2xl font-bold text-foreground">Студенты, которые уже получают имиджку</h2>
-          </div>
+          </SectionHeader>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-0" style={{ border: "3px solid var(--border)" }}>
             {successStories.map((s, i) => {
               const topColor = ["#FF007F","#C6FF00","#0057B8"][i];
@@ -318,10 +324,9 @@ export default function Leaderboard() {
 
         {/* ── Top 3 Podium ─────────────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="flex items-center gap-2 mb-8">
-            <span className="text-accent font-black">◆</span>
+          <SectionHeader num="05" accent="#C6FF00">
             <h2 className="text-2xl font-bold text-foreground">Текущий рейтинг</h2>
-          </div>
+          </SectionHeader>
 
           {!isLoading && top3.length >= 3 && (
             <div className="mb-8 grid grid-cols-3 gap-0" style={{ border: "3px solid var(--border)" }}>

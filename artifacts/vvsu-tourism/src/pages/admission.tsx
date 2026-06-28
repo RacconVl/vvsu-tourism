@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
+import { GeoCircle, GhostText, DotGrid, VerticalText, GhostSectionNum, AccentCard } from "@/components/GraphicAccents";
 import { DigitalDesignIllustration, EnvironmentDesignIllustration } from "@/components/illustrations/DesignIllustrations";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
@@ -259,6 +259,13 @@ export default function AdmissionPage() {
                 </motion.div>
               ))}
             </motion.div>
+
+            {/* Accent stat strip */}
+            <div className="grid grid-cols-3 gap-0 my-6" style={{ border: "2px solid #0A0A0A" }}>
+              <AccentCard text="25" sub="бюджетных мест" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
+              <AccentCard text="4" sub="направления подготовки" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
+              <AccentCard text="★" sub="топ вузов ДФО" bg="#FF007F" textColor="#fff" />
+            </div>
 
             {/* ── Дизайн: два направления ─────────────────── */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8">

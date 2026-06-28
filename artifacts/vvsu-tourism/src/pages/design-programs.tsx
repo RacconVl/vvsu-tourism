@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
+import { GeoCircle, GhostText, DotGrid, VerticalText, SectionHeader, GhostSectionNum } from "@/components/GraphicAccents";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
@@ -295,9 +295,14 @@ export default function DesignProgramsPage() {
         {/* ── BLOCK 2: О кафедре ─────────────────────────────── */}
         <motion.section id="about" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div>
+            <div style={{ position: "relative" }}>
+              <GhostSectionNum num="01" color="var(--color-foreground)" />
+              <div style={{ position: "relative", zIndex: 1 }}>
               <Badge variant="outline" className="mb-4 text-xs" id="about-badge">О кафедре</Badge>
-              <h2 className="text-3xl font-bold text-foreground mb-4">Две кафедры — одна творческая среда</h2>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 16 }}>
+                <div style={{ width: 4, background: "#FF007F", flexShrink: 0, marginTop: 4, height: 38 }} />
+                <h2 className="text-3xl font-bold text-foreground">Две кафедры — одна творческая среда</h2>
+              </div>
               <p className="text-muted-foreground leading-relaxed mb-5">
                 Кафедра дизайна и технологий и кафедра архитектуры ВВГУ ИТИКИ — это единое пространство
                 для тех, кто проектирует будущее: визуальные образы, цифровую среду, пространства, одежду,
@@ -317,6 +322,7 @@ export default function DesignProgramsPage() {
                     {item}
                   </div>
                 ))}
+              </div>
               </div>
             </div>
             {/* History timeline */}
@@ -338,13 +344,17 @@ export default function DesignProgramsPage() {
 
         {/* ── BLOCK 4: Направления подготовки ────────────────── */}
         <motion.section id="programs" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="text-accent font-black">◆</span>
-              <span className="text-muted-foreground uppercase tracking-widest text-xs">Карта направлений</span>
+          <div className="text-center mb-10" style={{ position: "relative" }}>
+            <GhostSectionNum num="02" color="var(--color-foreground)" align="right" />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <div style={{ width: 24, height: 3, background: "#C6FF00" }} />
+                <span className="text-muted-foreground uppercase tracking-widest text-xs">Карта направлений</span>
+                <div style={{ width: 24, height: 3, background: "#C6FF00" }} />
+              </div>
+              <h2 className="text-3xl font-bold text-foreground">Выбери свой образовательный трек</h2>
+              <p className="text-muted-foreground mt-2 text-sm">Нажми на карточку, чтобы узнать подробнее о направлении</p>
             </div>
-            <h2 className="text-3xl font-bold text-foreground">Выбери свой образовательный трек</h2>
-            <p className="text-muted-foreground mt-2 text-sm">Нажми на карточку, чтобы узнать подробнее о направлении</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {tracks.map((track, i) => (
@@ -393,7 +403,13 @@ export default function DesignProgramsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
               <Badge variant="outline" className="mb-4 text-xs">Ценность</Badge>
-              <h2 className="text-2xl font-bold text-foreground mb-6">Почему выбирают кафедру</h2>
+              <div style={{ position: "relative" }}>
+                <GhostSectionNum num="03" color="var(--color-foreground)" />
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 24, position: "relative", zIndex: 1 }}>
+                  <div style={{ width: 4, background: "#C6FF00", flexShrink: 0, marginTop: 4, height: 34 }} />
+                  <h2 className="text-2xl font-bold text-foreground">Почему выбирают кафедру</h2>
+                </div>
+              </div>
               <div className="space-y-4">
                 {whyItems.map((item, i) => (
                   <motion.div key={i} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
@@ -428,13 +444,17 @@ export default function DesignProgramsPage() {
 
         {/* ── Процесс обучения ───────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="text-accent font-black">◆</span>
-              <span className="text-muted-foreground uppercase tracking-widest text-xs">Как строится обучение</span>
+          <div className="text-center mb-8" style={{ position: "relative" }}>
+            <GhostSectionNum num="04" color="var(--color-foreground)" />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <div style={{ width: 24, height: 3, background: "#FF007F" }} />
+                <span className="text-muted-foreground uppercase tracking-widest text-xs">Как строится обучение</span>
+                <div style={{ width: 24, height: 3, background: "#FF007F" }} />
+              </div>
+              <h2 className="text-2xl font-bold text-foreground">Идея → Портфолио: 7 шагов</h2>
+              <p className="text-muted-foreground text-sm mt-1">Студент собирает проектный путь, а не просто изучает дисциплины</p>
             </div>
-            <h2 className="text-2xl font-bold text-foreground">Идея → Портфолио: 7 шагов</h2>
-            <p className="text-muted-foreground text-sm mt-1">Студент собирает проектный путь, а не просто изучает дисциплины</p>
           </div>
           <div className="relative">
             <div className="absolute top-8 left-[7%] right-[7%] h-0.5 bg-gradient-to-r from-accent via-[#7c3aed] to-[#16a34a] hidden md:block" />

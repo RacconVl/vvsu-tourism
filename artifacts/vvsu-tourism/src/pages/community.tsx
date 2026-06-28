@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { GeoCircle, GhostText, DotGrid, VerticalText } from "@/components/GraphicAccents";
+import { GeoCircle, GhostText, DotGrid, VerticalText, GhostSectionNum, AccentCard } from "@/components/GraphicAccents";
 import {
   useListCommunityPosts,
   useCreateCommunityPost,
@@ -287,12 +287,15 @@ export default function Community() {
 
       <div className="py-10 px-4">
       <div className="max-w-7xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-accent font-black text-lg">◆</span>
-            <span className="text-muted-foreground uppercase tracking-widest text-xs">Студенческая жизнь</span>
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8" style={{ position: "relative" }}>
+          <GhostSectionNum num="МЛ" color="var(--color-foreground)" opacity={0.04} />
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div className="flex items-center gap-3 mb-2">
+              <div style={{ width: 4, height: 16, background: "#FF007F", flexShrink: 0 }} />
+              <span className="text-muted-foreground uppercase tracking-widest text-xs">Студенческая жизнь</span>
+            </div>
+            <p className="text-muted-foreground mt-2">Делитесь опытом, обсуждайте проекты и вдохновляйтесь работами коллег</p>
           </div>
-          <p className="text-muted-foreground mt-2">Делитесь опытом, обсуждайте проекты и вдохновляйтесь работами коллег</p>
         </motion.div>
 
         <div className="flex items-center justify-end mb-6">
