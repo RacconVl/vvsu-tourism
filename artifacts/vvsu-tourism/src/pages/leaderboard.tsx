@@ -79,18 +79,56 @@ export default function Leaderboard() {
     <div className="min-h-screen bg-background">
 
       {/* ── Hero ───────────────────────────────────────────── */}
-      <div className="py-10 px-4 border-b border-border/40" style={{ background: "linear-gradient(135deg, #0057B8 0%, #0057B8 70%, #0891b2 100%)" }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <span className="text-2xl">🏆</span>
-              <span className="text-white/60 uppercase tracking-widest text-xs">Рейтинг</span>
+      <div style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        {/* Label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "18px 48px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Рейтинг</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ ВВГУ 2026</span>
+        </div>
+        {/* Marquee */}
+        <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", animation: "marquee 24s linear infinite", width: "max-content", padding: "10px 0" }}>
+            {Array.from({ length: 4 }).flatMap((_, ri) =>
+              ["ЗАЛ СЛАВЫ", "★", "РЕЙТИНГ СТУДЕНТОВ", "★", "КВЕСТЫ", "★", "XP БАЛЛЫ", "★", "ИМИДЖКА ВВГУ", "★", "ТОП-10", "★"].map((w, wi) => (
+                <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "★" ? "#C6FF00" : "rgba(255,255,255,0.45)", flexShrink: 0 }}>{w}</span>
+              ))
+            )}
+          </div>
+        </div>
+        {/* Hero content */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", minHeight: 260, alignItems: "stretch" }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            style={{ padding: "48px 48px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+            {/* Geometric decoration */}
+            <div style={{ position: "absolute", right: 40, top: 20, width: 80, height: 80, borderRadius: "50%", border: "3px solid rgba(198,255,0,0.15)" }} />
+            <div style={{ position: "absolute", right: 20, bottom: 20, width: 40, height: 40, background: "rgba(255,0,127,0.12)" }} />
+            <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>
+              Институт туризма и креативных индустрий · ВВГУ
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">Зал славы</h1>
-            <p className="text-white/70 text-lg max-w-xl mx-auto">
+            <h1 style={{ fontSize: "clamp(40px,5.5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 16 }}>
+              Зал<br /><span style={{ color: "#C6FF00" }}>Славы</span>
+            </h1>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, lineHeight: 1.7, maxWidth: 480 }}>
               Выполняй квесты, копи XP и обменивай баллы на фирменную атрибутику ВВГУ
             </p>
           </motion.div>
+          {/* Right: stat cells */}
+          <div style={{ display: "grid", gridTemplateRows: "1fr 1fr 1fr", minWidth: 200 }}>
+            {[
+              { num: "10", sub: "участников", bg: "#C6FF00", text: "#0A0A0A" },
+              { num: "XP", sub: "за каждый квест", bg: "#FF007F", text: "#fff" },
+              { num: "01", sub: "место доступно", bg: "#0057B8", text: "#fff" },
+            ].map((s, i) => (
+              <div key={i} style={{ background: s.bg, padding: "20px 28px", borderBottom: i < 2 ? "3px solid rgba(0,0,0,0.1)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <div style={{ fontSize: 36, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
+                <div style={{ fontSize: 10, color: s.text, opacity: 0.65, fontWeight: 700, marginTop: 4, letterSpacing: 1, textTransform: "uppercase" }}>{s.sub}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -102,32 +140,27 @@ export default function Leaderboard() {
             <span className="text-accent font-black">◆</span>
             <h2 className="text-2xl font-bold text-foreground">Как работает система баллов</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-0" style={{ border: "3px solid var(--border)" }}>
             {[
               { step: "01", mark: "КВТ", title: "Выбери квест", desc: "Реальные задания по туризму, маркетингу, дизайну и бюджетированию во Владивостоке", color: "#0057B8" },
-              { step: "02", mark: "ВЫП", title: "Выполни задание", desc: "Отправь решение через личный кабинет — преподаватели проверяют работу", color: "#EB7124" },
-              { step: "03", mark: "XP",  title: "Получи XP", desc: "За каждый квест начисляются баллы опыта: от 100 до 300 XP в зависимости от сложности", color: "#7c3aed" },
-              { step: "04", mark: "ОБМ", title: "Обменяй на имиджку", desc: "Накопленные XP можно обменять в деканате на фирменную атрибутику ВВГУ", color: "#0891b2" },
+              { step: "02", mark: "ВЫП", title: "Выполни задание", desc: "Отправь решение через личный кабинет — преподаватели проверяют работу", color: "#FF007F" },
+              { step: "03", mark: "XP",  title: "Получи XP", desc: "За каждый квест начисляются баллы опыта: от 100 до 300 XP в зависимости от сложности", color: "#C6FF00" },
+              { step: "04", mark: "ОБМ", title: "Обменяй на имиджку", desc: "Накопленные XP можно обменять в деканате на фирменную атрибутику ВВГУ", color: "#0A0A0A" },
             ].map((s, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <Card className="rounded-2xl border-border/60 h-full">
-                  <CardContent className="p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs font-bold text-muted-foreground">{s.step}</span>
-                      <div className="flex-1 h-px bg-border/40" />
-                    </div>
-                    <motion.div
-                      className="h-11 w-11 rounded-xl flex items-center justify-center text-white mb-3"
-                      style={{ background: s.color }}
-                      animate={{ y: [0, -4, 0] }}
-                      transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <span className="text-xs font-black">{s.mark}</span>
-                    </motion.div>
-                    <h3 className="font-bold text-foreground mb-1">{s.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
-                  </CardContent>
-                </Card>
+              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                style={{ borderRight: i < 3 ? "3px solid var(--border)" : "none" }}>
+                <div style={{ borderTop: `4px solid ${s.color}` }} className="p-5 h-full">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span style={{ fontWeight: 900, fontSize: 28, color: s.color === "#C6FF00" ? "#C6FF00" : s.color, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.step}</span>
+                    <div className="flex-1 h-px bg-border/40" />
+                  </div>
+                  <div className="h-10 w-10 flex items-center justify-center text-white mb-3"
+                    style={{ background: s.color === "#C6FF00" ? "#C6FF00" : s.color, color: s.color === "#C6FF00" ? "#0A0A0A" : "#fff" }}>
+                    <span className="text-[11px] font-black">{s.mark}</span>
+                  </div>
+                  <h3 className="font-bold text-foreground mb-1">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -152,25 +185,31 @@ export default function Leaderboard() {
             <span className="text-accent font-black">◆</span>
             <h2 className="text-2xl font-bold text-foreground">Что можно получить за XP</h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {storeItems.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07 }}
-                whileHover={{ y: -4, scale: 1.03 }}
-              >
-                <Card className="rounded-2xl border-border/60 text-center p-4 hover:shadow-lg transition-shadow cursor-default">
-                  <div className="text-3xl mb-2">{item.emoji}</div>
-                  <p className="text-xs font-semibold text-foreground leading-tight mb-1">{item.name}</p>
-                  <Badge variant="outline" className="text-[10px] text-accent border-accent/40">
-                    ★ {item.xp.toLocaleString()} XP
-                  </Badge>
-                </Card>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-0" style={{ border: "3px solid var(--border)" }}>
+            {storeItems.map((item, i) => {
+              const bg = ["#0057B8","#FF007F","#C6FF00","#0A0A0A","#0057B8","#FF007F"][i];
+              const fg = bg === "#C6FF00" ? "#0A0A0A" : "#fff";
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.07 }}
+                  style={{ borderRight: i < 5 ? "3px solid var(--border)" : "none", borderBottom: i < 3 ? "3px solid var(--border)" : "none" }}
+                >
+                  <div className="p-4 h-full flex flex-col" style={{ borderTop: `3px solid ${bg}` }}>
+                    <div className="h-8 w-8 flex items-center justify-center text-[10px] font-black mb-2" style={{ background: bg, color: fg }}>
+                      {["КЕП","БЛК","ХДИ","РЗК","КНФ","СТЖ"][i]}
+                    </div>
+                    <p className="text-xs font-bold text-foreground leading-tight mb-1">{item.name}</p>
+                    <p className="text-[10px] font-black mt-auto" style={{ color: bg === "#C6FF00" ? "#7a9900" : bg }}>
+                      ★ {item.xp.toLocaleString()} XP
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
           <p className="text-xs text-muted-foreground mt-3 text-center">
             Обмен производится в деканате института (каб. 312) в рабочие часы. XP не сгорают.
@@ -190,44 +229,41 @@ export default function Leaderboard() {
               </span>
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {questExamples.map((q, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -16 : 16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -3 }}
-              >
-                <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow h-full">
-                  <CardContent className="p-5">
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 mt-0.5">
-                        <Badge className={`${q.color} border-0 text-xs flex items-center gap-1 px-2 py-1`}>
-                          {q.mark} · {q.type}
-                        </Badge>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "3px solid var(--border)" }}>
+            {questExamples.map((q, i) => {
+              const accentColor = ["#0057B8","#FF007F","#C6FF00","#0A0A0A"][i];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -16 : 16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  style={{
+                    borderRight: i % 2 === 0 ? "3px solid var(--border)" : "none",
+                    borderBottom: i < 2 ? "3px solid var(--border)" : "none",
+                    borderLeft: `4px solid ${accentColor}`,
+                  }}
+                >
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="h-7 w-7 flex items-center justify-center text-[9px] font-black shrink-0"
+                        style={{ background: accentColor, color: accentColor === "#C6FF00" ? "#0A0A0A" : "#fff" }}>
+                        {q.mark}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-foreground text-sm mb-1 leading-tight">{q.title}</h3>
-                        <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{q.desc}</p>
-                        <div className="flex items-center gap-3 flex-wrap">
-                          <span className="text-xs text-muted-foreground flex items-center gap-1">
-                            ● {q.location}
-                          </span>
-                          <span className={`text-xs font-medium flex items-center gap-1 ${q.diffColor}`}>
-                            ◆ {q.difficulty}
-                          </span>
-                          <span className="text-xs font-bold text-accent flex items-center gap-1 ml-auto">
-                            ★ +{q.xp} XP
-                          </span>
-                        </div>
-                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{q.type}</span>
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    <h3 className="font-bold text-foreground text-sm mb-1 leading-tight">{q.title}</h3>
+                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{q.desc}</p>
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span className="text-xs text-muted-foreground">● {q.location}</span>
+                      <span className={`text-xs font-medium ${q.diffColor}`}>◆ {q.difficulty}</span>
+                      <span className="text-xs font-black ml-auto" style={{ color: "#EB7124" }}>★ +{q.xp} XP</span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.section>
 
@@ -237,41 +273,40 @@ export default function Leaderboard() {
             <span className="text-accent font-black">◆</span>
             <h2 className="text-2xl font-bold text-foreground">Студенты, которые уже получают имиджку</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {successStories.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.12 }}
-                whileHover={{ y: -4 }}
-              >
-                <Card className="rounded-2xl border-border/60 hover:shadow-lg transition-shadow h-full overflow-hidden">
-                  <CardContent className="p-5 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <img src={s.avatar} alt={s.name} className="h-14 w-14 rounded-full object-cover ring-2 ring-accent/30 shrink-0" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0" style={{ border: "3px solid var(--border)" }}>
+            {successStories.map((s, i) => {
+              const topColor = ["#FF007F","#C6FF00","#0057B8"][i];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.12 }}
+                  style={{ borderRight: i < 2 ? "3px solid var(--border)" : "none" }}
+                >
+                  <div style={{ borderTop: `4px solid ${topColor}` }} className="p-5 h-full flex flex-col">
+                    {/* Quote mark decoration */}
+                    <div style={{ fontSize: 48, lineHeight: 1, color: topColor, opacity: 0.2, fontWeight: 900, marginBottom: -8 }}>«</div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <img src={s.avatar} alt={s.name} className="h-12 w-12 object-cover shrink-0" style={{ border: `2px solid ${topColor}` }} />
                       <div>
-                        <p className="font-bold text-foreground">{s.name}</p>
+                        <p className="font-black text-foreground text-sm">{s.name}</p>
                         <p className="text-xs text-muted-foreground">{s.course}</p>
                       </div>
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed italic">"{s.story}"</p>
-                    <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-border/40">
-                      <Badge variant="outline" className="text-xs">
+                    <p className="text-sm text-muted-foreground leading-relaxed flex-1">{s.story}</p>
+                    <div className="flex items-center gap-2 flex-wrap mt-4 pt-3 border-t border-border/40">
+                      <span className="text-[10px] font-black px-2 py-0.5" style={{ background: topColor, color: topColor === "#C6FF00" ? "#0A0A0A" : "#fff" }}>
                         ★ {s.xp.toLocaleString()} XP
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        ◆ {s.quests} квестов
-                      </Badge>
-                      <span className="text-xs font-semibold text-foreground ml-auto">
-                        {s.rewardEmoji} {s.reward}
                       </span>
+                      <span className="text-[10px] font-bold text-muted-foreground">◆ {s.quests} квест.</span>
+                      <span className="text-[10px] font-bold text-foreground ml-auto">{s.reward}</span>
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </motion.section>
 
@@ -283,19 +318,26 @@ export default function Leaderboard() {
           </div>
 
           {!isLoading && top3.length >= 3 && (
-            <div className="flex items-end justify-center gap-4 mb-8">
+            <div className="mb-8 grid grid-cols-3 gap-0" style={{ border: "3px solid var(--border)" }}>
+              {/* 2nd, 1st, 3rd order */}
               {[top3[1], top3[0], top3[2]].map((entry, idx) => {
                 const actualRank = entry.rank;
-                const styles = rankStyle(actualRank);
-                const heights = [idx === 1 ? "h-36" : "h-28"];
+                const colors = ["#0057B8","#C6FF00","#FF007F"];
+                const bg = colors[idx];
+                const textColor = bg === "#C6FF00" ? "#0A0A0A" : "#fff";
+                const rankMark = ["#2","#1","#3"][idx];
                 return (
-                  <div key={entry.rank} className="flex flex-col items-center gap-2">
-                    <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-14 w-14 rounded-full object-cover ring-4 ring-white shadow-lg" />
-                    <p className="text-sm font-semibold text-foreground text-center max-w-20 line-clamp-2">{entry.studentName}</p>
-                    <p className="text-xs text-muted-foreground">{entry.xp.toLocaleString()} XP</p>
-                    <div className={`w-24 ${heights[0] ?? "h-28"} rounded-t-2xl bg-gradient-to-t ${styles.bg || "from-muted to-muted-foreground/30"} flex items-start justify-center pt-3`}>
-                      <span className="text-2xl">{actualRank <= 3 ? ["🥇","🥈","🥉"][actualRank-1] : `#${actualRank}`}</span>
-                    </div>
+                  <div key={entry.rank}
+                    style={{ borderRight: idx < 2 ? "3px solid var(--border)" : "none", borderTop: `5px solid ${bg}` }}
+                    className="p-5 flex flex-col items-center text-center">
+                    <div className="h-8 w-8 flex items-center justify-center font-black text-sm mb-3"
+                      style={{ background: bg, color: textColor }}>{rankMark}</div>
+                    <img src={entry.avatarUrl || undefined} alt={entry.studentName}
+                      className="h-12 w-12 object-cover mb-2" style={{ border: `2px solid ${bg}` }} />
+                    <p className="font-black text-foreground text-sm leading-tight">{entry.studentName}</p>
+                    <p className="text-xs font-bold mt-1" style={{ color: bg === "#C6FF00" ? "#7a9900" : bg }}>
+                      ★ {entry.xp.toLocaleString()} XP
+                    </p>
                   </div>
                 );
               })}
@@ -303,17 +345,16 @@ export default function Leaderboard() {
           )}
 
           {/* Full List */}
-          <Card className="rounded-2xl border-border/60">
-            <CardContent className="p-0">
+          <div style={{ border: "3px solid var(--border)" }}>
               {isLoading ? (
                 <div className="p-4 space-y-3">
-                  {[1,2,3,4,5,6,7,8].map(i => <Skeleton key={i} className="h-16 w-full rounded-xl" />)}
+                  {[1,2,3,4,5,6,7,8].map(i => <Skeleton key={i} className="h-16 w-full" />)}
                 </div>
               ) : (
-                <div className="divide-y divide-border/40">
+                <div>
                   {leaderboard?.map((entry, i) => {
-                    const styles = rankStyle(entry.rank);
                     const isMe = entry.studentName === "Александра Морозова";
+                    const rankColor = entry.rank === 1 ? "#C6FF00" : entry.rank === 2 ? "#0057B8" : entry.rank === 3 ? "#FF007F" : "var(--border)";
                     return (
                       <motion.div
                         key={entry.rank}
@@ -321,37 +362,32 @@ export default function Leaderboard() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.05 }}
                         className={`flex items-center gap-4 p-4 transition-colors ${isMe ? "bg-accent/5" : "hover:bg-muted/30"}`}
+                        style={{ borderBottom: i < (leaderboard?.length ?? 0) - 1 ? "2px solid var(--border)" : "none", borderLeft: `4px solid ${rankColor}` }}
                         data-testid={`row-leaderboard-${entry.rank}`}
                       >
-                        <div className={`w-8 text-center font-bold text-sm ${styles.text}`}>
-                          {entry.rank <= 3 ? ["🥇","🥈","🥉"][entry.rank-1] : entry.rank}
+                        <div className="w-7 h-7 flex items-center justify-center font-black text-xs shrink-0"
+                          style={{ background: rankColor, color: rankColor === "#C6FF00" ? "#0A0A0A" : rankColor === "var(--border)" ? "var(--foreground)" : "#fff" }}>
+                          {entry.rank}
                         </div>
-                        <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-10 w-10 rounded-full object-cover flex-shrink-0" />
+                        <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-9 w-9 object-cover flex-shrink-0" style={{ border: `2px solid ${rankColor}` }} />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <p className={`font-semibold text-sm ${isMe ? "text-accent" : "text-foreground"}`}>{entry.studentName}</p>
-                            {isMe && <Badge className="bg-accent text-white border-0 text-xs">Вы</Badge>}
+                            <p className={`font-bold text-sm ${isMe ? "text-accent" : "text-foreground"}`}>{entry.studentName}</p>
+                            {isMe && <span className="text-[9px] font-black px-1.5 py-0.5" style={{ background: "#EB7124", color: "#fff" }}>ВЫ</span>}
                           </div>
                           <p className="text-xs text-muted-foreground">{roleLabels[entry.role] ?? entry.role}</p>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          <div className="flex items-center gap-1 justify-end">
-                            <Badge variant="outline" className="text-xs">Ур. {entry.level}</Badge>
-                          </div>
-                          <p className="text-sm font-bold text-accent mt-1 flex items-center gap-1 justify-end">
-                            ★ {entry.xp.toLocaleString()} XP
-                          </p>
-                          <p className="text-xs text-muted-foreground flex items-center gap-1 justify-end mt-0.5">
-                            ◆ {entry.completedQuests} квест.
-                          </p>
+                          <p className="text-[10px] font-bold text-muted-foreground">УР. {entry.level}</p>
+                          <p className="text-sm font-black" style={{ color: "#EB7124" }}>★ {entry.xp.toLocaleString()}</p>
+                          <p className="text-[10px] text-muted-foreground">◆ {entry.completedQuests} кв.</p>
                         </div>
                       </motion.div>
                     );
                   })}
                 </div>
               )}
-            </CardContent>
-          </Card>
+          </div>
         </motion.section>
 
       </div>

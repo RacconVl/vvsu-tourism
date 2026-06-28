@@ -177,17 +177,21 @@ export default function AdmissionPage() {
       {/* Tabs */}
       <section className="bg-background py-10">
         <div className="max-w-5xl mx-auto px-4">
-          {/* Tab bar */}
-          <div className="flex flex-wrap gap-1 p-1 rounded-2xl border border-border/60 bg-muted/30 mb-8 w-fit">
-            {tabs.map((t) => (
+          {/* Tab bar — editorial sharp style */}
+          <div className="flex flex-wrap gap-0 mb-8 w-fit" style={{ border: "2px solid var(--border)" }}>
+            {tabs.map((t, i) => (
               <button
                 key={t.key}
                 onClick={() => setActiveTab(t.key)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
-                  activeTab === t.key
-                    ? "bg-background shadow-sm text-foreground border border-border/60"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold transition-all whitespace-nowrap"
+                style={{
+                  borderRight: i < tabs.length - 1 ? "2px solid var(--border)" : "none",
+                  background: activeTab === t.key ? "#0057B8" : "transparent",
+                  color: activeTab === t.key ? "#fff" : "var(--muted-foreground)",
+                  letterSpacing: "0.02em",
+                  textTransform: "uppercase",
+                  fontSize: 11,
+                }}
               >
                 {t.label}
               </button>
@@ -197,61 +201,54 @@ export default function AdmissionPage() {
           {/* ── Направления ─────────────────────────────── */}
           {activeTab === "programs" && (
             <div className="space-y-8">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ border: "3px solid var(--border)" }}>
               {programs.map((p, i) => (
-                <motion.div key={p.code} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
-                  <Card className="rounded-2xl border-border/60 overflow-hidden hover:shadow-md transition-shadow h-full group">
+                <motion.div key={p.code} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
+                  style={{ borderRight: i % 2 === 0 ? "3px solid var(--border)" : "none", borderBottom: i < 2 ? "3px solid var(--border)" : "none" }}>
+                  <div className="overflow-hidden hover:shadow-md transition-shadow h-full group">
                     <div className="h-40 overflow-hidden relative">
                       <img src={p.img} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, transparent 40%, ${p.color}cc)` }} />
+                      <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, transparent 40%, ${p.color}ee)` }} />
+                      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: p.color }} />
                       <div className="absolute bottom-3 left-4 flex items-center gap-2">
-                        <span className="text-xs font-mono text-white/80">{p.code}</span>
-                        <Badge className="text-xs rounded-full text-white border-white/30 bg-white/10 backdrop-blur-sm">{p.degree}</Badge>
+                        <span className="text-[10px] font-black text-white px-2 py-0.5" style={{ background: "rgba(0,0,0,0.5)" }}>{p.code}</span>
+                        <span className="text-[10px] font-bold text-white px-2 py-0.5" style={{ background: p.color }}>{p.degree}</span>
                       </div>
                     </div>
-                    <div className="h-1" style={{ background: p.color }} />
-                    <CardContent className="p-5">
+                    <div className="p-5">
                       <div className="flex items-start justify-between gap-3 mb-3">
-                        <div>
-                          <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
-                        </div>
-                        <div
-                          className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0 text-[10px] font-black"
-                          style={{ background: p.color }}
-                        >
+                        <h3 className="text-lg font-black text-foreground">{p.title}</h3>
+                        <div className="h-10 w-10 flex items-center justify-center text-white shrink-0 text-[10px] font-black"
+                          style={{ background: p.color }}>
                           ТУР
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-2 mb-4 text-sm">
-                        <div className="rounded-xl bg-muted/50 p-2.5 text-center">
-                          <p className="font-bold text-foreground">{p.duration}</p>
-                          <p className="text-xs text-muted-foreground">Срок обучения</p>
-                        </div>
-                        <div className="rounded-xl bg-muted/50 p-2.5 text-center">
-                          <p className="font-bold text-foreground">{p.form}</p>
-                          <p className="text-xs text-muted-foreground">Форма</p>
-                        </div>
-                        <div className="rounded-xl p-2.5 text-center" style={{ background: `${p.color}15` }}>
-                          <p className="font-bold" style={{ color: p.color }}>{p.places.budget}</p>
-                          <p className="text-xs text-muted-foreground">Бюджет</p>
-                        </div>
-                        <div className="rounded-xl bg-muted/50 p-2.5 text-center">
-                          <p className="font-bold text-foreground">{p.places.paid}</p>
-                          <p className="text-xs text-muted-foreground">Платные</p>
-                        </div>
+                      <div className="grid grid-cols-2 gap-0 mb-4 text-sm" style={{ border: "2px solid var(--border)" }}>
+                        {[
+                          { val: p.duration, label: "Срок обучения" },
+                          { val: p.form, label: "Форма" },
+                          { val: String(p.places.budget), label: "Бюджет", accent: p.color },
+                          { val: String(p.places.paid), label: "Платные" },
+                        ].map((cell, ci) => (
+                          <div key={ci} className="p-2.5 text-center"
+                            style={{ borderRight: ci % 2 === 0 ? "2px solid var(--border)" : "none", borderBottom: ci < 2 ? "2px solid var(--border)" : "none", background: cell.accent ? `${cell.accent}15` : undefined }}>
+                            <p className="font-black text-foreground" style={cell.accent ? { color: cell.accent } : undefined}>{cell.val}</p>
+                            <p className="text-xs text-muted-foreground">{cell.label}</p>
+                          </div>
+                        ))}
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground mb-1 font-medium uppercase tracking-wide">Профили:</p>
+                        <p className="text-[10px] text-muted-foreground mb-1 font-black uppercase tracking-widest">Профили:</p>
                         <ul className="space-y-1">
                           {p.profiles.map((pr) => (
                             <li key={pr} className="flex items-center gap-2 text-sm text-foreground">
-                              <ChevronRight className="h-3.5 w-3.5 shrink-0" style={{ color: p.color }} /> {pr}
+                              <span className="font-black text-xs shrink-0" style={{ color: p.color }}>→</span> {pr}
                             </li>
                           ))}
                         </ul>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>

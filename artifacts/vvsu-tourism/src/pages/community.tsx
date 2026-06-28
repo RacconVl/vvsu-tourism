@@ -308,74 +308,85 @@ export default function Community() {
             {[
               {
                 img: "/post-mascot.png",
-                badge: "🏆 Конкурс",
-                badgeClass: "bg-accent text-accent-foreground border-0",
+                badge: "КНК",
+                badgeLabel: "Конкурс",
+                badgeBg: "#EB7124",
                 tag: "Творчество",
                 title: "Конкурс на создание маскота ИТКИ — подай заявку до 30 июля!",
                 body: "Институт туризма и креативных индустрий объявляет открытый конкурс на создание официального маскота кафедры! Нарисуй персонажа, который будет олицетворять дух путешествий, творчества и Владивостока. Победитель получит диплом, мерч ИТКИ и 10 000 рублей. Работы принимаются в любом формате: скетч, цифровая иллюстрация, 3D.",
                 source: "Кафедра ИТКИ · ВВГУ",
                 link: "https://www.vvsu.ru/miost/",
-                pinIcon: "📌",
+                accentColor: "#EB7124",
                 delay: 0,
               },
               {
                 img: "/post-volunteer.png",
-                badge: "📌 Новость ВВГУ",
-                badgeClass: "bg-primary/80 text-white border-0",
+                badge: "НВС",
+                badgeLabel: "Новость",
+                badgeBg: "#0057B8",
                 tag: "Волонтёрство",
                 title: "«Чистые игры на ВЭФ 2024» — ВВГУ снова в числе лидеров",
                 body: "Центр волонтёров ВВГУ — единственный на Дальнем Востоке, готовивший добровольцев для Олимпийских игр 2014 в Сочи. С 2021 года координирует международный проект «Чистые игры в Приморье». В акции на ВЭФ 2024 участвовали около 80 человек — студенты ВВГУ и представители бизнеса. Ежегодно Центр задействован в более 300 событиях.",
                 source: "mc.vvsu.ru · Центр волонтёров",
                 link: "https://www.vvsu.ru/mc/",
-                pinIcon: "📌",
+                accentColor: "#0057B8",
                 delay: 0.06,
               },
               {
                 img: "/post-excursion.png",
-                badge: "📌 Стажировки",
-                badgeClass: "bg-teal-600 text-white border-0",
+                badge: "СТЖ",
+                badgeLabel: "Стажировки",
+                badgeBg: "#C6FF00",
                 tag: "Практика",
                 title: "Туроператор «ВГУЭС-ТРЭВЕЛ» — производственные экскурсии для студентов ИТКИ",
                 body: "40% преподавателей ИТКИ — практики отрасли: замминистра туризма Приморского края, директор нацпарка «Земля Леопарда», директор учебного центра «Билетур». Туроператор ВГУЭС-ТРЭВЕЛ организует для студентов образовательные стажировки с участием в конференциях и конкурсах по всей России и миру.",
                 source: "vvsu.ru/miost · ИТКИ",
                 link: "https://www.vvsu.ru/miost/",
-                pinIcon: "📌",
+                accentColor: "#C6FF00",
                 delay: 0.12,
               },
               {
                 img: "/post-festival.png",
-                badge: "🎯 Хакатон",
-                badgeClass: "bg-purple-600 text-white border-0",
+                badge: "ХКТ",
+                badgeLabel: "Хакатон",
+                badgeBg: "#FF007F",
                 tag: "Креативные индустрии",
                 title: "Creative Generation 2025 — федеральный хакатон для студентов ИТКИ",
                 body: "Стартовал федеральный контент-хакатон «Creative Generation» в сфере креативных индустрий. Бесплатное обучение нейросетям и работа на реальных задачах. Сроки: 1 октября — 19 декабря 2025. Участники получат сертификаты и возможность попасть в лучшие креативные агентства страны. Подавай заявку от кафедры ИТКИ!",
                 source: "mc.vvsu.ru · Творческие объединения",
                 link: "https://www.vvsu.ru/mc/",
-                pinIcon: "📌",
+                accentColor: "#FF007F",
                 delay: 0.18,
               },
             ].map((post, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: post.delay }}>
-                <Card className="rounded-2xl border-2 border-accent/20 hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="h-48 overflow-hidden">
+                <div className="hover:shadow-lg transition-shadow overflow-hidden"
+                  style={{ border: "2px solid var(--border)", borderTop: `4px solid ${post.accentColor}` }}>
+                  <div className="h-48 overflow-hidden relative">
                     <img src={post.img} alt={post.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                  </div>
-                  <CardContent className="p-5">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <Badge className={`text-xs ${post.badgeClass}`}>{post.badge}</Badge>
-                      <Badge variant="outline" className="text-xs">{post.tag}</Badge>
+                    <div className="absolute top-3 left-3 flex items-center gap-2">
+                      <span className="text-[9px] font-black px-2 py-1"
+                        style={{ background: post.accentColor, color: post.accentColor === "#C6FF00" ? "#0A0A0A" : "#fff" }}>
+                        {post.badge}
+                      </span>
+                      <span className="text-[9px] font-bold px-2 py-1" style={{ background: "rgba(0,0,0,0.6)", color: "#fff" }}>
+                        {post.tag}
+                      </span>
                     </div>
-                    <h3 className="font-bold text-foreground text-base mb-2">{post.title}</h3>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-black text-foreground text-base mb-2">{post.title}</h3>
                     <p className="text-sm text-muted-foreground mb-3 line-clamp-3">{post.body}</p>
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <span className="text-xs text-muted-foreground">{post.source}</span>
                       <a href={post.link} target="_blank" rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-xs font-medium text-accent hover:underline">
-                        Подробнее <ExternalLink className="h-3 w-3" />
+                        className="flex items-center gap-1 text-xs font-black transition-colors"
+                        style={{ color: post.accentColor }}>
+                        Подробнее →
                       </a>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             ))}
 
@@ -455,38 +466,39 @@ export default function Community() {
                     link: "https://www.vvsu.ru/admission/mag/",
                   },
                 ].map((alum, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }} whileHover={{ y: -3 }}>
-                    <Card className="rounded-2xl border-border/60 hover:shadow-lg transition-shadow h-full flex flex-col overflow-hidden">
+                  <motion.div key={i} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
+                    <div className="hover:shadow-lg transition-shadow h-full flex flex-col overflow-hidden"
+                      style={{ border: "2px solid var(--border)", borderTop: `4px solid ${alum.color}` }}>
                       <div className="p-4 pb-0 flex items-start gap-3">
-                        <div className="h-11 w-11 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0"
-                          style={{ background: `linear-gradient(135deg, ${alum.color}99, ${alum.color})` }}>
+                        <div className="h-10 w-10 flex items-center justify-center text-white font-black text-base shrink-0"
+                          style={{ background: alum.color }}>
                           {alum.avatar}
                         </div>
                         <div className="min-w-0">
-                          <div className="font-bold text-foreground text-sm">{alum.name}</div>
+                          <div className="font-black text-foreground text-sm">{alum.name}</div>
                           <div className="text-xs text-muted-foreground">{alum.year}</div>
                           <div className="text-xs text-muted-foreground leading-snug mt-0.5">{alum.role}</div>
                         </div>
                       </div>
-                      <CardContent className="p-4 flex flex-col gap-3 flex-1">
+                      <div className="p-4 flex flex-col gap-3 flex-1">
                         <div className="flex gap-1 flex-wrap">
                           {alum.tags.map(t => (
-                            <span key={t} className="text-xs px-2 py-0.5 rounded-full border font-medium"
-                              style={{ borderColor: `${alum.color}44`, color: alum.color, background: `${alum.color}11` }}>{t}</span>
+                            <span key={t} className="text-[10px] px-2 py-0.5 font-black"
+                              style={{ background: alum.color, color: alum.color === "#C6FF00" ? "#0A0A0A" : "#fff" }}>{t}</span>
                           ))}
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed flex-1">«{alum.text}»</p>
                         <div className="flex items-center justify-between pt-2 border-t border-border/40">
-                          <div className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: alum.color }}>
+                          <div className="text-[10px] font-black" style={{ color: alum.color }}>
                             ★ {alum.achievement}
                           </div>
                           <a href={alum.link} target="_blank" rel="noopener noreferrer"
                             className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                            <ExternalLink className="h-3 w-3" /> Подробнее
+                            <ExternalLink className="h-3 w-3" /> →
                           </a>
                         </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -498,11 +510,12 @@ export default function Community() {
             </div>
 
             {/* Forum posts */}
-            {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-36 w-full rounded-2xl" />) :
+            {postsLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-36 w-full" />) :
               posts?.map((post, i) => {
                 const postId = String(post.id);
                 const postReactions = reactions[postId];
                 const isExpanded = expandedPostId === post.id;
+                const catColor = ["#0057B8","#FF007F","#C6FF00","#EB7124","#0A0A0A"][i % 5];
 
                 return (
                   <motion.div
@@ -512,13 +525,14 @@ export default function Community() {
                     transition={{ delay: i * 0.06 }}
                     data-testid={`card-post-${post.id}`}
                   >
-                    <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow overflow-hidden">
+                    <div className="border-border/60 hover:shadow-md transition-shadow overflow-hidden"
+                      style={{ border: "2px solid var(--border)", borderLeft: `4px solid ${catColor}` }}>
                       {categoryImages[post.category] && (
                         <div className="h-36 overflow-hidden">
                           <img src={categoryImages[post.category]} alt={post.category} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                         </div>
                       )}
-                      <CardContent className="p-5">
+                      <div className="p-5">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-2">
                             <Badge variant="outline" className="text-xs">{post.category}</Badge>
@@ -581,8 +595,8 @@ export default function Community() {
                             )}
                           </AnimatePresence>
                         </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   </motion.div>
                 );
               })

@@ -248,15 +248,21 @@ export default function DesignProgramsPage() {
               {/* Quick facts */}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 0 }}>
               {[
-                { icon: "🎓", label: "Бакалавриат" }, { icon: "🎓", label: "Магистратура" },
-                { icon: "⏱️", label: "Очное обучение" }, { icon: "🏛️", label: "ИТИКИ" },
-                { icon: "🖼️", label: "Портфолио" }, { icon: "🧩", label: "Реальные проекты" },
-              ].map((f, i) => (
-                <div key={i} style={{ border: "1px solid rgba(255,255,255,0.1)", padding: "12px 16px", textAlign: "center", marginRight: -1, marginBottom: -1 }}>
-                  <div style={{ fontSize: 18, marginBottom: 4 }}>{f.icon}</div>
+                { mark: "БАК", label: "Бакалавриат", bg: "#0057B8" },
+                { mark: "МАГ", label: "Магистратура", bg: "#FF007F" },
+                { mark: "ОЧН", label: "Очное", bg: "#C6FF00" },
+                { mark: "ИТК", label: "ИТИКИ", bg: "#0A0A0A" },
+                { mark: "ПРФ", label: "Портфолио", bg: "#0057B8" },
+                { mark: "PRJ", label: "Реальные проекты", bg: "#FF007F" },
+              ].map((f, i) => {
+                const fg = f.bg === "#C6FF00" ? "#0A0A0A" : "#fff";
+                return (
+                <div key={i} style={{ border: "2px solid rgba(255,255,255,0.1)", padding: "12px 16px", textAlign: "center", marginRight: -2, marginBottom: -2 }}>
+                  <div style={{ width: 28, height: 28, background: f.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 900, color: fg, margin: "0 auto 6px" }}>{f.mark}</div>
                   <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 700, letterSpacing: 0.5 }}>{f.label}</div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </motion.div>
         </div>

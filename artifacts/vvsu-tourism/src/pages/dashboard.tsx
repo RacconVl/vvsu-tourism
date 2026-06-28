@@ -1394,24 +1394,21 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Profile Hero */}
-      <div
-        className="relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0057B8 0%, #0057B8 55%, #0a2d5c 100%)" }}
-      >
-        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-          <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 1440 80" preserveAspectRatio="none">
-            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="hsl(var(--background))" />
-          </svg>
-          <div className="absolute top-6 right-12 opacity-10">
-            <Waves className="h-40 w-40 text-white" />
+      {/* Profile Hero — editorial black */}
+      <div style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        {/* Label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "16px 48px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#EB7124" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#EB7124" }}>
+              {isAdmin ? "Панель администратора" : "Личный кабинет"}
+            </span>
           </div>
-          <div className="absolute -top-4 -left-4 opacity-5">
-            <Anchor className="h-56 w-56 text-white" />
-          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ ВВГУ · ИТИКИ</span>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 pt-10 pb-16">
+        <div className="relative max-w-7xl mx-auto px-4 py-8 md:py-10">
           {profileLoading ? (
             <div className="flex gap-5 items-center">
               <Skeleton className="h-24 w-24 rounded-full bg-white/10" />
@@ -1522,38 +1519,36 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Journey Map */}
               <div className="lg:col-span-2">
-                <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #0057B8, #EB7124)" }} />
-                  <CardHeader className="pb-2 pt-4">
-                    <CardTitle className="flex items-center gap-2 text-primary text-base">
-                      <MapPin className="h-4 w-4 text-accent" /> Карта путешествия
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
+                <div className="overflow-hidden" style={{ border: "3px solid var(--border)", borderTop: "4px solid #0057B8" }}>
+                  <div className="px-4 pt-4 pb-2 flex items-center gap-2">
+                    <div className="h-7 w-7 flex items-center justify-center text-[9px] font-black" style={{ background: "#0057B8", color: "#fff" }}>МАП</div>
+                    <span className="text-sm font-black text-foreground uppercase tracking-widest" style={{ fontSize: 11 }}>Карта путешествия</span>
+                  </div>
+                  <div className="px-4 pb-4">
                     {mapLoading ? (
-                      <div className="space-y-3">{[1,2,3,4,5].map(i => <Skeleton key={i} className="h-16 w-full rounded-xl" />)}</div>
+                      <div className="space-y-3">{[1,2,3,4,5].map(i => <Skeleton key={i} className="h-16 w-full" />)}</div>
                     ) : progressMap ? (
                       <div className="relative">
                         <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border" />
                         <div className="space-y-4">
                           {progressMap.stages.map((stage, i) => (
                             <div key={stage.id} className="flex gap-4 items-start pl-2">
-                              <div className={`relative z-10 flex-shrink-0 h-10 w-10 rounded-full border-2 flex items-center justify-center text-sm font-bold shadow-sm ${
+                              <div className={`relative z-10 flex-shrink-0 h-10 w-10 border-2 flex items-center justify-center text-sm font-black shadow-sm ${
                                 stage.isCompleted ? "text-white border-[#0057B8]"
-                                  : stage.isCurrent ? "text-white border-[#EB7124] animate-pulse"
+                                  : stage.isCurrent ? "text-white border-[#EB7124]"
                                   : stage.isLocked ? "bg-muted border-muted text-muted-foreground"
                                   : "bg-background border-border text-foreground"
                               }`} style={stage.isCompleted ? { background: "#0057B8" } : stage.isCurrent ? { background: "#EB7124" } : {}}>
                                 {stage.isCompleted ? "✓" : i + 1}
                               </div>
-                              <div className={`flex-1 p-3 rounded-xl border transition-all ${
+                              <div className={`flex-1 p-3 border transition-all ${
                                 stage.isCurrent ? "border-[#EB7124]/30 bg-[#EB7124]/5"
                                   : stage.isCompleted ? "border-[#0057B8]/20 bg-[#0057B8]/5"
                                   : "border-border/40 bg-muted/20"
                               }`}>
                                 <div className="flex items-center justify-between">
                                   <div>
-                                    <p className={`font-semibold text-sm ${stage.isLocked ? "text-muted-foreground" : "text-foreground"}`}>{stage.name}</p>
+                                    <p className={`font-bold text-sm ${stage.isLocked ? "text-muted-foreground" : "text-foreground"}`}>{stage.name}</p>
                                     <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                                       <MapPin className="h-3 w-3" /> {stage.location}
                                     </p>
@@ -1567,21 +1562,19 @@ export default function Dashboard() {
                         </div>
                       </div>
                     ) : null}
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </div>
 
               {/* Right column */}
               <div className="space-y-6">
                 {/* Recent Activity */}
-                <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "linear-gradient(90deg, #EB7124, #d97706)" }} />
-                  <CardHeader className="pb-3 pt-4">
-                    <CardTitle className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <Activity className="h-4 w-4 text-accent" /> Последняя активность
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="px-4 pb-4 space-y-2">
+                <div className="overflow-hidden" style={{ border: "3px solid var(--border)", borderTop: "4px solid #EB7124" }}>
+                  <div className="px-4 pt-4 pb-2 flex items-center gap-2">
+                    <div className="h-7 w-7 flex items-center justify-center text-[9px] font-black" style={{ background: "#EB7124", color: "#fff" }}>АКТ</div>
+                    <span className="font-black text-foreground uppercase tracking-widest" style={{ fontSize: 11 }}>Последняя активность</span>
+                  </div>
+                  <div className="px-4 pb-4 space-y-2">
                     {summaryLoading ? (
                       [1,2,3].map(i => <Skeleton key={i} className="h-14 w-full rounded-xl" />)
                     ) : summary?.recentActivity.length ? (
@@ -1611,59 +1604,61 @@ export default function Dashboard() {
                         <p className="text-xs text-muted-foreground/60 mt-1">Проходите курсы и квесты</p>
                       </div>
                     )}
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
                 {/* Deadlines */}
-                <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "#0057B8" }} />
-                  <CardHeader className="pb-2 pt-4">
-                    <CardTitle className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                      <Clock className="h-3.5 w-3.5" /> Ближайшие дедлайны
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    {summaryLoading ? [1,2].map(i => <Skeleton key={i} className="h-14 w-full rounded-xl" />) :
+                <div className="overflow-hidden" style={{ border: "3px solid var(--border)", borderTop: "4px solid #0057B8" }}>
+                  <div className="px-4 pt-4 pb-2 flex items-center gap-2">
+                    <div className="h-7 w-7 flex items-center justify-center text-[9px] font-black" style={{ background: "#0057B8", color: "#fff" }}>ДДЛ</div>
+                    <span className="font-black text-foreground uppercase tracking-widest" style={{ fontSize: 11 }}>Ближайшие дедлайны</span>
+                  </div>
+                  <div className="px-4 pb-4 space-y-2">
+                    {summaryLoading ? [1,2].map(i => <Skeleton key={i} className="h-14 w-full" />) :
                       summary?.upcomingDeadlines.length ? summary.upcomingDeadlines.map((d) => (
-                        <div key={d.id} className="p-3 rounded-xl border border-border/60 bg-background">
-                          <p className="text-sm font-medium text-foreground line-clamp-1">{d.title}</p>
+                        <div key={d.id} className="p-3 border border-border/60 bg-background">
+                          <p className="text-sm font-bold text-foreground line-clamp-1">{d.title}</p>
                           <p className="text-xs text-muted-foreground mt-0.5">{d.courseTitle}</p>
-                          <p className="text-xs font-medium mt-1" style={{ color: "#EB7124" }}>
+                          <p className="text-xs font-black mt-1" style={{ color: "#EB7124" }}>
                             {new Date(d.dueDate).toLocaleDateString("ru-RU", { day: "numeric", month: "long" })}
                           </p>
                         </div>
                       )) : <p className="text-xs text-muted-foreground py-2 text-center">Дедлайнов нет</p>
                     }
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
                 {/* Mini Leaderboard */}
-                <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #0057B8)" }} />
-                  <CardHeader className="pb-2 pt-4 flex flex-row items-center justify-between space-y-0">
-                    <CardTitle className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                      <Trophy className="h-3.5 w-3.5 text-yellow-500" /> Топ студентов
-                    </CardTitle>
+                <div className="overflow-hidden" style={{ border: "3px solid var(--border)", borderTop: "4px solid #C6FF00" }}>
+                  <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="h-7 w-7 flex items-center justify-center text-[9px] font-black" style={{ background: "#C6FF00", color: "#0A0A0A" }}>ТОП</div>
+                      <span className="font-black text-foreground uppercase tracking-widest" style={{ fontSize: 11 }}>Топ студентов</span>
+                    </div>
                     <Button variant="ghost" size="sm" asChild className="text-xs h-7 px-2">
-                      <Link href="/leaderboard">Все <ChevronRight className="h-3 w-3 ml-0.5" /></Link>
+                      <Link href="/leaderboard">Все →</Link>
                     </Button>
-                  </CardHeader>
-                  <CardContent className="space-y-1.5">
-                    {lbLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-10 w-full rounded-xl" />) :
+                  </div>
+                  <div className="px-4 pb-4 space-y-1.5">
+                    {lbLoading ? [1,2,3].map(i => <Skeleton key={i} className="h-10 w-full" />) :
                       leaderboard?.length ? leaderboard.slice(0, 4).map((entry) => (
-                        <div key={entry.rank} className="flex items-center gap-3 p-2 rounded-xl transition-colors hover:bg-muted/40" style={entry.rank <= 3 ? { background: "rgba(235,113,36,0.05)" } : {}}>
-                          <span className={`text-sm font-bold w-5 text-center shrink-0 ${entry.rank === 1 ? "text-yellow-500" : entry.rank === 2 ? "text-gray-400" : entry.rank === 3 ? "text-amber-600" : "text-muted-foreground"}`}>{entry.rank}</span>
-                          <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-7 w-7 rounded-full object-cover ring-1 ring-border" />
+                        <div key={entry.rank} className="flex items-center gap-3 p-2 transition-colors hover:bg-muted/40"
+                          style={entry.rank <= 3 ? { borderLeft: "3px solid #C6FF00" } : { borderLeft: "3px solid transparent" }}>
+                          <span className="text-sm font-black w-5 text-center shrink-0"
+                            style={{ color: entry.rank === 1 ? "#C6FF00" : entry.rank === 2 ? "#0057B8" : entry.rank === 3 ? "#FF007F" : "var(--muted-foreground)" }}>
+                            {entry.rank}
+                          </span>
+                          <img src={entry.avatarUrl || undefined} alt={entry.studentName} className="h-7 w-7 object-cover ring-1 ring-border" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs font-medium truncate">{entry.studentName}</p>
+                            <p className="text-xs font-bold truncate">{entry.studentName}</p>
                             <p className="text-xs text-muted-foreground">Ур. {entry.level}</p>
                           </div>
-                          <span className="text-xs font-bold" style={{ color: "#EB7124" }}>{entry.xp.toLocaleString()}</span>
+                          <span className="text-xs font-black" style={{ color: "#EB7124" }}>{entry.xp.toLocaleString()}</span>
                         </div>
                       )) : <p className="text-xs text-muted-foreground py-2 text-center">Пока нет студентов</p>
                     }
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -1674,36 +1669,38 @@ export default function Dashboard() {
           <motion.div key="achievements" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
             {profileLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="h-28 rounded-2xl" />)}
+                {[1,2,3,4,5,6].map(i => <Skeleton key={i} className="h-28" />)}
               </div>
             ) : profile?.unlockedAchievements.length === 0 ? (
-              <Card className="rounded-2xl border-dashed">
-                <CardContent className="p-10 text-center text-muted-foreground">
-                  <Lock className="h-10 w-10 mx-auto mb-3 opacity-40" />
-                  Пока нет открытых достижений. Проходите тесты и квесты, чтобы получить первые!
-                </CardContent>
-              </Card>
+              <div className="p-10 text-center text-muted-foreground" style={{ border: "3px dashed var(--border)" }}>
+                <Lock className="h-10 w-10 mx-auto mb-3 opacity-40" />
+                Пока нет открытых достижений. Проходите тесты и квесты, чтобы получить первые!
+              </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {profile?.unlockedAchievements.map((a, i) => (
+                {profile?.unlockedAchievements.map((a, i) => {
+                  const accentColors = ["#0057B8","#FF007F","#C6FF00","#EB7124","#0A0A0A"];
+                  const ac = accentColors[i % accentColors.length];
+                  return (
                   <motion.div key={a.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                    <Card className="rounded-2xl border-border/60 hover:shadow-md transition-shadow">
-                      <CardContent className="p-5 flex gap-4">
-                        <div className="h-14 w-14 rounded-2xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
-                          {iconMap[a.iconType] ?? <Award className="h-6 w-6" />}
+                    <div className="hover:shadow-md transition-shadow" style={{ border: "2px solid var(--border)", borderTop: `4px solid ${ac}` }}>
+                      <div className="p-5 flex gap-4">
+                        <div className="h-12 w-12 flex items-center justify-center shrink-0" style={{ background: ac, color: ac === "#C6FF00" ? "#0A0A0A" : "#fff" }}>
+                          {iconMap[a.iconType] ?? <Award className="h-5 w-5" />}
                         </div>
                         <div className="flex-1">
-                          <h3 className="font-bold">{a.name}</h3>
-                          <p className="text-sm text-muted-foreground">{a.description}</p>
+                          <h3 className="font-black text-sm">{a.name}</h3>
+                          <p className="text-xs text-muted-foreground">{a.description}</p>
                           <div className="flex items-center justify-between mt-2 text-xs">
-                            <span className="text-accent font-semibold">+{a.xpReward} XP</span>
+                            <span className="font-black" style={{ color: ac }}>+{a.xpReward} XP</span>
                             <span className="text-muted-foreground">{new Date(a.unlockedAt).toLocaleDateString("ru-RU")}</span>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   </motion.div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </motion.div>
@@ -1712,8 +1709,8 @@ export default function Dashboard() {
         {/* ── АКТИВНОСТЬ (только студенты) ─────────────────── */}
         {activeTab === "activity" && !isAdmin && (
           <motion.div key="activity" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-            <Card className="rounded-2xl border-border/60">
-              <CardContent className="p-5">
+            <div style={{ border: "3px solid var(--border)", borderTop: "4px solid #EB7124" }}>
+              <div className="p-5">
                 {profileLoading ? (
                   <div className="space-y-3">{[1,2,3,4,5].map(i => <Skeleton key={i} className="h-16 rounded-xl" />)}</div>
                 ) : profile?.recentActivity.length === 0 ? (
@@ -1747,16 +1744,16 @@ export default function Dashboard() {
                     })}
                   </ul>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
         )}
 
         {/* ── РЕЗУЛЬТАТЫ (только студенты) ─────────────────── */}
         {activeTab === "results" && !isAdmin && (
           <motion.div key="results" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-5">
-            <Card className="rounded-2xl border-border/60">
-              <CardContent className="p-5">
+            <div style={{ border: "3px solid var(--border)", borderTop: "4px solid #0057B8" }}>
+              <div className="p-5">
                 <h3 className="font-bold mb-4 flex items-center gap-2"><Brain className="h-5 w-5 text-secondary" /> История тестов</h3>
                 {profileLoading ? <Skeleton className="h-32 rounded-xl" /> :
                   profile?.quizHistory.length === 0 ? (
@@ -1778,12 +1775,12 @@ export default function Dashboard() {
                     </ul>
                   )
                 }
-              </CardContent>
-            </Card>
-            <Card className="rounded-2xl border-border/60">
-              <CardContent className="p-5">
-                <h3 className="font-bold mb-4 flex items-center gap-2"><BookOpen className="h-5 w-5 text-primary" /> Прогресс по курсам</h3>
-                {profileLoading ? <Skeleton className="h-32 rounded-xl" /> :
+              </div>
+            </div>
+            <div style={{ border: "3px solid var(--border)", borderTop: "4px solid #0057B8" }}>
+              <div className="p-5">
+                <h3 className="font-black text-sm mb-4 flex items-center gap-2"><BookOpen className="h-4 w-4" style={{ color: "#0057B8" }} /> Прогресс по курсам</h3>
+                {profileLoading ? <Skeleton className="h-32" /> :
                   profile?.completedCourses.length === 0 ? (
                     <p className="text-muted-foreground text-sm">Вы ещё не открывали модули курсов.</p>
                   ) : (
@@ -1791,7 +1788,7 @@ export default function Dashboard() {
                       {profile?.completedCourses.map((c) => (
                         <li key={c.courseId}>
                           <div className="flex justify-between text-sm mb-1.5">
-                            <span className="font-semibold">{c.title}</span>
+                            <span className="font-bold">{c.title}</span>
                             <span className="text-muted-foreground">{c.completedModules} / {c.totalModules}</span>
                           </div>
                           <Progress value={c.totalModules > 0 ? (c.completedModules / c.totalModules) * 100 : 0} className="h-2" />
@@ -1800,18 +1797,19 @@ export default function Dashboard() {
                     </ul>
                   )
                 }
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
         )}
 
         {/* ── НАСТРОЙКИ ────────────────────────────────────────── */}
         {activeTab === "settings" && (
           <motion.div key="settings" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-            <Card className="rounded-2xl border-border/60 max-w-2xl">
-              <CardContent className="p-6 space-y-5">
-                <h2 className="text-lg font-bold flex items-center gap-2">
-                  <Settings className="h-5 w-5 text-accent" /> Настройки профиля
+            <div className="max-w-2xl" style={{ border: "3px solid var(--border)", borderTop: "4px solid #EB7124" }}>
+              <div className="p-6 space-y-5">
+                <h2 className="font-black text-base flex items-center gap-2">
+                  <div className="h-7 w-7 flex items-center justify-center text-[9px] font-black" style={{ background: "#EB7124", color: "#fff" }}>НСТ</div>
+                  Настройки профиля
                 </h2>
                 <div className="space-y-2">
                   <Label>Имя</Label>
@@ -1845,8 +1843,8 @@ export default function Dashboard() {
                 <Button onClick={saveProfile} disabled={update.isPending} className="rounded-full" data-testid="button-save-profile">
                   {update.isPending ? "Сохранение..." : "Сохранить изменения"}
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
         )}
       </div>

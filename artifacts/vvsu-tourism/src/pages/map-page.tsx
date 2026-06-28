@@ -141,7 +141,7 @@ export default function MapPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Yandex Map */}
           <div className="lg:col-span-2">
-            <Card className="rounded-2xl border-border/60 overflow-hidden">
+            <div className="overflow-hidden" style={{ border: "3px solid var(--border)" }}>
               <div className="relative" style={{ height: "640px" }}>
                 {pointsLoading ? (
                   <Skeleton className="absolute inset-0" />
@@ -202,7 +202,7 @@ export default function MapPage() {
                   </YMaps>
                 )}
               </div>
-            </Card>
+            </div>
             <p className="text-xs text-muted-foreground mt-2 px-1">
               © Яндекс.Карты. Используйте колесо мыши для масштабирования, перетаскивание для перемещения.
             </p>
