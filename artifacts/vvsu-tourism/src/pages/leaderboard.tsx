@@ -3,7 +3,7 @@ import { useGetLeaderboard } from "@workspace/api-client-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Trophy, Star, Compass, Flame, Gift, MapPin, Swords, ArrowRight, CheckCircle, Lightbulb, Route, Palette, Megaphone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
 const roleLabels: Record<string, string> = {
@@ -21,50 +21,10 @@ const rankStyle = (rank: number) => {
 };
 
 const questExamples = [
-  {
-    icon: <Route className="h-5 w-5" />,
-    type: "Маршрут",
-    color: "bg-teal-100 text-teal-700",
-    title: "Маршрут по Золотому Рогу",
-    desc: "Разработайте однодневный туристический маршрут по набережной с 5 ключевыми достопримечательностями",
-    location: "Бухта Золотой Рог",
-    difficulty: "Лёгкий",
-    diffColor: "text-green-600",
-    xp: 100,
-  },
-  {
-    icon: <Megaphone className="h-5 w-5" />,
-    type: "Маркетинг",
-    color: "bg-purple-100 text-purple-700",
-    title: "SMM-кампания для сафари-парка",
-    desc: "Создайте концепцию SMM-кампании для привлечения туристов в Приморский сафари-парк",
-    location: "Приморский сафари-парк",
-    difficulty: "Средний",
-    diffColor: "text-amber-600",
-    xp: 175,
-  },
-  {
-    icon: <Palette className="h-5 w-5" />,
-    type: "Дизайн",
-    color: "bg-rose-100 text-rose-700",
-    title: "Фирменный стиль отеля на мысе Тобизина",
-    desc: "Разработайте концепцию визуального стиля для бутик-отеля: цвета, логотип, айдентика",
-    location: "Мыс Тобизина",
-    difficulty: "Сложный",
-    diffColor: "text-red-600",
-    xp: 250,
-  },
-  {
-    icon: <Route className="h-5 w-5" />,
-    type: "Маршрут",
-    color: "bg-teal-100 text-teal-700",
-    title: "Экомаршрут по Морскому заповеднику",
-    desc: "Разработайте эко-тур с минимальным воздействием на природу и образовательными элементами",
-    location: "Морской заповедник",
-    difficulty: "Сложный",
-    diffColor: "text-red-600",
-    xp: 300,
-  },
+  { mark: "МАР", type: "Маршрут",   color: "bg-teal-100 text-teal-700",   title: "Маршрут по Золотому Рогу",              desc: "Разработайте однодневный туристический маршрут по набережной с 5 ключевыми достопримечательностями", location: "Бухта Золотой Рог",         difficulty: "Лёгкий",  diffColor: "text-green-600", xp: 100 },
+  { mark: "МКТ", type: "Маркетинг", color: "bg-purple-100 text-purple-700", title: "SMM-кампания для сафари-парка",          desc: "Создайте концепцию SMM-кампании для привлечения туристов в Приморский сафари-парк",                location: "Приморский сафари-парк",    difficulty: "Средний", diffColor: "text-amber-600", xp: 175 },
+  { mark: "ДЗН", type: "Дизайн",    color: "bg-rose-100 text-rose-700",   title: "Фирменный стиль отеля на мысе Тобизина", desc: "Разработайте концепцию визуального стиля для бутик-отеля: цвета, логотип, айдентика",               location: "Мыс Тобизина",              difficulty: "Сложный", diffColor: "text-red-600",   xp: 250 },
+  { mark: "ЭКО", type: "Маршрут",   color: "bg-teal-100 text-teal-700",   title: "Экомаршрут по Морскому заповеднику",    desc: "Разработайте эко-тур с минимальным воздействием на природу и образовательными элементами",          location: "Морской заповедник",        difficulty: "Сложный", diffColor: "text-red-600",   xp: 300 },
 ];
 
 const successStories = [
@@ -123,7 +83,7 @@ export default function Leaderboard() {
         <div className="max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center justify-center gap-3 mb-3">
-              <Trophy className="h-7 w-7 text-amber-400" />
+              <span className="text-2xl">🏆</span>
               <span className="text-white/60 uppercase tracking-widest text-xs">Рейтинг</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">Зал славы</h1>
@@ -139,15 +99,15 @@ export default function Leaderboard() {
         {/* ── Как работает система ───────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="flex items-center gap-2 mb-6">
-            <Lightbulb className="h-5 w-5 text-accent" />
+            <span className="text-accent font-black">◆</span>
             <h2 className="text-2xl font-bold text-foreground">Как работает система баллов</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {[
-              { step: "01", icon: <Compass className="h-6 w-6" />, title: "Выбери квест", desc: "Реальные задания по туризму, маркетингу, дизайну и бюджетированию во Владивостоке", color: "#0057B8" },
-              { step: "02", icon: <CheckCircle className="h-6 w-6" />, title: "Выполни задание", desc: "Отправь решение через личный кабинет — преподаватели проверяют работу", color: "#EB7124" },
-              { step: "03", icon: <Star className="h-6 w-6" />, title: "Получи XP", desc: "За каждый квест начисляются баллы опыта: от 100 до 300 XP в зависимости от сложности", color: "#7c3aed" },
-              { step: "04", icon: <Gift className="h-6 w-6" />, title: "Обменяй на имиджку", desc: "Накопленные XP можно обменять в деканате на фирменную атрибутику ВВГУ", color: "#0891b2" },
+              { step: "01", mark: "КВТ", title: "Выбери квест", desc: "Реальные задания по туризму, маркетингу, дизайну и бюджетированию во Владивостоке", color: "#0057B8" },
+              { step: "02", mark: "ВЫП", title: "Выполни задание", desc: "Отправь решение через личный кабинет — преподаватели проверяют работу", color: "#EB7124" },
+              { step: "03", mark: "XP",  title: "Получи XP", desc: "За каждый квест начисляются баллы опыта: от 100 до 300 XP в зависимости от сложности", color: "#7c3aed" },
+              { step: "04", mark: "ОБМ", title: "Обменяй на имиджку", desc: "Накопленные XP можно обменять в деканате на фирменную атрибутику ВВГУ", color: "#0891b2" },
             ].map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Card className="rounded-2xl border-border/60 h-full">
@@ -162,7 +122,7 @@ export default function Leaderboard() {
                       animate={{ y: [0, -4, 0] }}
                       transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
                     >
-                      {s.icon}
+                      <span className="text-xs font-black">{s.mark}</span>
                     </motion.div>
                     <h3 className="font-bold text-foreground mb-1">{s.title}</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
@@ -189,7 +149,7 @@ export default function Leaderboard() {
         {/* ── Магазин имиджки ─────────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="flex items-center gap-2 mb-6">
-            <Gift className="h-5 w-5 text-accent" />
+            <span className="text-accent font-black">◆</span>
             <h2 className="text-2xl font-bold text-foreground">Что можно получить за XP</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -206,7 +166,7 @@ export default function Leaderboard() {
                   <div className="text-3xl mb-2">{item.emoji}</div>
                   <p className="text-xs font-semibold text-foreground leading-tight mb-1">{item.name}</p>
                   <Badge variant="outline" className="text-[10px] text-accent border-accent/40">
-                    <Flame className="h-2.5 w-2.5 mr-0.5" /> {item.xp.toLocaleString()} XP
+                    ★ {item.xp.toLocaleString()} XP
                   </Badge>
                 </Card>
               </motion.div>
@@ -221,7 +181,7 @@ export default function Leaderboard() {
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
             <div className="flex items-center gap-2">
-              <Compass className="h-5 w-5 text-accent" />
+              <span className="text-accent font-black">◆</span>
               <h2 className="text-2xl font-bold text-foreground">Примеры квестов из кабинета</h2>
             </div>
             <Link href="/quests">
@@ -245,7 +205,7 @@ export default function Leaderboard() {
                     <div className="flex items-start gap-3">
                       <div className="shrink-0 mt-0.5">
                         <Badge className={`${q.color} border-0 text-xs flex items-center gap-1 px-2 py-1`}>
-                          {q.icon} {q.type}
+                          {q.mark} · {q.type}
                         </Badge>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -253,13 +213,13 @@ export default function Leaderboard() {
                         <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{q.desc}</p>
                         <div className="flex items-center gap-3 flex-wrap">
                           <span className="text-xs text-muted-foreground flex items-center gap-1">
-                            <MapPin className="h-3 w-3" /> {q.location}
+                            ● {q.location}
                           </span>
                           <span className={`text-xs font-medium flex items-center gap-1 ${q.diffColor}`}>
-                            <Swords className="h-3 w-3" /> {q.difficulty}
+                            ◆ {q.difficulty}
                           </span>
                           <span className="text-xs font-bold text-accent flex items-center gap-1 ml-auto">
-                            <Star className="h-3 w-3" /> +{q.xp} XP
+                            ★ +{q.xp} XP
                           </span>
                         </div>
                       </div>
@@ -274,7 +234,7 @@ export default function Leaderboard() {
         {/* ── Истории успеха ───────────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="flex items-center gap-2 mb-6">
-            <Trophy className="h-5 w-5 text-accent" />
+            <span className="text-accent font-black">◆</span>
             <h2 className="text-2xl font-bold text-foreground">Студенты, которые уже получают имиджку</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -299,10 +259,10 @@ export default function Leaderboard() {
                     <p className="text-sm text-muted-foreground leading-relaxed italic">"{s.story}"</p>
                     <div className="flex items-center gap-2 flex-wrap pt-1 border-t border-border/40">
                       <Badge variant="outline" className="text-xs">
-                        <Flame className="h-3 w-3 mr-1 text-accent" /> {s.xp.toLocaleString()} XP
+                        ★ {s.xp.toLocaleString()} XP
                       </Badge>
                       <Badge variant="outline" className="text-xs">
-                        <Compass className="h-3 w-3 mr-1" /> {s.quests} квестов
+                        ◆ {s.quests} квестов
                       </Badge>
                       <span className="text-xs font-semibold text-foreground ml-auto">
                         {s.rewardEmoji} {s.reward}
@@ -318,7 +278,7 @@ export default function Leaderboard() {
         {/* ── Top 3 Podium ─────────────────────────────────────── */}
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="flex items-center gap-2 mb-8">
-            <Trophy className="h-5 w-5 text-accent" />
+            <span className="text-accent font-black">◆</span>
             <h2 className="text-2xl font-bold text-foreground">Текущий рейтинг</h2>
           </div>
 
@@ -379,10 +339,10 @@ export default function Leaderboard() {
                             <Badge variant="outline" className="text-xs">Ур. {entry.level}</Badge>
                           </div>
                           <p className="text-sm font-bold text-accent mt-1 flex items-center gap-1 justify-end">
-                            <Flame className="h-3.5 w-3.5" /> {entry.xp.toLocaleString()} XP
+                            ★ {entry.xp.toLocaleString()} XP
                           </p>
                           <p className="text-xs text-muted-foreground flex items-center gap-1 justify-end mt-0.5">
-                            <Compass className="h-3 w-3" /> {entry.completedQuests} квест.
+                            ◆ {entry.completedQuests} квест.
                           </p>
                         </div>
                       </motion.div>

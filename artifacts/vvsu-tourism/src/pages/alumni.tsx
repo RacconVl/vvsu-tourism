@@ -145,7 +145,7 @@ export default function AlumniPage() {
                 <CardContent className="p-6 space-y-4">
                   {/* Header */}
                   <div className="flex items-start gap-4">
-                    <img src={a.photo} alt={a.name} className="h-16 w-16 rounded-full object-cover ring-2 shrink-0" style={{ ringColor: a.color }} />
+                    <img src={a.photo} alt={a.name} className="h-16 w-16 rounded-full object-cover ring-2 shrink-0" style={{ "--tw-ring-color": a.color } as React.CSSProperties} />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                         <h3 className="font-bold text-foreground">{a.name}</h3>

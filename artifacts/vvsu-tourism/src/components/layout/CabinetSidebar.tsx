@@ -1,15 +1,14 @@
 import { Link, useLocation, useSearch } from "wouter";
 import { motion } from "framer-motion";
-import { LayoutDashboard, Swords, Settings, MessageSquare, UserCheck } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useListConversations, useListFriendRequests } from "@workspace/api-client-react";
 
 const sidebarItems = [
-  { href: "/cabinet",           label: "Обзор",      icon: LayoutDashboard },
-  { href: "/cabinet/tasks",     label: "Задания",    icon: Swords },
-  { href: "/cabinet/friends",   label: "Друзья",     icon: UserCheck },
-  { href: "/cabinet/messages",  label: "Сообщения",  icon: MessageSquare },
+  { href: "/cabinet",          label: "Обзор",     mark: "ОБ" },
+  { href: "/cabinet/tasks",    label: "Задания",   mark: "ЗД" },
+  { href: "/cabinet/friends",  label: "Друзья",    mark: "ДР" },
+  { href: "/cabinet/messages", label: "Сообщения", mark: "СО" },
 ];
 
 function isActive(href: string, location: string, search: string) {
@@ -19,6 +18,20 @@ function isActive(href: string, location: string, search: string) {
     return !params.get("tab") || params.get("tab") === "overview";
   }
   return location.startsWith(href);
+}
+
+function Mark({ text, active }: { text: string; active: boolean }) {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      width: 28, height: 20, fontSize: 9, fontWeight: 900, letterSpacing: "0.05em",
+      background: active ? "rgba(255,255,255,0.2)" : "rgba(0,87,184,0.08)",
+      color: active ? "#fff" : "#0057B8",
+      flexShrink: 0,
+    }}>
+      {text}
+    </span>
+  );
 }
 
 export function CabinetSidebar() {
@@ -81,7 +94,7 @@ export function CabinetSidebar() {
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
-                  <item.icon className="h-4 w-4 shrink-0" />
+                  <Mark text={item.mark} active={active} />
                   <span className="flex-1">{item.label}</span>
                   {badge && (
                     <span className="h-5 min-w-5 px-1 rounded-full bg-accent text-white text-[10px] font-bold flex items-center justify-center">
@@ -104,7 +117,7 @@ export function CabinetSidebar() {
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
-                <Settings className="h-4 w-4 shrink-0" />
+                <Mark text="НС" active={settingsActive} />
                 Настройки
               </motion.div>
             </Link>
@@ -114,7 +127,7 @@ export function CabinetSidebar() {
 
       {/* Mobile bottom navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-card/95 backdrop-blur-md border-t border-border/60 flex items-stretch h-16 safe-area-bottom">
-        {[...sidebarItems, { href: "/cabinet?tab=settings", label: "Настройки", icon: Settings }].map(item => {
+        {[...sidebarItems, { href: "/cabinet?tab=settings", label: "Настройки", mark: "НС" }].map(item => {
           const active =
             item.href === "/cabinet?tab=settings"
               ? settingsActive
@@ -125,7 +138,14 @@ export function CabinetSidebar() {
               <div className={`relative flex flex-col items-center justify-center h-full gap-1 transition-colors ${active ? "text-accent" : "text-muted-foreground"}`}>
                 <div className={`absolute top-0 left-1/2 -translate-x-1/2 h-0.5 rounded-full bg-accent transition-all duration-200 ${active ? "w-8 opacity-100" : "w-0 opacity-0"}`} />
                 <div className="relative">
-                  <item.icon className={`h-5 w-5 transition-all duration-200 ${active ? "scale-110" : ""}`} />
+                  <span style={{
+                    display: "inline-flex", alignItems: "center", justifyContent: "center",
+                    width: 32, height: 22, fontSize: 9, fontWeight: 900, letterSpacing: "0.05em",
+                    background: active ? "rgba(0,87,184,0.12)" : "rgba(0,0,0,0.05)",
+                    color: active ? "#0057B8" : "currentColor",
+                  }}>
+                    {item.mark}
+                  </span>
                   {badge && (
                     <span className="absolute -top-1.5 -right-1.5 h-4 min-w-4 px-0.5 rounded-full bg-accent text-white text-[9px] font-bold flex items-center justify-center">
                       {badge}

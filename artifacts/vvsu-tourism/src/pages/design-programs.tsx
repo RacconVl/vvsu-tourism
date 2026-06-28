@@ -6,12 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  ArrowRight, CheckCircle, MapPin, Users, Briefcase, Star,
-  Layers, Lightbulb, Monitor, Building2, Leaf, Palette,
-  GraduationCap, FlaskConical, Trophy, Phone, Mail, MessageCircle,
-  ChevronDown, Clock, BookOpen, Hammer,
-} from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 /* ─── data ─────────────────────────────────────────────────── */
 
@@ -100,12 +95,12 @@ const labs = [
 ];
 
 const whyItems = [
-  { icon: <Star className="h-4 w-4" />, title: "Практика с первого курса", desc: "Реальные проекты, а не только учебные задания" },
-  { icon: <Briefcase className="h-4 w-4" />, title: "Портфолио и личный бренд", desc: "Портфолио начинается с первого дня учёбы" },
-  { icon: <MapPin className="h-4 w-4" />, title: "Владивосток и Приморье", desc: "Городская среда — ваша проектная лаборатория" },
-  { icon: <Layers className="h-4 w-4" />, title: "Междисциплинарность", desc: "Дизайн + технологии + мода + туризм" },
-  { icon: <Lightbulb className="h-4 w-4" />, title: "Реальные проекты", desc: "Работа с реальными заказчиками и задачами" },
-  { icon: <Users className="h-4 w-4" />, title: "Первые заказы", desc: "Монетизация навыков ещё во время учёбы" },
+  { mark: "01", title: "Практика с первого курса", desc: "Реальные проекты, а не только учебные задания" },
+  { mark: "02", title: "Портфолио и личный бренд", desc: "Портфолио начинается с первого дня учёбы" },
+  { mark: "03", title: "Владивосток и Приморье",   desc: "Городская среда — ваша проектная лаборатория" },
+  { mark: "04", title: "Междисциплинарность",      desc: "Дизайн + технологии + мода + туризм" },
+  { mark: "05", title: "Реальные проекты",          desc: "Работа с реальными заказчиками и задачами" },
+  { mark: "06", title: "Первые заказы",             desc: "Монетизация навыков ещё во время учёбы" },
 ];
 
 const projectFilters = ["Все", "Дизайн среды", "Цифровой дизайн", "Мода", "Графика", "Архитектура"];
@@ -305,7 +300,7 @@ export default function DesignProgramsPage() {
                   "Мечтать, исследовать, творить — объединяя искусство и технологии",
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-accent shrink-0 mt-0.5" />
+                    <span className="text-accent shrink-0 mt-0.5 font-bold">→</span>
                     {item}
                   </div>
                 ))}
@@ -332,7 +327,7 @@ export default function DesignProgramsPage() {
         <motion.section id="programs" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="text-center mb-10">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <Palette className="h-5 w-5 text-accent" />
+              <span className="text-accent font-black">◆</span>
               <span className="text-muted-foreground uppercase tracking-widest text-xs">Карта направлений</span>
             </div>
             <h2 className="text-3xl font-bold text-foreground">Выбери свой образовательный трек</h2>
@@ -390,8 +385,8 @@ export default function DesignProgramsPage() {
                 {whyItems.map((item, i) => (
                   <motion.div key={i} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
                     className="flex items-start gap-3">
-                    <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
-                      {item.icon}
+                    <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0 text-[9px] font-black">
+                      {item.mark}
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground">{item.title}</p>
@@ -422,7 +417,7 @@ export default function DesignProgramsPage() {
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <Lightbulb className="h-4 w-4 text-accent" />
+              <span className="text-accent font-black">◆</span>
               <span className="text-muted-foreground uppercase tracking-widest text-xs">Как строится обучение</span>
             </div>
             <h2 className="text-2xl font-bold text-foreground">Идея → Портфолио: 7 шагов</h2>
@@ -556,7 +551,7 @@ export default function DesignProgramsPage() {
         <motion.section id="team" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <Users className="h-4 w-4 text-accent" />
+              <span className="text-accent font-black">◆</span>
               <span className="text-muted-foreground uppercase tracking-widest text-xs">Наставники, практики, эксперты</span>
             </div>
             <h2 className="text-2xl font-bold text-foreground">Преподаватели и профессиональная среда</h2>
@@ -574,12 +569,12 @@ export default function DesignProgramsPage() {
           </div>
           <div className="grid grid-cols-3 gap-4 text-center">
             {[
-              { icon: <Users className="h-5 w-5 mx-auto text-accent" />, label: "Дизайнеры-практики", desc: "Действующие специалисты отрасли" },
-              { icon: <FlaskConical className="h-5 w-5 mx-auto text-accent" />, label: "Эксперты индустрии", desc: "Консультации и экспертные сессии" },
-              { icon: <Hammer className="h-5 w-5 mx-auto text-accent" />, label: "Наставники проектов", desc: "Персональное сопровождение" },
+              { mark: "ПРК", label: "Дизайнеры-практики", desc: "Действующие специалисты отрасли" },
+              { mark: "ЭКС", label: "Эксперты индустрии", desc: "Консультации и экспертные сессии" },
+              { mark: "НСТ", label: "Наставники проектов", desc: "Персональное сопровождение" },
             ].map((item, i) => (
               <div key={i} className="p-4 rounded-xl bg-muted/30 border border-border/40">
-                {item.icon}
+                <div className="h-8 w-8 mx-auto mb-2 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-[9px] font-black">{item.mark}</div>
                 <p className="text-sm font-bold text-foreground mt-2">{item.label}</p>
                 <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
               </div>
@@ -591,7 +586,7 @@ export default function DesignProgramsPage() {
         <motion.section id="applicants" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="text-center mb-10">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <GraduationCap className="h-5 w-5 text-accent" />
+              <span className="text-accent font-black">◆</span>
               <span className="text-muted-foreground uppercase tracking-widest text-xs">Как поступить</span>
             </div>
             <h2 className="text-3xl font-bold text-foreground">Маршрут абитуриента</h2>
@@ -630,14 +625,13 @@ export default function DesignProgramsPage() {
                         {s.step}
                       </div>
                       <div>
-                        <div className="text-xl">{s.icon}</div>
                         <h3 className="text-sm font-bold text-foreground">{s.title}</h3>
                       </div>
                     </div>
                     <div className="space-y-1.5">
                       {s.items.map((item, j) => (
                         <div key={j} className="flex items-start gap-2 text-xs text-muted-foreground">
-                          <CheckCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" style={{ color: s.color }} />
+                          <span className="shrink-0 mt-0.5 font-bold text-xs" style={{ color: s.color }}>→</span>
                           {item}
                         </div>
                       ))}
@@ -663,13 +657,13 @@ export default function DesignProgramsPage() {
               <h3 className="font-bold text-foreground mb-4">Быстрая информация</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { icon: <Clock className="h-4 w-4" />, label: "Бакалавриат", val: "4 года, очно" },
-                  { icon: <GraduationCap className="h-4 w-4" />, label: "Магистратура", val: "2 года, очно / заочно" },
-                  { icon: <BookOpen className="h-4 w-4" />, label: "Вступительные", val: "Рисунок + Композиция" },
-                  { icon: <Star className="h-4 w-4" />, label: "Бюджетные места", val: "от 10 до 15 на трек" },
+                  { mark: "БАК", label: "Бакалавриат", val: "4 года, очно" },
+                  { mark: "МАГ", label: "Магистратура", val: "2 года, очно / заочно" },
+                  { mark: "ВСТ", label: "Вступительные", val: "Рисунок + Композиция" },
+                  { mark: "БДЖ", label: "Бюджетные места", val: "от 10 до 15 на трек" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center shrink-0">{item.icon}</div>
+                    <div className="h-8 w-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center shrink-0 text-[8px] font-black">{item.mark}</div>
                     <div>
                       <p className="text-xs text-muted-foreground">{item.label}</p>
                       <p className="text-sm font-semibold text-foreground">{item.val}</p>
@@ -733,7 +727,7 @@ export default function DesignProgramsPage() {
                   "Профессиональные контакты и наставники",
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-accent shrink-0" />
+                    <span className="text-accent font-bold shrink-0">→</span>
                     {item}
                   </div>
                 ))}
@@ -762,7 +756,7 @@ export default function DesignProgramsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="p-8 md:p-10 space-y-4" style={{ background: "linear-gradient(135deg,#0057B8,#0057B8)" }}>
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-accent" />
+                  <span className="text-accent font-black">◆</span>
                   <span className="text-white/60 text-xs uppercase tracking-widest">Набережные · Маршруты · Парки</span>
                 </div>
                 <h2 className="text-2xl font-bold text-white">Владивосток — ваша проектная лаборатория</h2>
@@ -814,13 +808,13 @@ export default function DesignProgramsPage() {
               <h2 className="text-2xl font-bold text-foreground mb-5">Свяжитесь с кафедрой</h2>
               <div className="space-y-4 mb-7">
                 {[
-                  { icon: <MapPin className="h-4 w-4" />, label: "Адрес", val: "Владивосток, ул. Гоголя, 41, ВВГУ ИТИКИ" },
-                  { icon: <Mail className="h-4 w-4" />, label: "E-mail", val: "design@vvsu.ru" },
-                  { icon: <Phone className="h-4 w-4" />, label: "Телефон", val: "+7 (423) 240-40-40" },
-                  { icon: <MessageCircle className="h-4 w-4" />, label: "Telegram", val: "@miost_vl — новости кафедры" },
+                  { mark: "АДР", label: "Адрес", val: "Владивосток, ул. Гоголя, 41, ВВГУ ИТИКИ" },
+                  { mark: "МЛ",  label: "E-mail", val: "design@vvsu.ru" },
+                  { mark: "ТЛФ", label: "Телефон", val: "+7 (423) 240-40-40" },
+                  { mark: "ТГ",  label: "Telegram", val: "@miost_vl — новости кафедры" },
                 ].map((c, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center shrink-0">{c.icon}</div>
+                    <div className="h-8 w-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center shrink-0 text-[8px] font-black">{c.mark}</div>
                     <div>
                       <p className="text-xs text-muted-foreground">{c.label}</p>
                       <p className="text-sm font-medium text-foreground">{c.val}</p>

@@ -5,13 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  GraduationCap, ClipboardList, FileText, Phone, MapPin,
-  ChevronRight, CheckCircle2, Clock, Calendar, ArrowRight,
-  Anchor, Waves, Star, Users, BookOpen, Award, Home, Wifi,
-  Utensils, ShieldCheck, Play, ExternalLink,
-  Palette, Sparkles, Lightbulb, Monitor, TreePine, Zap,
-} from "lucide-react";
+import { ChevronRight, CheckCircle2, ArrowRight, ExternalLink, Play } from "lucide-react";
 
 const programs = [
   {
@@ -61,34 +55,10 @@ const programs = [
 ];
 
 const steps = [
-  {
-    num: 1,
-    title: "Подача заявления",
-    desc: "Подайте заявление лично в приёмную комиссию, через Госуслуги или по почте. Укажите желаемое направление и форму обучения.",
-    icon: <FileText className="h-6 w-6" />,
-    deadline: "20 июля",
-  },
-  {
-    num: 2,
-    title: "Сдача документов",
-    desc: "Предоставьте оригиналы или копии необходимых документов. Полный список указан в разделе «Документы».",
-    icon: <ClipboardList className="h-6 w-6" />,
-    deadline: "25 июля",
-  },
-  {
-    num: 3,
-    title: "Вступительные испытания",
-    desc: "Для некоторых специальностей проводятся дополнительные творческие испытания. Расписание публикуется на сайте.",
-    icon: <BookOpen className="h-6 w-6" />,
-    deadline: "28–30 июля",
-  },
-  {
-    num: 4,
-    title: "Зачисление",
-    desc: "После конкурсного отбора абитуриенты, вошедшие в список, подают оригиналы документов для зачисления.",
-    icon: <Award className="h-6 w-6" />,
-    deadline: "9 августа",
-  },
+  { num: 1, title: "Подача заявления",       desc: "Подайте заявление лично в приёмную комиссию, через Госуслуги или по почте. Укажите желаемое направление и форму обучения.", deadline: "20 июля" },
+  { num: 2, title: "Сдача документов",        desc: "Предоставьте оригиналы или копии необходимых документов. Полный список указан в разделе «Документы».", deadline: "25 июля" },
+  { num: 3, title: "Вступительные испытания", desc: "Для некоторых специальностей проводятся дополнительные творческие испытания. Расписание публикуется на сайте.", deadline: "28–30 июля" },
+  { num: 4, title: "Зачисление",              desc: "После конкурсного отбора абитуриенты, вошедшие в список, подают оригиналы документов для зачисления.", deadline: "9 августа" },
 ];
 
 const documents = [
@@ -110,30 +80,30 @@ const exams = [
 ];
 
 const contacts = [
-  { label: "Приёмная комиссия",  value: "+7 (423) 240-40-07", icon: <Phone className="h-4 w-4" /> },
-  { label: "Адрес",              value: "г. Владивосток, ул. Гоголя, 41", icon: <MapPin className="h-4 w-4" /> },
-  { label: "Режим работы",       value: "Пн–Пт: 09:00–17:00", icon: <Clock className="h-4 w-4" /> },
-  { label: "Email",              value: "priem@vvsu.ru", icon: <FileText className="h-4 w-4" /> },
+  { label: "Приёмная комиссия", value: "+7 (423) 240-40-07", mark: "ТЕЛ" },
+  { label: "Адрес",             value: "г. Владивосток, ул. Гоголя, 41", mark: "АДР" },
+  { label: "Режим работы",      value: "Пн–Пт: 09:00–17:00", mark: "ЧАС" },
+  { label: "Email",             value: "priem@vvsu.ru", mark: "МЛ" },
 ];
 
 type TabKey = "programs" | "steps" | "documents" | "exams" | "dorm" | "contacts";
 
-const tabs: { key: TabKey; label: string; icon: React.ReactNode }[] = [
-  { key: "programs",  label: "Направления",          icon: <GraduationCap className="h-4 w-4" /> },
-  { key: "steps",     label: "Этапы поступления",    icon: <ClipboardList className="h-4 w-4" /> },
-  { key: "documents", label: "Документы",             icon: <FileText className="h-4 w-4" /> },
-  { key: "exams",     label: "Вступительные",         icon: <BookOpen className="h-4 w-4" /> },
-  { key: "dorm",      label: "Общежитие",             icon: <Home className="h-4 w-4" /> },
-  { key: "contacts",  label: "Контакты",              icon: <Phone className="h-4 w-4" /> },
+const tabs: { key: TabKey; label: string }[] = [
+  { key: "programs",  label: "Направления" },
+  { key: "steps",     label: "Этапы поступления" },
+  { key: "documents", label: "Документы" },
+  { key: "exams",     label: "Вступительные" },
+  { key: "dorm",      label: "Общежитие" },
+  { key: "contacts",  label: "Контакты" },
 ];
 
 const dormAmenities = [
-  { icon: <Wifi className="h-5 w-5" />,        label: "Высокоскоростной Wi-Fi",        desc: "Оптоволоконный интернет во всех комнатах и зонах отдыха" },
-  { icon: <Utensils className="h-5 w-5" />,    label: "Столовая и буфет",              desc: "Горячее питание 3 раза в день, кухни на каждом этаже" },
-  { icon: <ShieldCheck className="h-5 w-5" />, label: "Круглосуточная охрана",         desc: "Пропускная система, видеонаблюдение, комендант" },
-  { icon: <Users className="h-5 w-5" />,       label: "Комнаты отдыха",               desc: "Телевизоры, настольный теннис, зоны для общения" },
-  { icon: <BookOpen className="h-5 w-5" />,    label: "Читальный зал",                 desc: "Тихая учебная зона с доступом к университетским ресурсам" },
-  { icon: <Home className="h-5 w-5" />,        label: "Прачечная",                     desc: "Стиральные машины и сушилки на каждом этаже" },
+  { mark: "ВФ",  label: "Высокоскоростной Wi-Fi",  desc: "Оптоволоконный интернет во всех комнатах и зонах отдыха" },
+  { mark: "ПТ",  label: "Столовая и буфет",         desc: "Горячее питание 3 раза в день, кухни на каждом этаже" },
+  { mark: "ОХ",  label: "Круглосуточная охрана",    desc: "Пропускная система, видеонаблюдение, комендант" },
+  { mark: "ОТ",  label: "Комнаты отдыха",           desc: "Телевизоры, настольный теннис, зоны для общения" },
+  { mark: "ЧЗ",  label: "Читальный зал",            desc: "Тихая учебная зона с доступом к университетским ресурсам" },
+  { mark: "ПР",  label: "Прачечная",                desc: "Стиральные машины и сушилки на каждом этаже" },
 ];
 
 const dormRooms = [
@@ -219,7 +189,7 @@ export default function AdmissionPage() {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {t.icon} {t.label}
+                {t.label}
               </button>
             ))}
           </div>
@@ -246,10 +216,10 @@ export default function AdmissionPage() {
                           <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
                         </div>
                         <div
-                          className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
+                          className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0 text-[10px] font-black"
                           style={{ background: p.color }}
                         >
-                          <GraduationCap className="h-5 w-5" />
+                          ТУР
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-2 mb-4 text-sm">
@@ -290,8 +260,8 @@ export default function AdmissionPage() {
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8">
               <div className="rounded-2xl border border-[#0057B8]/20 bg-gradient-to-br from-[#0057B8]/5 to-[#6366f1]/5 p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="h-9 w-9 rounded-xl bg-[#0057B8] flex items-center justify-center text-white shrink-0">
-                    <Palette className="h-5 w-5" />
+                  <div className="h-9 w-9 rounded-xl bg-[#0057B8] flex items-center justify-center text-white shrink-0 text-[10px] font-black">
+                    ДЗН
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">54.03.01 · Бакалавриат · 4 года</p>
@@ -308,8 +278,8 @@ export default function AdmissionPage() {
                     <DigitalDesignIllustration />
                     <div className="p-5 flex flex-col gap-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-11 w-11 rounded-xl bg-[#6366f1] flex items-center justify-center text-white shrink-0">
-                        <Monitor className="h-5 w-5" />
+                      <div className="h-11 w-11 rounded-xl bg-[#6366f1] flex items-center justify-center text-white shrink-0 text-[9px] font-black">
+                        ЦФ
                       </div>
                       <div>
                         <p className="text-xs text-[#6366f1] font-semibold uppercase tracking-wide">Профиль 1</p>
@@ -328,7 +298,7 @@ export default function AdmissionPage() {
                       </div>
                     </div>
                     <div className="rounded-xl bg-[#6366f1]/5 p-3.5">
-                      <p className="text-xs font-semibold text-[#6366f1] mb-2 flex items-center gap-1.5"><Sparkles className="h-3.5 w-3.5" /> Идеально, если ты:</p>
+                      <p className="text-xs font-semibold text-[#6366f1] mb-2 flex items-center gap-1.5">✦ Идеально, если ты:</p>
                       <ul className="space-y-1.5">
                         {[
                           "Проводишь часы в телефоне и замечаешь, когда интерфейс «сломан»",
@@ -342,7 +312,7 @@ export default function AdmissionPage() {
                       </ul>
                     </div>
                     <div className="mt-auto pt-1 text-xs text-muted-foreground flex items-center gap-1.5">
-                      <Zap className="h-3.5 w-3.5 text-[#6366f1]" />
+                      <span className="text-[#6366f1] font-bold">→</span>
                       Выпускники работают в стартапах, турагентствах и digital-агентствах по всей России и АТР
                     </div>
                     </div>
@@ -353,8 +323,8 @@ export default function AdmissionPage() {
                     <EnvironmentDesignIllustration />
                     <div className="p-5 flex flex-col gap-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-11 w-11 rounded-xl bg-[#0d9488] flex items-center justify-center text-white shrink-0">
-                        <TreePine className="h-5 w-5" />
+                      <div className="h-11 w-11 rounded-xl bg-[#0d9488] flex items-center justify-center text-white shrink-0 text-[9px] font-black">
+                        СР
                       </div>
                       <div>
                         <p className="text-xs text-[#0d9488] font-semibold uppercase tracking-wide">Профиль 2</p>
@@ -373,7 +343,7 @@ export default function AdmissionPage() {
                       </div>
                     </div>
                     <div className="rounded-xl bg-[#0d9488]/5 p-3.5">
-                      <p className="text-xs font-semibold text-[#0d9488] mb-2 flex items-center gap-1.5"><Lightbulb className="h-3.5 w-3.5" /> Идеально, если ты:</p>
+                      <p className="text-xs font-semibold text-[#0d9488] mb-2 flex items-center gap-1.5">✦ Идеально, если ты:</p>
                       <ul className="space-y-1.5">
                         {[
                           "Входишь в кафе и сразу оцениваешь интерьер, свет и атмосферу",
@@ -387,7 +357,7 @@ export default function AdmissionPage() {
                       </ul>
                     </div>
                     <div className="mt-auto pt-1 text-xs text-muted-foreground flex items-center gap-1.5">
-                      <Zap className="h-3.5 w-3.5 text-[#0d9488]" />
+                      <span className="text-[#0d9488] font-bold">→</span>
                       Выпускники работают с девелоперами, отельными сетями и туристическими объектами Приморья
                     </div>
                     </div>
@@ -397,12 +367,12 @@ export default function AdmissionPage() {
                 {/* Общие преимущества */}
                 <div className="mt-6 rounded-xl bg-[#0057B8]/5 border border-[#0057B8]/10 p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                   {[
-                    { icon: <Award className="h-4 w-4" />, label: "Лицензированная программа", sub: "государственный диплом" },
-                    { icon: <Users className="h-4 w-4" />, label: "Практики отрасли", sub: "преподаватели-действующие специалисты" },
-                    { icon: <Star className="h-4 w-4" />, label: "Творческое испытание", sub: "портфолио вместо ЕГЭ по рисованию" },
-                  ].map(({ icon, label, sub }) => (
+                    { mark: "ЛЦ", label: "Лицензированная программа", sub: "государственный диплом" },
+                    { mark: "ПР", label: "Практики отрасли", sub: "преподаватели-действующие специалисты" },
+                    { mark: "ТВ", label: "Творческое испытание", sub: "портфолио вместо ЕГЭ по рисованию" },
+                  ].map(({ mark, label, sub }) => (
                     <div key={label} className="flex flex-col items-center gap-1">
-                      <span className="text-[#0057B8] dark:text-[#6b8cbf]">{icon}</span>
+                      <span className="inline-flex items-center justify-center w-8 h-6 text-[9px] font-black text-[#0057B8] bg-[#0057B8]/10">{mark}</span>
                       <p className="text-xs font-semibold text-foreground">{label}</p>
                       <p className="text-xs text-muted-foreground">{sub}</p>
                     </div>
@@ -423,9 +393,9 @@ export default function AdmissionPage() {
                     <motion.div key={s.num} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}
                       className="flex gap-5 pl-2 items-start"
                     >
-                      <div className="relative z-10 h-12 w-12 rounded-full flex items-center justify-center text-white shrink-0 shadow-sm"
+                      <div className="relative z-10 h-12 w-12 rounded-full flex items-center justify-center text-white shrink-0 shadow-sm font-black text-sm"
                         style={{ background: i === 0 ? "#EB7124" : "#0057B8" }}>
-                        {s.icon}
+                        {String(s.num).padStart(2, "0")}
                       </div>
                       <Card className="flex-1 rounded-2xl border-border/60">
                         <CardContent className="p-4">
@@ -465,7 +435,7 @@ export default function AdmissionPage() {
                 <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
                 <CardContent className="p-6">
                   <h2 className="font-bold text-lg text-foreground mb-4 flex items-center gap-2">
-                    <FileText className="h-5 w-5 text-accent" /> Перечень документов
+                    <span className="text-accent font-black">◆</span> Перечень документов
                   </h2>
                   <ul className="space-y-3">
                     {documents.map((doc, i) => (
@@ -509,7 +479,7 @@ export default function AdmissionPage() {
                 <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
                 <CardContent className="p-6">
                   <h2 className="font-bold text-lg text-foreground mb-3 flex items-center gap-2">
-                    <BookOpen className="h-5 w-5 text-accent" /> Что такое вступительные испытания?
+                    <span className="text-accent font-black">◆</span> Что такое вступительные испытания?
                   </h2>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                     Вступительные испытания — это дополнительные экзамены, которые проводит университет помимо результатов ЕГЭ.
@@ -555,7 +525,7 @@ export default function AdmissionPage() {
                 <div className="h-1 bg-accent" />
                 <CardContent className="p-6 space-y-5">
                   <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
-                    <Award className="h-5 w-5 text-accent" /> Творческое испытание — Дизайн (54.03.01)
+                    <span className="text-accent font-black">◆</span> Творческое испытание — Дизайн (54.03.01)
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Творческое испытание проводится для всех профилей направления «Дизайн», в том числе
@@ -590,7 +560,7 @@ export default function AdmissionPage() {
 
                   <div className="rounded-xl bg-muted/30 p-4 space-y-2">
                     <p className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-accent" /> Как проходит испытание
+                      <span className="text-accent font-black">◆</span> Как проходит испытание
                     </p>
                     <ul className="space-y-1.5 text-sm text-muted-foreground">
                       <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 text-accent mt-0.5 shrink-0" />Продолжительность: 3–4 часа в аудитории университета</li>
@@ -618,7 +588,7 @@ export default function AdmissionPage() {
                 <div className="h-1 bg-primary" />
                 <CardContent className="p-5">
                   <p className="font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-accent" /> Минимальные баллы ЕГЭ
+                    <span className="text-accent font-black">◆</span> Минимальные баллы ЕГЭ
                   </p>
                   <div className="grid grid-cols-3 gap-3 text-center text-sm mt-3">
                     {[["Русский язык", 40], ["Обществознание", 45], ["История", 35]].map(([subj, score]) => (
@@ -689,7 +659,7 @@ export default function AdmissionPage() {
                   {/* Info panel */}
                   <CardContent className="md:w-1/2 p-6 flex flex-col justify-center">
                     <h2 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
-                      <Home className="h-5 w-5 text-accent" /> Студенческое общежитие ВВГУ
+                      <span className="text-accent font-black">◆</span> Студенческое общежитие ВВГУ
                     </h2>
                     <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                       Комфортное проживание в 5 минутах ходьбы от главного корпуса. Все иногородние студенты имеют право на место в общежитии при наличии свободных мест.
@@ -714,7 +684,7 @@ export default function AdmissionPage() {
               {/* Room types */}
               <div>
                 <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
-                  <Home className="h-4 w-4 text-accent" /> Типы комнат
+                  <span className="text-accent font-black">◆</span> Типы комнат
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {dormRooms.map((r, i) => (
@@ -728,7 +698,7 @@ export default function AdmissionPage() {
                           </div>
                           <p className="text-xs text-muted-foreground leading-relaxed mb-3">{r.desc}</p>
                           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <Users className="h-3.5 w-3.5" /> {r.places} мест
+                            <span className="text-[10px] font-bold">МСТ</span> {r.places} мест
                           </div>
                         </CardContent>
                       </Card>
@@ -740,14 +710,14 @@ export default function AdmissionPage() {
               {/* Amenities */}
               <div>
                 <h3 className="font-bold text-foreground text-lg mb-4 flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-accent" /> Удобства и инфраструктура
+                  <span className="text-accent">◆</span> Удобства и инфраструктура
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {dormAmenities.map((a, i) => (
                     <motion.div key={a.label} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}>
                       <div className="flex items-start gap-3 p-4 rounded-xl border border-border/50 bg-muted/20 hover:bg-muted/40 transition-colors">
                         <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
-                          {a.icon}
+                          <span className="text-[9px] font-black">{a.mark}</span>
                         </div>
                         <div>
                           <p className="font-semibold text-sm text-foreground">{a.label}</p>
@@ -764,7 +734,7 @@ export default function AdmissionPage() {
                 <Card className="rounded-2xl border-border/60">
                   <CardContent className="p-5">
                     <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
-                      <ClipboardList className="h-4 w-4 text-accent" /> Как получить место
+                      <span className="text-accent font-black">◆</span> Как получить место
                     </h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       {[
@@ -785,7 +755,7 @@ export default function AdmissionPage() {
                 <Card className="rounded-2xl border-border/60">
                   <CardContent className="p-5">
                     <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
-                      <ShieldCheck className="h-4 w-4 text-accent" /> Правила проживания
+                      <span className="text-accent font-black">◆</span> Правила проживания
                     </h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       {[
@@ -830,7 +800,7 @@ export default function AdmissionPage() {
                     <Card className="rounded-2xl border-border/60 h-full">
                       <CardContent className="p-4 flex items-start gap-3">
                         <div className="h-9 w-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
-                          {c.icon}
+                          <span className="text-[9px] font-black">{c.mark}</span>
                         </div>
                         <div>
                           <p className="text-xs text-muted-foreground">{c.label}</p>
@@ -846,7 +816,7 @@ export default function AdmissionPage() {
               <Card className="rounded-2xl border-border/60 overflow-hidden">
                 <div className="aspect-video bg-muted/40 flex items-center justify-center relative">
                   <div className="text-center">
-                    <MapPin className="h-10 w-10 text-accent mx-auto mb-2" />
+                    <span className="text-5xl block mb-2">◉</span>
                     <p className="font-semibold text-foreground">г. Владивосток, ул. Гоголя, 41</p>
                     <p className="text-sm text-muted-foreground mt-1">ВВГУ, корпус А</p>
                     <a href="https://yandex.ru/maps/-/CDNnJdPL" target="_blank" rel="noopener noreferrer"
@@ -884,9 +854,9 @@ export default function AdmissionPage() {
         <div className="container mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Star className="h-5 w-5 text-accent" />
+              <span className="text-accent text-lg">✦</span>
               <span className="text-white/60 text-sm uppercase tracking-widest">Осталось сделать один шаг</span>
-              <Star className="h-5 w-5 text-accent" />
+              <span className="text-accent text-lg">✦</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
               Готовы стать частью ВВГУ?

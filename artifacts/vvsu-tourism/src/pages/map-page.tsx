@@ -6,23 +6,22 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Map as MapIcon, BookOpen, Mountain, Building2, TreePine, Utensils, Scroll, Route, Clock, Anchor, Compass, Ship, Waves, Fish, Wind } from "lucide-react";
 
-const floatingIcons = [
-  { Icon: Anchor, x: "8%",  y: "20%", delay: 0,    dur: 4.0, size: 28, color: "#0057B8" },
-  { Icon: Ship,   x: "88%", y: "15%", delay: 0.6,  dur: 5.2, size: 32, color: "#EB7124" },
-  { Icon: Compass,x: "5%",  y: "70%", delay: 1.2,  dur: 3.8, size: 24, color: "#7c3aed" },
-  { Icon: Waves,  x: "92%", y: "65%", delay: 0.3,  dur: 6.0, size: 26, color: "#0891b2" },
-  { Icon: Fish,   x: "50%", y: "8%",  delay: 1.8,  dur: 4.4, size: 22, color: "#16a34a" },
-  { Icon: Wind,   x: "75%", y: "80%", delay: 0.9,  dur: 5.6, size: 20, color: "#d97706" },
+const floatingMarks = [
+  { char: "⚓", x: "8%",  y: "20%", delay: 0,    dur: 4.0, size: 22, color: "#0057B8" },
+  { char: "⛵", x: "88%", y: "15%", delay: 0.6,  dur: 5.2, size: 26, color: "#EB7124" },
+  { char: "✦",  x: "5%",  y: "70%", delay: 1.2,  dur: 3.8, size: 18, color: "#7c3aed" },
+  { char: "〜",  x: "92%", y: "65%", delay: 0.3,  dur: 6.0, size: 20, color: "#0891b2" },
+  { char: "✦",  x: "50%", y: "8%",  delay: 1.8,  dur: 4.4, size: 16, color: "#16a34a" },
+  { char: "✦",  x: "75%", y: "80%", delay: 0.9,  dur: 5.6, size: 14, color: "#d97706" },
 ];
 
-const categoryConfig: Record<string, { color: string; label: string; icon: React.ReactNode }> = {
-  landmark: { color: "#2563eb", label: "Достопримечательность", icon: <Building2 className="h-4 w-4" /> },
-  nature: { color: "#16a34a", label: "Природа", icon: <TreePine className="h-4 w-4" /> },
-  museum: { color: "#9333ea", label: "Музей", icon: <BookOpen className="h-4 w-4" /> },
-  hotel: { color: "#d97706", label: "Отель", icon: <Mountain className="h-4 w-4" /> },
-  restaurant: { color: "#e11d48", label: "Ресторан", icon: <Utensils className="h-4 w-4" /> },
+const categoryConfig: Record<string, { color: string; label: string; mark: string }> = {
+  landmark: { color: "#2563eb", label: "Достопримечательность", mark: "ДОС" },
+  nature:   { color: "#16a34a", label: "Природа",               mark: "ПРИ" },
+  museum:   { color: "#9333ea", label: "Музей",                 mark: "МУЗ" },
+  hotel:    { color: "#d97706", label: "Отель",                 mark: "ОТЕ" },
+  restaurant:{ color: "#e11d48", label: "Ресторан",             mark: "РЕС" },
 };
 
 const pointCoordinates: Record<string, [number, number]> = {
@@ -126,7 +125,7 @@ export default function MapPage() {
           {/* Content row */}
           <div style={{ display: "flex", alignItems: "center", gap: 24, padding: "28px 32px" }}>
             <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ flexShrink: 0 }}>
-              <Compass style={{ width: 48, height: 48, color: "#C6FF00" }} />
+              <span style={{ fontSize: 48, color: "#C6FF00", display: "block", lineHeight: 1 }}>⚓</span>
             </motion.div>
             <div>
               <h1 style={{ fontSize: "clamp(28px,4vw,48px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 8 }}>
@@ -218,7 +217,7 @@ export default function MapPage() {
                 className="flex-1 rounded-xl"
                 onClick={() => setActiveTab("points")}
               >
-                <MapIcon className="h-4 w-4 mr-1.5" /> Объекты
+                Объекты
               </Button>
               <Button
                 variant={activeTab === "routes" ? "default" : "outline"}
@@ -226,7 +225,7 @@ export default function MapPage() {
                 className="flex-1 rounded-xl"
                 onClick={() => setActiveTab("routes")}
               >
-                <Route className="h-4 w-4 mr-1.5" /> Маршруты
+                Маршруты
               </Button>
             </div>
 
@@ -279,7 +278,7 @@ export default function MapPage() {
                                   className="inline-flex items-center justify-center w-9 h-9 rounded-full text-white shrink-0"
                                   style={{ background: p.catConfig.color }}
                                 >
-                                  {p.catConfig.icon}
+                                  <span className="text-[8px] font-black">{p.catConfig.mark}</span>
                                 </span>
                               )}
                               <div className="flex-1 min-w-0">
@@ -291,7 +290,7 @@ export default function MapPage() {
                                   className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white shrink-0"
                                   style={{ background: p.catConfig.color }}
                                 >
-                                  {p.catConfig.icon}
+                                  <span className="text-[7px] font-black">{p.catConfig.mark}</span>
                                 </span>
                               )}
                             </div>
@@ -324,8 +323,7 @@ export default function MapPage() {
                               {difficultyLabel[r.difficulty] ?? r.difficulty}
                             </Badge>
                             <span className="text-xs text-muted-foreground inline-flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {r.durationHours} ч
+                              ◷ {r.durationHours} ч
                             </span>
                           </div>
                         </div>
@@ -347,7 +345,7 @@ export default function MapPage() {
                         className="inline-flex items-center justify-center w-6 h-6 rounded-full text-white shrink-0"
                         style={{ background: cfg.color }}
                       >
-                        <span className="scale-75">{cfg.icon}</span>
+                        <span className="text-[7px] font-black">{cfg.mark}</span>
                       </span>
                       <span className="text-xs text-muted-foreground">{cfg.label}</span>
                     </div>
@@ -359,7 +357,7 @@ export default function MapPage() {
             {activeTab === "routes" && activeRoute && (
               <Card className="rounded-xl border-border/60 p-3 bg-accent/5">
                 <div className="flex items-center gap-1.5 mb-1">
-                  <Scroll className="h-3.5 w-3.5 text-accent" />
+                  <span className="text-accent font-black text-sm">◆</span>
                   <span className="text-xs font-semibold text-accent">Активный маршрут</span>
                 </div>
                 <div className="text-sm font-semibold mb-1">{activeRoute.name}</div>

@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-import { Users, MessageCircle, PlusCircle, Palette, Route, Megaphone, ArrowLeft, ExternalLink, Send, ChevronDown, ChevronUp, GraduationCap, Briefcase, Award } from "lucide-react";
+import { ArrowLeft, ExternalLink, Send, ChevronDown, ChevronUp } from "lucide-react";
 
 
 const roleLabels: Record<string, string> = {
@@ -34,11 +34,11 @@ const categoryImages: Record<string, string> = {
   "Дизайн": "/post-cat-design.png",
 };
 
-const categoryIcons: Record<string, React.ReactNode> = {
-  "Фотография": <MessageCircle className="h-4 w-4" />,
-  "Маркетинг": <Megaphone className="h-4 w-4" />,
-  "Операционная деятельность": <Route className="h-4 w-4" />,
-  "Дизайн": <Palette className="h-4 w-4" />,
+const categoryIcons: Record<string, string> = {
+  "Фотография": "ФТО",
+  "Маркетинг": "МКТ",
+  "Операционная деятельность": "ОПЕ",
+  "Дизайн": "ДЗН",
 };
 
 
@@ -283,7 +283,7 @@ export default function Community() {
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <Users className="h-6 w-6 text-accent" />
+            <span className="text-accent font-black text-lg">◆</span>
             <span className="text-muted-foreground uppercase tracking-widest text-xs">Студенческая жизнь</span>
           </div>
           <p className="text-muted-foreground mt-2">Делитесь опытом, обсуждайте проекты и вдохновляйтесь работами коллег</p>
@@ -292,12 +292,12 @@ export default function Community() {
         <div className="flex items-center justify-end mb-6">
           {user ? (
             <Button onClick={() => setShowDialog(true)} className="rounded-full" data-testid="button-create-post">
-              <PlusCircle className="h-4 w-4 mr-2" /> Новый пост
+              + Новый пост
             </Button>
           ) : (
             <Link href="/login">
               <Button variant="outline" className="rounded-full" data-testid="button-login-to-post">
-                <PlusCircle className="h-4 w-4 mr-2" /> Войти, чтобы публиковать
+                + Войти, чтобы публиковать
               </Button>
             </Link>
           )}
@@ -382,7 +382,7 @@ export default function Community() {
             {/* Alumni designer posts */}
             <div className="mt-2 mb-1">
               <div className="flex items-center gap-2 mb-4">
-                <GraduationCap className="h-4 w-4 text-accent" />
+                <span className="text-accent font-black">◆</span>
                 <span className="text-sm font-bold text-foreground">Выпускники — дизайнеры ВВГУ</span>
                 <span className="text-xs text-muted-foreground ml-1">Истории успеха</span>
               </div>
@@ -478,7 +478,7 @@ export default function Community() {
                         <p className="text-sm text-muted-foreground leading-relaxed flex-1">«{alum.text}»</p>
                         <div className="flex items-center justify-between pt-2 border-t border-border/40">
                           <div className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: alum.color }}>
-                            <Award className="h-3.5 w-3.5" />{alum.achievement}
+                            ★ {alum.achievement}
                           </div>
                           <a href={alum.link} target="_blank" rel="noopener noreferrer"
                             className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
@@ -493,7 +493,7 @@ export default function Community() {
             </div>
 
             <div className="flex items-center gap-2 mt-6 mb-2">
-              <Briefcase className="h-4 w-4 text-accent" />
+              <span className="text-accent font-black">◆</span>
               <span className="text-sm font-bold text-foreground">Форум сообщества</span>
             </div>
 
@@ -564,7 +564,7 @@ export default function Community() {
                                   : "bg-muted/40 border-border/50 text-muted-foreground hover:bg-muted hover:border-border"
                               }`}
                             >
-                              <MessageCircle className="h-3.5 w-3.5" />
+                              <span className="text-sm leading-none">◎</span>
                               <span>{post.replies} комм.</span>
                               {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                             </button>
