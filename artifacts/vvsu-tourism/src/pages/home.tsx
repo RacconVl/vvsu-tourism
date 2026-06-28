@@ -586,9 +586,9 @@ export default function Home() {
             style={{ background: "#0057B8", position: "relative", overflow: "hidden" }}
           >
             <div style={{ position: "absolute", bottom: -50, left: -50, width: 200, height: 200, borderRadius: "50%", background: "#C6FF00" }} />
-            <div style={{ position: "relative", padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
-              <div style={{ color: "#fff", fontSize: "clamp(18px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>
+            <div style={{ position: "relative", padding: "clamp(14px,2.5vw,28px) clamp(10px,2.5vw,36px)", zIndex: 1 }}>
+              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
+              <div style={{ color: "#fff", fontSize: "clamp(18px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 4 }}>
                 <span className="hidden lg:inline">более </span><span style={{ color: "#C6FF00" }}>2 500</span>
               </div>
             </div>
@@ -602,7 +602,7 @@ export default function Home() {
           >
             <div style={{ position: "absolute", top: -30, right: -30, width: 130, height: 130, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
             <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>Занятость</div>
+              <div style={{ color: "rgba(255,255,255,0.85)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Занятость</div>
               <div style={{ color: "#fff", fontSize: "clamp(20px,3.8vw,62px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>94%</div>
             </div>
           </motion.div>
@@ -614,9 +614,9 @@ export default function Home() {
           >
             <div style={{ position: "absolute", bottom: -20, right: -20, width: 100, height: 100, borderRadius: "50%", background: "rgba(0,0,0,0.06)" }} />
             <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(0,0,0,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>Место</div>
-              <div style={{ color: "#0A0A0A", fontSize: "clamp(18px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>ТОП-5</div>
-              <div style={{ color: "rgba(0,0,0,0.5)", fontSize: 12, fontWeight: 700, marginTop: 2 }}>ДФО</div>
+              <div style={{ color: "rgba(0,0,0,0.7)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Место</div>
+              <div style={{ color: "#0A0A0A", fontSize: "clamp(18px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 4 }}>ТОП-5</div>
+              <div style={{ color: "rgba(0,0,0,0.65)", fontSize: 12, fontWeight: 800, marginTop: 2 }}>ДФО</div>
             </div>
           </motion.div>
         </div>
