@@ -656,7 +656,7 @@ export default function AdmissionPage() {
                     <div className="grid grid-cols-2 gap-0" style={{ border: "2px solid #0A0A0A" }}>
                       {[["220","мест всего"],["5 мин","до корпуса"],["24/7","охрана"],["от 2 200 ₽","в месяц"]].map(([v,l],i) => (
                         <div key={l} style={{ padding: "14px 16px", borderRight: i % 2 === 0 ? "2px solid #0A0A0A" : "none", borderBottom: i < 2 ? "2px solid #0A0A0A" : "none", textAlign: "center" as const }}>
-                          <p style={{ fontSize: 20, fontWeight: 900, color: "var(--color-foreground)", lineHeight: 1 }}>{v}</p>
+                          <p style={{ fontSize: 20, fontWeight: 900, color: "var(--color-foreground)", lineHeight: 1, whiteSpace: "nowrap" }}>{v}</p>
                           <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", marginTop: 4 }}>{l}</p>
                         </div>
                       ))}
