@@ -1,0 +1,46 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to 77.34.131.212
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 77.34.131.212
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            set -e
+
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            echo "==> Pulling latest code..."
+            git pull origin main
+
+            echo "==> Installing dependencies..."
+            pnpm install --frozen-lockfile
+
+            echo "==> Building project..."
+            pnpm run build
+
+            echo "==> Running database migrations..."
+            pnpm --filter @workspace/db run push
+
+            echo "==> Restarting services..."
+            if command -v pm2 &> /dev/null; then
+              pm2 restart all || pm2 start ecosystem.config.js
+            else
+              echo "PM2 not found — restart your service manually"
+              exit 1
+            fi
+
+            echo "==> Deploy complete!"
