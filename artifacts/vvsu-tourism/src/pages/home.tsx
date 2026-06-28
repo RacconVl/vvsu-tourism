@@ -587,8 +587,8 @@ export default function Home() {
           >
             <div style={{ position: "absolute", bottom: -50, left: -50, width: 200, height: 200, borderRadius: "50%", background: "#C6FF00" }} />
             <div style={{ position: "relative", padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Студентов</div>
-              <div style={{ color: "#fff", fontSize: "clamp(22px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>
+              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
+              <div style={{ color: "#fff", fontSize: "clamp(18px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>
                 <span className="hidden lg:inline">более </span><span style={{ color: "#C6FF00" }}>2 500</span>
               </div>
             </div>
@@ -602,8 +602,8 @@ export default function Home() {
           >
             <div style={{ position: "absolute", top: -30, right: -30, width: 130, height: 130, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
             <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Занятость</div>
-              <div style={{ color: "#fff", fontSize: "clamp(26px,3.8vw,62px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>94%</div>
+              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>Занятость</div>
+              <div style={{ color: "#fff", fontSize: "clamp(20px,3.8vw,62px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>94%</div>
             </div>
           </motion.div>
 
@@ -614,8 +614,8 @@ export default function Home() {
           >
             <div style={{ position: "absolute", bottom: -20, right: -20, width: 100, height: 100, borderRadius: "50%", background: "rgba(0,0,0,0.06)" }} />
             <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(0,0,0,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }}>Место</div>
-              <div style={{ color: "#0A0A0A", fontSize: "clamp(24px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>ТОП-5</div>
+              <div style={{ color: "rgba(0,0,0,0.45)", fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>Место</div>
+              <div style={{ color: "#0A0A0A", fontSize: "clamp(18px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>ТОП-5</div>
               <div style={{ color: "rgba(0,0,0,0.5)", fontSize: 12, fontWeight: 700, marginTop: 2 }}>ДФО</div>
             </div>
           </motion.div>
@@ -728,7 +728,7 @@ export default function Home() {
           </div>
 
           {/* Accent stat row */}
-          <div className="grid grid-cols-3 gap-0 mb-8" style={{ border: "2px solid #0A0A0A" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 mb-8" style={{ border: "2px solid #0A0A0A" }}>
             <AccentCard text="6" sub="лабораторий и студий" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
             <AccentCard text="VR" sub="иммерсивные технологии" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
             <AccentCard text="3D" sub="принтеры с первого курса" bg="#FF007F" textColor="#fff" />
@@ -768,9 +768,9 @@ export default function Home() {
                     { num: "3 млн", label: "Выиграно в 2024", bg: "#0057B8", text: "#fff" },
                     { num: "100%", label: "Поддержка заявки", bg: "#fff", text: "#0A0A0A" },
                   ].map((s, i) => (
-                    <div key={i} style={{ background: s.bg, padding: 28, borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                      <div style={{ fontSize: 36, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.03em", color: s.text }}>{s.num}</div>
-                      <div style={{ fontSize: 11, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.5 }}>{s.label}</div>
+                    <div key={i} style={{ background: s.bg, padding: "clamp(16px,3vw,28px)", borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                      <div style={{ fontSize: "clamp(22px,5vw,36px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.03em", color: s.text }}>{s.num}</div>
+                      <div style={{ fontSize: 10, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.3 }}>{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -1167,9 +1167,9 @@ export default function Home() {
                 { num: "500+", label: "Вакансий", bg: "#0057B8", text: "#fff" },
                 { num: "12", label: "Мероприятий/год", bg: "#fff", text: "#0A0A0A" },
               ].map((s, i) => (
-                <div key={i} style={{ background: s.bg, padding: "32px 28px", borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                  <div style={{ fontSize: 44, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
-                  <div style={{ fontSize: 11, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.5, textTransform: "uppercase" }}>{s.label}</div>
+                <div key={i} style={{ background: s.bg, padding: "clamp(16px,3vw,32px) clamp(14px,3vw,28px)", borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                  <div style={{ fontSize: "clamp(26px,6vw,44px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
+                  <div style={{ fontSize: 10, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.3, textTransform: "uppercase" }}>{s.label}</div>
                 </div>
               ))}
             </div>

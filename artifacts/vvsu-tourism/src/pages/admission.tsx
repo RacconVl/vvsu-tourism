@@ -267,7 +267,7 @@ export default function AdmissionPage() {
             </motion.div>
 
             {/* Accent stat strip */}
-            <div className="grid grid-cols-3 gap-0 my-6" style={{ border: "2px solid #0A0A0A" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 my-6" style={{ border: "2px solid #0A0A0A" }}>
               <AccentCard text="25" sub="бюджетных мест" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
               <AccentCard text="4" sub="направления подготовки" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
               <AccentCard text="★" sub="топ вузов ДФО" bg="#FF007F" textColor="#fff" />
