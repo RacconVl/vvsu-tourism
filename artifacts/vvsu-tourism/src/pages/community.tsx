@@ -234,15 +234,48 @@ export default function Community() {
         <span className="text-muted-foreground text-sm">Молодёжка</span>
       </div>
 
-      {/* Photo strip */}
-      <div className="w-full overflow-hidden">
-        <div className="grid grid-cols-3 md:grid-cols-6 h-48 md:h-64">
-          {["/community-1.png","/community-2.png","/community-3.png","/community-4.png","/community-5.png","/community-6.png"].map((src, i) => (
-            <motion.div key={i} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.06 }} className="overflow-hidden relative">
-              <img src={src} alt="" className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-primary/20 hover:bg-transparent transition-colors duration-300" />
-            </motion.div>
-          ))}
+      {/* Editorial header */}
+      <div style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        {/* Label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "18px 32px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Молодёжка</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ Студенческая жизнь</span>
+        </div>
+        {/* Marquee */}
+        <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", animation: "marquee 26s linear infinite", width: "max-content", padding: "10px 0" }}>
+            {Array.from({ length: 4 }).flatMap((_, ri) =>
+              ["МОЛОДЁЖКА", "◆", "ТВОРЧЕСТВО", "◆", "ФОРУМ", "◆", "ПОСТЫ", "◆", "ПРОЕКТЫ", "◆", "СООБЩЕСТВО ВВГУ", "◆"].map((w, wi) => (
+                <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "◆" ? "#FF007F" : "rgba(255,255,255,0.45)", flexShrink: 0 }}>{w}</span>
+              ))
+            )}
+          </div>
+        </div>
+        {/* Hero title + photo strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", alignItems: "stretch" }}>
+          <div style={{ padding: "36px 40px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 280 }}>
+            <h1 style={{ fontSize: "clamp(40px,5vw,64px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 12 }}>
+              Молодёжка
+            </h1>
+            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, lineHeight: 1.6 }}>
+              Делитесь опытом, обсуждайте<br />проекты и вдохновляйтесь
+            </p>
+          </div>
+          {/* Photo strip */}
+          <div className="w-full overflow-hidden" style={{ height: 180 }}>
+            <div className="grid grid-cols-6 h-full">
+              {["/community-1.png","/community-2.png","/community-3.png","/community-4.png","/community-5.png","/community-6.png"].map((src, i) => (
+                <motion.div key={i} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.06 }} className="overflow-hidden relative" style={{ borderLeft: "3px solid rgba(255,255,255,0.07)" }}>
+                  <img src={src} alt="" className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-black/30 hover:bg-transparent transition-colors duration-300" />
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -253,7 +286,6 @@ export default function Community() {
             <Users className="h-6 w-6 text-accent" />
             <span className="text-muted-foreground uppercase tracking-widest text-xs">Студенческая жизнь</span>
           </div>
-          <h1 className="text-4xl font-bold text-foreground">Молодёжка</h1>
           <p className="text-muted-foreground mt-2">Делитесь опытом, обсуждайте проекты и вдохновляйтесь работами коллег</p>
         </motion.div>
 

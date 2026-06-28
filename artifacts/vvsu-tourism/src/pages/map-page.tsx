@@ -101,43 +101,39 @@ export default function MapPage() {
   return (
     <div className="min-h-screen bg-background py-6 px-4">
       <div className="max-w-7xl mx-auto">
-        {/* Animated hero banner */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-          className="relative mb-8 rounded-2xl overflow-hidden"
-          style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 60%, #0891b2 100%)", minHeight: 140 }}
-        >
-          {/* Floating icons */}
-          {floatingIcons.map(({ Icon, x, y, delay, dur, size, color }, idx) => (
-            <motion.div
-              key={idx}
-              className="absolute pointer-events-none"
-              style={{ left: x, top: y }}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 0.25, scale: 1, y: [0, -10, 0] }}
-              transition={{ opacity: { delay, duration: 0.6 }, scale: { delay, duration: 0.5 }, y: { delay, duration: dur, repeat: Infinity, ease: "easeInOut" } }}
-            >
-              <Icon style={{ width: size, height: size, color }} />
-            </motion.div>
-          ))}
-
-          {/* Content */}
-          <div className="relative z-10 px-8 py-8 flex items-center gap-5">
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="shrink-0"
-            >
-              <Compass className="h-12 w-12 text-white/80" />
+        {/* Editorial hero banner */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
+          className="mb-8" style={{ background: "#0A0A0A", border: "3px solid #0A0A0A" }}>
+          {/* Label strip */}
+          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "16px 32px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
+              <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Интерактивная карта</span>
+            </div>
+            <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+            <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ Владивосток</span>
+          </div>
+          {/* Marquee */}
+          <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+            <div style={{ display: "flex", animation: "marquee-reverse 30s linear infinite", width: "max-content", padding: "10px 0" }}>
+              {Array.from({ length: 4 }).flatMap((_, ri) =>
+                ["ВЛАДИВОСТОК", "→", "ЗОЛОТОЙ РОГ", "→", "ОСТРОВ РУССКИЙ", "→", "ПРИМОРЬЕ", "→", "ТУРИСТСКИЕ МАРШРУТЫ", "→", "ЛЕГЕНДЫ ГОРОДА", "→"].map((w, wi) => (
+                  <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "→" ? "#FF007F" : "rgba(255,255,255,0.4)", flexShrink: 0 }}>{w}</span>
+                ))
+              )}
+            </div>
+          </div>
+          {/* Content row */}
+          <div style={{ display: "flex", alignItems: "center", gap: 24, padding: "28px 32px" }}>
+            <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} style={{ flexShrink: 0 }}>
+              <Compass style={{ width: 48, height: 48, color: "#C6FF00" }} />
             </motion.div>
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <MapIcon className="h-4 w-4 text-white/60" />
-                <span className="text-white/60 uppercase tracking-widest text-xs">Навигация</span>
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white">Карта Владивостока</h1>
-              <p className="text-white/70 mt-1 text-sm">
-                Интерактивная карта Приморского края на Яндекс.Картах
+              <h1 style={{ fontSize: "clamp(28px,4vw,48px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 8 }}>
+                Карта <span style={{ color: "#C6FF00" }}>Владивостока</span>
+              </h1>
+              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, lineHeight: 1.5 }}>
+                Интерактивная карта Приморского края — легенды, маршруты, точки интереса
               </p>
             </div>
           </div>

@@ -61,14 +61,15 @@ export function Navbar() {
       <div className="flex h-[68px] max-w-screen-2xl items-center px-8 mx-auto gap-0">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 mr-8" style={{ textDecoration: "none" }}>
-          <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#FF007F", flexShrink: 0 }} />
-          <span style={{ fontWeight: 900, fontSize: 15, letterSpacing: 3, textTransform: "uppercase", color: logoText, lineHeight: 1 }}>
-            ВВГУ
-          </span>
-          <div style={{ width: 1, height: 22, background: dividerColor }} />
-          <span className="hidden md:block" style={{ fontWeight: 500, fontSize: 11, letterSpacing: 0.5, color: textColor, textTransform: "uppercase", maxWidth: 200, lineHeight: 1.3 }}>
-            Институт туризма и креативных индустрий
+        <Link href="/" className="flex items-center gap-4 shrink-0 mr-8" style={{ textDecoration: "none" }}>
+          <img
+            src="/vvsu-logo-official.png"
+            alt="ВВГУ"
+            style={{ height: 38, width: "auto", filter: theme === "dark" ? "brightness(0) invert(1)" : "none" }}
+          />
+          <div style={{ width: 1, height: 24, background: dividerColor }} />
+          <span className="hidden md:block" style={{ fontWeight: 600, fontSize: 11, letterSpacing: 0.5, color: textColor, textTransform: "uppercase", maxWidth: 200, lineHeight: 1.35 }}>
+            Институт туризма<br />и креативных индустрий
           </span>
         </Link>
 

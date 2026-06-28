@@ -666,17 +666,23 @@ export default function Home() {
       </section>
 
       {/* ── Tech Infrastructure ───────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
-              <Cpu className="h-4 w-4 text-accent" /> Инфраструктура
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
-              Передовые технологии<br /><span className="text-accent">для вашего обучения</span>
+      <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
+        {/* Section label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#C6FF00" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Передовые технологии</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>→ ВВГУ</span>
+        </div>
+        <div className="container mx-auto px-4 max-w-6xl py-20">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+            <h2 style={{ fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-foreground)", marginBottom: 16 }}>
+              Передовые технологии<br /><span style={{ color: "#FF007F" }}>для вашего обучения</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              В ВВГУ созданы все условия для учёбы и творчества — современное оборудование, лаборатории и инструменты, которыми пользуются профессионалы индустрии.
+            <p className="text-muted-foreground max-w-2xl text-lg">
+              В ВВГУ созданы все условия для учёбы и творчества — современное оборудование, лаборатории и инструменты профессиональной индустрии.
             </p>
           </motion.div>
 
@@ -725,18 +731,19 @@ export default function Home() {
                 color: "#16a34a",
               },
             ].map(({ Illus, title, desc, tags, color }, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} whileHover={{ y: -4 }}>
-                <div className="rounded-2xl border border-border/60 bg-card h-full flex flex-col hover:shadow-lg transition-shadow p-5 gap-4">
-                  <div className="h-28 w-28 mx-auto">
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                <div style={{ border: "2px solid #0A0A0A", background: "var(--color-card)", height: "100%", display: "flex", flexDirection: "column", padding: 24, gap: 16, position: "relative", overflow: "hidden" }}
+                  className="hover:shadow-xl transition-shadow">
+                  <div style={{ position: "absolute", top: 0, left: 0, width: 4, bottom: 0, background: color }} />
+                  <div className="h-24 w-24 ml-2">
                     <Illus />
                   </div>
                   <div>
-                    <h3 className="font-bold text-foreground text-base mb-2">{title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">{desc}</p>
-                    <div className="flex flex-wrap gap-1.5">
+                    <h3 style={{ fontWeight: 800, fontSize: 15, color: "var(--color-foreground)", marginBottom: 8, lineHeight: 1.3 }}>{title}</h3>
+                    <p style={{ fontSize: 13, color: "hsl(var(--muted-foreground))", lineHeight: 1.6, marginBottom: 12 }}>{desc}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                       {tags.map(t => (
-                        <span key={t} className="text-xs px-2 py-0.5 rounded-full border font-medium"
-                          style={{ borderColor: `${color}55`, color, background: `${color}11` }}>{t}</span>
+                        <span key={t} style={{ fontSize: 11, padding: "3px 10px", border: `1.5px solid ${color}`, color, background: `${color}15`, fontWeight: 700, letterSpacing: 0.5 }}>{t}</span>
                       ))}
                     </div>
                   </div>
@@ -747,46 +754,42 @@ export default function Home() {
 
           {/* Grants strip */}
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="rounded-3xl overflow-hidden relative" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 60%, #0a2d5c 100%)" }}>
-              <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-              <div className="absolute right-0 top-0 bottom-0 w-64 pointer-events-none opacity-10 flex items-center justify-end pr-8">
-                <GrantIllustration />
-              </div>
-              <div className="relative z-10 p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/20 border border-accent/30 text-accent text-sm mb-5">
-                    <Award className="h-4 w-4" /> Гранты и стипендии
+            <div style={{ border: "3px solid #0A0A0A", background: "#0A0A0A", overflow: "hidden", position: "relative" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+                {/* Left: text */}
+                <div style={{ padding: "52px 48px", borderRight: "3px solid rgba(255,255,255,0.1)" }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FF007F", color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", padding: "6px 14px", marginBottom: 28 }}>
+                    <Award style={{ width: 14, height: 14 }} /> Гранты
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-                    Студенты ВВГУ<br /><span className="text-accent">выигрывают гранты</span>
+                  <h3 style={{ fontSize: "clamp(28px,3vw,44px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.03em", color: "#fff", marginBottom: 20 }}>
+                    Студенты ВВГУ<br /><span style={{ color: "#C6FF00" }}>выигрывают гранты</span>
                   </h3>
-                  <p className="text-white/70 text-base leading-relaxed mb-6">
-                    Наши студенты регулярно получают гранты Росмолодёжи, президентские стипендии и гранты на реализацию проектов в сфере туризма и креативных индустрий. ВВГУ помогает оформить заявку и подготовить проект.
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.7, marginBottom: 28, maxWidth: 360 }}>
+                    Гранты Росмолодёжи, президентские стипендии и гранты на проекты в туризме и креативных индустриях. ВВГУ помогает оформить заявку.
                   </p>
-                  <div className="flex flex-wrap gap-3">
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                     <a href="https://fadm.gov.ru" target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-white text-sm font-semibold hover:bg-accent/80 transition-colors shadow-lg shadow-accent/30">
-                      Гранты Росмолодёжи <ExternalLink className="h-3.5 w-3.5" />
+                      style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: "#FF007F", color: "#fff", fontSize: 13, fontWeight: 800, textDecoration: "none", letterSpacing: 0.5 }}>
+                      Гранты Росмолодёжи <ExternalLink style={{ width: 14, height: 14 }} />
                     </a>
                     <a href="https://grants.culture.ru" target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-white/20 transition-colors">
-                      Культурные гранты <ExternalLink className="h-3.5 w-3.5" />
+                      style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", border: "2px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>
+                      Культурные гранты <ExternalLink style={{ width: 14, height: 14 }} />
                     </a>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                {/* Right: stat cells */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr" }}>
                   {[
-                    { num: "500 000 ₽", label: "Максимальный грант для студента", color: "#EB7124" },
-                    { num: "12+", label: "Победителей грантов за 2024 год", color: "#5b9cf6" },
-                    { num: "3 млн ₽", label: "Суммарно выиграли студенты в 2024", color: "#16a34a" },
-                    { num: "100%", label: "Поддержка в оформлении заявки", color: "#a78bfa" },
+                    { num: "500K₽", label: "Максимальный грант", bg: "#FF007F", text: "#fff" },
+                    { num: "12+", label: "Победителей в 2024", bg: "#C6FF00", text: "#0A0A0A" },
+                    { num: "3 млн", label: "Выиграно в 2024", bg: "#172E46", text: "#fff" },
+                    { num: "100%", label: "Поддержка заявки", bg: "#fff", text: "#0A0A0A" },
                   ].map((s, i) => (
-                    <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                      <div className="rounded-xl bg-white/8 border border-white/12 p-4 text-center">
-                        <div className="text-2xl font-black mb-1" style={{ color: s.color }}>{s.num}</div>
-                        <div className="text-xs text-white/60 leading-snug">{s.label}</div>
-                      </div>
-                    </motion.div>
+                    <div key={i} style={{ background: s.bg, padding: 28, borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                      <div style={{ fontSize: 36, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.03em", color: s.text }}>{s.num}</div>
+                      <div style={{ fontSize: 11, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.5 }}>{s.label}</div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -794,6 +797,17 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* ── Marquee: tech → programs ────────────────────────────── */}
+      <div style={{ overflow: "hidden", background: "#172E46", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        <div style={{ display: "flex", animation: "marquee-reverse 28s linear infinite", width: "max-content", padding: "12px 0" }}>
+          {Array.from({ length: 4 }).flatMap((_, ri) =>
+            ["3D-ПРИНТЕРЫ", "◆", "VR / AR", "◆", "MAC STUDIO", "◆", "МЕДИАСТУДИЯ", "◆", "GDS-СИСТЕМЫ", "◆", "IT-ЛАБ", "◆", "ИНФРАСТРУКТУРА", "◆"].map((w, wi) => (
+              <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 13, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "◆" ? "#C6FF00" : "rgba(255,255,255,0.55)", flexShrink: 0 }}>{w}</span>
+            ))
+          )}
+        </div>
+      </div>
 
       {/* ── Flagship programs ──────────────────────────────────── */}
       <section className="py-24 relative overflow-hidden" style={{ background: "#0A0A0A" }}>
@@ -1057,57 +1071,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Marquee: before careers ─────────────────────────────── */}
+      <div style={{ overflow: "hidden", background: "#FF007F", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        <div style={{ display: "flex", animation: "marquee 24s linear infinite", width: "max-content", padding: "14px 0" }}>
+          {Array.from({ length: 4 }).flatMap((_, ri) =>
+            ["ТУРОПЕРАТОР", "★", "ДИЗАЙНЕР", "★", "МЕНЕДЖЕР ОТЕЛЯ", "★", "ГИД", "★", "АРТ-ДИРЕКТОР", "★", "МАРКЕТОЛОГ", "★", "КАРЬЕРА В АТР", "★"].map((w, wi) => (
+              <span key={`${ri}-${wi}`} style={{ fontWeight: 900, fontSize: 14, letterSpacing: 4, textTransform: "uppercase", paddingRight: 32, color: w === "★" ? "#0A0A0A" : "#fff", flexShrink: 0 }}>{w}</span>
+            ))
+          )}
+        </div>
+      </div>
+
       {/* ── Careers ───────────────────────────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border/60 bg-muted/30 text-muted-foreground text-sm mb-5">
-              <Briefcase className="h-4 w-4 text-accent" /> Карьера выпускников
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Кем вы можете<br />
-              <span className="text-accent">стать после ВВГУ</span>
+      <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
+        {/* Section label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid #0A0A0A", background: "#fff" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#0A0A0A" }}>Кем вы станете после ВВГУ</span>
+          </div>
+          <div style={{ height: 1, background: "#0A0A0A", opacity: 0.12 }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "#0A0A0A", opacity: 0.35, textTransform: "uppercase" }}>→ Карьера</span>
+        </div>
+        <div className="container mx-auto px-4 max-w-6xl py-20">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+            <h2 style={{ fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-foreground)", marginBottom: 16 }}>
+              Кем вы можете<br /><span style={{ color: "#FF007F" }}>стать после ВВГУ</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+            <p className="text-muted-foreground max-w-2xl text-lg">
               Наши выпускники работают по всему Азиатско-Тихоокеанскому региону — от отелей Владивостока до туроператоров Японии и Кореи.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {[
-              { icon: <Plane className="h-7 w-7" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽", img: "/career-touroperator.png" },
-              { icon: <Building2 className="h-7 w-7" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽", img: "/career-hotel.png" },
-              { icon: <Globe className="h-7 w-7" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽", img: "/career-guide.png" },
-              { icon: <Camera className="h-7 w-7" />, title: "Специалист по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽", img: "/career-marketing.png" },
-              { icon: <UtensilsCrossed className="h-7 w-7" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽", img: "/career-events.png" },
-              { icon: <Ship className="h-7 w-7" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽", img: "/career-cruise.png" },
-              { icon: <Palette className="h-7 w-7" />, title: "Графический дизайнер / арт-директор", desc: "Фирменный стиль туристических брендов, полиграфия, визуальная идентичность дестинаций.", color: "#db2777", salary: "от 70 000 ₽", img: "/career-designer-graphic.png" },
-              { icon: <Sparkles className="h-7 w-7" />, title: "Дизайнер цифровых медиа", desc: "UX/UI туристических приложений и сайтов, motion-графика, веб-дизайн для АТР-рынка.", color: "#6366f1", salary: "от 75 000 ₽", img: "/career-designer-digital.png" },
-              { icon: <Lightbulb className="h-7 w-7" />, title: "Дизайнер интерьера и пространств", desc: "Концепции отелей, ресторанов и туристических объектов — от лобби до смотровых площадок.", color: "#0d9488", salary: "от 65 000 ₽", img: "/career-designer-interior.png" },
+              { icon: <Plane className="h-6 w-6" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽", img: "/career-touroperator.png" },
+              { icon: <Building2 className="h-6 w-6" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽", img: "/career-hotel.png" },
+              { icon: <Globe className="h-6 w-6" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽", img: "/career-guide.png" },
+              { icon: <Camera className="h-6 w-6" />, title: "Спец. по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽", img: "/career-marketing.png" },
+              { icon: <UtensilsCrossed className="h-6 w-6" />, title: "Организатор событий и MICE", desc: "Конференции, деловые форумы, фестивали, инсентив-туризм для корпоративных клиентов.", color: "#16a34a", salary: "от 75 000 ₽", img: "/career-events.png" },
+              { icon: <Ship className="h-6 w-6" />, title: "Специалист круизного туризма", desc: "Обслуживание круизных лайнеров, портовый туризм, морские экскурсии по бухте Золотой Рог.", color: "#b45309", salary: "от 80 000 ₽", img: "/career-cruise.png" },
+              { icon: <Palette className="h-6 w-6" />, title: "Графический дизайнер", desc: "Фирменный стиль туристических брендов, полиграфия, визуальная идентичность дестинаций.", color: "#db2777", salary: "от 70 000 ₽", img: "/career-designer-graphic.png" },
+              { icon: <Sparkles className="h-6 w-6" />, title: "Дизайнер цифровых медиа", desc: "UX/UI туристических приложений и сайтов, motion-графика, веб-дизайн для АТР-рынка.", color: "#6366f1", salary: "от 75 000 ₽", img: "/career-designer-digital.png" },
+              { icon: <Lightbulb className="h-6 w-6" />, title: "Дизайнер интерьера", desc: "Концепции отелей, ресторанов и туристических объектов — от лобби до смотровых площадок.", color: "#0d9488", salary: "от 65 000 ₽", img: "/career-designer-interior.png" },
             ].map((job, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -4 }}>
-                <div className="rounded-2xl border border-border/60 bg-card h-full flex flex-col hover:shadow-lg transition-shadow group overflow-hidden">
-                  <div className="h-40 overflow-hidden">
+                viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
+                <div style={{ borderRight: "2px solid #0A0A0A", borderBottom: "2px solid #0A0A0A", background: "var(--color-card)", height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}
+                  className="group hover:bg-muted/20 transition-colors">
+                  <div style={{ height: 140, overflow: "hidden", position: "relative" }}>
                     <img src={job.img} alt={job.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: job.color }} />
+                    <div style={{ position: "absolute", bottom: 8, right: 8, background: job.color, color: "#fff", fontSize: 11, fontWeight: 800, padding: "4px 10px", letterSpacing: 0.5 }}>{job.salary}</div>
                   </div>
-                  <div className="p-5 flex flex-col gap-3 flex-1">
-                    <div className="flex items-start justify-between">
-                      <div className="h-12 w-12 rounded-xl flex items-center justify-center text-white shrink-0"
-                        style={{ background: `linear-gradient(135deg, ${job.color}cc, ${job.color})` }}>
-                        {job.icon}
-                      </div>
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-muted text-muted-foreground">{job.salary}</span>
+                  <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, color: job.color }}>
+                      {job.icon}
                     </div>
-                    <div>
-                      <h3 className="font-bold text-foreground mb-1">{job.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{job.desc}</p>
-                    </div>
-                    <div className="mt-auto pt-2">
-                      <div className="h-0.5 w-8 rounded-full transition-all group-hover:w-16" style={{ background: job.color }} />
-                    </div>
+                    <h3 style={{ fontWeight: 800, fontSize: 14, color: "var(--color-foreground)", lineHeight: 1.3 }}>{job.title}</h3>
+                    <p style={{ fontSize: 12, color: "hsl(var(--muted-foreground))", lineHeight: 1.6 }}>{job.desc}</p>
                   </div>
                 </div>
               </motion.div>
@@ -1117,186 +1140,204 @@ export default function Home() {
       </section>
 
       {/* ── Career Center ─────────────────────────────────────── */}
-      <section className="py-24 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #0a1a2e 0%, #0d2340 50%, #0a1a2e 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 80% 30%, rgba(22,163,74,0.12) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(3,63,126,0.2) 0%, transparent 40%)" }} />
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#16a34a]/40 bg-[#16a34a]/10 text-[#4ade80] text-sm mb-6">
-                <Briefcase className="h-4 w-4" /> Центр карьеры ВВГУ
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
-                Центр карьеры —<br /><span className="text-[#4ade80]">ваш старт в профессию</span>
-              </h2>
-              <p className="text-white/70 text-lg leading-relaxed mb-8">
-                Центр карьеры ВВГУ (<a href="https://cpo.vvsu.ru" target="_blank" rel="noopener noreferrer" className="text-[#4ade80] hover:underline">cpo.vvsu.ru</a>) — служба, которая помогает студентам и выпускникам найти работу, пройти практику и построить карьеру в индустрии. Работодатели приходят к вам сами.
-              </p>
-              <div className="space-y-4 mb-8">
-                {[
-                  { icon: <Handshake className="h-5 w-5" />, title: "База вакансий и работодателей", desc: "Доступ к актуальным вакансиям от партнёров ВВГУ — отелей, туроператоров, дизайн-студий и IT-компаний Приморья", color: "#16a34a" },
-                  { icon: <TrendingUp className="h-5 w-5" />, title: "Карьерные недели и ярмарки", desc: "Регулярные встречи с работодателями, ярмарки вакансий и интеграционные карьерные недели прямо в кампусе ВВГУ", color: "#EB7124" },
-                  { icon: <FlaskConical className="h-5 w-5" />, title: "Места практик", desc: "Банк актуальных мест для учебной и производственной практики в ведущих компаниях. Подача заявления онлайн", color: "#5b9cf6" },
-                  { icon: <BadgeCheck className="h-5 w-5" />, title: "Практико-интегрированное обучение", desc: "Работайте в реальных проектах компаний уже во время учёбы — зарабатывайте опыт и получайте доход", color: "#a78bfa" },
-                ].map((item, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                    <div className="flex items-start gap-4 p-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/8 transition-colors">
-                      <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white shrink-0"
-                        style={{ background: `linear-gradient(135deg, ${item.color}99, ${item.color})` }}>
-                        {item.icon}
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-white mb-0.5 text-sm">{item.title}</h4>
-                        <p className="text-white/55 text-sm leading-relaxed">{item.desc}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-              <a href="https://cpo.vvsu.ru" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#16a34a] text-white text-sm font-bold hover:bg-[#15803d] transition-colors shadow-lg shadow-[#16a34a]/30">
-                Перейти в Центр карьеры <ExternalLink className="h-4 w-4" />
-              </a>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                {[
-                  { num: "94%", label: "Трудоустройство выпускников", color: "#16a34a" },
-                  { num: "200+", label: "Партнёров-работодателей", color: "#EB7124" },
-                  { num: "500+", label: "Вакансий для студентов", color: "#5b9cf6" },
-                  { num: "12", label: "Карьерных мероприятий в год", color: "#a78bfa" },
-                ].map((s, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center hover:bg-white/8 transition-colors">
-                      <div className="text-3xl font-black mb-1.5" style={{ color: s.color }}>{s.num}</div>
-                      <div className="text-xs text-white/55 leading-snug">{s.label}</div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="rounded-2xl border border-[#16a34a]/30 bg-[#16a34a]/8 p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-12 w-12 shrink-0">
-                    <CareerCenterIllustration />
-                  </div>
-                  <div>
-                    <div className="font-bold text-white text-base">Свежие события</div>
-                    <div className="text-xs text-white/50">Центр карьеры ВВГУ · 2025–2026</div>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { date: "17.06.2026", title: "Выпускники встретились с работодателями транспортной отрасли", type: "Встреча с работодателями" },
-                    { date: "16.02.2026", title: "Встреча со специалистами Центра занятости населения Приморья", type: "Открытая лекция" },
-                    { date: "02.12.2025", title: "Интеграционные карьерные недели завершились в ВВГУ", type: "Карьерная неделя" },
-                  ].map((ev, i) => (
-                    <div key={i} className="flex items-start gap-3 py-2 border-b border-white/8 last:border-0">
-                      <div className="text-xs text-white/40 shrink-0 mt-0.5 w-20">{ev.date}</div>
-                      <div>
-                        <div className="text-xs font-medium text-white/80 leading-snug mb-0.5">{ev.title}</div>
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-[#16a34a]/20 text-[#4ade80]">{ev.type}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+      <section style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        {/* Section label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Центр карьеры</span>
           </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ cpo.vvsu.ru</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 600 }}>
+          {/* Left: text content */}
+          <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+            style={{ padding: "52px 48px", borderRight: "3px solid rgba(255,255,255,0.08)", display: "flex", flexDirection: "column", gap: 0 }}>
+            <h2 style={{ fontSize: "clamp(32px,3.5vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "#fff", marginBottom: 20 }}>
+              Центр карьеры —<br /><span style={{ color: "#C6FF00" }}>ваш старт в профессию</span>
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 15, lineHeight: 1.7, marginBottom: 36 }}>
+              <a href="https://cpo.vvsu.ru" target="_blank" rel="noopener noreferrer" style={{ color: "#C6FF00", textDecoration: "none", fontWeight: 700 }}>cpo.vvsu.ru</a> — служба, которая помогает студентам и выпускникам найти работу, пройти практику и построить карьеру. Работодатели приходят к вам сами.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 2, marginBottom: 36 }}>
+              {[
+                { icon: <Handshake className="h-5 w-5" />, title: "База вакансий и работодателей", color: "#C6FF00" },
+                { icon: <TrendingUp className="h-5 w-5" />, title: "Карьерные недели и ярмарки", color: "#FF007F" },
+                { icon: <FlaskConical className="h-5 w-5" />, title: "Места практик онлайн", color: "#5b9cf6" },
+                { icon: <BadgeCheck className="h-5 w-5" />, title: "Практико-интегрированное обучение", color: "#a78bfa" },
+              ].map((item, i) => (
+                <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", borderBottom: "1px solid rgba(255,255,255,0.07)", borderLeft: `3px solid ${item.color}` }}>
+                    <div style={{ color: item.color, flexShrink: 0 }}>{item.icon}</div>
+                    <span style={{ fontWeight: 700, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item.title}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            <a href="https://cpo.vvsu.ru" target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 28px", background: "#C6FF00", color: "#0A0A0A", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase", alignSelf: "flex-start" }}>
+              Перейти в Центр карьеры <ExternalLink style={{ width: 14, height: 14 }} />
+            </a>
+          </motion.div>
+
+          {/* Right: stats + events */}
+          <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+            style={{ display: "flex", flexDirection: "column" }}>
+            {/* Stat cells 2x2 */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", flex: "0 0 auto" }}>
+              {[
+                { num: "94%", label: "Трудоустройство", bg: "#C6FF00", text: "#0A0A0A" },
+                { num: "200+", label: "Работодателей", bg: "#FF007F", text: "#fff" },
+                { num: "500+", label: "Вакансий", bg: "#172E46", text: "#fff" },
+                { num: "12", label: "Мероприятий/год", bg: "#fff", text: "#0A0A0A" },
+              ].map((s, i) => (
+                <div key={i} style={{ background: s.bg, padding: "32px 28px", borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                  <div style={{ fontSize: 44, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
+                  <div style={{ fontSize: 11, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.5, textTransform: "uppercase" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+            {/* Events list */}
+            <div style={{ flex: 1, padding: "28px 32px", borderTop: "3px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ fontWeight: 800, fontSize: 13, color: "#C6FF00", letterSpacing: 3, textTransform: "uppercase", marginBottom: 20 }}>Свежие события</div>
+              {[
+                { date: "17.06.2026", title: "Выпускники встретились с работодателями транспортной отрасли", type: "Встреча" },
+                { date: "16.02.2026", title: "Встреча со специалистами Центра занятости населения Приморья", type: "Лекция" },
+                { date: "02.12.2025", title: "Интеграционные карьерные недели завершились в ВВГУ", type: "Карьерная неделя" },
+              ].map((ev, i) => (
+                <div key={i} style={{ display: "flex", gap: 16, padding: "14px 0", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontWeight: 700, flexShrink: 0, minWidth: 72, paddingTop: 2 }}>{ev.date}</div>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.8)", lineHeight: 1.4, marginBottom: 6 }}>{ev.title}</div>
+                    <span style={{ fontSize: 10, padding: "3px 8px", background: "rgba(198,255,0,0.15)", color: "#C6FF00", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>{ev.type}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
+      {/* ── Marquee: before student life ────────────────────────── */}
+      <div style={{ overflow: "hidden", background: "#0A0A0A", borderTop: "3px solid #0A0A0A" }}>
+        <div style={{ display: "flex", animation: "marquee-reverse 32s linear infinite", width: "max-content", padding: "12px 0" }}>
+          {Array.from({ length: 4 }).flatMap((_, ri) =>
+            ["КАМПУС", "→", "ЯПОНСКОЕ МОРЕ", "→", "КВЕСТЫ", "→", "НЕТВОРКИНГ", "→", "ПРОЕКТЫ", "→", "ДРУЗЬЯ", "→", "ПРИМОРЬЕ", "→", "АТР", "→"].map((w, wi) => (
+              <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", paddingRight: 28, color: w === "→" ? "#C6FF00" : "rgba(255,255,255,0.4)", flexShrink: 0 }}>{w}</span>
+            ))
+          )}
+        </div>
+      </div>
+
       {/* ── Жизнь студента ─────────────────────────────────────── */}
-      <section className="py-20 px-4 bg-background">
-        <div className="container mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Heart className="h-5 w-5 text-accent" />
-              <span className="text-muted-foreground uppercase tracking-widest text-xs">Студенческая жизнь</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">Жизнь в ВВГУ — это не только учёба</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">Путешествия, квесты по Владивостоку, нетворкинг с индустрией и настоящие друзья из разных стран АТР</p>
+      <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
+        {/* Section label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px 48px", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#fff" }}>Жизнь в ВВГУ</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>→ Студенческая жизнь</span>
+        </div>
+        <div className="container mx-auto px-4 max-w-6xl py-20">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
+            <h2 style={{ fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-foreground)", marginBottom: 16 }}>
+              Жизнь в ВВГУ —<br /><span style={{ color: "#FF007F" }}>это не только учёба</span>
+            </h2>
+            <p className="text-muted-foreground max-w-2xl text-lg">
+              Путешествия, квесты по Владивостоку, нетворкинг с индустрией и настоящие друзья из разных стран АТР
+            </p>
           </motion.div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+
+          {/* Photo cards — sharp editorial grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", border: "2px solid #0A0A0A", marginBottom: 2 }}>
             {[
-              { img: "/student-life-1.png", title: "Командная работа над реальными проектами", desc: "Студенты разрабатывают маршруты для настоящих туроператоров Приморья ещё с первого курса", tag: "Практика" },
-              { img: "/student-life-2.png", title: "Кампус с видом на Японское море", desc: "Учись там, где вдохновляет сама природа. Терраса ВВГУ стала любимым местом для встреч", tag: "Кампус" },
-              { img: "/student-life-3.png", title: "Публичные защиты и конференции", desc: "Каждый семестр студенты представляют проекты перед представителями отрасли и получают реальную обратную связь", tag: "Карьера" },
+              { img: "/student-life-1.png", title: "Командная работа над реальными проектами", desc: "Маршруты для настоящих туроператоров с 1-го курса", tag: "Практика", tagBg: "#FF007F" },
+              { img: "/student-life-2.png", title: "Кампус с видом на Японское море", desc: "Учись там, где вдохновляет сама природа", tag: "Кампус", tagBg: "#C6FF00", tagText: "#0A0A0A" },
+              { img: "/student-life-3.png", title: "Публичные защиты и конференции", desc: "Защити проект перед представителями отрасли", tag: "Карьера", tagBg: "#172E46" },
             ].map((item, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }} whileHover={{ y: -4 }} className="rounded-2xl overflow-hidden border border-border/60 bg-card hover:shadow-xl transition-shadow group">
-                <div className="relative h-52 overflow-hidden">
-                  <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute top-3 left-3">
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-accent text-white">{item.tag}</span>
+              <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }}>
+                <div style={{ borderRight: "2px solid #0A0A0A", height: "100%", overflow: "hidden", position: "relative" }} className="group">
+                  <div style={{ height: 240, overflow: "hidden" }}>
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-foreground text-base mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <div style={{ padding: "24px", borderTop: "2px solid #0A0A0A" }}>
+                    <div style={{ display: "inline-block", background: item.tagBg, color: item.tagText ?? "#fff", fontSize: 10, fontWeight: 800, padding: "4px 10px", letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>{item.tag}</div>
+                    <h3 style={{ fontWeight: 800, fontSize: 15, color: "var(--color-foreground)", lineHeight: 1.3, marginBottom: 8 }}>{item.title}</h3>
+                    <p style={{ fontSize: 13, color: "hsl(var(--muted-foreground))", lineHeight: 1.6 }}>{item.desc}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
-          {/* Student quotes row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+
+          {/* Quote strip */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", border: "2px solid #0A0A0A", borderTop: "none", marginBottom: 32 }}>
             {[
-              { text: "В ВВГУ я познакомилась с корейскими студентами, и сейчас мы вместе разрабатываем тур-проект для рынка Азии.", name: "Даша, 3 курс", avatar: "/avatars/student-1.png" },
-              { text: "Квест по Золотому Рогу — лучшее задание в моей жизни. Это не просто учёба, это настоящее приключение.", name: "Артём, 2 курс", avatar: "/avatars/student-2.png" },
-              { text: "Мастер-класс от шеф-повара ресторана «Zuma» был частью нашей программы. Такого нет ни в одном другом вузе!", name: "Юна, магистратура", avatar: "/avatars/student-3.png" },
+              { text: "В ВВГУ я познакомилась с корейскими студентами, и сейчас мы вместе разрабатываем тур-проект для рынка Азии.", name: "Даша, 3 курс", avatar: "/avatars/student-1.png", bg: "#0A0A0A", textC: "#fff" },
+              { text: "Квест по Золотому Рогу — лучшее задание в моей жизни. Это не просто учёба, это настоящее приключение.", name: "Артём, 2 курс", avatar: "/avatars/student-2.png", bg: "#C6FF00", textC: "#0A0A0A" },
+              { text: "Мастер-класс от шеф-повара ресторана «Zuma» был частью нашей программы. Такого нет ни в одном другом вузе!", name: "Юна, магистратура", avatar: "/avatars/student-3.png", bg: "#FF007F", textC: "#fff" },
             ].map((q, i) => (
-              <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <div className="rounded-2xl bg-muted/40 border border-border/60 p-5 h-full">
-                  <p className="text-sm text-muted-foreground italic leading-relaxed mb-4">«{q.text}»</p>
-                  <div className="flex items-center gap-3">
-                    <img src={q.avatar} alt={q.name} className="h-9 w-9 rounded-full object-cover" />
-                    <span className="text-sm font-semibold text-foreground">{q.name}</span>
-                  </div>
+              <div key={i} style={{ background: q.bg, padding: "28px 24px", borderRight: "2px solid #0A0A0A", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 20 }}>
+                <p style={{ fontSize: 14, color: q.textC, opacity: 0.85, lineHeight: 1.6, fontStyle: "italic" }}>«{q.text}»</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <img src={q.avatar} alt={q.name} style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover", border: `2px solid ${q.textC}40` }} />
+                  <span style={{ fontSize: 12, fontWeight: 700, color: q.textC }}>{q.name}</span>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-          {/* Quick links for applicants */}
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-border/60 bg-card p-6">
-            <p className="text-center text-sm font-semibold text-foreground mb-4">Узнайте больше об институте</p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button asChild variant="outline" className="rounded-full text-sm">
-                <Link href="/open-day">📅 День открытых дверей</Link>
-              </Button>
-              <Button asChild variant="outline" className="rounded-full text-sm">
-                <Link href="/specialty-test">🎯 Какая специальность тебе подходит?</Link>
-              </Button>
-              <Button asChild variant="outline" className="rounded-full text-sm">
-                <Link href="/alumni">💼 Карьера выпускников</Link>
-              </Button>
-              <Button asChild variant="outline" className="rounded-full text-sm">
-                <Link href="/faq">💬 FAQ для абитуриентов</Link>
-              </Button>
-            </div>
-          </motion.div>
+
+          {/* Quick links */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {[
+              { href: "/open-day", label: "День открытых дверей" },
+              { href: "/specialty-test", label: "Какая специальность подходит?" },
+              { href: "/alumni", label: "Карьера выпускников" },
+              { href: "/faq", label: "FAQ для абитуриентов" },
+            ].map(({ href, label }) => (
+              <Link key={href} href={href}
+                style={{ display: "inline-block", padding: "10px 20px", border: "2px solid #0A0A0A", fontSize: 13, fontWeight: 700, color: "var(--color-foreground)", textDecoration: "none", letterSpacing: 0.3 }}
+                className="hover:bg-muted transition-colors">
+                {label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── CTA strip ──────────────────────────────────────────── */}
-      <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
-        <div className="absolute right-10 top-0 bottom-0 flex items-center pointer-events-none opacity-[0.04]">
-          <Anchor className="h-64 w-64 text-white" />
+      <section style={{ background: "#FF007F", borderBottom: "3px solid #0A0A0A", overflow: "hidden" }}>
+        {/* Marquee inside CTA */}
+        <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(0,0,0,0.15)" }}>
+          <div style={{ display: "flex", animation: "marquee 20s linear infinite", width: "max-content", padding: "12px 0" }}>
+            {Array.from({ length: 6 }).flatMap((_, ri) =>
+              ["ПОСТУПАЙ СЕЙЧАС", "✦", "ТВОРИ", "✦", "УЧИСЬ", "✦", "МЕНЯЙ МИР", "✦"].map((w, wi) => (
+                <span key={`${ri}-${wi}`} style={{ fontWeight: 900, fontSize: 14, letterSpacing: 4, textTransform: "uppercase", paddingRight: 32, color: w === "✦" ? "rgba(0,0,0,0.35)" : "#fff", flexShrink: 0 }}>{w}</span>
+              ))
+            )}
+          </div>
         </div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <Star className="h-5 w-5 text-accent" />
-              <span className="text-white/60 text-sm uppercase tracking-widest">Начните прямо сейчас</span>
-              <Star className="h-5 w-5 text-accent" />
+        <div className="container mx-auto px-4" style={{ padding: "64px 48px" }}>
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 48 }}>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginBottom: 16 }}>Начните прямо сейчас</div>
+              <h2 style={{ fontSize: "clamp(40px,5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 0 }}>
+                Готовы<br />к экспедиции?
+              </h2>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Готовы к экспедиции?</h2>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-white rounded-full px-10 h-13" asChild>
-                <Link href="/register">Зарегистрироваться бесплатно <ArrowRight className="ml-2 h-5 w-5" /></Link>
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-full px-8 border-white/20 bg-white/5 text-white hover:bg-white/10" asChild>
-                <Link href="/admission">Информация о поступлении</Link>
-              </Button>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <Link href="/register"
+                style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "16px 36px", background: "#0A0A0A", color: "#fff", fontSize: 14, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                Зарегистрироваться <ArrowRight style={{ width: 18, height: 18 }} />
+              </Link>
+              <Link href="/admission"
+                style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "16px 36px", border: "2px solid rgba(0,0,0,0.25)", color: "#fff", fontSize: 14, fontWeight: 700, textDecoration: "none", letterSpacing: 0.5, whiteSpace: "nowrap" }}>
+                Информация о поступлении
+              </Link>
             </div>
           </motion.div>
         </div>

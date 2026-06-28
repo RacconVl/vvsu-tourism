@@ -201,66 +201,71 @@ export default function DesignProgramsPage() {
     <div className="min-h-screen bg-background">
 
       {/* ── BLOCK 1: Hero ─────────────────────────────────────── */}
-      <div className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #172E46 0%, #0d1220 55%, #033F7E 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none opacity-20"
-          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
-        {["🎨","💻","👗","🏛️","⚙️","🌿"].map((e, i) => (
-          <motion.div key={i} className="absolute text-3xl opacity-10 pointer-events-none select-none"
-            style={{ top: `${10 + i * 13}%`, left: `${4 + i * 16}%` }}
-            animate={{ y: [0, -14, 0], rotate: [0, 6, 0] }}
-            transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.4 }}>
-            {e}
-          </motion.div>
-        ))}
-        <div className="max-w-6xl mx-auto px-4 pt-16 pb-12 relative z-10">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <Badge className="bg-white/10 text-white/80 border-white/20 text-xs">ВВГУ · ИТИКИ</Badge>
-              <Badge className="bg-white/10 text-white/80 border-white/20 text-xs">Кафедра дизайна и технологий</Badge>
-              <Badge className="bg-white/10 text-white/80 border-white/20 text-xs">Кафедра архитектуры</Badge>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-4 leading-tight">
-              Дизайн, архитектура<br />
-              <span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(90deg,#EB7124,#db2777,#7c3aed)" }}>
-                и технологии ВВГУ
-              </span>
-            </h1>
-            <p className="text-white/60 text-lg max-w-2xl mb-8">
-              Образование для тех, кто хочет создавать визуальные, предметные, пространственные и цифровые проекты.
-              Твоё портфолио начинается здесь.
-            </p>
+      <div style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        {/* Label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "18px 48px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Дизайн & Арт</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ ВВГУ · ИТИКИ</span>
+        </div>
+        {/* Marquee */}
+        <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", animation: "marquee 22s linear infinite", width: "max-content", padding: "10px 0" }}>
+            {Array.from({ length: 4 }).flatMap((_, ri) =>
+              ["ДИЗАЙН", "✦", "АРХИТЕКТУРА", "✦", "ЦИФРОВЫЕ МЕДИА", "✦", "ДИЗАЙН СРЕДЫ", "✦", "ГРАФИКА", "✦", "ПОРТФОЛИО", "✦", "ПРОЕКТЫ", "✦"].map((w, wi) => (
+                <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "✦" ? "#C6FF00" : "rgba(255,255,255,0.45)", flexShrink: 0 }}>{w}</span>
+              ))
+            )}
+          </div>
+        </div>
+        {/* Hero content */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", minHeight: 320, alignItems: "stretch" }}>
+          <div className="max-w-6xl px-12 py-14">
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 20 }}>Кафедра дизайна и технологий · Кафедра архитектуры</div>
+              <h1 style={{ fontSize: "clamp(40px,5.5vw,72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 20 }}>
+                Дизайн,<br />архитектура<br /><span style={{ color: "#FF007F" }}>и технологии</span>
+              </h1>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 16, lineHeight: 1.7, maxWidth: 520, marginBottom: 32 }}>
+                Образование для тех, кто хочет создавать визуальные, предметные, пространственные и цифровые проекты. Твоё портфолио начинается здесь.
+              </p>
+              {/* CTA buttons */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
+                <button onClick={() => scrollTo("programs")}
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: "#FF007F", color: "#fff", fontSize: 13, fontWeight: 900, border: "none", cursor: "pointer", letterSpacing: 1, textTransform: "uppercase" }}>
+                  Выбрать направление <ArrowRight style={{ width: 14, height: 14 }} />
+                </button>
+                {[
+                  { label: "Проекты", key: "projects" },
+                  { label: "Поступить", key: "applicants" },
+                  { label: "Консультация", key: "contacts" },
+                ].map(({ label, key }) => (
+                  <button key={key} onClick={() => scrollTo(key)}
+                    style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", border: "2px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)", fontSize: 13, fontWeight: 700, background: "transparent", cursor: "pointer" }}>
+                    {label}
+                  </button>
+                ))}
+              </div>
 
-            {/* 4 CTA buttons */}
-            <div className="flex flex-wrap gap-3 mb-10">
-              <Button onClick={() => scrollTo("programs")} className="bg-accent hover:bg-accent/90 text-white rounded-full px-7 h-11">
-                Выбрать направление <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button onClick={() => scrollTo("projects")} variant="outline" className="rounded-full px-7 h-11 border-white/20 bg-white/5 text-white hover:bg-white/10">
-                Проекты студентов
-              </Button>
-              <Button onClick={() => scrollTo("applicants")} variant="outline" className="rounded-full px-7 h-11 border-white/20 bg-white/5 text-white hover:bg-white/10">
-                Поступить
-              </Button>
-              <Button onClick={() => scrollTo("contacts")} variant="outline" className="rounded-full px-7 h-11 border-white/20 bg-white/5 text-white hover:bg-white/10">
-                Консультация
-              </Button>
-            </div>
-
-            {/* Quick facts */}
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+              {/* Quick facts */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 0 }}>
               {[
                 { icon: "🎓", label: "Бакалавриат" }, { icon: "🎓", label: "Магистратура" },
                 { icon: "⏱️", label: "Очное обучение" }, { icon: "🏛️", label: "ИТИКИ" },
                 { icon: "🖼️", label: "Портфолио" }, { icon: "🧩", label: "Реальные проекты" },
               ].map((f, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                  <div className="text-xl mb-1">{f.icon}</div>
-                  <div className="text-white/70 text-xs leading-tight">{f.label}</div>
+                <div key={i} style={{ border: "1px solid rgba(255,255,255,0.1)", padding: "12px 16px", textAlign: "center", marginRight: -1, marginBottom: -1 }}>
+                  <div style={{ fontSize: 18, marginBottom: 4 }}>{f.icon}</div>
+                  <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 700, letterSpacing: 0.5 }}>{f.label}</div>
                 </div>
               ))}
             </div>
           </motion.div>
         </div>
+      </div>
       </div>
 
       {/* ── Sticky anchor nav ─────────────────────────────────── */}

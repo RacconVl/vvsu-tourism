@@ -148,52 +148,59 @@ export default function AdmissionPage() {
   return (
     <div className="flex flex-col w-full">
       {/* Hero */}
-      <section
-        className="relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0a1a2e 0%, #033F7E 60%, #0a2d5c 100%)" }}
-      >
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "40px 40px" }}
-        />
-        <div className="absolute right-10 top-10 opacity-[0.05] pointer-events-none">
-          <Anchor className="h-64 w-64 text-white" />
+      <section style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        {/* Label strip */}
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "18px 48px", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Поступление</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ ВВГУ 2026</span>
         </div>
-        <div className="absolute bottom-0 left-0 w-full pointer-events-none">
-          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="w-full">
-            <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="hsl(var(--background))" />
-          </svg>
+        {/* Marquee */}
+        <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", animation: "marquee 28s linear infinite", width: "max-content", padding: "10px 0" }}>
+            {Array.from({ length: 4 }).flatMap((_, ri) =>
+              ["ПОСТУПЛЕНИЕ 2026", "✦", "БЮДЖЕТНЫЕ МЕСТА", "✦", "ТУРИЗМ", "✦", "ДИЗАЙН", "✦", "ГОСТИНИЧНОЕ ДЕЛО", "✦", "ПРИЁМ ДО 30 АВГУСТА", "✦"].map((w, wi) => (
+                <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "✦" ? "#C6FF00" : "rgba(255,255,255,0.45)", flexShrink: 0 }}>{w}</span>
+              ))
+            )}
+          </div>
         </div>
-
-        <div className="relative max-w-5xl mx-auto px-4 pt-16 pb-24 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/8 text-white/70 text-sm mb-6">
-              <Waves className="h-4 w-4 text-accent" />
-              Институт туризма и креативных индустрий · ВВГУ
+        {/* Hero content */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 0, minHeight: 340, alignItems: "stretch" }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            style={{ padding: "56px 48px", borderRight: "3px solid rgba(255,255,255,0.07)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 4, textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 20 }}>Институт туризма и креативных индустрий · ВВГУ</div>
+              <h1 style={{ fontSize: "clamp(44px,6vw,80px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", color: "#fff", marginBottom: 20 }}>
+                Поступление<br /><span style={{ color: "#FF007F" }}>2026</span>
+              </h1>
+              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16, lineHeight: 1.7, maxWidth: 520 }}>
+                Начните своё путешествие в мир туризма, гостеприимства и творческих индустрий. Мы ждём вас в ВВГУ!
+              </p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
-              Поступление <span className="text-accent">2026</span>
-            </h1>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto mb-10">
-              Начните своё путешествие в мир туризма, гостеприимства и творческих индустрий. Мы ждём вас в ВВГУ!
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 mb-8">
-              <div className="flex items-center gap-2"><Users className="h-4 w-4 text-accent" /> Бюджетные и платные места</div>
-              <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-accent" /> Приём до 30 августа 2026</div>
-              <div className="flex items-center gap-2"><Star className="h-4 w-4 text-accent" /> Очная и заочная формы</div>
-            </div>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="https://www.vvsu.ru/about/flagship-educational-programs/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-semibold rounded-full px-8 py-3 text-sm transition-all shadow-lg shadow-accent/30 hover:shadow-accent/50"
-              >
-                <Play className="h-4 w-4" />
-                Флагманские образовательные программы
-                <ExternalLink className="h-4 w-4 ml-0.5" />
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 32 }}>
+              <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FF007F", color: "#fff", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase" }}>
+                <Play style={{ width: 14, height: 14 }} /> Флагманские программы <ExternalLink style={{ width: 13, height: 13 }} />
               </a>
             </div>
           </motion.div>
+          {/* Right: stat cells */}
+          <div style={{ display: "grid", gridTemplateRows: "1fr 1fr 1fr", minWidth: 200 }}>
+            {[
+              { num: "25", sub: "бюджетных мест", bg: "#FF007F", text: "#fff" },
+              { num: "30.08", sub: "дата окончания приёма", bg: "#C6FF00", text: "#0A0A0A" },
+              { num: "4", sub: "направления", bg: "#172E46", text: "#fff" },
+            ].map((s, i) => (
+              <div key={i} style={{ background: s.bg, padding: "24px 28px", borderBottom: i < 2 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <div style={{ fontSize: 40, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
+                <div style={{ fontSize: 11, color: s.text, opacity: 0.65, fontWeight: 600, marginTop: 4, letterSpacing: 0.5, textTransform: "uppercase" }}>{s.sub}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
