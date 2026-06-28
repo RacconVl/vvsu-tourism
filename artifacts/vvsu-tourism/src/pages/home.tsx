@@ -524,8 +524,8 @@ export default function Home() {
         {/* LEFT: editorial big type */}
         <motion.div
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }}
-          className="flex flex-col justify-center"
-          style={{ background: "var(--color-background)", padding: "80px 60px", borderRight: "4px solid #0A0A0A", gap: 32 }}
+          className="flex flex-col justify-center items-center"
+          style={{ background: "var(--color-background)", padding: "80px 60px", borderRight: "4px solid #0A0A0A", gap: 32, textAlign: "center" }}
         >
           <div>
             <div style={{
