@@ -1406,7 +1406,7 @@ export default function Dashboard() {
             </span>
           </div>
           <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
-          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ ВВГУ · ИТИКИ</span>
+          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ ВВГУ · ИТИКИ</span>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 py-8 md:py-10" style={{ overflow: "hidden" }}>

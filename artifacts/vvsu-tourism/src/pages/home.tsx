@@ -643,7 +643,7 @@ export default function Home() {
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Передовые технологии</span>
           </div>
           <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
-          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>→ ВВГУ</span>
+          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ ВВГУ</span>
         </div>
         <div className="container mx-auto px-4 max-w-6xl py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16" style={{ position: "relative" }}>
@@ -1065,7 +1065,7 @@ export default function Home() {
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#0A0A0A" }}>Кем вы станете после ВВГУ</span>
           </div>
           <div style={{ height: 1, background: "#0A0A0A", opacity: 0.12 }} />
-          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "#0A0A0A", opacity: 0.35, textTransform: "uppercase" }}>→ Карьера</span>
+          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "#0A0A0A", opacity: 0.35, textTransform: "uppercase", whiteSpace: "nowrap" }}>→ Карьера</span>
         </div>
         <div className="container mx-auto px-4 max-w-6xl py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">
@@ -1122,7 +1122,7 @@ export default function Home() {
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Центр карьеры</span>
           </div>
           <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
-          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ cpo.vvsu.ru</span>
+          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ cpo.vvsu.ru</span>
         </div>
         <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 1fr" }}>
           {/* Left: text content */}
@@ -1214,7 +1214,7 @@ export default function Home() {
             <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#fff" }}>Жизнь в ВВГУ</span>
           </div>
           <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
-          <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>→ Студенческая жизнь</span>
+          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ Студенческая жизнь</span>
         </div>
         <div className="container mx-auto px-4 max-w-6xl py-20">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16">

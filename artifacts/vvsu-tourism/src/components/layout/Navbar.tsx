@@ -61,7 +61,7 @@ export function Navbar() {
       <div className="flex h-[68px] max-w-screen-2xl items-center px-4 md:px-8 mx-auto gap-0">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-4 shrink-0 mr-8" style={{ textDecoration: "none" }}>
+        <Link href="/" className="flex items-center gap-3 shrink-0 mr-2 md:mr-8" style={{ textDecoration: "none" }}>
           <div style={{ position: "relative", display: "inline-block", height: 38 }}>
             <img
               src="/vvsu-logo-official.png"
@@ -171,20 +171,21 @@ export function Navbar() {
               <Link href="/login" style={{ display: "flex" }}>
                 <Button
                   variant="ghost"
-                  style={{ borderRadius: 0, fontWeight: 700, fontSize: 13, color: textColor, padding: "0 20px", height: 44, borderLeft: `1px solid ${dividerColor}` }}
+                  style={{ borderRadius: 0, fontWeight: 700, fontSize: 13, color: textColor, height: 44, borderLeft: `1px solid ${dividerColor}` }}
+                  className="px-2 md:px-5"
                   data-testid="button-nav-login"
                 >
-                  <LogIn className="h-4 w-4 mr-1.5" />
+                  <LogIn className="h-4 w-4 md:mr-1.5" />
                   <span className="hidden md:inline">Войти</span>
                 </Button>
               </Link>
               <Link href="/register" style={{ display: "flex" }}>
                 <Button
-                  style={{ background: "#FF007F", color: "#ffffff", borderRadius: 0, fontWeight: 800, fontSize: 13, padding: "0 24px", height: 44, letterSpacing: 0.5 }}
-                  className="hover:opacity-90 transition-opacity"
+                  style={{ background: "#FF007F", color: "#ffffff", borderRadius: 0, fontWeight: 800, fontSize: 13, height: 44, letterSpacing: 0.5 }}
+                  className="px-3 md:px-6 hover:opacity-90 transition-opacity"
                   data-testid="button-nav-register"
                 >
-                  <UserPlus className="h-4 w-4 mr-1.5" />
+                  <UserPlus className="h-4 w-4 md:mr-1.5" />
                   <span className="hidden md:inline">Регистрация</span>
                 </Button>
               </Link>

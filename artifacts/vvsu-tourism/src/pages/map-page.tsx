@@ -111,7 +111,7 @@ export default function MapPage() {
               <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Интерактивная карта</span>
             </div>
             <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
-            <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>→ Владивосток</span>
+            <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ Владивосток</span>
           </div>
           {/* Marquee */}
           <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(255,255,255,0.07)" }}>
