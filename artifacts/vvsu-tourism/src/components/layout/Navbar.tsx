@@ -68,7 +68,7 @@ export function Navbar() {
               alt="ВВГУ"
               style={{ height: 38, width: "auto", display: "block" }}
             />
-            <div style={{ position: "absolute", inset: 0, background: "#FF007F", mixBlendMode: "color" as const }} />
+            <div style={{ position: "absolute", inset: 0, background: "#0057B8", mixBlendMode: "color" as const }} />
           </div>
           <div style={{ width: 1, height: 24, background: dividerColor }} />
           <span className="hidden md:block" style={{ fontWeight: 600, fontSize: 11, letterSpacing: 0.5, color: textColor, textTransform: "uppercase", maxWidth: 200, lineHeight: 1.35 }}>
