@@ -181,11 +181,10 @@ export default function AdmissionPage() {
         </div>
       </section>
 
-      {/* Tabs */}
-      <section className="bg-background py-10">
-        <div className="max-w-5xl mx-auto px-4">
-          {/* Tab bar — editorial sharp style */}
-          <div className="flex flex-wrap gap-0 mb-8 w-fit" style={{ border: "2px solid var(--border)" }}>
+      {/* Sticky tab bar */}
+      <div className="sticky top-[80px] z-40 bg-background/95 backdrop-blur-sm border-b border-border/40 shadow-sm">
+        <div className="max-w-5xl mx-auto px-4 py-3">
+          <div className="flex flex-wrap gap-0 w-fit" style={{ border: "2px solid var(--border)" }}>
             {tabs.map((t, i) => (
               <button
                 key={t.key}
@@ -204,6 +203,12 @@ export default function AdmissionPage() {
               </button>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Tab content */}
+      <section className="bg-background py-10">
+        <div className="max-w-5xl mx-auto px-4">
 
           {/* ── Направления ─────────────────────────────── */}
           {activeTab === "programs" && (
