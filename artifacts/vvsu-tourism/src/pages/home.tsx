@@ -585,11 +585,11 @@ export default function Home() {
             className="border-r-[4px] lg:border-r-0 lg:border-b-[4px] border-[#0A0A0A]"
             style={{ background: "#0057B8", position: "relative", overflow: "hidden" }}
           >
-            <div style={{ position: "absolute", bottom: -50, left: -50, width: 200, height: 200, borderRadius: "50%", background: "#C6FF00" }} />
+            <div style={{ position: "absolute", top: -40, right: -40, width: 140, height: 140, borderRadius: "50%", background: "#C6FF00", opacity: 0.2 }} />
             <div style={{ position: "relative", padding: "clamp(14px,2.5vw,28px) clamp(10px,2.5vw,36px)", zIndex: 1 }}>
               <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
               <div style={{ color: "#fff", fontSize: "clamp(18px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 4 }}>
-                <span className="hidden lg:inline">более </span><span style={{ color: "#C6FF00" }}>2 500</span>
+                <span className="hidden lg:inline">более </span>2 500
               </div>
             </div>
           </motion.div>
