@@ -1,0 +1,19 @@
+root@RacconQ:/opt/vvsu-tourism# PORT=8888 pnpm --filter @workspace/vvsu-tourism run build
+$ vite build --config vite.config.ts
+failed to load config from /opt/vvsu-tourism/artifacts/vvsu-tourism/vite.config.ts
+error during build:
+Error: BASE_PATH environment variable is required but was not provided.
+    at file:///opt/vvsu-tourism/artifacts/vvsu-tourism/node_modules/.vite-temp/vite.config.ts.timestamp-1782654383119-3efd4f24326f4.mjs:20:9
+    at ModuleJob.run
+ (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:633:26
+    at async loadConfigFromBundledFile (file:///opt/vvsu-tourism/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35920:12)
+    at async bundleAndLoadConfigFile (file:///opt/vvsu-tourism/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35808:17)
+    at async loadConfigFromFile (file:///opt/vvsu-tourism/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35775:42)
+    at async resolveConfig (file:///opt/vvsu-tourism/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35424:22)
+    at async createBuilder (file:///opt/vvsu-tourism/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:33879:19)
+    at async CAC.<anonymous> (file:///opt/vvsu-tourism/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/cli.js:629:10)
+/opt/vvsu-tourism/artifacts/vvsu-tourism:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @workspace/vvsu-tourism@0.0.0 build: `vite build --config vite.config.ts`
+Exit status 1
+root@RacconQ:/opt/vvsu-tourism#
