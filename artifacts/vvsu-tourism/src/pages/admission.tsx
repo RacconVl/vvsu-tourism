@@ -753,12 +753,12 @@ export default function AdmissionPage() {
               </div>
 
               {/* Link to full life page */}
-              <div style={{ border: "2px solid #0A0A0A", borderTop: "none", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, padding: "18px 24px", flexWrap: "wrap" }}>
-                <div style={{ minWidth: 0, flex: 1 }}>
+              <div style={{ border: "2px solid #0A0A0A", borderTop: "none", display: "flex", flexDirection: "column", gap: 14, padding: "18px 24px" }}>
+                <div>
                   <p style={{ fontSize: 15, fontWeight: 900, color: "var(--color-foreground)", marginBottom: 4 }}>Жизнь в ВВГУ</p>
                   <p style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>Полная информация о студенческой жизни, досуге и инфраструктуре кампуса</p>
                 </div>
-                <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0 }}>
+                <a href="https://www.vvsu.ru/life/" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start" }}>
                   <button style={{ background: "transparent", border: "2px solid #0A0A0A", color: "var(--color-foreground)", fontSize: 12, fontWeight: 900, padding: "10px 18px", cursor: "pointer", letterSpacing: 1, display: "inline-flex", alignItems: "center", gap: 8 }}>
                     vvsu.ru/life <ExternalLink className="h-3.5 w-3.5" />
                   </button>
