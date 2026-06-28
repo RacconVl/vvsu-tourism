@@ -119,7 +119,7 @@ export default function Leaderboard() {
     <div className="min-h-screen bg-background">
 
       {/* ── Hero ───────────────────────────────────────────── */}
-      <div className="py-10 px-4 border-b border-border/40" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 70%, #0891b2 100%)" }}>
+      <div className="py-10 px-4 border-b border-border/40" style={{ background: "linear-gradient(135deg, #0057B8 0%, #0057B8 70%, #0891b2 100%)" }}>
         <div className="max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center justify-center gap-3 mb-3">
@@ -144,7 +144,7 @@ export default function Leaderboard() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {[
-              { step: "01", icon: <Compass className="h-6 w-6" />, title: "Выбери квест", desc: "Реальные задания по туризму, маркетингу, дизайну и бюджетированию во Владивостоке", color: "#033F7E" },
+              { step: "01", icon: <Compass className="h-6 w-6" />, title: "Выбери квест", desc: "Реальные задания по туризму, маркетингу, дизайну и бюджетированию во Владивостоке", color: "#0057B8" },
               { step: "02", icon: <CheckCircle className="h-6 w-6" />, title: "Выполни задание", desc: "Отправь решение через личный кабинет — преподаватели проверяют работу", color: "#EB7124" },
               { step: "03", icon: <Star className="h-6 w-6" />, title: "Получи XP", desc: "За каждый квест начисляются баллы опыта: от 100 до 300 XP в зависимости от сложности", color: "#7c3aed" },
               { step: "04", icon: <Gift className="h-6 w-6" />, title: "Обменяй на имиджку", desc: "Накопленные XP можно обменять в деканате на фирменную атрибутику ВВГУ", color: "#0891b2" },

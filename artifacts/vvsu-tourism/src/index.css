@@ -52,34 +52,33 @@
   --app-font-sans: 'IBM Plex Sans', Arial, sans-serif;
   --radius: 0.75rem;
 
-  /* Primary deep navy: #172E46 -> HSL(210, 50%, 18%) */
-  /* Secondary royal blue: #033F7E -> HSL(211, 95%, 25%) */
+  /* Primary VVSU blue: #0057B8 -> HSL(212, 100%, 36%) */
   /* Accent hot pink: #FF007F -> HSL(330, 100%, 50%) */
   /* Lime highlight: #C6FF00 */
   /* Background: #F1F3F9 -> HSL(225, 33%, 96%) */
 
   --background: 225 33% 96%;
-  --foreground: 210 50% 10%;
+  --foreground: 212 100% 8%;
 
   --card: 0 0% 100%;
-  --card-foreground: 210 50% 10%;
-  --card-border: 210 20% 90%;
+  --card-foreground: 212 100% 8%;
+  --card-border: 212 30% 88%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 210 50% 10%;
-  --popover-border: 210 20% 90%;
+  --popover-foreground: 212 100% 8%;
+  --popover-border: 212 30% 88%;
 
-  --primary: 210 50% 18%;
+  --primary: 212 100% 36%;
   --primary-foreground: 0 0% 100%;
-  --primary-border: 210 50% 15%;
+  --primary-border: 212 100% 28%;
 
-  --secondary: 211 95% 25%;
+  --secondary: 212 100% 28%;
   --secondary-foreground: 0 0% 100%;
-  --secondary-border: 211 95% 20%;
+  --secondary-border: 212 100% 22%;
 
-  --muted: 210 20% 90%;
-  --muted-foreground: 210 10% 40%;
-  --muted-border: 210 20% 85%;
+  --muted: 212 20% 90%;
+  --muted-foreground: 212 20% 40%;
+  --muted-border: 212 20% 85%;
 
   /* Hot pink #FF007F */
   --accent: 330 100% 50%;
@@ -90,9 +89,9 @@
   --destructive-foreground: 0 0% 100%;
   --destructive-border: 0 84% 50%;
 
-  --border: 210 20% 85%;
-  --input: 210 20% 85%;
-  --ring: 210 50% 18%;
+  --border: 212 20% 85%;
+  --input: 212 20% 85%;
+  --ring: 212 100% 36%;
 
   --opaque-button-border-intensity: -8;
   --sidebar-primary-border: hsl(var(--sidebar-primary));
@@ -111,26 +110,26 @@
   --popover-foreground: 225 33% 96%;
   --popover-border: 210 30% 20%;
 
-  --primary: 211 95% 35%;
+  --primary: 212 100% 55%;
   --primary-foreground: 0 0% 100%;
-  --primary-border: 211 95% 40%;
+  --primary-border: 212 100% 60%;
 
-  --secondary: 210 50% 25%;
+  --secondary: 212 100% 45%;
   --secondary-foreground: 0 0% 100%;
-  --secondary-border: 210 50% 30%;
+  --secondary-border: 212 100% 50%;
 
-  --muted: 210 30% 15%;
-  --muted-foreground: 210 20% 60%;
-  --muted-border: 210 30% 20%;
+  --muted: 212 30% 15%;
+  --muted-foreground: 212 20% 60%;
+  --muted-border: 212 30% 20%;
 
   /* Hot pink stays vivid in dark mode */
   --accent: 330 100% 50%;
   --accent-foreground: 0 0% 100%;
   --accent-border: 330 100% 58%;
 
-  --border: 210 30% 20%;
-  --input: 210 30% 20%;
-  --ring: 211 95% 35%;
+  --border: 212 30% 20%;
+  --input: 212 30% 20%;
+  --ring: 212 100% 55%;
 }
 
 @layer base {

@@ -31,13 +31,13 @@ function useCountdown(target: Date) {
 }
 
 const schedule = [
-  { time: "10:00", title: "Открытие. Приветственное слово декана", icon: <Mic className="h-4 w-4" />, tag: "Пленарная", color: "#033F7E" },
+  { time: "10:00", title: "Открытие. Приветственное слово декана", icon: <Mic className="h-4 w-4" />, tag: "Пленарная", color: "#0057B8" },
   { time: "10:30", title: "Презентация программ бакалавриата и магистратуры", icon: <BookOpen className="h-4 w-4" />, tag: "Лекция", color: "#EB7124" },
   { time: "11:30", title: "Экскурсия по кампусу и лабораториям", icon: <MapPin className="h-4 w-4" />, tag: "Экскурсия", color: "#7c3aed" },
   { time: "12:30", title: "Кофе-пауза и общение со студентами", icon: <Coffee className="h-4 w-4" />, tag: "Нетворкинг", color: "#0891b2" },
   { time: "13:00", title: "Мастер-класс «Разработка туристического маршрута»", icon: <Compass className="h-4 w-4" />, tag: "Практика", color: "#16a34a" },
   { time: "14:00", title: "Квест по Владивостоку для абитуриентов", icon: <Trophy className="h-4 w-4" />, tag: "Квест", color: "#d97706" },
-  { time: "15:00", title: "Консультации по поступлению. Ответы на вопросы", icon: <Users className="h-4 w-4" />, tag: "Консультация", color: "#033F7E" },
+  { time: "15:00", title: "Консультации по поступлению. Ответы на вопросы", icon: <Users className="h-4 w-4" />, tag: "Консультация", color: "#0057B8" },
   { time: "16:00", title: "Завершение. Подарки участникам", icon: <Star className="h-4 w-4" />, tag: "Финал", color: "#EB7124" },
 ];
 
@@ -60,7 +60,7 @@ export default function OpenDayPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <div className="relative overflow-hidden py-16 px-4" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 60%, #0891b2 100%)" }}>
+      <div className="relative overflow-hidden py-16 px-4" style={{ background: "linear-gradient(135deg, #0057B8 0%, #0057B8 60%, #0891b2 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>

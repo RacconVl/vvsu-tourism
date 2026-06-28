@@ -65,7 +65,7 @@ export function Navbar() {
           <img
             src="/vvsu-logo-official.png"
             alt="ВВГУ"
-            style={{ height: 38, width: "auto", filter: theme === "dark" ? "brightness(0) invert(1)" : "none" }}
+            style={{ height: 38, width: "auto" }}
           />
           <div style={{ width: 1, height: 24, background: dividerColor }} />
           <span className="hidden md:block" style={{ fontWeight: 600, fontSize: 11, letterSpacing: 0.5, color: textColor, textTransform: "uppercase", maxWidth: 200, lineHeight: 1.35 }}>

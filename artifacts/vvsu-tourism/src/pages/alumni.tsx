@@ -17,7 +17,7 @@ const alumniList = [
     specialty: "Туризм, бакалавриат",
     quote: "ВВГУ дал мне понимание, как работает туристическая индустрия изнутри. Уже на 3-м курсе я вела реальные проекты вместе с городским туристическим центром — это бесценный опыт.",
     tags: ["Туристический маркетинг", "Event-планирование", "PR"],
-    color: "#033F7E",
+    color: "#0057B8",
   },
   {
     photo: "/avatars/alumni-2.png",
@@ -87,7 +87,7 @@ const alumniList = [
 ];
 
 const stats = [
-  { num: "94%", label: "выпускников трудоустроены\nв течение 6 месяцев", color: "#033F7E" },
+  { num: "94%", label: "выпускников трудоустроены\nв течение 6 месяцев", color: "#0057B8" },
   { num: "3 000+", label: "выпускников по всему\nАзиатско-Тихоокеанскому региону", color: "#EB7124" },
   { num: "12", label: "стран, где работают\nнаши выпускники", color: "#7c3aed" },
   { num: "200+", label: "компаний-партнёров\nнанимают студентов ВВГУ", color: "#0891b2" },
@@ -97,7 +97,7 @@ export default function AlumniPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <div className="relative overflow-hidden py-16 px-4" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 60%, #0891b2 100%)" }}>
+      <div className="relative overflow-hidden py-16 px-4" style={{ background: "linear-gradient(135deg, #0057B8 0%, #0057B8 60%, #0891b2 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
@@ -186,7 +186,7 @@ export default function AlumniPage() {
 
         {/* CTA */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-16 text-center">
-          <div className="rounded-2xl p-10 border border-border/60" style={{ background: "linear-gradient(135deg, #172E46, #033F7E)" }}>
+          <div className="rounded-2xl p-10 border border-border/60" style={{ background: "linear-gradient(135deg, #0057B8, #0057B8)" }}>
             <Globe className="h-12 w-12 text-accent mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-white mb-3">Начни свою историю в ВВГУ</h2>
             <p className="text-white/60 mb-6 max-w-md mx-auto text-sm">Более 3 000 выпускников уже строят карьеру в туризме по всему АТР. Следующим можете стать вы.</p>

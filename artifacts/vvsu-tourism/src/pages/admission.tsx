@@ -22,7 +22,7 @@ const programs = [
     form: "Очная / Заочная",
     places: { budget: 25, paid: 30 },
     profiles: ["Технология и организация туроператорской деятельности", "Технология и организация туристских услуг"],
-    color: "#033F7E",
+    color: "#0057B8",
     img: "/prog-tourism-bachelor.png",
   },
   {
@@ -44,7 +44,7 @@ const programs = [
     form: "Очная",
     places: { budget: 15, paid: 20 },
     profiles: ["Цифровой дизайн", "Дизайн среды"],
-    color: "#172E46",
+    color: "#0057B8",
     img: "/prog-design.png",
   },
   {
@@ -137,9 +137,9 @@ const dormAmenities = [
 ];
 
 const dormRooms = [
-  { type: "Одноместная",  price: "4 500 ₽/мес", places: 40,  color: "#033F7E", desc: "Личное пространство с письменным столом, шкафом и кроватью" },
+  { type: "Одноместная",  price: "4 500 ₽/мес", places: 40,  color: "#0057B8", desc: "Личное пространство с письменным столом, шкафом и кроватью" },
   { type: "Двухместная",  price: "2 800 ₽/мес", places: 120, color: "#EB7124", desc: "Стандартный блок на 2 студента, раздельные рабочие зоны" },
-  { type: "Трёхместная",  price: "2 200 ₽/мес", places: 60,  color: "#172E46", desc: "Экономичный вариант для иногородних первокурсников" },
+  { type: "Трёхместная",  price: "2 200 ₽/мес", places: 60,  color: "#0057B8", desc: "Экономичный вариант для иногородних первокурсников" },
 ];
 
 export default function AdmissionPage() {
@@ -193,7 +193,7 @@ export default function AdmissionPage() {
             {[
               { num: "25", sub: "бюджетных мест", bg: "#FF007F", text: "#fff" },
               { num: "30.08", sub: "дата окончания приёма", bg: "#C6FF00", text: "#0A0A0A" },
-              { num: "4", sub: "направления", bg: "#172E46", text: "#fff" },
+              { num: "4", sub: "направления", bg: "#0057B8", text: "#fff" },
             ].map((s, i) => (
               <div key={i} style={{ background: s.bg, padding: "24px 28px", borderBottom: i < 2 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
                 <div style={{ fontSize: 40, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em", color: s.text }}>{s.num}</div>
@@ -288,9 +288,9 @@ export default function AdmissionPage() {
 
             {/* ── Дизайн: два направления ─────────────────── */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8">
-              <div className="rounded-2xl border border-[#172E46]/20 bg-gradient-to-br from-[#172E46]/5 to-[#6366f1]/5 p-6 md:p-8">
+              <div className="rounded-2xl border border-[#0057B8]/20 bg-gradient-to-br from-[#0057B8]/5 to-[#6366f1]/5 p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="h-9 w-9 rounded-xl bg-[#172E46] flex items-center justify-center text-white shrink-0">
+                  <div className="h-9 w-9 rounded-xl bg-[#0057B8] flex items-center justify-center text-white shrink-0">
                     <Palette className="h-5 w-5" />
                   </div>
                   <div>
@@ -395,14 +395,14 @@ export default function AdmissionPage() {
                 </div>
 
                 {/* Общие преимущества */}
-                <div className="mt-6 rounded-xl bg-[#172E46]/5 border border-[#172E46]/10 p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
+                <div className="mt-6 rounded-xl bg-[#0057B8]/5 border border-[#0057B8]/10 p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                   {[
                     { icon: <Award className="h-4 w-4" />, label: "Лицензированная программа", sub: "государственный диплом" },
                     { icon: <Users className="h-4 w-4" />, label: "Практики отрасли", sub: "преподаватели-действующие специалисты" },
                     { icon: <Star className="h-4 w-4" />, label: "Творческое испытание", sub: "портфолио вместо ЕГЭ по рисованию" },
                   ].map(({ icon, label, sub }) => (
                     <div key={label} className="flex flex-col items-center gap-1">
-                      <span className="text-[#172E46] dark:text-[#6b8cbf]">{icon}</span>
+                      <span className="text-[#0057B8] dark:text-[#6b8cbf]">{icon}</span>
                       <p className="text-xs font-semibold text-foreground">{label}</p>
                       <p className="text-xs text-muted-foreground">{sub}</p>
                     </div>
@@ -424,7 +424,7 @@ export default function AdmissionPage() {
                       className="flex gap-5 pl-2 items-start"
                     >
                       <div className="relative z-10 h-12 w-12 rounded-full flex items-center justify-center text-white shrink-0 shadow-sm"
-                        style={{ background: i === 0 ? "#EB7124" : "#033F7E" }}>
+                        style={{ background: i === 0 ? "#EB7124" : "#0057B8" }}>
                         {s.icon}
                       </div>
                       <Card className="flex-1 rounded-2xl border-border/60">
@@ -462,7 +462,7 @@ export default function AdmissionPage() {
           {activeTab === "documents" && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl space-y-5">
               <Card className="rounded-2xl border-border/60 overflow-hidden">
-                <div className="h-1" style={{ background: "linear-gradient(90deg, #033F7E, #EB7124)" }} />
+                <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
                 <CardContent className="p-6">
                   <h2 className="font-bold text-lg text-foreground mb-4 flex items-center gap-2">
                     <FileText className="h-5 w-5 text-accent" /> Перечень документов
@@ -506,7 +506,7 @@ export default function AdmissionPage() {
 
               {/* Что такое вступительные */}
               <Card className="rounded-2xl overflow-hidden border-border/60">
-                <div className="h-1" style={{ background: "linear-gradient(90deg, #033F7E, #EB7124)" }} />
+                <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
                 <CardContent className="p-6">
                   <h2 className="font-bold text-lg text-foreground mb-3 flex items-center gap-2">
                     <BookOpen className="h-5 w-5 text-accent" /> Что такое вступительные испытания?
@@ -538,7 +538,7 @@ export default function AdmissionPage() {
                             {e.subjects.map((s, j) => (
                               <span key={j} className="text-xs px-3 py-1 rounded-full font-medium"
                                 style={{ background: j === 0 ? "rgba(3,63,126,0.12)" : j === 1 ? "rgba(235,113,36,0.12)" : "rgba(23,46,70,0.1)",
-                                         color: j === 0 ? "#033F7E" : j === 1 ? "#EB7124" : "#172E46" }}>
+                                         color: j === 0 ? "#0057B8" : j === 1 ? "#EB7124" : "#0057B8" }}>
                                 {s}
                               </span>
                             ))}
@@ -566,7 +566,7 @@ export default function AdmissionPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {[
-                      { title: "Рисунок", desc: "Академический рисунок геометрических тел или натюрморта карандашом. Оценивается конструктивное построение, светотень, пропорции.", color: "#033F7E", img: "/exam-drawing.png" },
+                      { title: "Рисунок", desc: "Академический рисунок геометрических тел или натюрморта карандашом. Оценивается конструктивное построение, светотень, пропорции.", color: "#0057B8", img: "/exam-drawing.png" },
                       { title: "Живопись / Графика", desc: "Цветовое или тональное решение композиции. Для Цифрового дизайна — допускается чёрно-белая графика.", color: "#7c3aed", img: "/exam-painting.png" },
                       { title: "Композиция", desc: "Создание декоративной или пространственной композиции на заданную тему. Оценивается оригинальность, ритм, баланс.", color: "#EB7124", img: "/exam-composition.png" },
                       { title: "Творческое задание", desc: "Эскиз айдентики, иллюстрации или дизайн-концепции. Для цифровых профилей: может включать макет интерфейса.", color: "#16a34a", img: "/exam-creative.png" },
@@ -639,11 +639,11 @@ export default function AdmissionPage() {
 
               {/* Hero card with 3D tour */}
               <Card className="rounded-2xl border-border/60 overflow-hidden">
-                <div className="h-1.5" style={{ background: "linear-gradient(90deg, #033F7E, #EB7124)" }} />
+                <div className="h-1.5" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
                 <div className="relative flex flex-col md:flex-row">
                   {/* 3D Tour panel */}
                   <div className="md:w-1/2 min-h-[280px] flex flex-col items-center justify-center gap-5 p-8 relative overflow-hidden"
-                    style={{ background: "linear-gradient(135deg, #0a1a2e 0%, #033F7E 100%)" }}>
+                    style={{ background: "linear-gradient(135deg, #0a1a2e 0%, #0057B8 100%)" }}>
                     {/* Animated dot grid */}
                     <div className="absolute inset-0 pointer-events-none opacity-40"
                       style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
@@ -651,10 +651,10 @@ export default function AdmissionPage() {
                     <motion.svg viewBox="0 0 160 120" className="w-44 h-32 relative z-10" fill="none"
                       initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}>
                       {/* Building */}
-                      <rect x="20" y="35" width="120" height="80" rx="3" fill="#033F7E" opacity="0.6" />
+                      <rect x="20" y="35" width="120" height="80" rx="3" fill="#0057B8" opacity="0.6" />
                       <rect x="20" y="35" width="120" height="80" rx="3" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
                       {/* Roof */}
-                      <polygon points="10,35 80,8 150,35" fill="#172E46" opacity="0.8" />
+                      <polygon points="10,35 80,8 150,35" fill="#0057B8" opacity="0.8" />
                       {/* Windows grid */}
                       {([0,1,2,3] as const).flatMap(col => ([0,1,2] as const).map(row => (
                         <motion.rect key={`${col}-${row}`} x={32 + col * 28} y={48 + row * 22} width="16" height="14" rx="2"
@@ -663,7 +663,7 @@ export default function AdmissionPage() {
                           transition={{ duration: 2.5, repeat: Infinity, delay: (col + row) * 0.3 }} />
                       )))}
                       {/* Door */}
-                      <rect x="68" y="90" width="24" height="25" rx="2" fill="#172E46" opacity="0.9" />
+                      <rect x="68" y="90" width="24" height="25" rx="2" fill="#0057B8" opacity="0.9" />
                       {/* Flag */}
                       <line x1="80" y1="8" x2="80" y2="0" stroke="white" strokeWidth="1.5" />
                       <motion.polygon points="80,0 96,-6 80,-12" fill="#EB7124"
@@ -858,7 +858,7 @@ export default function AdmissionPage() {
               </Card>
 
               <Card className="rounded-2xl overflow-hidden border-border/60">
-                <div className="h-1" style={{ background: "linear-gradient(90deg, #033F7E, #EB7124)" }} />
+                <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #EB7124)" }} />
                 <CardContent className="p-5">
                   <p className="font-semibold text-foreground mb-2">Онлайн-подача документов</p>
                   <p className="text-sm text-muted-foreground mb-3">
@@ -880,7 +880,7 @@ export default function AdmissionPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16" style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 100%)" }}>
+      <section className="py-16" style={{ background: "linear-gradient(135deg, #0057B8 0%, #0057B8 100%)" }}>
         <div className="container mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="flex items-center justify-center gap-2 mb-4">

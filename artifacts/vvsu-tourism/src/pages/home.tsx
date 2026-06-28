@@ -13,25 +13,25 @@ function CompassIllustration() {
       {/* Outer ring */}
       <motion.g style={{ transformOrigin: "100px 100px" }}
         animate={{ rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }}>
-        <circle cx="100" cy="100" r="80" stroke="#033F7E" strokeWidth="3" strokeDasharray="8 4" opacity="0.3" />
+        <circle cx="100" cy="100" r="80" stroke="#0057B8" strokeWidth="3" strokeDasharray="8 4" opacity="0.3" />
       </motion.g>
       {/* Middle ring */}
       <circle cx="100" cy="100" r="60" stroke="#EB7124" strokeWidth="1.5" opacity="0.2" />
       {/* Inner circle */}
-      <circle cx="100" cy="100" r="40" fill="#033F7E" opacity="0.15" />
-      <circle cx="100" cy="100" r="40" stroke="#033F7E" strokeWidth="2" opacity="0.4" />
+      <circle cx="100" cy="100" r="40" fill="#0057B8" opacity="0.15" />
+      <circle cx="100" cy="100" r="40" stroke="#0057B8" strokeWidth="2" opacity="0.4" />
       {/* Compass needle N */}
       <motion.g style={{ transformOrigin: "100px 100px" }}
         animate={{ rotate: [0, 8, -5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}>
         <polygon points="100,62 106,100 100,108 94,100" fill="#EB7124" />
-        <polygon points="100,108 106,100 100,138 94,100" fill="#033F7E" opacity="0.6" />
+        <polygon points="100,108 106,100 100,138 94,100" fill="#0057B8" opacity="0.6" />
       </motion.g>
       {/* Center dot */}
       <circle cx="100" cy="100" r="6" fill="white" />
       <circle cx="100" cy="100" r="3" fill="#EB7124" />
       {/* Cardinal points */}
       {[["N", 100, 18], ["S", 100, 188], ["W", 12, 104], ["E", 188, 104]].map(([l, x, y]) => (
-        <text key={String(l)} x={x} y={y} textAnchor="middle" fill="#033F7E" fontSize="12" fontWeight="700" opacity="0.6">{l}</text>
+        <text key={String(l)} x={x} y={y} textAnchor="middle" fill="#0057B8" fontSize="12" fontWeight="700" opacity="0.6">{l}</text>
       ))}
       {/* Sparkles */}
       {[[40, 40], [160, 40], [40, 160], [160, 160]].map(([x, y], i) => (
@@ -49,25 +49,25 @@ function MapIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
       {/* Sea background */}
-      <motion.ellipse cx="100" cy="130" rx="75" ry="25" fill="#033F7E" opacity="0.1"
+      <motion.ellipse cx="100" cy="130" rx="75" ry="25" fill="#0057B8" opacity="0.1"
         animate={{ scaleX: [1, 1.05, 1] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} />
       {/* Map outline - Vladivostok peninsula shape */}
       <motion.path d="M70,50 Q80,40 100,38 Q130,36 145,55 Q158,72 155,95 Q150,125 130,145 Q110,158 95,155 Q75,150 65,130 Q52,108 58,85 Q62,65 70,50 Z"
-        fill="#033F7E" stroke="#033F7E" strokeWidth="2"
+        fill="#0057B8" stroke="#0057B8" strokeWidth="2"
         animate={{ opacity: [0.12, 0.18, 0.12] }} transition={{ duration: 3, repeat: Infinity }} />
       {/* Grid lines */}
       {[60, 80, 100, 120, 140].map(y => (
-        <line key={y} x1="30" y1={y} x2="170" y2={y} stroke="#033F7E" strokeWidth="0.5" opacity="0.15" strokeDasharray="4 4" />
+        <line key={y} x1="30" y1={y} x2="170" y2={y} stroke="#0057B8" strokeWidth="0.5" opacity="0.15" strokeDasharray="4 4" />
       ))}
       {[60, 90, 120, 150].map(x => (
-        <line key={x} x1={x} y1="30" x2={x} y2="170" stroke="#033F7E" strokeWidth="0.5" opacity="0.15" strokeDasharray="4 4" />
+        <line key={x} x1={x} y1="30" x2={x} y2="170" stroke="#0057B8" strokeWidth="0.5" opacity="0.15" strokeDasharray="4 4" />
       ))}
       {/* Location pins */}
       {[[100, 75], [125, 105], [80, 120]].map(([x, y], i) => (
         <motion.g key={i} style={{ transformOrigin: `${x}px ${y}px` }}
           animate={{ y: [0, -5, 0] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.7, ease: "easeInOut" }}>
-          <circle cx={x} cy={y} r="10" fill={i === 0 ? "#EB7124" : "#033F7E"} opacity="0.2" />
-          <circle cx={x} cy={y} r="6" fill={i === 0 ? "#EB7124" : "#033F7E"} opacity="0.8" />
+          <circle cx={x} cy={y} r="10" fill={i === 0 ? "#EB7124" : "#0057B8"} opacity="0.2" />
+          <circle cx={x} cy={y} r="6" fill={i === 0 ? "#EB7124" : "#0057B8"} opacity="0.8" />
           <circle cx={x} cy={y} r="3" fill="white" />
         </motion.g>
       ))}
@@ -109,9 +109,9 @@ function CommunityIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
       {/* Connection lines */}
-      <motion.line x1="100" y1="100" x2="50" y2="60" stroke="#033F7E" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
+      <motion.line x1="100" y1="100" x2="50" y2="60" stroke="#0057B8" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
         animate={{ opacity: [0.15, 0.4, 0.15] }} transition={{ duration: 2.5, repeat: Infinity }} />
-      <motion.line x1="100" y1="100" x2="150" y2="60" stroke="#033F7E" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
+      <motion.line x1="100" y1="100" x2="150" y2="60" stroke="#0057B8" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
         animate={{ opacity: [0.4, 0.15, 0.4] }} transition={{ duration: 2.5, repeat: Infinity }} />
       <motion.line x1="100" y1="100" x2="45" y2="145" stroke="#EB7124" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
         animate={{ opacity: [0.25, 0.5, 0.25] }} transition={{ duration: 3, repeat: Infinity, delay: 0.5 }} />
@@ -119,9 +119,9 @@ function CommunityIllustration() {
         animate={{ opacity: [0.5, 0.25, 0.5] }} transition={{ duration: 3, repeat: Infinity, delay: 0.5 }} />
       {/* Avatar circles */}
       {[
-        { cx: 50,  cy: 60,  r: 22, fill: "#033F7E", delay: 0 },
+        { cx: 50,  cy: 60,  r: 22, fill: "#0057B8", delay: 0 },
         { cx: 150, cy: 60,  r: 22, fill: "#EB7124", delay: 0.3 },
-        { cx: 45,  cy: 148, r: 18, fill: "#172E46", delay: 0.6 },
+        { cx: 45,  cy: 148, r: 18, fill: "#0057B8", delay: 0.6 },
         { cx: 155, cy: 148, r: 18, fill: "#d97706", delay: 0.9 },
       ].map((a, i) => (
         <motion.g key={i} animate={{ y: [0, -3, 0] }} transition={{ duration: 2.5, repeat: Infinity, delay: a.delay }}>
@@ -133,9 +133,9 @@ function CommunityIllustration() {
         </motion.g>
       ))}
       {/* Center hub */}
-      <motion.circle cx="100" cy="100" r="26" fill="#033F7E" opacity="0.15"
+      <motion.circle cx="100" cy="100" r="26" fill="#0057B8" opacity="0.15"
         animate={{ r: [24, 28, 24] }} transition={{ duration: 2, repeat: Infinity }} />
-      <circle cx="100" cy="100" r="20" fill="#033F7E" opacity="0.8" />
+      <circle cx="100" cy="100" r="20" fill="#0057B8" opacity="0.8" />
       <text x="100" y="106" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold">✦</text>
     </svg>
   );
@@ -146,21 +146,21 @@ function ShipIllustration() {
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
       {/* Sea waves */}
       <motion.g animate={{ y: [0, 5, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
-        <path d="M20,155 Q50,140 80,155 Q110,170 140,155 Q170,140 190,155" stroke="#033F7E" strokeWidth="2.5" fill="none" opacity="0.3" />
+        <path d="M20,155 Q50,140 80,155 Q110,170 140,155 Q170,140 190,155" stroke="#0057B8" strokeWidth="2.5" fill="none" opacity="0.3" />
       </motion.g>
       <motion.g animate={{ y: [0, -5, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}>
-        <path d="M20,165 Q50,152 80,165 Q110,178 140,165 Q170,152 190,165" stroke="#033F7E" strokeWidth="1.5" fill="none" opacity="0.2" />
+        <path d="M20,165 Q50,152 80,165 Q110,178 140,165 Q170,152 190,165" stroke="#0057B8" strokeWidth="1.5" fill="none" opacity="0.2" />
       </motion.g>
       {/* Ship hull */}
       <motion.g animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
-        <path d="M55,130 L145,130 L135,155 Q100,162 65,155 Z" fill="#172E46" opacity="0.9" />
-        <rect x="70" y="100" width="60" height="32" rx="4" fill="#033F7E" />
+        <path d="M55,130 L145,130 L135,155 Q100,162 65,155 Z" fill="#0057B8" opacity="0.9" />
+        <rect x="70" y="100" width="60" height="32" rx="4" fill="#0057B8" />
         {/* Windows */}
         <rect x="78" y="108" width="12" height="10" rx="2" fill="white" opacity="0.7" />
         <rect x="95" y="108" width="12" height="10" rx="2" fill="white" opacity="0.7" />
         <rect x="112" y="108" width="12" height="10" rx="2" fill="white" opacity="0.7" />
         {/* Mast */}
-        <line x1="100" y1="100" x2="100" y2="45" stroke="#172E46" strokeWidth="3" />
+        <line x1="100" y1="100" x2="100" y2="45" stroke="#0057B8" strokeWidth="3" />
         {/* Sail */}
         <motion.path d="M100,50 L140,75 L100,95 Z" fill="#EB7124" opacity="0.7"
           animate={{ skewY: [0, 2, 0, -2, 0] }} transition={{ duration: 4, repeat: Infinity }} />
@@ -179,15 +179,15 @@ function ShipIllustration() {
 function Printer3DIllustration() {
   return (
     <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
-      <rect x="20" y="75" width="80" height="32" rx="6" fill="#033F7E" opacity="0.18" />
-      <rect x="28" y="78" width="64" height="26" rx="4" fill="#033F7E" opacity="0.35" />
-      <rect x="32" y="55" width="56" height="8" rx="3" fill="#172E46" opacity="0.7" />
-      <rect x="32" y="20" width="4" height="65" rx="2" fill="#033F7E" opacity="0.5" />
-      <rect x="84" y="20" width="4" height="65" rx="2" fill="#033F7E" opacity="0.5" />
-      <rect x="28" y="16" width="64" height="8" rx="3" fill="#033F7E" opacity="0.8" />
+      <rect x="20" y="75" width="80" height="32" rx="6" fill="#0057B8" opacity="0.18" />
+      <rect x="28" y="78" width="64" height="26" rx="4" fill="#0057B8" opacity="0.35" />
+      <rect x="32" y="55" width="56" height="8" rx="3" fill="#0057B8" opacity="0.7" />
+      <rect x="32" y="20" width="4" height="65" rx="2" fill="#0057B8" opacity="0.5" />
+      <rect x="84" y="20" width="4" height="65" rx="2" fill="#0057B8" opacity="0.5" />
+      <rect x="28" y="16" width="64" height="8" rx="3" fill="#0057B8" opacity="0.8" />
       <motion.g animate={{ x: [-14, 14, -14] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
         <rect x="46" y="46" width="28" height="10" rx="3" fill="#5b9cf6" opacity="0.9" />
-        <rect x="56" y="56" width="8" height="6" rx="1" fill="#033F7E" />
+        <rect x="56" y="56" width="8" height="6" rx="1" fill="#0057B8" />
         <motion.rect x="59" y="62" width="2" height="6" rx="1" fill="#EB7124"
           animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }} />
       </motion.g>
@@ -197,7 +197,7 @@ function Printer3DIllustration() {
           initial={{ scaleX: 0, originX: 0.5 }} animate={{ scaleX: 1 }}
           transition={{ delay: i * 0.5, duration: 0.4, repeat: Infinity, repeatDelay: 2.5 }} />
       ))}
-      <circle cx="60" cy="60" r="44" fill="#033F7E" opacity="0.05" />
+      <circle cx="60" cy="60" r="44" fill="#0057B8" opacity="0.05" />
     </svg>
   );
 }
@@ -213,7 +213,7 @@ function LabIllustration() {
   ];
   return (
     <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
-      <rect x="18" y="25" width="84" height="58" rx="6" fill="#033F7E" opacity="0.2" />
+      <rect x="18" y="25" width="84" height="58" rx="6" fill="#0057B8" opacity="0.2" />
       <rect x="22" y="29" width="76" height="50" rx="4" fill="#0a1a2e" opacity="0.85" />
       {lines.map((l, i) => (
         <motion.rect key={i} x={30} y={l.y} width={l.w} height={3} rx={1.5}
@@ -223,9 +223,9 @@ function LabIllustration() {
       ))}
       <motion.rect x="78" y="55" width="2" height="14" rx="1" fill="#5b9cf6"
         animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.8, repeat: Infinity }} />
-      <rect x="38" y="83" width="44" height="5" rx="2" fill="#033F7E" opacity="0.5" />
-      <rect x="28" y="88" width="64" height="3" rx="1.5" fill="#033F7E" opacity="0.35" />
-      <rect x="40" y="91" width="40" height="12" rx="3" fill="#172E46" opacity="0.6" />
+      <rect x="38" y="83" width="44" height="5" rx="2" fill="#0057B8" opacity="0.5" />
+      <rect x="28" y="88" width="64" height="3" rx="1.5" fill="#0057B8" opacity="0.35" />
+      <rect x="40" y="91" width="40" height="12" rx="3" fill="#0057B8" opacity="0.6" />
       <circle cx="60" cy="60" r="44" fill="#5b9cf6" opacity="0.04" />
     </svg>
   );
@@ -236,8 +236,8 @@ function VRIllustration() {
     <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
       <motion.g animate={{ rotate: [-3, 3, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         style={{ transformOrigin: "60px 60px" }}>
-        <rect x="18" y="44" width="84" height="38" rx="18" fill="#033F7E" opacity="0.85" />
-        <rect x="22" y="48" width="76" height="30" rx="14" fill="#172E46" opacity="0.9" />
+        <rect x="18" y="44" width="84" height="38" rx="18" fill="#0057B8" opacity="0.85" />
+        <rect x="22" y="48" width="76" height="30" rx="14" fill="#0057B8" opacity="0.9" />
         <circle cx="44" cy="63" r="11" fill="#0a1a2e" opacity="0.95" />
         <circle cx="76" cy="63" r="11" fill="#0a1a2e" opacity="0.95" />
         <motion.circle cx="44" cy="63" r="7" fill="#5b9cf6" opacity="0.5"
@@ -246,9 +246,9 @@ function VRIllustration() {
         <motion.circle cx="76" cy="63" r="7" fill="#EB7124" opacity="0.5"
           animate={{ fill: ["#EB7124","#7c3aed","#5b9cf6","#EB7124"] }}
           transition={{ duration: 3, repeat: Infinity }} />
-        <rect x="52" y="56" width="16" height="14" rx="3" fill="#033F7E" opacity="0.6" />
+        <rect x="52" y="56" width="16" height="14" rx="3" fill="#0057B8" opacity="0.6" />
       </motion.g>
-      <rect x="46" y="82" width="28" height="4" rx="2" fill="#033F7E" opacity="0.4" />
+      <rect x="46" y="82" width="28" height="4" rx="2" fill="#0057B8" opacity="0.4" />
       <circle cx="60" cy="60" r="44" fill="#7c3aed" opacity="0.04" />
     </svg>
   );
@@ -259,7 +259,7 @@ function GrantIllustration() {
     <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
       <motion.g style={{ transformOrigin: "60px 55px" }}
         animate={{ rotate: [-4, 4, -4] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
-        <rect x="32" y="28" width="56" height="72" rx="6" fill="#033F7E" opacity="0.2" />
+        <rect x="32" y="28" width="56" height="72" rx="6" fill="#0057B8" opacity="0.2" />
         <rect x="36" y="32" width="48" height="64" rx="4" fill="#0a1a2e" opacity="0.7" />
         {[0,1,2,3,4].map(i => (
           <rect key={i} x="44" y={42 + i * 9} width={32 - (i % 2) * 10} height={3} rx={1.5}
@@ -284,7 +284,7 @@ function GrantIllustration() {
 function MacStudioIllustration() {
   return (
     <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
-      <rect x="20" y="22" width="80" height="60" rx="5" fill="#033F7E" opacity="0.18" />
+      <rect x="20" y="22" width="80" height="60" rx="5" fill="#0057B8" opacity="0.18" />
       <rect x="24" y="26" width="72" height="52" rx="3" fill="#0a1a2e" opacity="0.9" />
       <motion.rect x="30" y="32" width="60" height="40" rx="2" fill="#0d2444" opacity="0.8"
         animate={{ opacity: [0.8, 0.95, 0.8] }} transition={{ duration: 3, repeat: Infinity }} />
@@ -295,9 +295,9 @@ function MacStudioIllustration() {
       ))}
       <motion.rect x="82" y="50" width="2" height="18" rx="1" fill="white" opacity={0.9}
         animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.6, repeat: Infinity }} />
-      <rect x="50" y="78" width="20" height="4" rx="2" fill="#033F7E" opacity="0.5" />
-      <rect x="30" y="82" width="60" height="3" rx="1.5" fill="#033F7E" opacity="0.3" />
-      <rect x="10" y="85" width="100" height="8" rx="4" fill="#172E46" opacity="0.5" />
+      <rect x="50" y="78" width="20" height="4" rx="2" fill="#0057B8" opacity="0.5" />
+      <rect x="30" y="82" width="60" height="3" rx="1.5" fill="#0057B8" opacity="0.3" />
+      <rect x="10" y="85" width="100" height="8" rx="4" fill="#0057B8" opacity="0.5" />
     </svg>
   );
 }
@@ -306,13 +306,13 @@ function CareerCenterIllustration() {
   return (
     <svg viewBox="0 0 120 120" fill="none" className="w-full h-full">
       <motion.g animate={{ y: [-3, 3, -3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
-        <rect x="30" y="35" width="60" height="60" rx="8" fill="#033F7E" opacity="0.2" />
+        <rect x="30" y="35" width="60" height="60" rx="8" fill="#0057B8" opacity="0.2" />
         <rect x="34" y="39" width="52" height="52" rx="6" fill="#0a1a2e" opacity="0.8" />
         <rect x="40" y="45" width="40" height="6" rx="3" fill="#EB7124" opacity="0.8" />
         {[0,1,2,3].map(i => (
           <rect key={i} x="40" y={57 + i*8} width={40 - i*5} height={4} rx={2} fill="#5b9cf6" opacity={0.6 - i*0.1} />
         ))}
-        <rect x="34" y="78" width="52" height="13" rx="6" fill="#033F7E" opacity="0.4" />
+        <rect x="34" y="78" width="52" height="13" rx="6" fill="#0057B8" opacity="0.4" />
         <rect x="44" y="82" width="32" height="5" rx="2" fill="#EB7124" opacity="0.7" />
       </motion.g>
       <motion.circle cx="82" cy="38" r="14" fill="#16a34a" opacity="0.9"
@@ -401,7 +401,7 @@ function StickmanStat() {
   return (
     <div className="flex flex-col items-center text-center gap-2">
       <div className="h-10 w-10 rounded-xl flex items-center justify-center text-white mb-1"
-        style={{ background: "linear-gradient(135deg, #033F7E, #172E46)" }}>
+        style={{ background: "linear-gradient(135deg, #0057B8, #0057B8)" }}>
         <Trophy className="h-5 w-5" />
       </div>
       <div style={{ width: 140, height: 60, position: "relative" }}>
@@ -422,46 +422,46 @@ function StickmanStat() {
 
           <motion.g key={resetKey} initial={{ x: -55 }} animate={{ x: stickX }}
             transition={{ duration: stickDur, ease: "easeInOut" }}>
-            <circle cx={0} cy={7} r={5} stroke="#033F7E" strokeWidth={1.8} fill="none" />
-            <line x1={0} y1={12} x2={0} y2={27} stroke="#033F7E" strokeWidth={1.8} />
+            <circle cx={0} cy={7} r={5} stroke="#0057B8" strokeWidth={1.8} fill="none" />
+            <line x1={0} y1={12} x2={0} y2={27} stroke="#0057B8" strokeWidth={1.8} />
 
             {/* RIGHT arm */}
             {phase === "erase" ? (
               <motion.g style={{ transformOrigin: "0px 17px" }}
                 animate={{ rotate: [-18, 18] }}
                 transition={{ duration: 0.25, repeat: Infinity, repeatType: "reverse" }}>
-                <line x1={0} y1={17} x2={14} y2={17} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+                <line x1={0} y1={17} x2={14} y2={17} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
                 <rect x={10} y={14} width={7} height={4} rx={1} fill="#aaa" />
               </motion.g>
             ) : phase === "spray" ? (
               <g>
-                <line x1={0} y1={17} x2={14} y2={11} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+                <line x1={0} y1={17} x2={14} y2={11} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
                 <rect x={12} y={8} width={8} height={5} rx={1.5} fill="#EB7124" />
                 <circle cx={21} cy={10} r={1.3} fill="#c0392b" />
               </g>
             ) : (
               <g transform={`rotate(${isMoving ? rArmDeg : 0}, 0, 17)`}>
-                <line x1={0} y1={17} x2={4} y2={28} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+                <line x1={0} y1={17} x2={4} y2={28} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
               </g>
             )}
 
             {/* LEFT arm */}
             {isMoving ? (
               <g transform={`rotate(${lArmDeg}, 0, 17)`}>
-                <line x1={0} y1={17} x2={-4} y2={28} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+                <line x1={0} y1={17} x2={-4} y2={28} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
               </g>
             ) : (
-              <line x1={0} y1={17} x2={-8} y2={22} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+              <line x1={0} y1={17} x2={-8} y2={22} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
             )}
 
             {/* LEFT leg — synced with right arm */}
             <g transform={`rotate(${isMoving ? lLegDeg : 0}, 0, 27)`}>
-              <line x1={0} y1={27} x2={-2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+              <line x1={0} y1={27} x2={-2} y2={45} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
             </g>
 
             {/* RIGHT leg — synced with left arm */}
             <g transform={`rotate(${isMoving ? rLegDeg : 0}, 0, 27)`}>
-              <line x1={0} y1={27} x2={2} y2={45} stroke="#033F7E" strokeWidth={1.8} strokeLinecap="round" />
+              <line x1={0} y1={27} x2={2} y2={45} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
             </g>
           </motion.g>
         </svg>
@@ -477,7 +477,7 @@ const whyUs = [
     Illustration: CompassIllustration,
     title: "Практика с первого дня",
     desc: "Учебные квесты проходят на реальных туристических объектах Владивостока. Вы решаете настоящие бизнес-задачи ещё в стенах университета.",
-    accent: "#033F7E",
+    accent: "#0057B8",
     stat: "80%",
     statLabel: "практики от курса",
   },
@@ -541,7 +541,7 @@ export default function Home() {
               letterSpacing: "-0.04em", margin: 0, color: "var(--color-foreground)"
             }}>
               ТВОРИ.<br />
-              <span style={{ color: "#172E46" }}>УЧИСЬ.</span><br />
+              <span style={{ color: "#0057B8" }}>УЧИСЬ.</span><br />
               <span style={{
                 WebkitTextStroke: "3px var(--color-foreground)",
                 color: "transparent",
@@ -555,7 +555,7 @@ export default function Home() {
           </p>
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             <Button asChild size="lg" style={{
-              background: "#172E46", color: "#fff", borderRadius: 0,
+              background: "#0057B8", color: "#fff", borderRadius: 0,
               padding: "0 36px", height: 52, fontWeight: 800, fontSize: 14,
               letterSpacing: 1, textTransform: "uppercase"
             }}>
@@ -576,7 +576,7 @@ export default function Home() {
           {/* Top: navy + lime circle */}
           <motion.div
             initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
-            style={{ background: "#172E46", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
+            style={{ background: "#0057B8", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
           >
             <div style={{
               position: "absolute", bottom: -70, left: -70,
@@ -642,7 +642,7 @@ export default function Home() {
         </motion.div>
         {/* Navy + white */}
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.16 }}
-          style={{ background: "#172E46", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "28px 32px", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A" }}>
+          style={{ background: "#0057B8", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "28px 32px", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A" }}>
           <div style={{ position: "absolute", bottom: -30, left: -30, width: 110, height: 110, borderRadius: "50%", background: "#C6FF00", opacity: 0.14 }} />
           <div style={{ color: "rgba(255,255,255,0.38)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>Партнёров</div>
           <div style={{ color: "#fff", fontSize: 68, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.04em" }}>40+</div>
@@ -660,7 +660,7 @@ export default function Home() {
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.32 }}
           style={{ background: "#fff", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24, textAlign: "center" }}>
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.35)", marginBottom: 8 }}>Место</div>
-          <div style={{ fontSize: 48, fontWeight: 900, lineHeight: 1, color: "#172E46", letterSpacing: "-0.04em" }}>ТОП‑5</div>
+          <div style={{ fontSize: 48, fontWeight: 900, lineHeight: 1, color: "#0057B8", letterSpacing: "-0.04em" }}>ТОП‑5</div>
           <div style={{ fontSize: 10, color: "rgba(0,0,0,0.35)", marginTop: 6, fontWeight: 600, letterSpacing: 1 }}>ДФО</div>
         </motion.div>
       </section>
@@ -693,7 +693,7 @@ export default function Home() {
                 title: "3D-принтеры и прототипирование",
                 desc: "Современные FDM и SLA 3D-принтеры для создания макетов, сувенирной продукции и дизайн-проектов. Студенты печатают прототипы с первого курса.",
                 tags: ["Creality K1 Max", "Bambu Lab X1", "Фотополимерная печать"],
-                color: "#033F7E",
+                color: "#0057B8",
               },
               {
                 Illus: LabIllustration,
@@ -783,7 +783,7 @@ export default function Home() {
                   {[
                     { num: "500K₽", label: "Максимальный грант", bg: "#FF007F", text: "#fff" },
                     { num: "12+", label: "Победителей в 2024", bg: "#C6FF00", text: "#0A0A0A" },
-                    { num: "3 млн", label: "Выиграно в 2024", bg: "#172E46", text: "#fff" },
+                    { num: "3 млн", label: "Выиграно в 2024", bg: "#0057B8", text: "#fff" },
                     { num: "100%", label: "Поддержка заявки", bg: "#fff", text: "#0A0A0A" },
                   ].map((s, i) => (
                     <div key={i} style={{ background: s.bg, padding: 28, borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
@@ -799,7 +799,7 @@ export default function Home() {
       </section>
 
       {/* ── Marquee: tech → programs ────────────────────────────── */}
-      <div style={{ overflow: "hidden", background: "#172E46", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+      <div style={{ overflow: "hidden", background: "#0057B8", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
         <div style={{ display: "flex", animation: "marquee-reverse 28s linear infinite", width: "max-content", padding: "12px 0" }}>
           {Array.from({ length: 4 }).flatMap((_, ri) =>
             ["3D-ПРИНТЕРЫ", "◆", "VR / AR", "◆", "MAC STUDIO", "◆", "МЕДИАСТУДИЯ", "◆", "GDS-СИСТЕМЫ", "◆", "IT-ЛАБ", "◆", "ИНФРАСТРУКТУРА", "◆"].map((w, wi) => (
@@ -828,12 +828,12 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             {/* Tourism */}
             <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0 }} whileHover={{ y: -6 }}>
-              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-[#033F7E]/60 transition-all hover:shadow-xl hover:shadow-[#033F7E]/20">
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm h-full flex flex-col group hover:border-[#0057B8]/60 transition-all hover:shadow-xl hover:shadow-[#0057B8]/20">
                 <div className="relative h-52 overflow-hidden">
                   <img src="/prog-tourism.png" alt="Туризм" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(3,63,126,0.9) 100%)" }} />
                   <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <div className="h-9 w-9 rounded-xl bg-[#033F7E] flex items-center justify-center"><Globe className="h-5 w-5 text-white" /></div>
+                    <div className="h-9 w-9 rounded-xl bg-[#0057B8] flex items-center justify-center"><Globe className="h-5 w-5 text-white" /></div>
                     <span className="text-white font-bold text-lg">Туризм</span>
                   </div>
                   <div className="absolute top-3 right-3 bg-white/15 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full border border-white/20">Бакалавриат · Магистратура</div>
@@ -842,7 +842,7 @@ export default function Home() {
                   <p className="text-white/70 text-sm leading-relaxed">Организация международных туров, экотуризм, круизный туризм в АТР. Практика с первого курса на объектах Приморья.</p>
                   <div className="space-y-2">
                     {["25 бюджетных мест", "Двойной диплом с Кореей", "Практика в отелях 5★"].map(f => (
-                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-[#033F7E] shrink-0" />{f}</div>
+                      <div key={f} className="flex items-center gap-2 text-xs text-white/60"><CheckCircle2 className="h-3.5 w-3.5 text-[#0057B8] shrink-0" />{f}</div>
                     ))}
                   </div>
                   <div className="mt-auto">
@@ -990,7 +990,7 @@ export default function Home() {
               </p>
               <div className="space-y-4">
                 {[
-                  { icon: <Medal className="h-5 w-5" />, title: "Аккредитованные программы", desc: "Дипломы признаются работодателями России, Кореи, Японии и Китая", color: "#033F7E" },
+                  { icon: <Medal className="h-5 w-5" />, title: "Аккредитованные программы", desc: "Дипломы признаются работодателями России, Кореи, Японии и Китая", color: "#0057B8" },
                   { icon: <Lightbulb className="h-5 w-5" />, title: "Проектное обучение", desc: "Реальные кейсы от туристических компаний Приморья с первого семестра", color: "#EB7124" },
                   { icon: <Globe className="h-5 w-5" />, title: "Международная среда", desc: "Студенческий обмен с 12 университетами АТР, летние школы за рубежом", color: "#7c3aed" },
                   { icon: <Users className="h-5 w-5" />, title: "Сообщество выпускников", desc: "3 000+ выпускников работают в ведущих компаниях туристической отрасли", color: "#0891b2" },
@@ -1035,7 +1035,7 @@ export default function Home() {
                   <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginTop: 6 }}>Партнёров АТР</div>
                 </div>
                 {/* Cell 3: navy bg + bold text */}
-                <div style={{ background: "#172E46", display: "flex", flexDirection: "column", justifyContent: "center", padding: 28, borderRight: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
+                <div style={{ background: "#0057B8", display: "flex", flexDirection: "column", justifyContent: "center", padding: 28, borderRight: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
                   <div style={{ position: "absolute", bottom: -30, right: -30, width: 100, height: 100, borderRadius: "50%", background: "#C6FF00", opacity: 0.15 }} />
                   <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10 }}>Девиз</div>
                   <div style={{ color: "#fff", fontSize: 28, fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
@@ -1105,7 +1105,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0" style={{ border: "2px solid #0A0A0A" }}>
             {[
-              { icon: <Plane className="h-6 w-6" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#033F7E", salary: "от 60 000 ₽", img: "/career-touroperator.png" },
+              { icon: <Plane className="h-6 w-6" />, title: "Туроператор / турагент", desc: "Организация туров, формирование маршрутов, работа с международными партнёрами АТР.", color: "#0057B8", salary: "от 60 000 ₽", img: "/career-touroperator.png" },
               { icon: <Building2 className="h-6 w-6" />, title: "Менеджер отеля", desc: "Управление гостиничным сервисом, стандарты 4–5★, работа с международными гостями.", color: "#EB7124", salary: "от 70 000 ₽", img: "/career-hotel.png" },
               { icon: <Globe className="h-6 w-6" />, title: "Экскурсовод / гид", desc: "Авторские туры по Приморью, острову Русский, маршруты на иностранных языках.", color: "#7c3aed", salary: "от 50 000 ₽", img: "/career-guide.png" },
               { icon: <Camera className="h-6 w-6" />, title: "Спец. по туристическому маркетингу", desc: "SMM, контент-маркетинг, продвижение туристических брендов и дестинаций.", color: "#0891b2", salary: "от 65 000 ₽", img: "/career-marketing.png" },
@@ -1189,7 +1189,7 @@ export default function Home() {
               {[
                 { num: "94%", label: "Трудоустройство", bg: "#C6FF00", text: "#0A0A0A" },
                 { num: "200+", label: "Работодателей", bg: "#FF007F", text: "#fff" },
-                { num: "500+", label: "Вакансий", bg: "#172E46", text: "#fff" },
+                { num: "500+", label: "Вакансий", bg: "#0057B8", text: "#fff" },
                 { num: "12", label: "Мероприятий/год", bg: "#fff", text: "#0A0A0A" },
               ].map((s, i) => (
                 <div key={i} style={{ background: s.bg, padding: "32px 28px", borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
@@ -1256,7 +1256,7 @@ export default function Home() {
             {[
               { img: "/student-life-1.png", title: "Командная работа над реальными проектами", desc: "Маршруты для настоящих туроператоров с 1-го курса", tag: "Практика", tagBg: "#FF007F" },
               { img: "/student-life-2.png", title: "Кампус с видом на Японское море", desc: "Учись там, где вдохновляет сама природа", tag: "Кампус", tagBg: "#C6FF00", tagText: "#0A0A0A" },
-              { img: "/student-life-3.png", title: "Публичные защиты и конференции", desc: "Защити проект перед представителями отрасли", tag: "Карьера", tagBg: "#172E46" },
+              { img: "/student-life-3.png", title: "Публичные защиты и конференции", desc: "Защити проект перед представителями отрасли", tag: "Карьера", tagBg: "#0057B8" },
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }}>
                 <div style={{ borderRight: "2px solid #0A0A0A", height: "100%", overflow: "hidden", position: "relative" }} className="group">

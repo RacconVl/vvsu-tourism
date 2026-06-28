@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Map as MapIcon, BookOpen, Mountain, Building2, TreePine, Utensils, Scroll, Route, Clock, Anchor, Compass, Ship, Waves, Fish, Wind } from "lucide-react";
 
 const floatingIcons = [
-  { Icon: Anchor, x: "8%",  y: "20%", delay: 0,    dur: 4.0, size: 28, color: "#033F7E" },
+  { Icon: Anchor, x: "8%",  y: "20%", delay: 0,    dur: 4.0, size: 28, color: "#0057B8" },
   { Icon: Ship,   x: "88%", y: "15%", delay: 0.6,  dur: 5.2, size: 32, color: "#EB7124" },
   { Icon: Compass,x: "5%",  y: "70%", delay: 1.2,  dur: 3.8, size: 24, color: "#7c3aed" },
   { Icon: Waves,  x: "92%", y: "65%", delay: 0.3,  dur: 6.0, size: 26, color: "#0891b2" },

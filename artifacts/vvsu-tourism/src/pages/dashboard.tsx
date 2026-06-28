@@ -86,7 +86,7 @@ const roleLabels: Record<string, string> = {
 
 type ActivityType = "module_complete" | "quest_complete" | "achievement" | "quiz" | "quest" | "community";
 const activityConfig: Record<ActivityType | string, { icon: React.ReactNode; color: string; bg: string }> = {
-  module_complete: { icon: <BookOpen className="h-3.5 w-3.5" />, color: "#033F7E", bg: "rgba(3,63,126,0.12)" },
+  module_complete: { icon: <BookOpen className="h-3.5 w-3.5" />, color: "#0057B8", bg: "rgba(3,63,126,0.12)" },
   quest_complete:  { icon: <Compass className="h-3.5 w-3.5" />,  color: "#EB7124", bg: "rgba(235,113,36,0.12)" },
   quest:           { icon: <Compass className="h-3.5 w-3.5" />,  color: "#EB7124", bg: "rgba(235,113,36,0.12)" },
   achievement:     { icon: <Award className="h-3.5 w-3.5" />,    color: "#d97706", bg: "rgba(217,119,6,0.12)" },
@@ -333,7 +333,7 @@ function ContentManagement() {
             <Card key={c.id} className="rounded-xl border-border/60 overflow-hidden">
               <div className="flex items-center gap-3 p-4">
                 <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(3,63,126,0.1)" }}>
-                  <BookOpen className="h-4 w-4" style={{ color: "#033F7E" }} />
+                  <BookOpen className="h-4 w-4" style={{ color: "#0057B8" }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm truncate">{c.title}</p>
@@ -568,8 +568,8 @@ function AdminOverview() {
   const { toast } = useToast();
 
   const statCards = stats ? [
-    { icon: <Users className="h-5 w-5" />,     value: stats.totalUsers,              label: "Пользователей",          color: "#033F7E" },
-    { icon: <Shield className="h-5 w-5" />,    value: stats.totalAdmins,             label: "Администраторов",        color: "#172E46" },
+    { icon: <Users className="h-5 w-5" />,     value: stats.totalUsers,              label: "Пользователей",          color: "#0057B8" },
+    { icon: <Shield className="h-5 w-5" />,    value: stats.totalAdmins,             label: "Администраторов",        color: "#0057B8" },
     { icon: <BookOpen className="h-5 w-5" />,  value: stats.totalCourses,            label: "Курсов",                 color: "#EB7124" },
     { icon: <Compass className="h-5 w-5" />,   value: stats.totalQuests,             label: "Квестов",                color: "#d97706" },
     { icon: <Brain className="h-5 w-5" />,     value: stats.totalQuizzes,            label: "Тестов",                 color: "#7c3aed" },
@@ -1397,7 +1397,7 @@ export default function Dashboard() {
       {/* Profile Hero */}
       <div
         className="relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #172E46 0%, #033F7E 55%, #0a2d5c 100%)" }}
+        style={{ background: "linear-gradient(135deg, #0057B8 0%, #0057B8 55%, #0a2d5c 100%)" }}
       >
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
           <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 1440 80" preserveAspectRatio="none">
@@ -1523,7 +1523,7 @@ export default function Dashboard() {
               {/* Journey Map */}
               <div className="lg:col-span-2">
                 <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "linear-gradient(90deg, #172E46, #033F7E, #EB7124)" }} />
+                  <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #0057B8, #EB7124)" }} />
                   <CardHeader className="pb-2 pt-4">
                     <CardTitle className="flex items-center gap-2 text-primary text-base">
                       <MapPin className="h-4 w-4 text-accent" /> Карта путешествия
@@ -1539,16 +1539,16 @@ export default function Dashboard() {
                           {progressMap.stages.map((stage, i) => (
                             <div key={stage.id} className="flex gap-4 items-start pl-2">
                               <div className={`relative z-10 flex-shrink-0 h-10 w-10 rounded-full border-2 flex items-center justify-center text-sm font-bold shadow-sm ${
-                                stage.isCompleted ? "text-white border-[#033F7E]"
+                                stage.isCompleted ? "text-white border-[#0057B8]"
                                   : stage.isCurrent ? "text-white border-[#EB7124] animate-pulse"
                                   : stage.isLocked ? "bg-muted border-muted text-muted-foreground"
                                   : "bg-background border-border text-foreground"
-                              }`} style={stage.isCompleted ? { background: "#033F7E" } : stage.isCurrent ? { background: "#EB7124" } : {}}>
+                              }`} style={stage.isCompleted ? { background: "#0057B8" } : stage.isCurrent ? { background: "#EB7124" } : {}}>
                                 {stage.isCompleted ? "✓" : i + 1}
                               </div>
                               <div className={`flex-1 p-3 rounded-xl border transition-all ${
                                 stage.isCurrent ? "border-[#EB7124]/30 bg-[#EB7124]/5"
-                                  : stage.isCompleted ? "border-[#033F7E]/20 bg-[#033F7E]/5"
+                                  : stage.isCompleted ? "border-[#0057B8]/20 bg-[#0057B8]/5"
                                   : "border-border/40 bg-muted/20"
                               }`}>
                                 <div className="flex items-center justify-between">
@@ -1616,7 +1616,7 @@ export default function Dashboard() {
 
                 {/* Deadlines */}
                 <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "#033F7E" }} />
+                  <div className="h-1" style={{ background: "#0057B8" }} />
                   <CardHeader className="pb-2 pt-4">
                     <CardTitle className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-2">
                       <Clock className="h-3.5 w-3.5" /> Ближайшие дедлайны
@@ -1639,7 +1639,7 @@ export default function Dashboard() {
 
                 {/* Mini Leaderboard */}
                 <Card className="rounded-2xl border-border/60 overflow-hidden">
-                  <div className="h-1" style={{ background: "linear-gradient(90deg, #172E46, #033F7E)" }} />
+                  <div className="h-1" style={{ background: "linear-gradient(90deg, #0057B8, #0057B8)" }} />
                   <CardHeader className="pb-2 pt-4 flex flex-row items-center justify-between space-y-0">
                     <CardTitle className="text-xs text-muted-foreground uppercase tracking-wider flex items-center gap-2">
                       <Trophy className="h-3.5 w-3.5 text-yellow-500" /> Топ студентов

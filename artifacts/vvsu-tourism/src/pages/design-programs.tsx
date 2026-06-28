@@ -17,7 +17,7 @@ import {
 
 const tracks = [
   {
-    id: "environment", emoji: "🏙️", color: "#033F7E",
+    id: "environment", emoji: "🏙️", color: "#0057B8",
     title: "Дизайн среды",
     tags: "интерьеры, городская среда, 3D",
     creates: ["Интерьеры и общественные пространства", "Городские сценарии и благоустройство", "3D-визуализации и макеты", "Реальные задачи для среды Владивостока"],
@@ -111,7 +111,7 @@ const whyItems = [
 const projectFilters = ["Все", "Дизайн среды", "Цифровой дизайн", "Мода", "Графика", "Архитектура"];
 
 const mockProjects = [
-  { title: "Интерьер кофейни", author: "Анна М., 3 курс", track: "Дизайн среды", emoji: "🏛️", color: "#033F7E" },
+  { title: "Интерьер кофейни", author: "Анна М., 3 курс", track: "Дизайн среды", emoji: "🏛️", color: "#0057B8" },
   { title: "Приложение для туристов", author: "Иван С., 4 курс", track: "Цифровой дизайн", emoji: "💻", color: "#7c3aed" },
   { title: "Коллекция «Тихий океан»", author: "Мария К., 3 курс", track: "Мода", emoji: "👗", color: "#db2777" },
   { title: "Айдентика рыбного рынка", author: "Дмитрий П., 4 курс", track: "Графика", emoji: "🎨", color: "#EB7124" },
@@ -603,7 +603,7 @@ export default function DesignProgramsPage() {
             {[
               {
                 step: "01", icon: "🗺️", title: "Выбери направление",
-                color: "#033F7E",
+                color: "#0057B8",
                 items: ["Пройди тест на совместимость", "Изучи карточки треков", "Запишись на день открытых дверей"],
                 action: { label: "Пройти тест", href: "/specialty-test" },
               },
@@ -760,7 +760,7 @@ export default function DesignProgramsPage() {
         <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <Card className="rounded-2xl border-border/60 overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2">
-              <div className="p-8 md:p-10 space-y-4" style={{ background: "linear-gradient(135deg,#172E46,#033F7E)" }}>
+              <div className="p-8 md:p-10 space-y-4" style={{ background: "linear-gradient(135deg,#0057B8,#0057B8)" }}>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-accent" />
                   <span className="text-white/60 text-xs uppercase tracking-widest">Набережные · Маршруты · Парки</span>
@@ -888,7 +888,7 @@ export default function DesignProgramsPage() {
         {/* ── BLOCK 17: Финальный CTA ────────────────────────── */}
         <motion.section id="final-cta" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
           <div className="rounded-2xl p-12 border border-border/60 relative overflow-hidden"
-            style={{ background: "linear-gradient(135deg,#1a0533,#172E46)" }}>
+            style={{ background: "linear-gradient(135deg,#1a0533,#0057B8)" }}>
             <div className="absolute inset-0 pointer-events-none"
               style={{ backgroundImage: "radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
             <div className="relative z-10">

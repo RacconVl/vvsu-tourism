@@ -219,7 +219,7 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
                     >
                       <Link href={`/cabinet/tasks/quiz/${q.id}`}>
                         <Card className="rounded-2xl border-border/60 overflow-hidden cursor-pointer hover-elevate transition-all h-full group">
-                          <div className="h-32 relative bg-gradient-to-br from-[#033F7E] to-[#172E46]">
+                          <div className="h-32 relative bg-gradient-to-br from-[#0057B8] to-[#0057B8]">
                             {q.imageUrl && (
                               <img
                                 src={q.imageUrl}
@@ -294,7 +294,7 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
                     <Card className={`overflow-hidden rounded-2xl border-border/60 h-full ${
                       quest.isCompleted ? "opacity-70" : "hover:shadow-xl transition-shadow"
                     }`}>
-                      <div className="relative h-44 overflow-hidden bg-gradient-to-br from-[#033F7E] to-[#172E46]">
+                      <div className="relative h-44 overflow-hidden bg-gradient-to-br from-[#0057B8] to-[#0057B8]">
                         <img
                           src={quest.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                           alt={quest.title}
@@ -383,7 +383,7 @@ export default function TasksPage({ defaultTab = "quizzes" }: { defaultTab?: Tab
               {submittingQuest && (
                 <>
                   {/* Header with image */}
-                  <div className="relative h-36 overflow-hidden rounded-t-2xl bg-gradient-to-br from-[#033F7E] to-[#172E46]">
+                  <div className="relative h-36 overflow-hidden rounded-t-2xl bg-gradient-to-br from-[#0057B8] to-[#0057B8]">
                     <img
                       src={submittingQuest.imageUrl || "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600"}
                       alt={submittingQuest.title}
