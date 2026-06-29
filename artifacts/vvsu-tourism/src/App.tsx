@@ -10,6 +10,7 @@ import Home from "@/pages/home";
 import Cabinet from "@/pages/cabinet";
 import LoginPage from "@/pages/login";
 import RegisterPage from "@/pages/register";
+import MapPage from "@/pages/map-page";
 import LibraryPage from "@/pages/library";
 import Leaderboard from "@/pages/leaderboard";
 import PublicProfile from "@/pages/public-profile";
@@ -48,6 +49,7 @@ function Router() {
         <Route path="/faq" component={FaqPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
+        <Route path="/map" component={MapPage} />
         <Route path="/library" component={LibraryPage} />
         <Route path="/leaderboard" component={Leaderboard} />
         <Route path="/profile/:id" component={PublicProfile} />
