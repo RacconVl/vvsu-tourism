@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import {
-  Map as MapIcon, Trophy, GraduationCap, Users,
+  Trophy, GraduationCap, Users,
   Sun, Moon, Menu, X, LogIn, LogOut, UserPlus, LayoutDashboard, Palette, Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,6 @@ const publicNavItems = [
   { href: "/admission",   label: "Поступление",  icon: GraduationCap },
   { href: "/design",      label: "Дизайн & арт", icon: Palette },
   { href: "/community",   label: "Молодёжка",    icon: Users },
-  { href: "/map",         label: "Карта",         icon: MapIcon },
   { href: "/leaderboard", label: "Рейтинг",       icon: Trophy },
 ];
 
@@ -28,7 +27,6 @@ const bottomNavItems = [
   { href: "/",            label: "Главная",    icon: Home },
   { href: "/admission",   label: "Поступление", icon: GraduationCap },
   { href: "/community",   label: "Молодёжка",  icon: Users },
-  { href: "/map",         label: "Карта",       icon: MapIcon },
   { href: "/leaderboard", label: "Рейтинг",     icon: Trophy },
 ];
 
