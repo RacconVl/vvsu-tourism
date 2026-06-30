@@ -540,48 +540,70 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* RIGHT: geometric stat blocks — 3 cells */}
-        <div className="grid grid-cols-3 lg:grid-cols-1 border-t-[4px] lg:border-t-0 border-[#0A0A0A]">
-          {/* Cell 1: navy + lime circle — Студентов */}
+        {/* RIGHT: 2×2 visual grid — tourism + design */}
+        <div className="grid border-t-[4px] lg:border-t-0 border-[#0A0A0A]"
+          style={{ gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr" }}>
+
+          {/* Cell A: ТУРИЗМ — photo + label */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.15 }}
-            className="border-r-[4px] lg:border-r-0 lg:border-b-[4px] border-[#0A0A0A]"
-            style={{ background: "#0057B8", position: "relative", overflow: "hidden" }}
+            initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.15 }}
+            style={{ position: "relative", overflow: "hidden", borderRight: "4px solid #0A0A0A", borderBottom: "4px solid #0A0A0A", minHeight: 180 }}
           >
-            <div style={{ position: "absolute", top: -40, right: -40, width: 140, height: 140, borderRadius: "50%", background: "#C6FF00", opacity: 0.2 }} />
-            <div style={{ position: "relative", padding: "clamp(14px,2.5vw,28px) clamp(10px,2.5vw,36px)", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
-              <div style={{ color: "#fff", fontSize: "clamp(18px,3.2vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 4 }}>
-                <span className="hidden lg:inline">более </span>2 500
+            <img src="/prog-tourism.png" alt="Туризм" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(0,87,184,0.82) 0%, rgba(0,0,0,0.55) 100%)" }} />
+            <div style={{ position: "relative", zIndex: 1, padding: "clamp(14px,2.5vw,28px) clamp(12px,2.5vw,24px)", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#C6FF00", color: "#0A0A0A", fontSize: 10, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", padding: "4px 10px", alignSelf: "flex-start" }}>
+                ТУРИЗМ
+              </div>
+              <div>
+                <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 10, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>Бакалавриат · Магистратура</div>
+                <div style={{ color: "#fff", fontSize: "clamp(13px,1.8vw,17px)", fontWeight: 800, lineHeight: 1.3 }}>Международный туризм и менеджмент</div>
               </div>
             </div>
           </motion.div>
 
-          {/* Cell 2: hot pink — Трудоустройство */}
+          {/* Cell B: Студентов stat */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.25 }}
-            className="border-r-[4px] lg:border-r-0 lg:border-b-[4px] border-[#0A0A0A]"
-            style={{ background: "#FF007F", position: "relative", overflow: "hidden" }}
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
+            style={{ background: "#0057B8", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
           >
-            <div style={{ position: "absolute", top: -30, right: -30, width: 130, height: 130, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
-            <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(255,255,255,0.85)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Занятость</div>
-              <div style={{ color: "#fff", fontSize: "clamp(20px,3.8vw,62px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 6 }}>94%</div>
+            <div style={{ position: "absolute", top: -30, right: -30, width: 110, height: 110, borderRadius: "50%", background: "#C6FF00", opacity: 0.18 }} />
+            <div style={{ position: "relative", padding: "clamp(14px,2.5vw,28px) clamp(10px,2vw,24px)", zIndex: 1, height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+              <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
+              <div style={{ color: "#fff", fontSize: "clamp(22px,3.5vw,52px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", marginTop: 4 }}>2 500+</div>
             </div>
           </motion.div>
 
-          {/* Cell 3: lime — Место в ДФО */}
+          {/* Cell C: Трудоустройство stat */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.35 }}
-            style={{ background: "#C6FF00", position: "relative", overflow: "hidden" }}
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.3 }}
+            style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderRight: "4px solid #0A0A0A" }}
           >
-            <div style={{ position: "absolute", bottom: -20, right: -20, width: 100, height: 100, borderRadius: "50%", background: "rgba(0,0,0,0.06)" }} />
-            <div style={{ padding: "clamp(16px,2.5vw,28px) clamp(12px,2.5vw,36px)", position: "relative", zIndex: 1 }}>
-              <div style={{ color: "rgba(0,0,0,0.7)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Место</div>
-              <div style={{ color: "#0A0A0A", fontSize: "clamp(18px,3.2vw,52px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", marginTop: 4 }}>ТОП-5</div>
-              <div style={{ color: "rgba(0,0,0,0.65)", fontSize: 12, fontWeight: 800, marginTop: 2 }}>ДФО</div>
+            <div style={{ position: "absolute", bottom: -20, left: -20, width: 110, height: 110, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
+            <div style={{ padding: "clamp(14px,2.5vw,28px) clamp(10px,2vw,24px)", position: "relative", zIndex: 1, height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Занятость</div>
+              <div style={{ color: "#fff", fontSize: "clamp(22px,3.8vw,56px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", marginTop: 4 }}>94%</div>
             </div>
           </motion.div>
+
+          {/* Cell D: ДИЗАЙН — photo + label */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.35 }}
+            style={{ position: "relative", overflow: "hidden", minHeight: 180 }}
+          >
+            <img src="/prog-design.png" alt="Дизайн" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(10,10,10,0.78) 0%, rgba(255,0,127,0.55) 100%)" }} />
+            <div style={{ position: "relative", zIndex: 1, padding: "clamp(14px,2.5vw,28px) clamp(12px,2.5vw,24px)", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#FF007F", color: "#fff", fontSize: 10, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", padding: "4px 10px", alignSelf: "flex-start" }}>
+                ДИЗАЙН
+              </div>
+              <div>
+                <div style={{ color: "rgba(255,255,255,0.65)", fontSize: 10, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", marginBottom: 4 }}>ТОП-5 ДФО · Бюджет</div>
+                <div style={{ color: "#fff", fontSize: "clamp(13px,1.8vw,17px)", fontWeight: 800, lineHeight: 1.3 }}>Графический и средовой дизайн</div>
+              </div>
+            </div>
+          </motion.div>
+
         </div>
       </section>
 
@@ -595,6 +617,9 @@ export default function Home() {
           )}
         </div>
       </div>
+
+      {/* ── spacer before open day ──────────────────────────────── */}
+      <div style={{ height: 48, background: "var(--color-background)", borderBottom: "none" }} />
 
       {/* ── День открытых дверей ──────────────────────────────── */}
       <section style={{ background: "#0057B8", borderBottom: "3px solid #0A0A0A" }}>
@@ -1353,6 +1378,115 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── Контакты ВВГУ ──────────────────────────────────────── */}
+      <section style={{ background: "#0A0A0A", borderTop: "3px solid #0A0A0A" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Контакты</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <a href="https://www.vvsu.ru" target="_blank" rel="noopener noreferrer"
+            style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", whiteSpace: "nowrap", textDecoration: "none" }}>
+            → vvsu.ru
+          </a>
+        </div>
+
+        <div className="container mx-auto px-4 max-w-6xl" style={{ padding: "clamp(40px,5vw,64px) clamp(16px,4vw,48px)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 0, border: "3px solid rgba(255,255,255,0.1)", marginBottom: 40 }}>
+
+            {/* Адрес */}
+            <div style={{ padding: "clamp(24px,3vw,36px) clamp(20px,3vw,28px)", borderRight: "3px solid rgba(255,255,255,0.08)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                <div style={{ width: 32, height: 32, background: "#0057B8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>📍</div>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Адрес</span>
+              </div>
+              <p style={{ color: "#fff", fontSize: 15, fontWeight: 700, lineHeight: 1.55, marginBottom: 10 }}>
+                690014, г. Владивосток<br />ул. Гоголя, 41
+              </p>
+              <a href="https://yandex.ru/maps/?text=Владивосток+ул+Гоголя+41" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: 12, color: "#C6FF00", fontWeight: 700, textDecoration: "none" }}>
+                Открыть на карте →
+              </a>
+            </div>
+
+            {/* Телефоны */}
+            <div style={{ padding: "clamp(24px,3vw,36px) clamp(20px,3vw,28px)", borderRight: "3px solid rgba(255,255,255,0.08)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                <div style={{ width: 32, height: 32, background: "#FF007F", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>📞</div>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Телефон</span>
+              </div>
+              <a href="tel:+74232404040" style={{ display: "block", color: "#fff", fontSize: 16, fontWeight: 800, textDecoration: "none", marginBottom: 6, letterSpacing: "-0.02em" }}>
+                +7 (423) 240-40-40
+              </a>
+              <a href="tel:+78007000465" style={{ display: "flex", alignItems: "center", gap: 8, color: "rgba(255,255,255,0.5)", fontSize: 13, fontWeight: 700, textDecoration: "none", marginBottom: 12 }}>
+                +7 (800) 700-04-65
+                <span style={{ fontSize: 10, background: "rgba(255,255,255,0.1)", padding: "2px 6px", fontWeight: 600 }}>бесплатно</span>
+              </a>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontWeight: 600 }}>Пн–Пт: 09:00 – 18:00</div>
+            </div>
+
+            {/* Приёмная комиссия */}
+            <div style={{ padding: "clamp(24px,3vw,36px) clamp(20px,3vw,28px)", borderRight: "3px solid rgba(255,255,255,0.08)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                <div style={{ width: 32, height: 32, background: "#EB7124", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>🎓</div>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Приёмная комиссия</span>
+              </div>
+              <a href="tel:+74232404060" style={{ display: "block", color: "#fff", fontSize: 16, fontWeight: 800, textDecoration: "none", marginBottom: 6, letterSpacing: "-0.02em" }}>
+                +7 (423) 240-40-60
+              </a>
+              <a href="mailto:abiturient@vvsu.ru" style={{ display: "block", color: "#C6FF00", fontSize: 13, fontWeight: 700, textDecoration: "none", marginBottom: 10 }}>
+                abiturient@vvsu.ru
+              </a>
+              <a href="https://www.vvsu.ru/admission/" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: 12, color: "#EB7124", fontWeight: 700, textDecoration: "none" }}>
+                Подать документы →
+              </a>
+            </div>
+
+            {/* Онлайн */}
+            <div style={{ padding: "clamp(24px,3vw,36px) clamp(20px,3vw,28px)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                <div style={{ width: 32, height: 32, background: "#C6FF00", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>🌐</div>
+                <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Онлайн</span>
+              </div>
+              <a href="https://www.vvsu.ru" target="_blank" rel="noopener noreferrer"
+                style={{ display: "block", color: "#fff", fontSize: 15, fontWeight: 800, textDecoration: "none", marginBottom: 12 }}>
+                www.vvsu.ru
+              </a>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
+                {[
+                  { label: "ВКонтакте", href: "https://vk.com/vvsuvl" },
+                  { label: "Telegram", href: "https://t.me/vvsuvl" },
+                ].map(s => (
+                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                    style={{ fontSize: 11, padding: "5px 12px", border: "1.5px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.65)", fontWeight: 700, textDecoration: "none" }}>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+              <a href="mailto:info@vvsu.ru" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", fontWeight: 600, textDecoration: "none" }}>
+                info@vvsu.ru
+              </a>
+            </div>
+          </div>
+
+          {/* Footer bar */}
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16, paddingTop: 24, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <img src="/vvsu-logo.png" alt="ВВГУ" style={{ height: 32, opacity: 0.65 }} />
+              <div>
+                <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 13, fontWeight: 800 }}>ВВГУ — Институт туризма</div>
+                <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>и креативных индустрий</div>
+              </div>
+            </div>
+            <div style={{ color: "rgba(255,255,255,0.2)", fontSize: 11 }}>
+              © {new Date().getFullYear()} Владивостокский государственный университет
+            </div>
+          </div>
         </div>
       </section>
     </div>
