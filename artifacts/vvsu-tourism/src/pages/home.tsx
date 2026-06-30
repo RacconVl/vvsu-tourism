@@ -11,30 +11,23 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 function CompassIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
-      {/* Outer ring */}
       <motion.g style={{ transformOrigin: "100px 100px" }}
         animate={{ rotate: 360 }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }}>
         <circle cx="100" cy="100" r="80" stroke="#0057B8" strokeWidth="3" strokeDasharray="8 4" opacity="0.3" />
       </motion.g>
-      {/* Middle ring */}
       <circle cx="100" cy="100" r="60" stroke="#EB7124" strokeWidth="1.5" opacity="0.2" />
-      {/* Inner circle */}
       <circle cx="100" cy="100" r="40" fill="#0057B8" opacity="0.15" />
       <circle cx="100" cy="100" r="40" stroke="#0057B8" strokeWidth="2" opacity="0.4" />
-      {/* Compass needle N */}
       <motion.g style={{ transformOrigin: "100px 100px" }}
         animate={{ rotate: [0, 8, -5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}>
         <polygon points="100,62 106,100 100,108 94,100" fill="#EB7124" />
         <polygon points="100,108 106,100 100,138 94,100" fill="#0057B8" opacity="0.6" />
       </motion.g>
-      {/* Center dot */}
       <circle cx="100" cy="100" r="6" fill="white" />
       <circle cx="100" cy="100" r="3" fill="#EB7124" />
-      {/* Cardinal points */}
       {[["N", 100, 18], ["S", 100, 188], ["W", 12, 104], ["E", 188, 104]].map(([l, x, y]) => (
         <text key={String(l)} x={x} y={y} textAnchor="middle" fill="#0057B8" fontSize="12" fontWeight="700" opacity="0.6">{l}</text>
       ))}
-      {/* Sparkles */}
       {[[40, 40], [160, 40], [40, 160], [160, 160]].map(([x, y], i) => (
         <motion.g key={i} style={{ transformOrigin: `${x}px ${y}px` }}
           animate={{ opacity: [0.2, 0.8, 0.2], scale: [0.8, 1.3, 0.8] }}
@@ -49,21 +42,17 @@ function CompassIllustration() {
 function MapIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
-      {/* Sea background */}
       <motion.ellipse cx="100" cy="130" rx="75" ry="25" fill="#0057B8" opacity="0.1"
         animate={{ scaleX: [1, 1.05, 1] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} />
-      {/* Map outline - Vladivostok peninsula shape */}
       <motion.path d="M70,50 Q80,40 100,38 Q130,36 145,55 Q158,72 155,95 Q150,125 130,145 Q110,158 95,155 Q75,150 65,130 Q52,108 58,85 Q62,65 70,50 Z"
         fill="#0057B8" stroke="#0057B8" strokeWidth="2"
         animate={{ opacity: [0.12, 0.18, 0.12] }} transition={{ duration: 3, repeat: Infinity }} />
-      {/* Grid lines */}
       {[60, 80, 100, 120, 140].map(y => (
         <line key={y} x1="30" y1={y} x2="170" y2={y} stroke="#0057B8" strokeWidth="0.5" opacity="0.15" strokeDasharray="4 4" />
       ))}
       {[60, 90, 120, 150].map(x => (
         <line key={x} x1={x} y1="30" x2={x} y2="170" stroke="#0057B8" strokeWidth="0.5" opacity="0.15" strokeDasharray="4 4" />
       ))}
-      {/* Location pins */}
       {[[100, 75], [125, 105], [80, 120]].map(([x, y], i) => (
         <motion.g key={i} style={{ transformOrigin: `${x}px ${y}px` }}
           animate={{ y: [0, -5, 0] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.7, ease: "easeInOut" }}>
@@ -72,7 +61,6 @@ function MapIllustration() {
           <circle cx={x} cy={y} r="3" fill="white" />
         </motion.g>
       ))}
-      {/* Route line */}
       <motion.path d="M100,75 Q115,92 125,105 Q105,112 80,120" stroke="#EB7124" strokeWidth="2" strokeDasharray="5 3" fill="none" opacity="0.6"
         animate={{ strokeDashoffset: [0, -16] }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }} />
     </svg>
@@ -82,20 +70,16 @@ function MapIllustration() {
 function TrophyIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
-      {/* Glow */}
       <motion.circle cx="100" cy="85" r="55" fill="#EB7124" opacity="0.08"
         animate={{ r: [50, 58, 50] }} transition={{ duration: 3, repeat: Infinity }} />
-      {/* Trophy body */}
       <motion.g animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
         <path d="M72,45 L128,45 L122,90 Q118,115 100,120 Q82,115 78,90 Z" fill="#EB7124" opacity="0.85" />
         <path d="M72,45 L60,45 Q48,45 48,60 Q48,80 72,88 Z" fill="#d97706" opacity="0.6" />
         <path d="M128,45 L140,45 Q152,45 152,60 Q152,80 128,88 Z" fill="#d97706" opacity="0.6" />
         <rect x="88" y="120" width="24" height="20" fill="#EB7124" opacity="0.7" rx="2" />
         <rect x="75" y="138" width="50" height="8" fill="#EB7124" rx="4" />
-        {/* Star on trophy */}
         <polygon points="100,60 103,71 115,71 106,78 109,89 100,82 91,89 94,78 85,71 97,71" fill="white" opacity="0.9" />
       </motion.g>
-      {/* Orbiting stars */}
       <motion.g style={{ transformOrigin: "100px 85px" }}
         animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }}>
         {[0, 120, 240].map((deg, i) => (
@@ -109,7 +93,6 @@ function TrophyIllustration() {
 function CommunityIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
-      {/* Connection lines */}
       <motion.line x1="100" y1="100" x2="50" y2="60" stroke="#0057B8" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
         animate={{ opacity: [0.15, 0.4, 0.15] }} transition={{ duration: 2.5, repeat: Infinity }} />
       <motion.line x1="100" y1="100" x2="150" y2="60" stroke="#0057B8" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
@@ -118,7 +101,6 @@ function CommunityIllustration() {
         animate={{ opacity: [0.25, 0.5, 0.25] }} transition={{ duration: 3, repeat: Infinity, delay: 0.5 }} />
       <motion.line x1="100" y1="100" x2="155" y2="145" stroke="#EB7124" strokeWidth="1.5" opacity="0.25" strokeDasharray="4 3"
         animate={{ opacity: [0.5, 0.25, 0.5] }} transition={{ duration: 3, repeat: Infinity, delay: 0.5 }} />
-      {/* Avatar circles */}
       {[
         { cx: 50,  cy: 60,  r: 22, fill: "#0057B8", delay: 0 },
         { cx: 150, cy: 60,  r: 22, fill: "#EB7124", delay: 0.3 },
@@ -128,12 +110,10 @@ function CommunityIllustration() {
         <motion.g key={i} animate={{ y: [0, -3, 0] }} transition={{ duration: 2.5, repeat: Infinity, delay: a.delay }}>
           <circle cx={a.cx} cy={a.cy} r={a.r} fill={a.fill} opacity="0.2" />
           <circle cx={a.cx} cy={a.cy} r={a.r - 4} fill={a.fill} opacity="0.7" />
-          {/* Face */}
           <circle cx={a.cx} cy={a.cy - 3} r={4} fill="white" opacity="0.8" />
           <ellipse cx={a.cx} cy={a.cy + 7} rx={5} ry={3} fill="white" opacity="0.5" />
         </motion.g>
       ))}
-      {/* Center hub */}
       <motion.circle cx="100" cy="100" r="26" fill="#0057B8" opacity="0.15"
         animate={{ r: [24, 28, 24] }} transition={{ duration: 2, repeat: Infinity }} />
       <circle cx="100" cy="100" r="20" fill="#0057B8" opacity="0.8" />
@@ -145,29 +125,23 @@ function CommunityIllustration() {
 function ShipIllustration() {
   return (
     <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
-      {/* Sea waves */}
       <motion.g animate={{ y: [0, 5, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
         <path d="M20,155 Q50,140 80,155 Q110,170 140,155 Q170,140 190,155" stroke="#0057B8" strokeWidth="2.5" fill="none" opacity="0.3" />
       </motion.g>
       <motion.g animate={{ y: [0, -5, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}>
         <path d="M20,165 Q50,152 80,165 Q110,178 140,165 Q170,152 190,165" stroke="#0057B8" strokeWidth="1.5" fill="none" opacity="0.2" />
       </motion.g>
-      {/* Ship hull */}
       <motion.g animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
         <path d="M55,130 L145,130 L135,155 Q100,162 65,155 Z" fill="#0057B8" opacity="0.9" />
         <rect x="70" y="100" width="60" height="32" rx="4" fill="#0057B8" />
-        {/* Windows */}
         <rect x="78" y="108" width="12" height="10" rx="2" fill="white" opacity="0.7" />
         <rect x="95" y="108" width="12" height="10" rx="2" fill="white" opacity="0.7" />
         <rect x="112" y="108" width="12" height="10" rx="2" fill="white" opacity="0.7" />
-        {/* Mast */}
         <line x1="100" y1="100" x2="100" y2="45" stroke="#0057B8" strokeWidth="3" />
-        {/* Sail */}
         <motion.path d="M100,50 L140,75 L100,95 Z" fill="#EB7124" opacity="0.7"
           animate={{ skewY: [0, 2, 0, -2, 0] }} transition={{ duration: 4, repeat: Infinity }} />
         <motion.path d="M100,55 L65,75 L100,90 Z" fill="#EB7124" opacity="0.4"
           animate={{ skewY: [0, -2, 0, 2, 0] }} transition={{ duration: 4, repeat: Infinity, delay: 0.3 }} />
-        {/* Flag */}
         <motion.path d="M100,45 L118,38 L100,31 Z" fill="#EB7124"
           animate={{ scaleX: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
           style={{ transformOrigin: "100px 38px" }} />
@@ -333,7 +307,6 @@ function StickmanStat() {
   const [stickX, setStickX] = useState(-55);
   const [stickDur, setStickDur] = useState(2.0);
   const [resetKey, setResetKey] = useState(0);
-  // Single walk-cycle value 0→1 (triangle wave) that drives ALL limbs
   const [walkT, setWalkT] = useState(0);
 
   useEffect(() => {
@@ -374,16 +347,14 @@ function StickmanStat() {
 
   const isMoving = phase === "run" || phase === "leave";
 
-  // Single RAF loop — all limbs driven by one shared angle
   useEffect(() => {
     if (!isMoving) { setWalkT(0); return; }
-    const period = 380; // ms per half-stride
+    const period = 380;
     let startTime = 0;
     let rafId: number;
     const tick = (now: number) => {
       if (!startTime) startTime = now;
       const elapsed = (now - startTime) % (period * 2);
-      // triangle wave: 0→1 then 1→0
       setWalkT(elapsed < period ? elapsed / period : 2 - elapsed / period);
       rafId = requestAnimationFrame(tick);
     };
@@ -391,13 +362,10 @@ function StickmanStat() {
     return () => cancelAnimationFrame(rafId);
   }, [isMoving]);
 
-  // Natural cross-pattern walk:
-  //   right arm + left leg in phase  (both forward at walkT=0)
-  //   left arm  + right leg in phase (both backward at walkT=0)
-  const rArmDeg = -35 + walkT * 70;   // -35° (forward) → +35° (backward)
-  const lArmDeg =  35 - walkT * 70;   // +35° (backward) → -35° (forward)
-  const lLegDeg = -32 + walkT * 60;   // -32° (forward) → +28° (backward)  ← synced with rArm
-  const rLegDeg =  28 - walkT * 60;   // +28° (backward) → -32° (forward)  ← synced with lArm
+  const rArmDeg = -35 + walkT * 70;
+  const lArmDeg =  35 - walkT * 70;
+  const lLegDeg = -32 + walkT * 60;
+  const rLegDeg =  28 - walkT * 60;
 
   return (
     <div className="flex flex-col items-center text-center gap-2">
@@ -425,7 +393,6 @@ function StickmanStat() {
             <circle cx={0} cy={7} r={5} stroke="#0057B8" strokeWidth={1.8} fill="none" />
             <line x1={0} y1={12} x2={0} y2={27} stroke="#0057B8" strokeWidth={1.8} />
 
-            {/* RIGHT arm */}
             {phase === "erase" ? (
               <motion.g style={{ transformOrigin: "0px 17px" }}
                 animate={{ rotate: [-18, 18] }}
@@ -445,7 +412,6 @@ function StickmanStat() {
               </g>
             )}
 
-            {/* LEFT arm */}
             {isMoving ? (
               <g transform={`rotate(${lArmDeg}, 0, 17)`}>
                 <line x1={0} y1={17} x2={-4} y2={28} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
@@ -454,12 +420,10 @@ function StickmanStat() {
               <line x1={0} y1={17} x2={-8} y2={22} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
             )}
 
-            {/* LEFT leg — synced with right arm */}
             <g transform={`rotate(${isMoving ? lLegDeg : 0}, 0, 27)`}>
               <line x1={0} y1={27} x2={-2} y2={45} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
             </g>
 
-            {/* RIGHT leg — synced with left arm */}
             <g transform={`rotate(${isMoving ? rLegDeg : 0}, 0, 27)`}>
               <line x1={0} y1={27} x2={2} y2={45} stroke="#0057B8" strokeWidth={1.8} strokeLinecap="round" />
             </g>
@@ -528,7 +492,6 @@ export default function Home() {
           className="flex flex-col justify-center items-center lg:border-r-[4px] border-[#0A0A0A]"
           style={{ background: "var(--color-background)", padding: "clamp(40px,6vw,80px) clamp(20px,5vw,60px)", gap: 32, textAlign: "center", position: "relative", overflow: "hidden" }}
         >
-          {/* Graphic accents */}
           <GhostText text="ВВГУ" size={220} color="var(--color-foreground)" opacity={0.04} bottom={-30} right={-20} />
           <GeoCircle size={260} color="#0057B8" opacity={0.08} shape="full" top={-130} left={-80} animate />
           <GeoCircle size={100} color="#FF007F" opacity={0.12} shape="quarter-br" bottom={-1} right={-1} />
@@ -572,7 +535,7 @@ export default function Home() {
               padding: "0 28px", height: 52, fontWeight: 700, fontSize: 14,
               color: "var(--color-foreground)", background: "transparent"
             }}>
-              <Link href="/admission">Поступление →</Link>
+              <a href="https://www.vvsu.ru/admission/" target="_blank" rel="noopener noreferrer">Поступление →</a>
             </Button>
           </div>
         </motion.div>
@@ -627,169 +590,182 @@ export default function Home() {
         <div style={{ display: "flex", animation: "marquee 22s linear infinite", width: "max-content", padding: "13px 0" }}>
           {Array.from({ length: 4 }).flatMap((_, ri) =>
             ["ТВОРИ", "✦", "УЧИСЬ", "✦", "МЕНЯЙ", "✦", "ВЛАДИВОСТОК", "✦", "ВВГУ", "✦", "ТУРИЗМ", "✦", "ДИЗАЙН", "✦", "АРТ", "✦"].map((w, wi) => (
-              <span key={`${ri}-${wi}`} style={{ fontWeight: 900, fontSize: 15, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: "#0A0A0A", flexShrink: 0, fontStyle: w === "✦" ? "normal" : "normal" }}>{w}</span>
+              <span key={`${ri}-${wi}`} style={{ fontWeight: 900, fontSize: 15, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: "#0A0A0A", flexShrink: 0 }}>{w}</span>
             ))
           )}
         </div>
       </div>
 
-
-      {/* ── Tech Infrastructure ───────────────────────────────── */}
-      <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
-        {/* Section label strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#C6FF00" }} />
-            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Передовые технологии</span>
-          </div>
-          <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
-          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ ВВГУ</span>
-        </div>
-        <div className="container mx-auto px-4 max-w-6xl py-20">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16" style={{ position: "relative" }}>
-            <GhostSectionNum num="01" color="var(--color-foreground)" />
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 16 }}>
-                <div style={{ width: 4, background: "#C6FF00", flexShrink: 0, marginTop: 8, height: 48 }} />
-                <h2 style={{ fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-foreground)" }}>
-                  Передовые технологии<br /><span style={{ color: "#FF007F" }}>для вашего обучения</span>
-                </h2>
-              </div>
-              <p className="text-muted-foreground max-w-2xl text-lg">
-                В ВВГУ созданы все условия для учёбы и творчества — современное оборудование, лаборатории и инструменты профессиональной индустрии.
-              </p>
+      {/* ── День открытых дверей ──────────────────────────────── */}
+      <section style={{ background: "#0057B8", borderBottom: "3px solid #0A0A0A" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "stretch" }}
+        >
+          <div style={{ padding: "clamp(28px,4vw,52px) clamp(20px,5vw,60px)" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#C6FF00", color: "#0A0A0A", fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", padding: "6px 14px", marginBottom: 20 }}>
+              ◆ День открытых дверей
             </div>
-          </motion.div>
+            <h2 style={{ fontSize: "clamp(26px,3.5vw,46px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "#fff", marginBottom: 12 }}>
+              Приходи и почувствуй<br /><span style={{ color: "#C6FF00" }}>атмосферу ВВГУ</span>
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 15, lineHeight: 1.6, maxWidth: 480, marginBottom: 24 }}>
+              22 августа 2026 · 10:00 — 16:00 · ул. Гоголя, 41, Владивосток
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {["10:00 Открытие", "10:30 Презентации программ", "11:30 Экскурсия по кампусу", "13:00 Мастер-класс", "15:00 Консультации"].map((item, i) => (
+                <span key={i} style={{ fontSize: 11, padding: "5px 12px", border: "1.5px solid rgba(255,255,255,0.3)", color: "rgba(255,255,255,0.85)", fontWeight: 700, letterSpacing: 0.5 }}>{item}</span>
+              ))}
+            </div>
+          </div>
+          <div style={{ background: "#C6FF00", padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)", display: "flex", flexDirection: "column", justifyContent: "center", gap: 12, minWidth: 240, borderLeft: "3px solid #0A0A0A" }}>
+            <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginBottom: 4 }}>Зарегистрируйтесь бесплатно</div>
+            <Link href="/open-day"
+              style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "14px 24px", background: "#0A0A0A", color: "#fff", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+              Записаться на ДОД <ArrowRight style={{ width: 16, height: 16 }} />
+            </Link>
+            <a href="https://www.vvsu.ru/admission/" target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "14px 24px", border: "2px solid rgba(0,0,0,0.25)", color: "#0A0A0A", fontSize: 13, fontWeight: 700, textDecoration: "none", whiteSpace: "nowrap" }}>
+              Информация о поступлении
+            </a>
+          </div>
+        </motion.div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            {[
-              {
-                Illus: Printer3DIllustration,
-                title: "3D-принтеры и прототипирование",
-                desc: "Современные FDM и SLA 3D-принтеры для создания макетов, сувенирной продукции и дизайн-проектов. Студенты печатают прототипы с первого курса.",
-                tags: ["Creality K1 Max", "Bambu Lab X1", "Фотополимерная печать"],
-                color: "#0057B8",
-              },
-              {
-                Illus: LabIllustration,
-                title: "Компьютерные классы и IT-лаборатории",
-                desc: "Оборудованные компьютерные классы с высокопроизводительными ПК, скоростным интернетом и лицензионным ПО для работы с любыми проектами.",
-                tags: ["60+ рабочих мест", "Windows + Linux", "Adobe CC, AutoCAD"],
-                color: "#EB7124",
-              },
-              {
-                Illus: MacStudioIllustration,
-                title: "Mac Studio для дизайнеров",
-                desc: "Специализированная студия для дизайнеров, оснащённая Apple Mac Studio и профессиональными мониторами. Работайте в среде, как в ведущих агентствах.",
-                tags: ["Apple Mac Studio", "Wacom Cintiq", "Профмониторы 4K"],
-                color: "#db2777",
-              },
-              {
-                Illus: VRIllustration,
-                title: "VR / AR оборудование",
-                desc: "Шлемы виртуальной реальности для проектирования туристических маршрутов, виртуальных экскурсий и иммерсивных презентаций — технологии будущего уже сегодня.",
-                tags: ["Meta Quest Pro", "HTC Vive", "360° контент"],
-                color: "#7c3aed",
-              },
-              {
-                Illus: LabIllustration,
-                title: "Медиастудия и фотолаборатория",
-                desc: "Профессиональная фото- и видеостудия с постоянным освещением, хромакеем и монтажными станциями. Снимайте и монтируйте контент на уровне медиаагентств.",
-                tags: ["Canon EOS R5", "DJI Drone", "Adobe Premiere"],
-                color: "#0891b2",
-              },
-              {
-                Illus: Printer3DIllustration,
-                title: "Лаборатория туристических технологий",
-                desc: "Специализированная лаборатория с системами бронирования, GDS-платформами и профессиональным ПО для управления туристическими маршрутами и отелями.",
-                tags: ["Amadeus GDS", "TourWriter", "Travelport"],
-                color: "#16a34a",
-              },
-            ].map(({ Illus, title, desc, tags, color }, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                <div style={{ border: "2px solid #0A0A0A", background: "var(--color-card)", height: "100%", display: "flex", flexDirection: "column", padding: 24, gap: 16, position: "relative", overflow: "hidden" }}
-                  className="hover:shadow-xl transition-shadow">
-                  <div style={{ position: "absolute", top: 0, left: 0, width: 4, bottom: 0, background: color }} />
-                  <div className="h-24 w-24 ml-2">
-                    <Illus />
-                  </div>
-                  <div>
-                    <h3 style={{ fontWeight: 800, fontSize: 15, color: "var(--color-foreground)", marginBottom: 8, lineHeight: 1.3 }}>{title}</h3>
-                    <p style={{ fontSize: 13, color: "hsl(var(--muted-foreground))", lineHeight: 1.6, marginBottom: 12 }}>{desc}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                      {tags.map(t => (
-                        <span key={t} style={{ fontSize: 11, padding: "3px 10px", border: `1.5px solid ${color}`, color, background: `${color}15`, fontWeight: 700, letterSpacing: 0.5 }}>{t}</span>
-                      ))}
+      {/* ── Институт который меняет жизнь ───────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+            {/* Left: reasons */}
+            <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
+                <div style={{ width: 8, height: 8, background: "#FF007F" }} />
+                <span style={{ fontWeight: 900, fontSize: 11, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Почему выбирают нас</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                Институт,<br />который <span className="text-accent">меняет жизнь</span>
+              </h2>
+              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+                Мы не просто обучаем — мы погружаем в реальную индустрию с первого дня. Каждый студент получает наставника-практика и доступ к живым проектам.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 0, border: "3px solid #0A0A0A" }}>
+                {[
+                  { num: "01", title: "Аккредитованные программы", desc: "Дипломы признаются работодателями России, Кореи, Японии и Китая", color: "#0057B8" },
+                  { num: "02", title: "Проектное обучение", desc: "Реальные кейсы от туристических компаний Приморья с первого семестра", color: "#EB7124" },
+                  { num: "03", title: "Международная среда", desc: "Студенческий обмен с 12 университетами АТР, летние школы за рубежом", color: "#C6FF00" },
+                  { num: "04", title: "Сообщество выпускников", desc: "3 000+ выпускников работают в ведущих компаниях туристической отрасли", color: "#FF007F" },
+                ].map((r, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                    <div style={{ display: "flex", alignItems: "stretch", borderBottom: i < 3 ? "3px solid #0A0A0A" : "none" }}>
+                      <div style={{ width: 56, background: r.color, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 13, color: r.color === "#C6FF00" ? "#0A0A0A" : "#fff", letterSpacing: 1, flexShrink: 0, borderRight: "3px solid #0A0A0A" }}>
+                        {r.num}
+                      </div>
+                      <div style={{ padding: "16px 20px" }}>
+                        <h4 style={{ fontWeight: 800, fontSize: 14, color: "var(--color-foreground)", marginBottom: 4 }}>{r.title}</h4>
+                        <p style={{ fontSize: 12, color: "hsl(var(--muted-foreground))", lineHeight: 1.5 }}>{r.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right: reference-style mosaic grid */}
+            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: 0, border: "3px solid #0A0A0A", minHeight: 320 }}>
+                {/* Cell 1: pink bg + B&W circle photo */}
+                <div style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: 170, height: 170, borderRadius: "50%", overflow: "hidden", border: "4px solid rgba(255,255,255,0.3)" }}>
+                      <img src="/students-1.png" alt="Студенты" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.1)" }} />
                     </div>
                   </div>
+                  <div style={{ position: "absolute", bottom: 12, left: 0, right: 0, textAlign: "center", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Студенты</div>
+                </div>
+                {/* Cell 2: lime bg + bold number */}
+                <div style={{ background: "#C6FF00", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderBottom: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "#0A0A0A", opacity: 0.06 }} />
+                  <div style={{ fontSize: 80, fontWeight: 900, lineHeight: 1, color: "#0A0A0A", letterSpacing: "-0.04em" }}>12</div>
+                  <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.75)", marginTop: 6, textAlign: "center" }}>Партнёров АТР</div>
+                </div>
+                {/* Cell 3: navy bg + bold text */}
+                <div style={{ background: "#0057B8", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20, borderRight: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", bottom: -30, right: -30, width: 100, height: 100, borderRadius: "50%", background: "#C6FF00", opacity: 0.15 }} />
+                  <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10, textAlign: "center" }}>Девиз</div>
+                  <div style={{ color: "#fff", fontSize: "clamp(18px,4vw,28px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.02em", textAlign: "center" }}>
+                    УЧИСЬ.<br/><span style={{ color: "#C6FF00" }}>СОЗДАВАЙ.</span><br/>МЕНЯЙ.
+                  </div>
+                </div>
+                {/* Cell 4: black bg + B&W circle photo */}
+                <div style={{ background: "#0A0A0A", position: "relative", overflow: "hidden" }}>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: 170, height: 170, borderRadius: "50%", overflow: "hidden", border: "4px solid rgba(255,0,127,0.4)" }}>
+                      <img src="/students-2.png" alt="Кампус" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.15)" }} />
+                    </div>
+                  </div>
+                  <div style={{ position: "absolute", bottom: 12, left: 0, right: 0, textAlign: "center", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Кампус</div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Лучшая кафедра туризма и дизайна в ДФО ─────────────── */}
+      <section style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, background: "#EB7124" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#EB7124" }}>Лучший в ДФО</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)" }} />
+          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ Туризм · Дизайн</span>
+        </div>
+        <div className="container mx-auto px-4 max-w-6xl" style={{ padding: "clamp(40px,5vw,72px) clamp(16px,4vw,48px)" }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 48 }}>
+            <h2 style={{ fontSize: "clamp(32px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "#fff", marginBottom: 16 }}>
+              Лучшая кафедра<br /><span style={{ color: "#EB7124" }}>туризма и дизайна в ДФО</span>
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16, lineHeight: 1.7, maxWidth: 560 }}>
+              Институт туризма и креативных индустрий ВВГУ — признанный лидер Дальневосточного федерального округа по двум направлениям.
+            </p>
+          </motion.div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0, border: "3px solid rgba(255,255,255,0.1)" }}
+            className="grid-cols-1 sm:grid-cols-2">
+            {[
+              { icon: "🏆", title: "ТОП-5 в ДФО по туризму", desc: "Программа «Туризм» входит в пятёрку лучших в Дальневосточном регионе по качеству образования и трудоустройству выпускников.", color: "#C6FF00", textColor: "#0A0A0A" },
+              { icon: "🎨", title: "Единственная магистратура дизайна", desc: "ВВГУ — единственный вуз ДФО с аккредитованной магистратурой по направлению «Дизайн» с бюджетными местами.", color: "#FF007F", textColor: "#fff" },
+              { icon: "🌏", title: "12 партнёров в АТР", desc: "Университеты-партнёры в Японии, Корее, Китае и Вьетнаме. Студенты проходят международные стажировки с 1-го курса.", color: "#0057B8", textColor: "#fff" },
+              { icon: "💼", title: "94% трудоустройство", desc: "Почти все выпускники находят работу по специальности в течение года. Лучший показатель в ДФО в области туризма и дизайна.", color: "#EB7124", textColor: "#fff" },
+            ].map((item, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                <div style={{ background: item.color, padding: "clamp(24px,3vw,40px) clamp(20px,3vw,36px)", borderRight: i % 2 === 0 ? "3px solid rgba(255,255,255,0.15)" : "none", borderBottom: i < 2 ? "3px solid rgba(255,255,255,0.15)" : "none", height: "100%" }}>
+                  <div style={{ fontSize: 36, marginBottom: 16 }}>{item.icon}</div>
+                  <h3 style={{ fontSize: "clamp(16px,2vw,22px)", fontWeight: 900, color: item.textColor, lineHeight: 1.2, marginBottom: 12 }}>{item.title}</h3>
+                  <p style={{ fontSize: 13, color: item.textColor, opacity: 0.82, lineHeight: 1.6 }}>{item.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Accent stat row */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 mb-8" style={{ border: "2px solid #0A0A0A" }}>
-            <AccentCard text="6" sub="лабораторий и студий" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
-            <AccentCard text="VR" sub="иммерсивные технологии" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
-            <AccentCard text="3D" sub="принтеры с первого курса" bg="#FF007F" textColor="#fff" />
-          </div>
-
-          {/* Grants strip */}
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div style={{ border: "3px solid #0A0A0A", background: "#0A0A0A", overflow: "hidden", position: "relative" }}>
-              <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 0 }}>
-                {/* Left: text */}
-                <div className="lg:border-r-[3px] border-[rgba(255,255,255,0.1)]" style={{ padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)" }}>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FF007F", color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", padding: "6px 14px", marginBottom: 28 }}>
-                    ◆ Гранты
-                  </div>
-                  <h3 style={{ fontSize: "clamp(28px,3vw,44px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.03em", color: "#fff", marginBottom: 20 }}>
-                    Студенты ВВГУ<br /><span style={{ color: "#C6FF00" }}>выигрывают гранты</span>
-                  </h3>
-                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.7, marginBottom: 28, maxWidth: 360 }}>
-                    Гранты Росмолодёжи, президентские стипендии и гранты на проекты в туризме и креативных индустриях. ВВГУ помогает оформить заявку.
-                  </p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-                    <a href="https://fadm.gov.ru" target="_blank" rel="noopener noreferrer"
-                      style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: "#FF007F", color: "#fff", fontSize: 13, fontWeight: 800, textDecoration: "none", letterSpacing: 0.5 }}>
-                      Гранты Росмолодёжи <ExternalLink style={{ width: 14, height: 14 }} />
-                    </a>
-                    <a href="https://grants.culture.ru" target="_blank" rel="noopener noreferrer"
-                      style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", border: "2px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>
-                      Культурные гранты <ExternalLink style={{ width: 14, height: 14 }} />
-                    </a>
-                  </div>
-                </div>
-                {/* Right: stat cells */}
-                <div className="grid grid-cols-2 grid-rows-2">
-                  {[
-                    { num: "500K₽", label: "Максимальный грант", bg: "#FF007F", text: "#fff" },
-                    { num: "12+", label: "Победителей в 2024", bg: "#C6FF00", text: "#0A0A0A" },
-                    { num: "3 млн", label: "Выиграно в 2024", bg: "#0057B8", text: "#fff" },
-                    { num: "100%", label: "Поддержка заявки", bg: "#fff", text: "#0A0A0A" },
-                  ].map((s, i) => (
-                    <div key={i} style={{ background: s.bg, padding: "clamp(16px,3vw,28px)", borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                      <div style={{ fontSize: "clamp(22px,5vw,36px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.03em", color: s.text }}>{s.num}</div>
-                      <div style={{ fontSize: 10, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.3 }}>{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          {/* Admission CTA row */}
+          <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            style={{ marginTop: 32, display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+            <a href="https://www.vvsu.ru/admission/" target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", background: "#EB7124", color: "#fff", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase" }}>
+              Подать документы <ExternalLink style={{ width: 14, height: 14 }} />
+            </a>
+            <Link href="/open-day"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", border: "2px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>
+              День открытых дверей →
+            </Link>
+            <a href="https://www.vvsu.ru/about/flagship-educational-programs/" target="_blank" rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", border: "2px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>
+              Все программы <ExternalLink style={{ width: 14, height: 14 }} />
+            </a>
           </motion.div>
         </div>
       </section>
-
-      {/* ── Marquee: tech → programs ────────────────────────────── */}
-      <div style={{ overflow: "hidden", background: "#0057B8", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
-        <div style={{ display: "flex", animation: "marquee-reverse 28s linear infinite", width: "max-content", padding: "12px 0" }}>
-          {Array.from({ length: 4 }).flatMap((_, ri) =>
-            ["3D-ПРИНТЕРЫ", "◆", "VR / AR", "◆", "MAC STUDIO", "◆", "МЕДИАСТУДИЯ", "◆", "GDS-СИСТЕМЫ", "◆", "IT-ЛАБ", "◆", "ИНФРАСТРУКТУРА", "◆"].map((w, wi) => (
-              <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 13, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "◆" ? "#C6FF00" : "rgba(255,255,255,0.55)", flexShrink: 0 }}>{w}</span>
-            ))
-          )}
-        </div>
-      </div>
 
       {/* ── Flagship programs ──────────────────────────────────── */}
       <section className="py-24 relative overflow-hidden" style={{ background: "#0A0A0A" }}>
@@ -952,86 +928,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Why choose us + student photos ─────────────────────── */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
-            {/* Left: reasons */}
-            <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
-                <div style={{ width: 8, height: 8, background: "#FF007F" }} />
-                <span style={{ fontWeight: 900, fontSize: 11, letterSpacing: 4, textTransform: "uppercase", color: "#FF007F" }}>Почему выбирают нас</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
-                Институт,<br />который <span className="text-accent">меняет жизнь</span>
-              </h2>
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                Мы не просто обучаем — мы погружаем в реальную индустрию с первого дня. Каждый студент получает наставника-практика и доступ к живым проектам.
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 0, border: "3px solid #0A0A0A" }}>
-                {[
-                  { num: "01", title: "Аккредитованные программы", desc: "Дипломы признаются работодателями России, Кореи, Японии и Китая", color: "#0057B8" },
-                  { num: "02", title: "Проектное обучение", desc: "Реальные кейсы от туристических компаний Приморья с первого семестра", color: "#EB7124" },
-                  { num: "03", title: "Международная среда", desc: "Студенческий обмен с 12 университетами АТР, летние школы за рубежом", color: "#C6FF00" },
-                  { num: "04", title: "Сообщество выпускников", desc: "3 000+ выпускников работают в ведущих компаниях туристической отрасли", color: "#FF007F" },
-                ].map((r, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                    <div style={{ display: "flex", alignItems: "stretch", borderBottom: i < 3 ? "3px solid #0A0A0A" : "none" }}>
-                      <div style={{ width: 56, background: r.color, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 13, color: r.color === "#C6FF00" ? "#0A0A0A" : "#fff", letterSpacing: 1, flexShrink: 0, borderRight: "3px solid #0A0A0A" }}>
-                        {r.num}
-                      </div>
-                      <div style={{ padding: "16px 20px" }}>
-                        <h4 style={{ fontWeight: 800, fontSize: 14, color: "var(--color-foreground)", marginBottom: 4 }}>{r.title}</h4>
-                        <p style={{ fontSize: 12, color: "hsl(var(--muted-foreground))", lineHeight: 1.5 }}>{r.desc}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Right: reference-style mosaic grid */}
-            <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: 0, border: "3px solid #0A0A0A", minHeight: 320 }}>
-                {/* Cell 1: pink bg + B&W circle photo */}
-                <div style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderRight: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
-                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <div style={{ width: 170, height: 170, borderRadius: "50%", overflow: "hidden", border: "4px solid rgba(255,255,255,0.3)" }}>
-                      <img src="/students-1.png" alt="Студенты" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.1)" }} />
-                    </div>
-                  </div>
-                  <div style={{ position: "absolute", bottom: 12, left: 0, right: 0, textAlign: "center", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Студенты</div>
-                </div>
-                {/* Cell 2: lime bg + bold number */}
-                <div style={{ background: "#C6FF00", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderBottom: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "#0A0A0A", opacity: 0.06 }} />
-                  <div style={{ fontSize: 80, fontWeight: 900, lineHeight: 1, color: "#0A0A0A", letterSpacing: "-0.04em" }}>12</div>
-                  <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.75)", marginTop: 6, textAlign: "center" }}>Партнёров АТР</div>
-                </div>
-                {/* Cell 3: navy bg + bold text */}
-                <div style={{ background: "#0057B8", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20, borderRight: "3px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", bottom: -30, right: -30, width: 100, height: 100, borderRadius: "50%", background: "#C6FF00", opacity: 0.15 }} />
-                  <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 10, textAlign: "center" }}>Девиз</div>
-                  <div style={{ color: "#fff", fontSize: "clamp(18px,4vw,28px)", fontWeight: 900, lineHeight: 1.15, letterSpacing: "-0.02em", textAlign: "center" }}>
-                    УЧИСЬ.<br/><span style={{ color: "#C6FF00" }}>СОЗДАВАЙ.</span><br/>МЕНЯЙ.
-                  </div>
-                </div>
-                {/* Cell 4: black bg + B&W circle photo */}
-                <div style={{ background: "#0A0A0A", position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <div style={{ width: 170, height: 170, borderRadius: "50%", overflow: "hidden", border: "4px solid rgba(255,0,127,0.4)" }}>
-                      <img src="/students-2.png" alt="Кампус" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.15)" }} />
-                    </div>
-                  </div>
-                  <div style={{ position: "absolute", bottom: 12, left: 0, right: 0, textAlign: "center", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>Кампус</div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-        </div>
-      </section>
-
       {/* ── Oversized text statement ────────────────────────────── */}
       <section style={{ background: "#FF007F", overflow: "hidden", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A", padding: "40px 0", position: "relative" }}>
         <div style={{ position: "absolute", top: "50%", left: "40%", transform: "translate(-50%,-50%)", width: 500, height: 500, borderRadius: "50%", background: "rgba(0,0,0,0.08)", pointerEvents: "none" }} />
@@ -1058,7 +954,6 @@ export default function Home() {
 
       {/* ── Careers ───────────────────────────────────────────── */}
       <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
-        {/* Section label strip */}
         <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid #0A0A0A", background: "#fff" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#FF007F" }} />
@@ -1115,7 +1010,6 @@ export default function Home() {
 
       {/* ── Career Center ─────────────────────────────────────── */}
       <section style={{ background: "#0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
-        {/* Section label strip */}
         <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid rgba(255,255,255,0.08)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#C6FF00" }} />
@@ -1125,7 +1019,6 @@ export default function Home() {
           <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ cpo.vvsu.ru</span>
         </div>
         <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 1fr" }}>
-          {/* Left: text content */}
           <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
             className="lg:border-r-[3px] border-[rgba(255,255,255,0.08)]"
             style={{ padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)", display: "flex", flexDirection: "column", gap: 0 }}>
@@ -1156,10 +1049,8 @@ export default function Home() {
             </a>
           </motion.div>
 
-          {/* Right: stats + events */}
           <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
             style={{ display: "flex", flexDirection: "column" }}>
-            {/* Stat cells 2x2 */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", flex: "0 0 auto" }}>
               {[
                 { num: "94%", label: "Трудоустройство", bg: "#C6FF00", text: "#0A0A0A" },
@@ -1173,7 +1064,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            {/* Events list */}
             <div style={{ flex: 1, padding: "28px 32px", borderTop: "3px solid rgba(255,255,255,0.08)" }}>
               <div style={{ fontWeight: 800, fontSize: 13, color: "#C6FF00", letterSpacing: 3, textTransform: "uppercase", marginBottom: 20 }}>Свежие события</div>
               {[
@@ -1207,7 +1097,6 @@ export default function Home() {
 
       {/* ── Жизнь студента ─────────────────────────────────────── */}
       <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
-        {/* Section label strip */}
         <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 8, height: 8, background: "#FF007F" }} />
@@ -1226,7 +1115,6 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Photo cards — sharp editorial grid */}
           <div className="grid grid-cols-1 md:grid-cols-3" style={{ border: "2px solid #0A0A0A", marginBottom: 2 }}>
             {[
               { img: "/student-life-1.png", title: "Командная работа над реальными проектами", desc: "Маршруты для настоящих туроператоров с 1-го курса", tag: "Практика", tagBg: "#FF007F" },
@@ -1248,7 +1136,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Quote strip */}
           <div className="grid grid-cols-1 md:grid-cols-3" style={{ border: "2px solid #0A0A0A", borderTop: "none", marginBottom: 32 }}>
             {[
               { text: "В ВВГУ я познакомилась с корейскими студентами, и сейчас мы вместе разрабатываем тур-проект для рынка Азии.", name: "Даша, 3 курс", avatar: "/avatars/student-1.png", bg: "#0A0A0A", textC: "#fff" },
@@ -1265,7 +1152,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Quick links */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {[
               { href: "/open-day", label: "День открытых дверей" },
@@ -1285,7 +1171,6 @@ export default function Home() {
 
       {/* ── CTA strip ──────────────────────────────────────────── */}
       <section style={{ background: "#FF007F", borderBottom: "3px solid #0A0A0A", overflow: "hidden" }}>
-        {/* Marquee inside CTA */}
         <div style={{ overflow: "hidden", borderBottom: "3px solid rgba(0,0,0,0.15)" }}>
           <div style={{ display: "flex", animation: "marquee 20s linear infinite", width: "max-content", padding: "12px 0" }}>
             {Array.from({ length: 6 }).flatMap((_, ri) =>
@@ -1306,14 +1191,166 @@ export default function Home() {
               </h2>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <Link href="/register"
+              <a href="https://www.vvsu.ru/admission/" target="_blank" rel="noopener noreferrer"
                 style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "16px 36px", background: "#0A0A0A", color: "#fff", fontSize: 14, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                Зарегистрироваться <ArrowRight style={{ width: 18, height: 18 }} />
-              </Link>
-              <Link href="/admission"
+                Подать документы <ExternalLink style={{ width: 18, height: 18 }} />
+              </a>
+              <Link href="/open-day"
                 style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "16px 36px", border: "2px solid rgba(0,0,0,0.25)", color: "#fff", fontSize: 14, fontWeight: 700, textDecoration: "none", letterSpacing: 0.5, whiteSpace: "nowrap" }}>
-                Информация о поступлении
+                День открытых дверей — 22 авг.
               </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Marquee: tech ────────────────────────────────────────── */}
+      <div style={{ overflow: "hidden", background: "#0057B8", borderTop: "3px solid #0A0A0A", borderBottom: "3px solid #0A0A0A" }}>
+        <div style={{ display: "flex", animation: "marquee-reverse 28s linear infinite", width: "max-content", padding: "12px 0" }}>
+          {Array.from({ length: 4 }).flatMap((_, ri) =>
+            ["3D-ПРИНТЕРЫ", "◆", "VR / AR", "◆", "MAC STUDIO", "◆", "МЕДИАСТУДИЯ", "◆", "GDS-СИСТЕМЫ", "◆", "IT-ЛАБ", "◆", "ИНФРАСТРУКТУРА", "◆"].map((w, wi) => (
+              <span key={`${ri}-${wi}`} style={{ fontWeight: 800, fontSize: 13, letterSpacing: 3, textTransform: "uppercase", paddingRight: 28, color: w === "◆" ? "#C6FF00" : "rgba(255,255,255,0.55)", flexShrink: 0 }}>{w}</span>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* ── Передовые технологии ──────────────────────────────── */}
+      <section className="bg-background" style={{ borderBottom: "3px solid #0A0A0A" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 24, padding: "20px clamp(16px,4vw,48px)", borderBottom: "3px solid #0A0A0A", background: "#0A0A0A" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#C6FF00" }} />
+            <span style={{ fontWeight: 900, fontSize: 12, letterSpacing: 4, textTransform: "uppercase", color: "#C6FF00" }}>Передовые технологии</span>
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.1)" }} />
+          <span className="hidden sm:inline" style={{ fontWeight: 700, fontSize: 11, letterSpacing: 2, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", whiteSpace: "nowrap" }}>→ ВВГУ</span>
+        </div>
+        <div className="container mx-auto px-4 max-w-6xl py-20">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-16" style={{ position: "relative" }}>
+            <GhostSectionNum num="01" color="var(--color-foreground)" />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 16 }}>
+                <div style={{ width: 4, background: "#C6FF00", flexShrink: 0, marginTop: 8, height: 48 }} />
+                <h2 style={{ fontSize: "clamp(36px,4vw,56px)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-foreground)" }}>
+                  Передовые технологии<br /><span style={{ color: "#FF007F" }}>для вашего обучения</span>
+                </h2>
+              </div>
+              <p className="text-muted-foreground max-w-2xl text-lg">
+                В ВВГУ созданы все условия для учёбы и творчества — современное оборудование, лаборатории и инструменты профессиональной индустрии.
+              </p>
+            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {[
+              {
+                Illus: Printer3DIllustration,
+                title: "3D-принтеры и прототипирование",
+                desc: "Современные FDM и SLA 3D-принтеры для создания макетов, сувенирной продукции и дизайн-проектов. Студенты печатают прототипы с первого курса.",
+                tags: ["Creality K1 Max", "Bambu Lab X1", "Фотополимерная печать"],
+                color: "#0057B8",
+              },
+              {
+                Illus: LabIllustration,
+                title: "Компьютерные классы и IT-лаборатории",
+                desc: "Оборудованные компьютерные классы с высокопроизводительными ПК, скоростным интернетом и лицензионным ПО для работы с любыми проектами.",
+                tags: ["60+ рабочих мест", "Windows + Linux", "Adobe CC, AutoCAD"],
+                color: "#EB7124",
+              },
+              {
+                Illus: MacStudioIllustration,
+                title: "Mac Studio для дизайнеров",
+                desc: "Специализированная студия для дизайнеров, оснащённая Apple Mac Studio и профессиональными мониторами. Работайте в среде, как в ведущих агентствах.",
+                tags: ["Apple Mac Studio", "Wacom Cintiq", "Профмониторы 4K"],
+                color: "#db2777",
+              },
+              {
+                Illus: VRIllustration,
+                title: "VR / AR оборудование",
+                desc: "Шлемы виртуальной реальности для проектирования туристических маршрутов, виртуальных экскурсий и иммерсивных презентаций — технологии будущего уже сегодня.",
+                tags: ["Meta Quest Pro", "HTC Vive", "360° контент"],
+                color: "#7c3aed",
+              },
+              {
+                Illus: LabIllustration,
+                title: "Медиастудия и фотолаборатория",
+                desc: "Профессиональная фото- и видеостудия с постоянным освещением, хромакеем и монтажными станциями. Снимайте и монтируйте контент на уровне медиаагентств.",
+                tags: ["Canon EOS R5", "DJI Drone", "Adobe Premiere"],
+                color: "#0891b2",
+              },
+              {
+                Illus: Printer3DIllustration,
+                title: "Лаборатория туристических технологий",
+                desc: "Специализированная лаборатория с системами бронирования, GDS-платформами и профессиональным ПО для управления туристическими маршрутами и отелями.",
+                tags: ["Amadeus GDS", "TourWriter", "Travelport"],
+                color: "#16a34a",
+              },
+            ].map(({ Illus, title, desc, tags, color }, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                <div style={{ border: "2px solid #0A0A0A", background: "var(--color-card)", height: "100%", display: "flex", flexDirection: "column", padding: 24, gap: 16, position: "relative", overflow: "hidden" }}
+                  className="hover:shadow-xl transition-shadow">
+                  <div style={{ position: "absolute", top: 0, left: 0, width: 4, bottom: 0, background: color }} />
+                  <div className="h-24 w-24 ml-2">
+                    <Illus />
+                  </div>
+                  <div>
+                    <h3 style={{ fontWeight: 800, fontSize: 15, color: "var(--color-foreground)", marginBottom: 8, lineHeight: 1.3 }}>{title}</h3>
+                    <p style={{ fontSize: 13, color: "hsl(var(--muted-foreground))", lineHeight: 1.6, marginBottom: 12 }}>{desc}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                      {tags.map(t => (
+                        <span key={t} style={{ fontSize: 11, padding: "3px 10px", border: `1.5px solid ${color}`, color, background: `${color}15`, fontWeight: 700, letterSpacing: 0.5 }}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 mb-8" style={{ border: "2px solid #0A0A0A" }}>
+            <AccentCard text="6" sub="лабораторий и студий" bg="#C6FF00" textColor="#0A0A0A" style={{ borderRight: "2px solid #0A0A0A" }} />
+            <AccentCard text="VR" sub="иммерсивные технологии" bg="#0057B8" textColor="#fff" style={{ borderRight: "2px solid #0A0A0A" }} />
+            <AccentCard text="3D" sub="принтеры с первого курса" bg="#FF007F" textColor="#fff" />
+          </div>
+
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <div style={{ border: "3px solid #0A0A0A", background: "#0A0A0A", overflow: "hidden", position: "relative" }}>
+              <div className="flex flex-col lg:grid" style={{ gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+                <div className="lg:border-r-[3px] border-[rgba(255,255,255,0.1)]" style={{ padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)" }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FF007F", color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", padding: "6px 14px", marginBottom: 28 }}>
+                    ◆ Гранты
+                  </div>
+                  <h3 style={{ fontSize: "clamp(28px,3vw,44px)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.03em", color: "#fff", marginBottom: 20 }}>
+                    Студенты ВВГУ<br /><span style={{ color: "#C6FF00" }}>выигрывают гранты</span>
+                  </h3>
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.7, marginBottom: 28, maxWidth: 360 }}>
+                    Гранты Росмолодёжи, президентские стипендии и гранты на проекты в туризме и креативных индустриях. ВВГУ помогает оформить заявку.
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                    <a href="https://fadm.gov.ru" target="_blank" rel="noopener noreferrer"
+                      style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: "#FF007F", color: "#fff", fontSize: 13, fontWeight: 800, textDecoration: "none", letterSpacing: 0.5 }}>
+                      Гранты Росмолодёжи <ExternalLink style={{ width: 14, height: 14 }} />
+                    </a>
+                    <a href="https://grants.culture.ru" target="_blank" rel="noopener noreferrer"
+                      style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", border: "2px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>
+                      Культурные гранты <ExternalLink style={{ width: 14, height: 14 }} />
+                    </a>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 grid-rows-2">
+                  {[
+                    { num: "500K₽", label: "Максимальный грант", bg: "#FF007F", text: "#fff" },
+                    { num: "12+", label: "Победителей в 2024", bg: "#C6FF00", text: "#0A0A0A" },
+                    { num: "3 млн", label: "Выиграно в 2024", bg: "#0057B8", text: "#fff" },
+                    { num: "100%", label: "Поддержка заявки", bg: "#fff", text: "#0A0A0A" },
+                  ].map((s, i) => (
+                    <div key={i} style={{ background: s.bg, padding: "clamp(16px,3vw,28px)", borderTop: "3px solid rgba(255,255,255,0.08)", borderLeft: i % 2 === 1 ? "3px solid rgba(255,255,255,0.08)" : "none", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                      <div style={{ fontSize: "clamp(22px,5vw,36px)", fontWeight: 900, lineHeight: 1, letterSpacing: "-0.03em", color: s.text }}>{s.num}</div>
+                      <div style={{ fontSize: 10, color: s.text, opacity: 0.6, fontWeight: 600, marginTop: 6, letterSpacing: 0.3 }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
