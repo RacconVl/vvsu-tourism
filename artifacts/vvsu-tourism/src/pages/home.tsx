@@ -489,8 +489,8 @@ export default function Home() {
         {/* LEFT: editorial big type */}
         <motion.div
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: "easeOut" }}
-          className="flex flex-col justify-center items-center lg:border-r-[4px] border-[#0A0A0A]"
-          style={{ background: "var(--color-background)", padding: "clamp(40px,6vw,80px) clamp(20px,5vw,60px)", gap: 32, textAlign: "center", position: "relative", overflow: "hidden" }}
+          className="flex flex-col justify-center items-start lg:border-r-[4px] border-[#0A0A0A]"
+          style={{ background: "var(--color-background)", padding: "clamp(40px,6vw,80px) clamp(28px,5vw,72px)", gap: 28, textAlign: "left", position: "relative", overflow: "hidden" }}
         >
           <GhostText text="ВВГУ" size={220} color="var(--color-foreground)" opacity={0.04} bottom={-30} right={-20} />
           <GeoCircle size={260} color="#0057B8" opacity={0.08} shape="full" top={-130} left={-80} animate />
@@ -528,7 +528,7 @@ export default function Home() {
               padding: "0 36px", height: 52, fontWeight: 800, fontSize: 14,
               letterSpacing: 1, textTransform: "uppercase"
             }}>
-              <Link href="/dashboard">Начать обучение <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link href="/open-day">Записаться на ДОД <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
             <Button asChild size="lg" variant="outline" style={{
               borderRadius: 0, borderWidth: 2, borderColor: "var(--color-foreground)",
@@ -568,9 +568,14 @@ export default function Home() {
             style={{ background: "#0057B8", position: "relative", overflow: "hidden", borderBottom: "4px solid #0A0A0A" }}
           >
             <div style={{ position: "absolute", top: -30, right: -30, width: 110, height: 110, borderRadius: "50%", background: "#C6FF00", opacity: 0.18 }} />
-            <div style={{ position: "relative", padding: "clamp(14px,2.5vw,28px) clamp(10px,2vw,24px)", zIndex: 1, height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-              <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
-              <div style={{ color: "#fff", fontSize: "clamp(22px,3.5vw,52px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", marginTop: 4 }}>2 500+</div>
+            <div style={{ position: "relative", padding: "clamp(14px,2.5vw,28px) clamp(10px,2vw,24px)", zIndex: 1, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div style={{ display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.15)", color: "#fff", fontSize: 10, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", padding: "4px 10px" }}>
+                ВВГУ
+              </div>
+              <div>
+                <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Студентов</div>
+                <div style={{ color: "#fff", fontSize: "clamp(22px,3.5vw,52px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", marginTop: 4 }}>2 500+</div>
+              </div>
             </div>
           </motion.div>
 
@@ -580,9 +585,14 @@ export default function Home() {
             style={{ background: "#FF007F", position: "relative", overflow: "hidden", borderRight: "4px solid #0A0A0A" }}
           >
             <div style={{ position: "absolute", bottom: -20, left: -20, width: 110, height: 110, borderRadius: "50%", background: "rgba(0,0,0,0.1)" }} />
-            <div style={{ padding: "clamp(14px,2.5vw,28px) clamp(10px,2vw,24px)", position: "relative", zIndex: 1, height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-              <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Занятость</div>
-              <div style={{ color: "#fff", fontSize: "clamp(22px,3.8vw,56px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", marginTop: 4 }}>94%</div>
+            <div style={{ padding: "clamp(14px,2.5vw,28px) clamp(10px,2vw,24px)", position: "relative", zIndex: 1, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div style={{ display: "inline-flex", alignSelf: "flex-start", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.25)", color: "#fff", fontSize: 10, fontWeight: 900, letterSpacing: 2, textTransform: "uppercase", padding: "4px 10px" }}>
+                2026
+              </div>
+              <div>
+                <div style={{ color: "rgba(255,255,255,0.8)", fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>Занятость</div>
+                <div style={{ color: "#fff", fontSize: "clamp(22px,3.8vw,56px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.03em", marginTop: 4 }}>94%</div>
+              </div>
             </div>
           </motion.div>
 
@@ -618,14 +628,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── spacer before open day ──────────────────────────────── */}
-      <div style={{ height: 48, background: "var(--color-background)", borderBottom: "none" }} />
-
       {/* ── День открытых дверей ──────────────────────────────── */}
       <section style={{ background: "#0057B8", borderBottom: "3px solid #0A0A0A" }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "stretch" }}
+          className="flex flex-col lg:grid"
+          style={{ gridTemplateColumns: "1fr auto", alignItems: "stretch" }}
         >
           <div style={{ padding: "clamp(28px,4vw,52px) clamp(20px,5vw,60px)" }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#C6FF00", color: "#0A0A0A", fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", padding: "6px 14px", marginBottom: 20 }}>
@@ -643,7 +651,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div style={{ background: "#C6FF00", padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)", display: "flex", flexDirection: "column", justifyContent: "center", gap: 12, minWidth: 240, borderLeft: "3px solid #0A0A0A" }}>
+          <div style={{ background: "#C6FF00", padding: "clamp(28px,4vw,52px) clamp(20px,4vw,48px)", display: "flex", flexDirection: "column", justifyContent: "center", gap: 12, minWidth: 240, borderTop: "3px solid #0A0A0A" }} className="lg:[border-top:none] lg:[border-left:3px_solid_#0A0A0A]">
             <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginBottom: 4 }}>Зарегистрируйтесь бесплатно</div>
             <Link href="/open-day"
               style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "14px 24px", background: "#0A0A0A", color: "#fff", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap" }}>
@@ -755,8 +763,7 @@ export default function Home() {
               Институт туризма и креативных индустрий ВВГУ — признанный лидер Дальневосточного федерального округа по двум направлениям.
             </p>
           </motion.div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 0, border: "3px solid rgba(255,255,255,0.1)" }}
-            className="grid-cols-1 sm:grid-cols-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 0, border: "3px solid rgba(255,255,255,0.1)" }}>
             {[
               { icon: "🏆", title: "ТОП-5 в ДФО по туризму", desc: "Программа «Туризм» входит в пятёрку лучших в Дальневосточном регионе по качеству образования и трудоустройству выпускников.", color: "#C6FF00", textColor: "#0A0A0A" },
               { icon: "🎨", title: "Единственная магистратура дизайна", desc: "ВВГУ — единственный вуз ДФО с аккредитованной магистратурой по направлению «Дизайн» с бюджетными местами.", color: "#FF007F", textColor: "#fff" },
