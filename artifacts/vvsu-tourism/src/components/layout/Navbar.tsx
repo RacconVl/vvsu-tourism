@@ -116,6 +116,22 @@ export function Navbar() {
           })}
         </nav>
 
+        {/* Admission CTA — always visible on desktop */}
+        <a
+          href="https://www.vvsu.ru/admission/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden lg:inline-flex items-center gap-2 shrink-0"
+          style={{
+            background: "#EB7124", color: "#fff", fontWeight: 800, fontSize: 12,
+            letterSpacing: 1, textTransform: "uppercase", padding: "0 22px",
+            height: 44, textDecoration: "none", whiteSpace: "nowrap",
+            borderLeft: `1px solid ${dividerColor}`,
+          }}
+        >
+          Подать документы
+        </a>
+
         {/* Right side */}
         <div className="flex items-center gap-1 ml-auto">
           {user ? (
@@ -279,17 +295,28 @@ export function Navbar() {
                 </button>
               </>
             ) : (
-              <div style={{ display: "flex", gap: 12, paddingTop: 16 }}>
-                <Link href="/login" onClick={() => setMobileOpen(false)} style={{ flex: 1 }}>
-                  <button style={{ width: "100%", padding: "10px 0", fontWeight: 700, fontSize: 13, border: `2px solid ${dividerColor}`, background: "transparent", cursor: "pointer", color: textColor }}>
-                    Войти
-                  </button>
-                </Link>
-                <Link href="/register" onClick={() => setMobileOpen(false)} style={{ flex: 1 }}>
-                  <button style={{ width: "100%", padding: "10px 0", fontWeight: 800, fontSize: 13, background: "#FF007F", border: "none", color: "#fff", cursor: "pointer" }}>
-                    Регистрация
-                  </button>
-                </Link>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, paddingTop: 16 }}>
+                <a
+                  href="https://www.vvsu.ru/admission/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "block", width: "100%", padding: "12px 0", fontWeight: 900, fontSize: 13, letterSpacing: 1, textTransform: "uppercase", background: "#EB7124", border: "none", color: "#fff", cursor: "pointer", textAlign: "center", textDecoration: "none" }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Подать документы →
+                </a>
+                <div style={{ display: "flex", gap: 10 }}>
+                  <Link href="/login" onClick={() => setMobileOpen(false)} style={{ flex: 1 }}>
+                    <button style={{ width: "100%", padding: "10px 0", fontWeight: 700, fontSize: 13, border: `2px solid ${dividerColor}`, background: "transparent", cursor: "pointer", color: textColor }}>
+                      Войти
+                    </button>
+                  </Link>
+                  <Link href="/register" onClick={() => setMobileOpen(false)} style={{ flex: 1 }}>
+                    <button style={{ width: "100%", padding: "10px 0", fontWeight: 800, fontSize: 13, background: "#FF007F", border: "none", color: "#fff", cursor: "pointer" }}>
+                      Регистрация
+                    </button>
+                  </Link>
+                </div>
               </div>
             )}
           </nav>

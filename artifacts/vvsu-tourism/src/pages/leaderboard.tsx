@@ -403,6 +403,26 @@ export default function Leaderboard() {
         </motion.section>
 
       </div>
+
+      {/* Admission CTA */}
+      <div style={{ background: "#0057B8", borderTop: "3px solid #0A0A0A", padding: "40px 24px", marginTop: 32 }}>
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <div style={{ fontWeight: 900, fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,0.6)", marginBottom: 6 }}>Поступление · 2026</div>
+            <div style={{ fontWeight: 900, fontSize: "clamp(18px,2.5vw,26px)", color: "#fff", lineHeight: 1.2 }}>Войди в рейтинг лучших студентов ВВГУ</div>
+            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, marginTop: 6 }}>25 бюджетных мест · ТОП-5 в ДФО · 94% трудоустройство</div>
+          </div>
+          <a
+            href="https://www.vvsu.ru/admission/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", background: "#EB7124", color: "#fff", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap", flexShrink: 0 }}
+          >
+            Подать документы →
+          </a>
+        </div>
+      </div>
+
     </div>
   );
 }

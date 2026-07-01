@@ -138,9 +138,14 @@ export default function FaqPage() {
                   <p className="text-xs text-muted-foreground">@vvsu_itki</p>
                 </div>
               </div>
-              <div className="text-center mt-6">
-                <Button asChild className="bg-accent hover:bg-accent/90 text-white rounded-full px-8">
-                  <Link href="/open-day">Прийти на день открытых дверей <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6">
+                <Button asChild style={{ background: "#EB7124", borderRadius: 0, fontWeight: 800, fontSize: 13, letterSpacing: 1, textTransform: "uppercase", height: 48, padding: "0 28px" }}>
+                  <a href="https://www.vvsu.ru/admission/" target="_blank" rel="noopener noreferrer">
+                    Подать документы <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="rounded-none px-8 h-12 font-bold">
+                  <Link href="/open-day">День открытых дверей</Link>
                 </Button>
               </div>
             </CardContent>

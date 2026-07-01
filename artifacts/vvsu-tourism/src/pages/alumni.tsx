@@ -191,8 +191,10 @@ export default function AlumniPage() {
             <h2 className="text-2xl font-bold text-white mb-3">Начни свою историю в ВВГУ</h2>
             <p className="text-white/60 mb-6 max-w-md mx-auto text-sm">Более 3 000 выпускников уже строят карьеру в туризме по всему АТР. Следующим можете стать вы.</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Button asChild className="bg-accent hover:bg-accent/90 text-white rounded-full px-8">
-                <Link href="/admission">Узнать о поступлении <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              <Button asChild style={{ background: "#EB7124", borderRadius: 0, fontWeight: 800, fontSize: 13, letterSpacing: 1, textTransform: "uppercase", height: 48, padding: "0 28px" }}>
+                <a href="https://www.vvsu.ru/admission/" target="_blank" rel="noopener noreferrer">
+                  Подать документы <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
               </Button>
               <Button asChild variant="outline" className="rounded-full px-8 border-white/20 bg-white/5 text-white hover:bg-white/10">
                 <Link href="/open-day">День открытых дверей</Link>

@@ -614,6 +614,24 @@ export default function Community() {
       </div>
       </div>
 
+      {/* Admission CTA */}
+      <div style={{ background: "#EB7124", borderTop: "3px solid #0A0A0A", padding: "32px 24px" }}>
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <div style={{ fontWeight: 900, fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,0.75)", marginBottom: 6 }}>ВВГУ · Институт туризма и креативных индустрий</div>
+            <div style={{ fontWeight: 900, fontSize: "clamp(18px,2.5vw,26px)", color: "#fff", lineHeight: 1.2 }}>Хочешь стать частью этого сообщества?</div>
+          </div>
+          <a
+            href="https://www.vvsu.ru/admission/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 32px", background: "#0A0A0A", color: "#fff", fontSize: 13, fontWeight: 900, textDecoration: "none", letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap", flexShrink: 0 }}
+          >
+            Подать документы →
+          </a>
+        </div>
+      </div>
+
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="rounded-2xl">
           <DialogHeader>
